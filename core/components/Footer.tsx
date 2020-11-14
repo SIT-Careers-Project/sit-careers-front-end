@@ -17,7 +17,8 @@ const Footer = () => {
         </div>
         <div className="flex pt-16">
           <div className="mt-32 opacity-25 text-body-2 text-secondary2">
-            © School of Information Technology, King Mongkut's University of Technology Thonburi.
+            © School of Information Technology, King Mongkut&apos;s University of Technology
+            Thonburi.
           </div>
         </div>
       </div>
