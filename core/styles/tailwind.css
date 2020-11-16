@@ -3,4 +3,46 @@
 @tailwind utilities;
 
 /* font prompt */
-@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap'); */
+
+
+@font-face {
+    font-family: "Prompt Light";
+    src: url('/fonts/Prompt-Light.ttf');
+}
+
+@font-face {
+    font-family: "Prompt Medium";
+    src: url('/fonts/Prompt-Medium.ttf');
+}
+
+@font-face {
+    font-family: "Prompt Regular";
+    font-weight: 400;
+    src: url('/fonts/Prompt-Regular.ttf');
+}
+
+@font-face {
+    font-family: "Prompt SemiBold";
+    src: url('/fonts/Prompt-SemiBold.ttf');
+}
+
+@font-face {
+    font-family: "Sarabun Light";
+    src: url('/fonts/Sarabun-Light.ttf');
+}
+
+@font-face {
+    font-family: "Sarabun Medium";
+    src: url('/fonts/Sarabun-Medium.ttf');
+}
+
+@font-face {
+    font-family: "Sarabun Regular";
+    src: url('/fonts/Sarabun-Regular.ttf');
+}
+
+@font-face {
+    font-family: "Sarabun SemiBold";
+    src: url('/fonts/Sarabun-SemiBold.ttf');
+}

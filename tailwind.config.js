@@ -6,7 +6,8 @@ module.exports = {
   purge: [],
   theme: {
     fontFamily: {
-      prompt: ['Prompt'],
+      prompt: ['Prompt Light', 'Prompt Medium', 'Prompt Regular', 'Prompt SemiBold'],
+      sarabun: ['Sarabun Light', 'Sarabun Medium', 'Sarabun Regular', 'Sarabun SemiBold']
     },
     colors: {
       primary: '#295B8D',
