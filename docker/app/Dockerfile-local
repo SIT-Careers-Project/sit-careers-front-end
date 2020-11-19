@@ -1,0 +1,26 @@
+FROM node:14.15.1-alpine3.10
+
+WORKDIR /app
+ENV APPLICATION_ROOT /app
+
+COPY package.json $APPLICATION_ROOT
+COPY yarn.lock $APPLICATION_ROOT
+RUN yarn install
+
+COPY .babelrc $APPLICATION_ROOT
+COPY .eslintrc.js $APPLICATION_ROOT
+COPY .prettierrc $APPLICATION_ROOT
+COPY next-env.d.ts $APPLICATION_ROOT
+COPY next.config.js $APPLICATIO_ROOT
+COPY postcss.config.js $APPLICATION_ROOT
+COPY tailwind.config.js $APPLICATION_ROOT
+COPY tsconfig.json $APPLICATION_ROOT
+COPY ./utils $APPLICATION_ROOT/utils
+
+COPY .env $APPLICATION_ROOT
+
+COPY ./docker/app/yarn-local.sh $APPLICATION_ROOT/docker/app
+COPY ./pages $APPLICATION_ROOT/pages
+COPY ./public $APPLICATION_ROOT/public
+COPY ./core $APPLICATION_ROOT/core
+COPY ./features $APPLICATION_ROOT/features
