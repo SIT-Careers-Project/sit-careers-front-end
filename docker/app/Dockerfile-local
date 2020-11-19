@@ -17,6 +17,8 @@ COPY tailwind.config.js $APPLICATION_ROOT
 COPY tsconfig.json $APPLICATION_ROOT
 COPY ./utils $APPLICATION_ROOT/utils
 
+COPY .env $APPLICATION_ROOT
+
 COPY ./docker/app/yarn-local.sh $APPLICATION_ROOT/docker/app
 COPY ./pages $APPLICATION_ROOT/pages
 COPY ./public $APPLICATION_ROOT/public
