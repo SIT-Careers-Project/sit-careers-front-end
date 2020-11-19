@@ -18,7 +18,10 @@ services:
       NODE_ENV: development
     networks:
       - sit-careers
+      - sit-careers-api_sit-careers
 
 networks:
   sit-careers:
     driver: bridge
+  sit-careers-api_sit-careers:
+    external: true
