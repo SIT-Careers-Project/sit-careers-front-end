@@ -2,12 +2,13 @@ version: "3.8"
 services:
 
   frontend:
-    image: sit-careers:dev
+    image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers:fe-dev
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile-dev
     working_dir: /app
     container_name: sit-careers-fe
+    env_file: .env
     ports:
       - "3000:3000"
     environment:
@@ -16,7 +17,10 @@ services:
       - sit-careers
 
   fe-nginx:
-    image: nginx:1.19.4-alpine
+    image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers:fe-nginx-dev
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
     working_dir: /etc/nginx
     container_name: sit-careers-fe-nginx
     restart: always
