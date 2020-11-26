@@ -32,7 +32,7 @@ export default function Navbar() {
                     <li
                       className={`${
                         router.asPath === data.path ? 'bg-secondary1 bg-opacity-25' : ''
-                      } table px-4 py-5 font-prompt font-semibold text-subtitle-1 text-primary nav-item hover:shadow-none hover:bg-secondary1 hover:bg-opacity-25`}>
+                      } table px-4 py-5 font-prompt font-semibold text-subtitle-1 text-primary nav-item hover:shadow-none cursor-pointer hover:bg-secondary1 hover:bg-opacity-25`}>
                       {data.name}
                     </li>
                   </Link>
