@@ -13,6 +13,7 @@ module.exports = {
       primary: '#295B8D',
       secondary1: '#168FBD',
       secondary2: '#6D6D6A',
+      'grey-100': '#F5F5F5',
       white: '#ffffff'
     },
     fontSize: {
@@ -26,6 +27,9 @@ module.exports = {
       'body-2': '14px',
       'subtitle-1': '16px',
       'subtitle-2': '14px',
+    },
+    borderWidth: {
+      DEFAULT: '1px',
     }
   },
   variants: {},
