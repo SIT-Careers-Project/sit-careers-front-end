@@ -2,15 +2,15 @@ import { Card as MaterialCard, Typography } from '@material-ui/core'
 
 import React from 'react'
 
-export interface CardProps {
+interface CardProps {
   className?: string
-  tags: unknown
+  tags: Array<string>
   srcImg: string
   title?: string
   aboutUs?: string
 }
 
-export const Card = ({ className, tags, srcImg, aboutUs, title }) => (
+export const Card = ({ className, tags, srcImg, aboutUs, title }: CardProps) => (
   <>
     <MaterialCard style={{ height: '199px' }} className={`${className} w-full flex pr-4`}>
       <div className="w-1/3 mr-3">

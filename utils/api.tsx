@@ -2,9 +2,12 @@
 
 import axios from 'axios'
 
-const createInstance = () => {
+const createInstance = (headers) => {
   return axios.create({
-    baseURL: 'http://localhost:3000/api'
+    baseURL: 'http://localhost:3000/api',
+    headers: {
+      'Content-type': 'application/json'
+    }
   })
 }
 
