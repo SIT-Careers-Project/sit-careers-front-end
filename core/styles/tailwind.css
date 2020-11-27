@@ -46,3 +46,11 @@
     font-family: "Sarabun SemiBold";
     src: url('/fonts/Sarabun-SemiBold.ttf');
 }
+
+input::placeholder {
+    font-family: "Prompt Regular";
+}
+
+body {
+    font-family: "Prompt Regular";
+}
