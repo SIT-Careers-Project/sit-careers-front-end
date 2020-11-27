@@ -3,16 +3,16 @@ import { Card as MaterialCard, Typography } from '@material-ui/core'
 
 import React from 'react'
 
-export interface CardProps {
+interface CardProps {
   className?: string
-  tags: unknown
+  tags: Array<string>
   srcImg: string
   title?: string
   date?: string
   company?: string
 }
 
-export const CardSmall = ({ className, tags, srcImg, title, date, company }) => (
+export const CardSmall = ({ className, tags, srcImg, title, date, company }: CardProps) => (
   <>
     <MaterialCard style={{ height: '163px' }} className={`${className} w-1/3 flex p-2`}>
       <div className="mr-3">
