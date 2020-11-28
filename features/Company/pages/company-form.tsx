@@ -128,7 +128,7 @@ const CompanyForm = () => {
         </div>
         <div className="col-span-12 mt-5">
           <Controller
-            as={<textarea placeholder="รายะเอียด" />}
+            as={<textarea placeholder="รายละเอียด" />}
             control={control}
             name="description"
             ref={register({ required: true })}
