@@ -1,9 +1,9 @@
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
-  purge: [],
+  purge: [
+    './pages/*.tsx',
+    './core/**/*.tsx',
+    './features/**/**/*.tsx',
+  ],
   theme: {
     fontFamily: {
       prompt: ['Prompt Light', 'Prompt Medium', 'Prompt Regular', 'Prompt SemiBold'],
