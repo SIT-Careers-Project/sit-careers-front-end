@@ -10,7 +10,10 @@ module.exports = {
       'prompt-light': ['Prompt Light'],
       'prompt-medium': [ 'Prompt Medium' ],
       'prompt-semibold': [ 'Prompt SemiBold' ],
-      sarabun: ['Sarabun Light', 'Sarabun Medium', 'Sarabun Regular', 'Sarabun SemiBold']
+      sarabun: ['Sarabun Regular'],
+      'sarabun-meduim': ['Sarabun Medium'],
+      'sarabun-light': ['Sarabun Light'],
+      'sarabun-samibold': ['Sarabun SemiBold']
     },
     colors: {
       primary: '#295B8D',

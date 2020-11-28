@@ -2,9 +2,6 @@ import { Controller, useForm } from 'react-hook-form'
 import {
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   FormControl,
   InputLabel,
   MenuItem,
@@ -62,7 +59,7 @@ const CompanyForm = () => {
             label="ชื่อภาษาไทย *"
             name="company_name_th"
             control={control}
-            className="w-full font-prompt bg-grey-100"
+            className="w-full font-sarabun bg-grey-100"
           />
           <div className="mt-5">
             <FormControl className="w-full font-prompt bg-grey-100">
@@ -104,7 +101,7 @@ const CompanyForm = () => {
         </div>
         <div className="col-span-12 mt-5">
           <Controller
-            as={<textarea placeholder="Bio" />}
+            as={<textarea placeholder="แนะนำบริษัท" />}
             control={control}
             className="w-full h-40 border-opacity-50 placeholder-secondary2 border-secondary2 place-content-start bg-grey-100 border-DEFAULT"
             name="about_us"
@@ -381,25 +378,21 @@ const CompanyForm = () => {
           <p className="px-5 py-2 font-prompt">บันทึก</p>
         </button>
       </div>
-      <Dialog
-        open={context.showModal}
-        onClose={context.handleCloseModal}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description">
-        <DialogTitle id="alert-dialog-slide-title">บันทึกข้อมูลบริษัท</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
+      <Dialog open={context.showModal} onClose={context.handleCloseModal}>
+        <div className="p-4 text-left">
+          <p className="mb-3 mr-40 font-prompt-medium text-heading-6">บันทึกข้อมูลบริษัท</p>
+          <span className="mb-5 font-prompt text-subtitle-1">
             คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <button onClick={context.handleCloseModal} className="text-secondary2">
-            <p className="px-5 py-2 font-prompt">ยกเลิก</p>
-          </button>
-          <button onClick={handleSubmit(context.createCompany)} className="text-white bg-primary">
-            <p className="px-5 py-2 font-prompt">บันทึก</p>
-          </button>
-        </DialogActions>
+          </span>
+          <DialogActions className="mt-4">
+            <button onClick={context.handleCloseModal} className="text-secondary2">
+              <p className="px-5 py-2 font-prompt">ยกเลิก</p>
+            </button>
+            <button onClick={handleSubmit(context.createCompany)} className="text-white bg-primary">
+              <p className="px-5 py-2 font-prompt">บันทัก</p>
+            </button>
+          </DialogActions>
+        </div>
       </Dialog>
     </div>
   ))
