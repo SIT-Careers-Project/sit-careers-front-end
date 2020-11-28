@@ -46,10 +46,10 @@
     src: url('/fonts/Sarabun-SemiBold.ttf');
 }
 
-input::placeholder {
-    font-family: "Prompt Regular";
+.MuiInputLabel-formControl {
+    font-family: "Sarabun Regular" !important;
 }
 
-body {
-    font-family: "Prompt Regular";
+textarea::placeholder {
+    font-family: "Sarabun Regular" !important;
 }
