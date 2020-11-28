@@ -384,7 +384,9 @@ const CompanyForm = () => {
       <Dialog open={context.showModal} onClose={context.handleCloseModal}>
         <div className="p-4 text-left">
           <p className="mb-3 mr-40 font-prompt-medium text-heading-6">บันทึกข้อมูลบริษัท</p>
-          <span className="mb-5 font-prompt text-subtitle-1">คุณต้องการบันทึกข้อมูลบริษัทหรือไม่</span>
+          <span className="mb-5 font-prompt text-subtitle-1">
+            คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
+          </span>
           <DialogActions className="mt-4">
             <button onClick={context.handleCloseModal} className="text-secondary2">
               <p className="px-5 py-2 font-prompt">ยกเลิก</p>
