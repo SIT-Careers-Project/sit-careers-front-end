@@ -16,10 +16,10 @@ module.exports = (phase) => {
   return {
     publicRuntimeConfig: {
       // can add static folder instead public folder.
+      API_URL: process.env.API_URL,
       staticFolder: '/public'
     },
     serverRuntimeConfig: {
-      API_URL: process.env.API_URL,
       JWT_SECRET: process.env.JWT_SECRET
     }
   }

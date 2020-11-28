@@ -6,7 +6,10 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      prompt: ['Prompt Light', 'Prompt Medium', 'Prompt Regular', 'Prompt SemiBold'],
+      prompt: [ 'Prompt Regular' ],
+      'prompt-light': ['Prompt Light'],
+      'prompt-medium': [ 'Prompt Medium' ],
+      'prompt-semibold': [ 'Prompt SemiBold' ],
       sarabun: ['Sarabun Light', 'Sarabun Medium', 'Sarabun Regular', 'Sarabun SemiBold']
     },
     colors: {
