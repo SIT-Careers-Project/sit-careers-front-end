@@ -25,4 +25,6 @@ COPY ./public $APPLICATION_ROOT/public
 COPY ./core $APPLICATION_ROOT/core
 COPY ./features $APPLICATION_ROOT/features
 
-CMD yarn dev
+RUN yarn build
+
+CMD yarn start
