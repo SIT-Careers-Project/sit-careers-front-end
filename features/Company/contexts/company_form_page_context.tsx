@@ -6,13 +6,25 @@ import { createContext } from 'react'
 export class CompanyFormPageContext {
   companies
   formCompany
+  showModal
 
   constructor() {
     makeObservable(this, {
       getCompanies: action,
       createCompany: action,
-      formCompany: observable
+      handleModal: action,
+      formCompany: observable,
+      showModal: observable
     })
+    this.showModal = false
+  }
+
+  handleModal = () => {
+    this.showModal = true
+  }
+
+  handleCloseModal = () => {
+    this.showModal = false
   }
 
   getCompanies = async () => {
@@ -26,7 +38,9 @@ export class CompanyFormPageContext {
 
   createCompany = async (data) => {
     try {
-      const response = await apiService.createCompany(data)
+      const response = await apiService.createCompany(data).then(() => {
+        this.showModal = false
+      })
       console.log(response)
     } catch (error) {
       console.log(error)

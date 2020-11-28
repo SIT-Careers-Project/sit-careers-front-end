@@ -1,13 +1,14 @@
-/* eslint-disable no-undef */
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios'
+/* eslint-disable no-undef */
+import getConfig from 'next/config'
 
+const { publicRuntimeConfig } = getConfig()
+
+// eslint-disable-next-line no-unused-vars
 const createInstance = (headers) => {
   return axios.create({
-    baseURL: 'http://localhost:3000/api',
-    headers: {
-      'Content-type': 'application/json'
-    }
+    baseURL: publicRuntimeConfig.API_URL
   })
 }
 
