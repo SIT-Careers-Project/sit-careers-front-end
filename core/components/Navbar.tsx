@@ -61,7 +61,7 @@ export default function Navbar() {
                   TransitionComponent={Fade}
                   open={Boolean(context.anchorEl)}
                   onClose={context.handleClose}>
-                  <Link href="/company-form">
+                  <Link href="/company/info-management">
                     <MenuItem onClick={context.handleClose}>
                       <span className="font-prompt-light text-body-2 text-primary">
                         จัดการข้อมูลบริษัท

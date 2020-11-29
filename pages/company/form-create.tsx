@@ -1,6 +1,6 @@
-import CompanyPage from '../features/Company/pages/company-info'
-import Footer from '../core/components/Footer'
-import Navbar from '../core/components/Navbar'
+import CompanyForm from '../../features/Company/pages/company-form'
+import Footer from '../../core/components/Footer'
+import Navbar from '../../core/components/Navbar'
 import React from 'react'
 
 const CompanyInfo = () => {
@@ -8,7 +8,7 @@ const CompanyInfo = () => {
     <div>
       <Navbar />
       <div className="flex justify-center mt-16">
-        <CompanyPage />
+        <CompanyForm />
       </div>
       <Footer />
     </div>

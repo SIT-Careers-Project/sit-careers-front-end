@@ -7,6 +7,7 @@ export class CompanyFormPageContext {
   companies
   formCompany
   showModal
+  router
 
   constructor() {
     makeObservable(this, {
@@ -14,9 +15,11 @@ export class CompanyFormPageContext {
       createCompany: action,
       handleModal: action,
       formCompany: observable,
-      showModal: observable
+      showModal: observable,
+      router: observable
     })
     this.showModal = false
+    this.router = false
   }
 
   handleModal = () => {
@@ -38,10 +41,10 @@ export class CompanyFormPageContext {
 
   createCompany = async (data) => {
     try {
-      const response = await apiService.createCompany(data).then(() => {
+      await apiService.createCompany(data).then(() => {
         this.showModal = false
+        this.router = true
       })
-      console.log(response)
     } catch (error) {
       console.log(error)
     }
