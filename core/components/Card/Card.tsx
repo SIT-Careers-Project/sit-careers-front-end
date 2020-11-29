@@ -12,11 +12,14 @@ interface CardProps {
 
 export const Card = ({ className, tags, srcImg, aboutUs, title }: CardProps) => (
   <>
-    <MaterialCard style={{ height: '199px' }} className={`${className} w-full flex pr-4`}>
-      <div className="w-1/3 mr-3">
-        <img src={srcImg} alt="Normal Card" />
-      </div>
-      <div className="my-6 align-middle">
+    <MaterialCard
+      style={{ height: '199px' }}
+      className={`${className} w-full grid grid-cols-12 gap-4`}>
+      <div
+        className="w-full col-span-3 mr-3 bg-cover"
+        style={{ backgroundImage: `url(${srcImg})` }}
+      />
+      <div className="col-span-9 pt-8 align-middle">
         <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
           {title}
         </Typography>
