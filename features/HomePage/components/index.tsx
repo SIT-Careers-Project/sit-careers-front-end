@@ -8,7 +8,7 @@ function index() {
     <>
       <Navbar />
       <div className="container grid h-screen max-w-screen-lg grid-flow-row gap-16 mx-auto mb-2 grid-row-12">
-        <div className="text-heading-2 font-prompt">This is a HomePage !!</div>
+        <div className="mt-4" />
         <Card
           title="SIT Company"
           tags={['Software House', 'MOU']}
