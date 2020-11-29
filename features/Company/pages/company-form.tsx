@@ -8,15 +8,23 @@ import {
   Select,
   TextField
 } from '@material-ui/core'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import { Avatar } from '../../../core/components/Avatar'
 import { companyFormPageContext } from '../contexts/company_form_page_context'
 import { useObserver } from 'mobx-react-lite'
+import { useRouter } from 'next/router'
 
 const CompanyForm = () => {
   const { control, handleSubmit, register } = useForm()
   const context = useContext(companyFormPageContext)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (context.router) {
+      router.push('/company/info-management')
+    }
+  }, [context.router, router])
 
   const companyType = [
     { title: 'Software House' },
