@@ -397,7 +397,7 @@ const CompanyForm = () => {
               <p className="px-5 py-2 font-prompt">ยกเลิก</p>
             </button>
             <button onClick={handleSubmit(context.createCompany)} className="text-white bg-primary">
-              <p className="px-5 py-2 font-prompt">บันทัก</p>
+              <p className="px-5 py-2 font-prompt">บันทึก</p>
             </button>
           </DialogActions>
         </div>
