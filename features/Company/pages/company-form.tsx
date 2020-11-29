@@ -231,7 +231,7 @@ const CompanyForm = () => {
           <Controller
             as={TextField}
             control={control}
-            label="ตำบล/เขต"
+            label="ตำบล/เขต *"
             name="sub_district"
             className="w-full bg-grey-100"
           />
@@ -240,7 +240,7 @@ const CompanyForm = () => {
           <Controller
             as={TextField}
             control={control}
-            label="อำเภอ"
+            label="อำเภอ *"
             name="district"
             className="w-full bg-grey-100"
           />
@@ -249,7 +249,7 @@ const CompanyForm = () => {
           <Controller
             as={TextField}
             control={control}
-            label="จังหวัด"
+            label="จังหวัด *"
             name="province"
             className="w-full bg-grey-100"
           />
@@ -258,7 +258,7 @@ const CompanyForm = () => {
           <Controller
             as={TextField}
             control={control}
-            label="รหัสไปรษณีย์"
+            label="รหัสไปรษณีย์ *"
             name="postal_code"
             className="w-full bg-grey-100"
           />
