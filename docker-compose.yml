@@ -11,9 +11,6 @@ services:
     env_file: .env
     ports:
       - "3000:3000"
-    environment:
-      NODE_ENV: "staging"
-      STAGING: "1"
     networks:
       - sit-careers
 
