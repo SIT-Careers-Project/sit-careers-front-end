@@ -27,7 +27,7 @@ export const Card = ({ className, tags, srcImg, aboutUs, title }: CardProps) => 
           {tags.map((data, i) => (
             <span
               key={i}
-              className="px-1 mr-2 text-sm font-normal text-black bg-opacity-50 rounded text-body-2 bg-secondary2">
+              className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-primary">
               {data}
             </span>
           ))}
