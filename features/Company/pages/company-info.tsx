@@ -73,7 +73,7 @@ const CompanyInfo = () => {
         </>
       ) : (
         <div className="flex flex-col items-center justify-center w-full h-16">
-          <span className="font-prompt text-heading-6">ไม่พบผลการค้นหา</span>
+          <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
         </div>
       )}
     </div>
