@@ -26,6 +26,7 @@ export default function Navbar() {
           boxShadow:
             '0px 0px 2px rgba(0, 0, 0, 0.14), 0px 2px 2px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.2)'
         }}
+        data-cy="core-navbar"
         className="fixed flex justify-center w-full h-2 shadow-inner bg-grey-100 navbar-expand-lg">
         <div className="container max-w-screen-lg">
           <div className="flex justify-between">

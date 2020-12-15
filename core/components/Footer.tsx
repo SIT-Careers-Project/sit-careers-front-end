@@ -7,6 +7,7 @@ const Footer = () => {
         boxShadow:
           '0px -1px 2px rgba(0, 0, 0, 0.14), 0px -1px 2px rgba(0, 0, 0, 0.12), 0px -1px 3px rgba(0, 0, 0, 0.2)'
       }}
+      data-cy="core-footer"
       className="relative flex justify-center h-64 mb-0">
       <div className="container flex flex-row max-w-screen-lg col-span-12">
         <div className="flex-1 pt-12">
