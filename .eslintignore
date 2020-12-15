@@ -3,4 +3,5 @@ node_modules
 *.css
 *.test
 *.spec.js
+cypress
 .next
