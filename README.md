@@ -29,3 +29,19 @@ yarn lint
 ```
 
 or if you want to format document you can use `yarn format`
+
+#### Run cypress
+
+with cli for CI/CD use:
+```
+yarn run cypress run
+# or
+npm run cypress run
+```
+
+with Browser use:
+```
+yarn run cypress open
+# or
+npm run cypress open
+```
