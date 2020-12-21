@@ -16,9 +16,8 @@ phases:
       - docker build -t sit-careers:cypress-$IMAGE_TAG -f ./docker/cypress/Dockerfile .
   post_build:
     commands:
-      - echo Run Unit Tests...
-      - export IMAGE_TAG=${IMAGE_TAG}; docker-compose -f docker-compose.test.yml run --rm cypress \
-        sh -c "yarn start & yarn run cypress run"
+      - echo Run Cypress Tests...
+      - export IMAGE_TAG=${IMAGE_TAG}; docker-compose -f docker-compose.test.yml run --rm cypress sh -c "yarn start & yarn run cypress run"
 
 cache:
   paths:
