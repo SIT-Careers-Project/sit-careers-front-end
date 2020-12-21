@@ -5,7 +5,7 @@ services:
     image: sit-careers:local
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile-local
+      dockerfile: ./docker/app/Dockerfile.local
     working_dir: /app
     container_name: sit-careers-frontend
     restart: always

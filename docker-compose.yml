@@ -5,7 +5,7 @@ services:
     image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers:fe-dev
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile-dev
+      dockerfile: ./docker/app/Dockerfile.dev
     working_dir: /app
     container_name: sit-careers-fe
     env_file: .env
