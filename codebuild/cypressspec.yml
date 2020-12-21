@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 19
+  pre_build:
+    commands:
+      - echo Run Test started on `date`
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t sit-careers:cypress-$IMAGE_TAG -f ./docker/cypress/Dockerfile .
+  post_build:
+    commands:
+      - echo Run Unit Tests...
+      - export IMAGE_TAG=${IMAGE_TAG}; docker-compose -f docker-compose.test.yml run --rm cypress \
+        sh -c "yarn start & yarn run cypress run"
+
+cache:
+  paths:
+    - 'node_modules/*'
