@@ -109,7 +109,7 @@ const CompanyForm = () => {
         </div>
         <div className="w-1/2 pl-3">
           <TextField
-            label="เว็บไซต์ *"
+            label="เว็บไซต์"
             name="website"
             className="font-sarabun bg-grey-100"
             defaultValue=""
@@ -182,7 +182,7 @@ const CompanyForm = () => {
       <div className="flex flex-row justify-between px-6 pb-6">
         <div className="w-1/2 pr-3">
           <TextField
-            label="เบอร์สำนักงาน *"
+            label="เบอร์สำนักงาน"
             name="tel_no"
             className="font-sarabun bg-grey-100"
             inputRef={register}
@@ -193,7 +193,7 @@ const CompanyForm = () => {
         </div>
         <div className="w-1/2 pl-3">
           <TextField
-            label="เบอร์สำนักงาน *"
+            label="เบอร์สำนักงาน"
             name="phone_no"
             className="font-sarabun bg-grey-100"
             type="phone"
@@ -305,7 +305,7 @@ const CompanyForm = () => {
           <FormControl
             error={!!errors?.start_business_day}
             className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="company-type-select">วันเปิดทำการ</InputLabel>
+            <InputLabel htmlFor="company-type-select">วันเปิดทำการ *</InputLabel>
             <Select name="start_business_day" id="company-type-select">
               {days.map((data) => (
                 <MenuItem key={data.day} value={data.day}>
@@ -338,7 +338,7 @@ const CompanyForm = () => {
           <FormControl
             error={!!errors?.end_business_day}
             className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="company-type-select">วันปิดทำการ</InputLabel>
+            <InputLabel htmlFor="company-type-select">วันปิดทำการ *</InputLabel>
             <Select name="end_business_day" id="company-type-select">
               {days.map((data) => (
                 <MenuItem key={data.day} value={data.day}>
