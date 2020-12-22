@@ -11,32 +11,51 @@ export const CompanyFormSchema = yup.object().shape({
   company_name_th: yup
     .string()
     .matches(/[^a-zA-Z0-9]/)
-    .required(),
+    .required('*จำเป็นต้องกรอก ชื่อภาษาไทย และเป็นภาษาไทยเท่านั้น'),
   company_name_en: yup
     .string()
     .matches(/[a-zA-Z0-9]/)
-    .required(),
-  company_type: yup.number().required(),
-  website: yup.string().required(),
-  about_us: yup.string().max(200).required(),
-  description: yup.string().max(200).required(),
-  e_mail_manager: yup.string().email().required(),
-  e_mail_coordinator: yup.string().email().required(),
-  tel_no: yup.string().matches(/[0-9]/g).min(10).max(10).required(),
-  phone_no: yup.string().matches(/[0-9]/g).min(10).max(10).required(),
-  address_one: yup.string().required(),
-  address_two: yup.string().required(),
-  lane: yup.string().required(),
-  road: yup.string().required(),
-  sub_district: yup.string().required(),
-  district: yup.string().required(),
-  province: yup.string().required(),
-  postal_code: yup.string().required(),
-  start_business_day: yup.string().required(),
-  start_business_time: yup.string().required(),
-  end_business_day: yup.string().required(),
-  end_business_time: yup.string().required(),
-  mou_type: yup.string().required(),
-  contact_period: yup.string().required(),
-  mou_link: yup.string().required()
+    .required('*จำเป็นต้องกรอก ชื่ออังกฤษ และเป็นภาษาอังกฤษเท่านั้น'),
+  company_type: yup.number().required('*จำเป็นต้องกรอก ประเภทบริษัท'),
+  website: yup.string(),
+  about_us: yup
+    .string()
+    .max(200)
+    .required('*จำเป็นต้องกรอก แนะนำบริษัท และจำนวนตัวอักษรไม่เกิน 200 ตัวอักษร'),
+  description: yup
+    .string()
+    .max(200)
+    .required('*จำเป็นต้องกรอก รายละเอียด และจำนวนตัวอักษรไม่เกิน 200 ตัวอักษร'),
+  e_mail_manager: yup.string().email().required('*จำเป็นต้องกรอก อีเมล์ผู้จัดการ'),
+  e_mail_coordinator: yup.string().email().required('*จำเป็นต้องกรอก อีเมล์ผู้ประสานงาน'),
+  tel_no: yup
+    .string()
+    .matches(/[0-9][''""]/g, '*กรอกเพียงตัวเลขเท่านั้น')
+    .min(10)
+    .max(10),
+  phone_no: yup
+    .string()
+    .matches(/[0-9][''""]/g, '*กรอกเพียงตัวเลขเท่านั้น')
+    .min(10)
+    .max(10),
+  address_one: yup.string().required('*จำเป็นต้องกรอก ที่อยู่ 1'),
+  address_two: yup.string(),
+  lane: yup.string(),
+  road: yup.string(),
+  sub_district: yup.string().required('*จำเป็นต้องกรอก ตำบล/เขต'),
+  district: yup.string().required('*จำเป็นต้องกรอก อำเภอ'),
+  province: yup.string().required('*จำเป็นต้องกรอก จังหวัด'),
+  postal_code: yup
+    .string()
+    .matches(/[0-9][''""]/g, '*กรอกเพียงตัวเลขเท่านั้น')
+    .max(6)
+    .min(6)
+    .required('*จำเป็นต้องกรอก รหัสไปรษณีย์'),
+  start_business_day: yup.string().required('*จำเป็นต้องกรอก วันเปิดทำการ'),
+  start_business_time: yup.string().required('*จำเป็นต้องกรอก เวลาเปิดทำการ'),
+  end_business_day: yup.string().required('*จำเป็นต้องกรอก วันปิดทำการ'),
+  end_business_time: yup.string().required('*จำเป็นต้องกรอก เวลาปิดทำการ'),
+  mou_type: yup.string(),
+  contact_period: yup.string(),
+  mou_link: yup.string()
 })
