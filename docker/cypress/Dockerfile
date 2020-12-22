@@ -1,4 +1,4 @@
-FROM node:14.15.1-alpine3.10
+FROM cypress/base:10
 
 WORKDIR /app
 ENV APPLICATION_ROOT /app
@@ -15,11 +15,10 @@ COPY next.config.js $APPLICATIO_ROOT
 COPY postcss.config.js $APPLICATION_ROOT
 COPY tailwind.config.js $APPLICATION_ROOT
 COPY tsconfig.json $APPLICATION_ROOT
+COPY cypress.json $APPLICATION_ROOT
+
+COPY ./cypress $APPLICATION_ROOT/cypress
 COPY ./utils $APPLICATION_ROOT/utils
-
-COPY .env.example $APPLICATION_ROOT/.env
-
-COPY ./docker/app/yarn-local.sh $APPLICATION_ROOT/docker/app
 COPY ./pages $APPLICATION_ROOT/pages
 COPY ./public $APPLICATION_ROOT/public
 COPY ./core $APPLICATION_ROOT/core

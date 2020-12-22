@@ -5,7 +5,7 @@ services:
     image: sit-careers:local
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile-local
+      dockerfile: ./docker/app/Dockerfile.local
     working_dir: /app
     container_name: sit-careers-frontend
     restart: always
@@ -14,8 +14,7 @@ services:
       - ./:/app
     ports:
       - "3000:3000"
-    environment:
-      NODE_ENV: development
+    env_file: .env
     networks:
       - sit-careers
       - sit-careers-api_sit-careers
