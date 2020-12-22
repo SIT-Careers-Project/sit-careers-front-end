@@ -1,8 +1,8 @@
-import { Controller, useForm } from 'react-hook-form'
 import {
   Dialog,
   DialogActions,
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -11,12 +11,17 @@ import {
 import React, { useContext, useEffect } from 'react'
 
 import { Avatar } from '../../../core/components/Avatar'
+import { CompanyFormSchema } from '../services/validationSchema'
 import { companyFormPageContext } from '../contexts/company_form_page_context'
+import { useForm } from 'react-hook-form'
 import { useObserver } from 'mobx-react-lite'
 import { useRouter } from 'next/router'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 const CompanyForm = () => {
-  const { control, handleSubmit, register } = useForm()
+  const { handleSubmit, register, errors } = useForm({
+    resolver: yupResolver(CompanyFormSchema)
+  })
   const context = useContext(companyFormPageContext)
   const router = useRouter()
 
@@ -50,336 +55,356 @@ const CompanyForm = () => {
         <p className="font-semibold font-prompt text-heading-6">ข้อมูลบริษัท</p>
         <Avatar className="mt-5 bg-grey-100" />
         <div className="hidden">
-          <Controller
-            as={<TextField defaultValue="path/to/logo" />}
-            label="logo"
+          <TextField
+            label="logo *"
             name="logo"
+            className="hidden font-sarabun bg-grey-100"
             defaultValue="path/to/logo"
-            control={control}
-            className="hidden w-full font-prompt bg-grey-100"
+            inputRef={register}
+            error={!!errors.logo}
+            helperText={errors.logo?.message}
+            fullWidth
           />
         </div>
       </div>
-      <div className="grid grid-cols-12 p-6 gap-x-8">
-        <div className="col-span-6 mt-5">
-          <Controller
-            as={TextField}
+      <div className="flex flex-row justify-between px-6 py-6">
+        <div className="w-1/2 pr-3">
+          <TextField
             label="ชื่อภาษาไทย *"
             name="company_name_th"
-            control={control}
-            className="w-full font-sarabun bg-grey-100"
+            className="font-sarabun bg-grey-100"
+            defaultValue=""
+            inputRef={register}
+            error={!!errors.company_name_th}
+            helperText={errors.company_name_th?.message}
+            fullWidth
           />
-          <div className="mt-5">
-            <FormControl className="w-full font-prompt bg-grey-100">
-              <InputLabel htmlFor="company-type-select">ประเภทธุรกิจ *</InputLabel>
-              <Controller
-                control={control}
-                name="company_type"
-                as={
-                  <Select id="company-type-select">
-                    {companyType.map((company) => (
-                      <MenuItem key={company.title} value={company.title}>
-                        {company.title}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                }
-              />
-            </FormControl>
-          </div>
         </div>
-        <div className="col-span-6 mt-5">
-          <Controller
-            as={TextField}
+        <div className="w-1/2 pl-3">
+          <TextField
             label="ชื่อภาษาอังกฤษ *"
             name="company_name_en"
-            control={control}
-            className="w-full bg-grey-100"
-          />
-          <div className="mt-5">
-            <Controller
-              as={TextField}
-              label="เว็บไซต์"
-              id="website"
-              name="website"
-              control={control}
-              className="w-full bg-grey-100"
-            />
-          </div>
-        </div>
-        <div className="col-span-12 mt-5">
-          <Controller
-            as={<textarea placeholder="แนะนำบริษัท" />}
-            control={control}
-            className="w-full h-40 border-opacity-50 placeholder-secondary2 border-secondary2 place-content-start bg-grey-100 border-DEFAULT"
-            name="about_us"
-            ref={register({ required: true })}
-          />
-        </div>
-        <div className="col-span-12 mt-5">
-          <Controller
-            as={<textarea placeholder="Bio" value="path/to/logo" />}
-            control={control}
-            className="hidden w-full h-40 border-opacity-50 placeholder-secondary2 border-secondary2 place-content-start bg-grey-100 border-DEFAULT"
-            name="logo"
-            ref={register({ required: true })}
+            className="font-sarabun bg-grey-100"
+            defaultValue=""
+            inputRef={register}
+            error={!!errors.company_name_en}
+            helperText={errors.company_name_en?.message}
+            fullWidth
           />
         </div>
       </div>
-      <hr className="font-semibold opacity-25 text-secondary2" />
-      <div className="grid grid-cols-12 px-6 my-6 gap-x-8">
-        <div className="col-span-12">
-          <p className="font-semibold font-prompt text-heading-6">รายละเอียดบริษัท</p>
-        </div>
-        <div className="col-span-12 mt-5">
-          <Controller
-            as={<textarea placeholder="รายละเอียด" />}
-            control={control}
-            name="description"
-            ref={register({ required: true })}
-            className="w-full h-40 border-opacity-50 placeholder-secondary2 border-secondary2 place-content-start bg-grey-100 border-DEFAULT"
-          />
-        </div>
-      </div>
-      <hr className="font-semibold opacity-25 text-secondary2" />
-      <div className="grid grid-cols-12 px-6 my-6 gap-x-8">
-        <div className="col-span-12">
-          <p className="font-semibold font-prompt text-heading-6">ข้อมูลติดต่อ</p>
-        </div>
-        <div className="col-span-6 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="อีเมล์ผู้จัดการ *"
-            name="e_mail_manager"
-            className="w-full bg-grey-100"
-          />
-        </div>
-        <div className="col-span-6 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="อีเมล์ผู้ประสานงาน *"
-            name="e_mail_coordinator"
-            className="w-full bg-grey-100"
-          />
-        </div>
-        <div className="col-span-12 mt-6">
-          <p className="font-semibold font-prompt text-heading-6">เบอร์ติดต่อ</p>
-        </div>
-        <div className="col-span-6 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="เบอร์สำนักงาน"
-            name="tel_no"
-            className="w-full bg-grey-100"
-          />
-        </div>
-        <div className="col-span-6 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="เบอร์โทรศัพท์"
-            name="phone_no"
-            className="w-full bg-grey-100"
-          />
-        </div>
-      </div>
-      <hr className="font-semibold opacity-25 text-secondary2" />
-      <div className="grid grid-cols-12 px-6 my-6 gap-x-8">
-        <div className="col-span-12">
-          <p className="font-semibold font-prompt text-heading-6">สถานที่ทำการ</p>
-        </div>
-        <div className="col-span-12 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="ที่อยู่ 1 *"
-            name="address_one"
-            className="w-full bg-grey-100"
-          />
-        </div>
-        <div className="col-span-12 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="ที่อยู่ 2"
-            name="address_two"
-            className="w-full bg-grey-100"
-          />
-        </div>
-        <div className="col-span-4 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="ซอย"
-            name="lane"
-            className="w-full bg-grey-100"
-          />
-        </div>
-        <div className="col-span-4 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="ถนน"
-            name="road"
-            className="w-full bg-grey-100"
-          />
-        </div>
-        <div className="col-span-4 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="ตำบล/เขต *"
-            name="sub_district"
-            className="w-full bg-grey-100"
-          />
-        </div>
-        <div className="col-span-4 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="อำเภอ *"
-            name="district"
-            className="w-full bg-grey-100"
-          />
-        </div>
-        <div className="col-span-4 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="จังหวัด *"
-            name="province"
-            className="w-full bg-grey-100"
-          />
-        </div>
-        <div className="col-span-4 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="รหัสไปรษณีย์ *"
-            name="postal_code"
-            className="w-full bg-grey-100"
-          />
-        </div>
-      </div>
-      <hr className="font-semibold opacity-25 text-secondary2" />
-      <div className="grid grid-cols-12 px-6 my-6 gap-x-8">
-        <div className="col-span-12">
-          <p className="font-semibold font-prompt text-heading-6">วันที่ทำการ</p>
-        </div>
-        <div className="col-span-2 mt-5">
-          <FormControl className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="company-type-select">วันเปิดทำการ *</InputLabel>
-            <Controller
-              control={control}
-              name="start_business_day"
-              as={
-                <Select id="company-type-select">
-                  {days.map((data) => (
-                    <MenuItem key={data.day} value={data.day}>
-                      {data.day}
-                    </MenuItem>
-                  ))}
-                </Select>
-              }
-            />
+      <div className="flex flex-row justify-between px-6">
+        <div className="w-1/2 pr-3">
+          <FormControl error={!!errors?.company_type} className="w-full font-prompt bg-grey-100">
+            <InputLabel htmlFor="company-type-select">ประเภทธุรกิจ *</InputLabel>
+            <Select name="company_type" id="company-type-select">
+              {companyType.map((company) => (
+                <MenuItem key={company.title} value={company.title}>
+                  {company.title}
+                </MenuItem>
+              ))}
+            </Select>
+            <FormHelperText>{errors.company_type?.message}</FormHelperText>
           </FormControl>
         </div>
-        <div className="col-span-2 mt-5">
-          <Controller
-            as={
-              <TextField
-                type="time"
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-            }
-            control={control}
-            label="เวลาเปิดทำการ *"
+        <div className="w-1/2 pl-3">
+          <TextField
+            label="เว็บไซต์ *"
+            name="website"
+            className="font-sarabun bg-grey-100"
+            defaultValue=""
+            inputRef={register}
+            error={!!errors.website}
+            helperText={errors.website?.message}
+            fullWidth
+          />
+        </div>
+      </div>
+      <div className="flex flex-col justify-between p-6">
+        <TextField
+          label="แนะนำ *"
+          name="about_us"
+          className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
+          variant="outlined"
+          defaultValue=""
+          ref={register}
+          error={!!errors.about_us}
+          helperText={errors.about_us?.message}
+          rows={5}
+          multiline
+          fullWidth
+        />
+      </div>
+      <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
+      <div className="flex flex-col px-6 pb-6">
+        <p className="mb-4 font-semibold font-prompt text-heading-6">รายละเอียดบริษัท</p>
+        <TextField
+          label="รายละเอียด *"
+          name="description"
+          className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
+          variant="outlined"
+          defaultValue=""
+          ref={register}
+          error={!!errors.description}
+          helperText={errors.description?.message}
+          rows={5}
+          multiline
+          fullWidth
+        />
+      </div>
+      <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
+      <p className="mb-3 ml-6 font-semibold font-prompt text-heading-6">ข้อมูลติดต่อ</p>
+      <div className="flex flex-row justify-between px-6">
+        <div className="w-1/2 pb-6 pr-3">
+          <TextField
+            label="อีเมล์ผู้จัดการ *"
+            name="e_mail_manager"
+            className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.e_mail_manager}
+            helperText={errors.e_mail_manager?.message}
+            fullWidth
+          />
+        </div>
+        <div className="w-1/2 pl-3">
+          <TextField
+            label="อีเมล์ผู้ประสานงาน *"
+            name="e_mail_coordinator"
+            className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.e_mail_coordinator}
+            helperText={errors.e_mail_coordinator?.message}
+            fullWidth
+          />
+        </div>
+      </div>
+      <p className="mb-3 ml-6 font-semibold font-prompt text-heading-6">เบอร์ติดต่อ</p>
+      <div className="flex flex-row justify-between px-6 pb-6">
+        <div className="w-1/2 pr-3">
+          <TextField
+            label="เบอร์สำนักงาน *"
+            name="tel_no"
+            className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.tel_no}
+            helperText={errors.tel_no?.message}
+            fullWidth
+          />
+        </div>
+        <div className="w-1/2 pl-3">
+          <TextField
+            label="เบอร์สำนักงาน *"
+            name="phone_no"
+            className="font-sarabun bg-grey-100"
+            type="phone"
+            inputRef={register}
+            error={!!errors.phone_no}
+            helperText={errors.phone_no?.message}
+            fullWidth
+          />
+        </div>
+      </div>
+      <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
+      <p className="mb-3 ml-6 font-semibold font-prompt text-heading-6">สถานที่ทำการ</p>
+      <div className="w-full px-6">
+        <TextField
+          label="ที่อยู่ 1 *"
+          name="address_one"
+          className="font-sarabun bg-grey-100"
+          inputRef={register}
+          error={!!errors.address_one}
+          helperText={errors.address_one?.message}
+          fullWidth
+        />
+      </div>
+      <div className="w-full px-6 my-6">
+        <TextField
+          label="ที่อยู่ 2"
+          name="address_two"
+          className="font-sarabun bg-grey-100"
+          inputRef={register}
+          error={!!errors.address_two}
+          helperText={errors.address_two?.message}
+          fullWidth
+        />
+      </div>
+      <div className="flex flex-row justify-between">
+        <div className="w-4/12 pl-6 pr-3">
+          <TextField
+            label="ซอย"
+            name="lane"
+            className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.lane}
+            helperText={errors.lane?.message}
+            fullWidth
+          />
+        </div>
+        <div className="w-4/12 pl-3 pr-3">
+          <TextField
+            name="road"
+            label="ถนน"
+            className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.road}
+            helperText={errors.road?.message}
+            fullWidth
+          />
+        </div>
+        <div className="w-4/12 pl-3 pr-6">
+          <TextField
+            name="sub_district"
+            label="ตำบล/เขต *"
+            className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.sub_district}
+            helperText={errors.sub_district?.message}
+            fullWidth
+          />
+        </div>
+      </div>
+      <div className="flex flex-row justify-between pb-6 mt-6">
+        <div className="w-4/12 pl-6 pr-3">
+          <TextField
+            name="district"
+            label="อำเภอ *"
+            className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.district}
+            helperText={errors.district?.message}
+            fullWidth
+          />
+        </div>
+        <div className="w-4/12 px-3">
+          <TextField
+            name="province"
+            label="จังหวัด *"
+            className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.province}
+            helperText={errors.province?.message}
+            fullWidth
+          />
+        </div>
+        <div className="w-4/12 pl-3 pr-6">
+          <TextField
+            name="postal_code"
+            label="รหัสไปรษณีย์ *"
+            className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.postal_code}
+            helperText={errors.postal_code?.message}
+            fullWidth
+          />
+        </div>
+      </div>
+      <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
+      <p className="mb-3 ml-6 font-semibold font-prompt text-heading-6">วันที่ทำการ</p>
+      <div className="flex flex-row pb-6">
+        <div className="w-4/12 pl-6 pr-3">
+          <FormControl
+            error={!!errors?.start_business_day}
+            className="w-full font-prompt bg-grey-100">
+            <InputLabel htmlFor="company-type-select">วันเปิดทำการ</InputLabel>
+            <Select name="start_business_day" id="company-type-select">
+              {days.map((data) => (
+                <MenuItem key={data.day} value={data.day}>
+                  {data.day}
+                </MenuItem>
+              ))}
+            </Select>
+            <FormHelperText>{errors.start_business_day?.message}</FormHelperText>
+          </FormControl>
+        </div>
+        <div className="w-4/12 pl-3 pr-3">
+          <TextField
             name="start_business_time"
-            className="w-full bg-grey-100"
+            label="เวลาเปิดทำการ *"
+            className="font-sarabun bg-grey-100"
+            type="date"
+            InputLabelProps={{
+              shrink: true
+            }}
+            inputRef={register}
+            error={!!errors.start_business_time}
+            helperText={errors.start_business_time?.message}
+            fullWidth
           />
         </div>
         <div className="flex items-end justify-center col-span-1">
           <p className="font-semibold text-heading-6 font-prompt">ถึง</p>
         </div>
-        <div className="col-span-2 mt-5">
-          <FormControl className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="company-type-select">วันปิดทำการ *</InputLabel>
-            <Controller
-              control={control}
-              name="end_business_day"
-              as={
-                <Select id="company-type-select">
-                  {days.map((data) => (
-                    <MenuItem key={data.day} value={data.day}>
-                      {data.day}
-                    </MenuItem>
-                  ))}
-                </Select>
-              }
-            />
+        <div className="w-4/12 pl-3 pr-3">
+          <FormControl
+            error={!!errors?.end_business_day}
+            className="w-full font-prompt bg-grey-100">
+            <InputLabel htmlFor="company-type-select">วันปิดทำการ</InputLabel>
+            <Select name="end_business_day" id="company-type-select">
+              {days.map((data) => (
+                <MenuItem key={data.day} value={data.day}>
+                  {data.day}
+                </MenuItem>
+              ))}
+            </Select>
+            <FormHelperText>{errors.end_business_day?.message}</FormHelperText>
           </FormControl>
         </div>
-        <div className="col-span-2 mt-5">
-          <Controller
-            as={
-              <TextField
-                type="time"
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-            }
-            control={control}
-            label="เวลาปิดทำการ *"
+        <div className="w-4/12 pl-3 pr-6">
+          <TextField
             name="end_business_time"
-            className="w-full bg-grey-100"
+            label="เวลาปิดทำการ *"
+            className="font-sarabun bg-grey-100"
+            type="date"
+            InputLabelProps={{
+              shrink: true
+            }}
+            inputRef={register}
+            error={!!errors.end_business_time}
+            helperText={errors.end_business_time?.message}
+            fullWidth
           />
         </div>
       </div>
-      <hr className="font-semibold opacity-25 text-secondary2" />
-      <div className="grid grid-cols-12 px-6 my-6 gap-x-8">
-        <div className="col-span-12">
-          <p className="font-semibold font-prompt text-heading-6">MOU</p>
-        </div>
-        <div className="col-span-6 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
+      <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
+      <p className="mb-3 ml-6 font-semibold font-prompt text-heading-6">MOU</p>
+      <div className="flex flex-row justify-between">
+        <div className="w-1/2 pl-6 pr-3">
+          <TextField
             label="ประเภท MOU"
             name="mou_type"
-            className="w-full bg-grey-100"
+            className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.mou_type}
+            helperText={errors.mou_type?.message}
+            fullWidth
           />
         </div>
-        <div className="col-span-6 mt-5">
-          <Controller
-            as={
-              <TextField
-                type="date"
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-            }
-            control={control}
+        <div className="w-1/2 pl-3 pr-6">
+          <TextField
             label="ระยะสัญญา"
             name="contact_period"
-            className="w-full bg-grey-100"
+            className="font-sarabun bg-grey-100"
+            type="date"
+            inputRef={register}
+            error={!!errors.contact_period}
+            helperText={errors.contact_period?.message}
+            InputLabelProps={{
+              shrink: true
+            }}
+            fullWidth
           />
         </div>
-        <div className="col-span-12 mt-5">
-          <Controller
-            as={TextField}
-            control={control}
-            label="MOU Link"
-            name="mou_link"
-            className="w-full bg-grey-100"
-          />
-        </div>
+      </div>
+      <div className="p-6">
+        <TextField
+          label="MOU Link *"
+          name="mou_link"
+          className="font-sarabun bg-grey-100"
+          inputRef={register}
+          error={!!errors.mou_link}
+          helperText={errors.mou_link?.message}
+          fullWidth
+        />
       </div>
       <div className="flex justify-end grid-cols-12 px-6 my-6 gap-x-8">
         <button onClick={context.handleModal} className="text-white bg-primary">
