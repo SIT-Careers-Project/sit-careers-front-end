@@ -15,7 +15,7 @@ const CompanyTable = () => {
         )
       }
     },
-    { title: 'บริษัท', field: 'company' },
+    { title: 'บริษัท', field: 'company_name_en' },
     { title: 'ประเภทธุรกิจ', field: 'company_type' },
     { title: 'MOU', field: 'MOU' },
     {
@@ -52,7 +52,7 @@ const CompanyTable = () => {
           columns={column}
           data={[
             {
-              company: 'SIT Company',
+              company_name_en: 'SIT Company',
               company_type: 'Data Canter',
               MOU: 'มี',
               imageUrl: 'https://st.sit.kmutt.ac.th/wifi4st/SIT_logo.png'
