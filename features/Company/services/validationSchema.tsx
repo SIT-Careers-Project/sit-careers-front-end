@@ -16,28 +16,22 @@ export const CompanyFormSchema = yup.object().shape({
     .string()
     .matches(/[a-zA-Z0-9]/, '*จำเป็นต้องกรอก ชื่ออังกฤษ และต้องกรอกเป็นภาษาอังกฤษเท่านั้น')
     .required('*จำเป็นต้องกรอก ชื่ออังกฤษ'),
-  company_type: yup.number().required('*จำเป็นต้องกรอก ประเภทบริษัท'),
+  company_type: yup.string().required('*จำเป็นต้องกรอก ประเภทบริษัท'),
   website: yup.string(),
   about_us: yup
     .string()
-    .max(200)
+    .min(1)
+    .max(200, '*กรอก แนะนำบริษัท จำนวนตัวอักษรไม่เกิน 200 ตัวอักษร')
     .required('*จำเป็นต้องกรอก แนะนำบริษัท และจำนวนตัวอักษรไม่เกิน 200 ตัวอักษร'),
   description: yup
     .string()
+    .min(1)
     .max(200)
     .required('*จำเป็นต้องกรอก รายละเอียด และจำนวนตัวอักษรไม่เกิน 200 ตัวอักษร'),
   e_mail_manager: yup.string().email().required('*จำเป็นต้องกรอก อีเมล์ผู้จัดการ'),
   e_mail_coordinator: yup.string().email().required('*จำเป็นต้องกรอก อีเมล์ผู้ประสานงาน'),
-  tel_no: yup
-    .string()
-    .matches(/[0-9][''""]/g, '*กรอกเพียงตัวเลขเท่านั้น')
-    .min(10)
-    .max(10),
-  phone_no: yup
-    .string()
-    .matches(/[0-9][''""]/g, '*กรอกเพียงตัวเลขเท่านั้น')
-    .min(10)
-    .max(10),
+  tel_no: yup.string().matches(/[0-9]/g, 'กรอกเพียงตัวเลขเท่านั้น').max(10).notRequired(),
+  phone_no: yup.string().matches(/[0-9]/g, 'กรอกเพียงตัวเลขเท่านั้น').max(10).notRequired(),
   address_one: yup.string().required('*จำเป็นต้องกรอก ที่อยู่ 1'),
   address_two: yup.string(),
   lane: yup.string(),
@@ -47,15 +41,15 @@ export const CompanyFormSchema = yup.object().shape({
   province: yup.string().required('*จำเป็นต้องกรอก จังหวัด'),
   postal_code: yup
     .string()
-    .matches(/[0-9][''""]/g, '*กรอกเพียงตัวเลขเท่านั้น')
-    .max(6)
-    .min(6)
+    .matches(/[0-9]/g, '*กรอกเพียงตัวเลขเท่านั้น')
+    .max(5)
+    .min(5)
     .required('*จำเป็นต้องกรอก รหัสไปรษณีย์'),
   start_business_day: yup.string().required('*จำเป็นต้องกรอก วันเปิดทำการ'),
   start_business_time: yup.string().required('*จำเป็นต้องกรอก เวลาเปิดทำการ'),
   end_business_day: yup.string().required('*จำเป็นต้องกรอก วันปิดทำการ'),
   end_business_time: yup.string().required('*จำเป็นต้องกรอก เวลาปิดทำการ'),
   mou_type: yup.string(),
-  contact_period: yup.string(),
   mou_link: yup.string()
+  contact_period: yup.string(),
 })
