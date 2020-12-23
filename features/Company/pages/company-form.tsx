@@ -1,3 +1,4 @@
+import { Controller, useForm } from 'react-hook-form'
 import {
   Dialog,
   DialogActions,
@@ -13,13 +14,12 @@ import React, { useContext, useEffect } from 'react'
 import { Avatar } from '../../../core/components/Avatar'
 import { CompanyFormSchema } from '../services/validationSchema'
 import { companyFormPageContext } from '../contexts/company_form_page_context'
-import { useForm } from 'react-hook-form'
 import { useObserver } from 'mobx-react-lite'
 import { useRouter } from 'next/router'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 const CompanyForm = () => {
-  const { handleSubmit, register, errors } = useForm({
+  const { handleSubmit, register, errors, control } = useForm({
     resolver: yupResolver(CompanyFormSchema)
   })
   const context = useContext(companyFormPageContext)
@@ -96,14 +96,20 @@ const CompanyForm = () => {
       <div className="flex flex-row justify-between px-6">
         <div className="w-1/2 pr-3">
           <FormControl error={!!errors?.company_type} className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="company-type-select">ประเภทธุรกิจ *</InputLabel>
-            <Select name="company_type" id="company-type-select">
-              {companyType.map((company) => (
-                <MenuItem key={company.title} value={company.title}>
-                  {company.title}
-                </MenuItem>
-              ))}
-            </Select>
+            <InputLabel htmlFor="trinity-select">ประเภทธุรกิจ *</InputLabel>
+            <Controller
+              control={control}
+              name="company_type"
+              as={
+                <Select id="trinity-select">
+                  {companyType.map((company) => (
+                    <MenuItem key={company.title} value={company.title}>
+                      {company.title}
+                    </MenuItem>
+                  ))}
+                </Select>
+              }
+            />
             <FormHelperText>{errors.company_type?.message}</FormHelperText>
           </FormControl>
         </div>
@@ -121,36 +127,52 @@ const CompanyForm = () => {
         </div>
       </div>
       <div className="flex flex-col justify-between p-6">
-        <TextField
-          label="แนะนำ *"
-          name="about_us"
-          className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
-          variant="outlined"
-          defaultValue=""
-          ref={register}
-          error={!!errors.about_us}
-          helperText={errors.about_us?.message}
-          rows={5}
-          multiline
-          fullWidth
-        />
+        <FormControl error={!!errors?.about_us} className="w-full font-prompt bg-grey-100">
+          <InputLabel htmlFor="trinity-select">ประเภทธุรกิจ *</InputLabel>
+          <Controller
+            control={control}
+            name="about_us"
+            as={
+              <TextField
+                label="แนะนำ *"
+                name="about_us"
+                className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
+                variant="outlined"
+                defaultValue=""
+                error={!!errors?.about_us}
+                helperText={errors.about_us?.message}
+                rows={5}
+                multiline
+                fullWidth
+              />
+            }
+          />
+        </FormControl>
       </div>
       <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
       <div className="flex flex-col px-6 pb-6">
         <p className="mb-4 font-semibold font-prompt text-heading-6">รายละเอียดบริษัท</p>
-        <TextField
-          label="รายละเอียด *"
-          name="description"
-          className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
-          variant="outlined"
-          defaultValue=""
-          ref={register}
-          error={!!errors.description}
-          helperText={errors.description?.message}
-          rows={5}
-          multiline
-          fullWidth
-        />
+        <FormControl error={!!errors?.description} className="w-full font-prompt bg-grey-100">
+          <InputLabel htmlFor="trinity-select">ประเภทธุรกิจ *</InputLabel>
+          <Controller
+            control={control}
+            name="description"
+            as={
+              <TextField
+                label="รายละเอียด *"
+                name="description"
+                className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
+                variant="outlined"
+                defaultValue=""
+                error={!!errors.description}
+                helperText={errors.description?.message}
+                rows={5}
+                multiline
+                fullWidth
+              />
+            }
+          />
+        </FormControl>
       </div>
       <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
       <p className="mb-3 ml-6 font-semibold font-prompt text-heading-6">ข้อมูลติดต่อ</p>
@@ -305,14 +327,20 @@ const CompanyForm = () => {
           <FormControl
             error={!!errors?.start_business_day}
             className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="company-type-select">วันเปิดทำการ *</InputLabel>
-            <Select name="start_business_day" id="company-type-select">
-              {days.map((data) => (
-                <MenuItem key={data.day} value={data.day}>
-                  {data.day}
-                </MenuItem>
-              ))}
-            </Select>
+            <InputLabel htmlFor="start-business-day-select">วันเปิดทำการ *</InputLabel>
+            <Controller
+              control={control}
+              name="start_business_day"
+              as={
+                <Select id="start-business-day-select">
+                  {days.map((data) => (
+                    <MenuItem key={data.day} value={data.day}>
+                      {data.day}
+                    </MenuItem>
+                  ))}
+                </Select>
+              }
+            />
             <FormHelperText>{errors.start_business_day?.message}</FormHelperText>
           </FormControl>
         </div>
@@ -321,7 +349,7 @@ const CompanyForm = () => {
             name="start_business_time"
             label="เวลาเปิดทำการ *"
             className="font-sarabun bg-grey-100"
-            type="date"
+            type="time"
             InputLabelProps={{
               shrink: true
             }}
@@ -338,14 +366,20 @@ const CompanyForm = () => {
           <FormControl
             error={!!errors?.end_business_day}
             className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="company-type-select">วันปิดทำการ *</InputLabel>
-            <Select name="end_business_day" id="company-type-select">
-              {days.map((data) => (
-                <MenuItem key={data.day} value={data.day}>
-                  {data.day}
-                </MenuItem>
-              ))}
-            </Select>
+            <InputLabel htmlFor="end-business-day-select">วันเปิดทำการ *</InputLabel>
+            <Controller
+              control={control}
+              name="end_business_day"
+              as={
+                <Select id="end-business-day-select">
+                  {days.map((data) => (
+                    <MenuItem key={data.day} value={data.day}>
+                      {data.day}
+                    </MenuItem>
+                  ))}
+                </Select>
+              }
+            />
             <FormHelperText>{errors.end_business_day?.message}</FormHelperText>
           </FormControl>
         </div>
@@ -354,7 +388,7 @@ const CompanyForm = () => {
             name="end_business_time"
             label="เวลาปิดทำการ *"
             className="font-sarabun bg-grey-100"
-            type="date"
+            type="time"
             InputLabelProps={{
               shrink: true
             }}
