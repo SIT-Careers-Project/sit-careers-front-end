@@ -6,6 +6,8 @@ phases:
       docker: 19
   pre_build:
     commands:
+      - echo Logging in Docker Hub
+      - docker login --username $USER_DOCKER_HUB -p $PASSWORD_DOCKER_HUB
       - echo Run Test started on `date`
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
