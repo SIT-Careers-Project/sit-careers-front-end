@@ -9,7 +9,7 @@ import {
   Select,
   TextField
 } from '@material-ui/core'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { Avatar } from '../../../core/components/Avatar'
 import { CompanyFormSchema } from '../services/validationSchema'
@@ -24,10 +24,11 @@ const CompanyForm = () => {
   })
   const context = useContext(companyFormPageContext)
   const router = useRouter()
+  const [file, setFile] = useState(null)
 
   useEffect(() => {
     if (context.router) {
-      router.push('/company/info-management')
+      router.push('/company/company-table')
     }
   }, [context.router, router])
 
@@ -53,19 +54,22 @@ const CompanyForm = () => {
     <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
       <div className="px-6 pt-6">
         <p className="font-semibold font-prompt text-heading-6">ข้อมูลบริษัท</p>
-        <Avatar className="mt-5 bg-grey-100" />
-        <div className="hidden">
-          <TextField
-            label="logo *"
-            name="logo"
+        <button className="border-none focus:outline-none">
+          <InputLabel htmlFor="company_logo_image">
+            <Avatar imgSrc={file} className="mt-5 cursor-pointer bg-grey-100" />
+          </InputLabel>
+          <input
+            id="company_logo_image"
+            name="company_logo_image"
+            type="file"
             className="hidden font-sarabun bg-grey-100"
-            defaultValue="path/to/logo"
-            inputRef={register}
-            error={!!errors.logo}
-            helperText={errors.logo?.message}
-            fullWidth
+            defaultValue="-"
+            ref={register}
+            onChange={(event) => {
+              setFile(URL.createObjectURL(event.target.files[0]))
+            }}
           />
-        </div>
+        </button>
       </div>
       <div className="flex flex-row justify-between px-6 py-6">
         <div className="w-1/2 pr-3">
@@ -128,7 +132,6 @@ const CompanyForm = () => {
       </div>
       <div className="flex flex-col justify-between p-6">
         <FormControl error={!!errors?.about_us} className="w-full font-prompt bg-grey-100">
-          <InputLabel htmlFor="trinity-select">ประเภทธุรกิจ *</InputLabel>
           <Controller
             control={control}
             name="about_us"
@@ -153,7 +156,6 @@ const CompanyForm = () => {
       <div className="flex flex-col px-6 pb-6">
         <p className="mb-4 font-semibold font-prompt text-heading-6">รายละเอียดบริษัท</p>
         <FormControl error={!!errors?.description} className="w-full font-prompt bg-grey-100">
-          <InputLabel htmlFor="trinity-select">ประเภทธุรกิจ *</InputLabel>
           <Controller
             control={control}
             name="description"
@@ -204,7 +206,7 @@ const CompanyForm = () => {
       <div className="flex flex-row justify-between px-6 pb-6">
         <div className="w-1/2 pr-3">
           <TextField
-            label="เบอร์สำนักงาน"
+            label="เบอร์สำนักงาน *"
             name="tel_no"
             className="font-sarabun bg-grey-100"
             inputRef={register}
@@ -215,7 +217,7 @@ const CompanyForm = () => {
         </div>
         <div className="w-1/2 pl-3">
           <TextField
-            label="เบอร์สำนักงาน"
+            label="เบอร์ผู้ประสานงาน *"
             name="phone_no"
             className="font-sarabun bg-grey-100"
             type="phone"
@@ -431,7 +433,7 @@ const CompanyForm = () => {
       </div>
       <div className="p-6">
         <TextField
-          label="MOU Link *"
+          label="MOU Link"
           name="mou_link"
           className="font-sarabun bg-grey-100"
           inputRef={register}
