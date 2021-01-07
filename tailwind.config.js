@@ -1,4 +1,8 @@
 module.exports = {
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
+  },
   purge: [
     './pages/*.tsx',
     './pages/**/*.tsx',
@@ -21,7 +25,8 @@ module.exports = {
       secondary1: '#168FBD',
       secondary2: '#6D6D6A',
       'grey-100': '#F5F5F5',
-      white: '#ffffff'
+      white: '#ffffff',
+      black: '#000000',
     },
     fontSize: {
       'heading-1': '96px',
