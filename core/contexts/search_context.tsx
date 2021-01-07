@@ -11,7 +11,6 @@ export class SearchContext {
     })
   }
   setSearchItems = (value, items, keySearch) => {
-    console.log(value)
     return matchSorter(items, value, {
       keys: keySearch
     })
