@@ -17,6 +17,7 @@ module.exports = (phase) => {
     publicRuntimeConfig: {
       // can add static folder instead public folder.
       API_URL: process.env.API_URL,
+      s3_url: process.env.S3_URL,
       staticFolder: '/public'
     },
     serverRuntimeConfig: {
