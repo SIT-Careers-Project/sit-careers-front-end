@@ -10,6 +10,8 @@ phases:
       docker: 19
   pre_build:
     commands:
+      - echo Logging in Docker Hub
+      - docker login --username $USER_DOCKER_HUB -p $PASSWORD_DOCKER_HUB
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
