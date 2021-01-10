@@ -73,7 +73,9 @@ const apiCompany = {
     formData.append('tel_no', data.tel_no)
     formData.append('logo', data.logo)
     formData.append('website', data.website)
-    const response = await api.put('/company', formData, {
+    formData.append('_method', 'put')
+
+    const response = await api.post('/company', formData, {
       headers: { 'Content-type': 'multipart/form-data' }
     })
     return response
