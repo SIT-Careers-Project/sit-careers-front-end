@@ -5,16 +5,16 @@ import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import MaterialTable from 'material-table'
 import { Observer } from 'mobx-react-lite'
-import { companyInfoPageContext } from '../contexts/company_info_page_context'
+import { companyTablePageContext } from '../contexts/company_table_page_context'
 import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
 
 const CompanyTable = () => {
-  const context = useContext(companyInfoPageContext)
+  const context = useContext(companyTablePageContext)
   useEffect(() => {
     context.getCompanies()
-  }, [])
+  }, [context])
 
   const column = [
     {
@@ -61,37 +61,38 @@ const CompanyTable = () => {
   ]
 
   return (
-    <Observer>
-      {() => (
-        <div className="w-full h-full max-w-screen-lg mb-16 bg-white">
-          <div className="flex justify-between w-full mt-2">
-            <div>
-              <p className="text-heading-5 font-prompt">จัดการข้อมูลบริษัท</p>
-            </div>
-            <div>
-              <Link href="/company/form-create">
-                <button className="bg-primary">
-                  <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
-                    <AddCircle className="mr-1" />
-                    เพิ่มบริษัท
-                  </p>
-                </button>
-              </Link>
-            </div>
-          </div>
-          <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
-          <div>
+    <div className="w-full h-full max-w-screen-lg mb-16 bg-white">
+      <div className="flex justify-between w-full mt-2">
+        <div>
+          <p className="text-heading-5 font-prompt">จัดการข้อมูลบริษัท</p>
+        </div>
+        <div>
+          <Link href="/company/form-create">
+            <button className="bg-primary">
+              <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
+                <AddCircle className="mr-1" />
+                เพิ่มบริษัท
+              </p>
+            </button>
+          </Link>
+        </div>
+      </div>
+      <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
+      <div>
+        <Observer>
+          {() => (
             <MaterialTable
               columns={column}
               data={context.companies}
               options={{
-                showTitle: false
+                showTitle: false,
+                draggable: false
               }}
             />
-          </div>
-        </div>
-      )}
-    </Observer>
+          )}
+        </Observer>
+      </div>
+    </div>
   )
 }
 
