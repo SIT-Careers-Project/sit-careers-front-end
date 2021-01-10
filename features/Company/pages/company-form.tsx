@@ -13,8 +13,8 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { Avatar } from '../../../core/components/Avatar'
 import { CompanyFormSchema } from '../services/validationSchema'
+import { Observer } from 'mobx-react-lite'
 import { companyFormPageContext } from '../contexts/company_form_page_context'
-import { useObserver } from 'mobx-react-lite'
 import { useRouter } from 'next/router'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -50,24 +50,21 @@ const CompanyForm = () => {
     { day: 'อาทิตย์' }
   ]
 
-  return useObserver(() => (
+  return (
     <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
       <div className="px-6 pt-6">
         <p className="font-semibold font-prompt text-heading-6">ข้อมูลบริษัท</p>
         <button className="border-none focus:outline-none">
-          <InputLabel htmlFor="company_logo_image">
+          <InputLabel htmlFor="company_logo_image_label">
             <Avatar imgSrc={file} className="mt-5 cursor-pointer bg-grey-100" />
           </InputLabel>
           <input
-            id="company_logo_image"
-            name="company_logo_image"
+            id="company_logo_image_label"
             type="file"
-            className="hidden font-sarabun bg-grey-100"
-            defaultValue="-"
+            name="company_logo_image"
+            className="hidden"
             ref={register}
-            onChange={(event) => {
-              setFile(URL.createObjectURL(event.target.files[0]))
-            }}
+            onChange={(event) => setFile(URL.createObjectURL(event?.target?.files[0]))}
           />
         </button>
       </div>
@@ -442,29 +439,37 @@ const CompanyForm = () => {
           fullWidth
         />
       </div>
-      <div className="flex justify-end grid-cols-12 px-6 my-6 gap-x-8">
-        <button onClick={context.handleModal} className="text-white bg-primary">
-          <p className="px-5 py-2 font-prompt">บันทึก</p>
-        </button>
-      </div>
-      <Dialog open={context.showModal} onClose={context.handleCloseModal}>
-        <div className="p-4 text-left">
-          <p className="mb-3 mr-40 font-prompt-medium text-heading-6">บันทึกข้อมูลบริษัท</p>
-          <span className="mb-5 font-prompt text-subtitle-1">
-            คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
-          </span>
-          <DialogActions className="mt-4">
-            <button onClick={context.handleCloseModal} className="text-secondary2">
-              <p className="px-5 py-2 font-prompt">ยกเลิก</p>
-            </button>
-            <button onClick={handleSubmit(context.createCompany)} className="text-white bg-primary">
-              <p className="px-5 py-2 font-prompt">บันทึก</p>
-            </button>
-          </DialogActions>
-        </div>
-      </Dialog>
+      <Observer>
+        {() => (
+          <>
+            <div className="flex justify-end grid-cols-12 px-6 my-6 gap-x-8">
+              <button onClick={context.handleModal} className="text-white bg-primary">
+                <p className="px-5 py-2 font-prompt">บันทึก</p>
+              </button>
+            </div>
+            <Dialog open={context.showModal} onClose={context.handleCloseModal}>
+              <div className="p-4 text-left">
+                <p className="mb-3 mr-40 font-prompt-medium text-heading-6">บันทึกข้อมูลบริษัท</p>
+                <span className="mb-5 font-prompt text-subtitle-1">
+                  คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
+                </span>
+                <DialogActions className="mt-4">
+                  <button onClick={context.handleCloseModal} className="text-secondary2">
+                    <p className="px-5 py-2 font-prompt">ยกเลิก</p>
+                  </button>
+                  <button
+                    onClick={handleSubmit(context.createCompany)}
+                    className="text-white bg-primary">
+                    <p className="px-5 py-2 font-prompt">บันทึก</p>
+                  </button>
+                </DialogActions>
+              </div>
+            </Dialog>
+          </>
+        )}
+      </Observer>
     </div>
-  ))
+  )
 }
 
 export default CompanyForm
