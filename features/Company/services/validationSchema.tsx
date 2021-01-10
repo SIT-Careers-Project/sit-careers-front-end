@@ -1,12 +1,13 @@
 import * as yup from 'yup'
 
 export const CompanyFormSchema = yup.object().shape({
-  // logo: yup
+  company_id: yup.string(),
+  // company_logo_image: yup
   //   .mixed()
-  //   .test(
-  //     'type',
-  //     'We only support jpeg',
-  //     (value) => !value || (value && value[0].type === 'image/jpeg')
+  //   .notRequired()
+  //   .test('fileSize', 'File Size is too large', (value) => value.size <= 50000)
+  //   .test('fileType', 'Unsupported File Format', (value) =>
+  //     ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'].includes(value.type)
   //   ),
   company_name_th: yup
     .string()
@@ -30,8 +31,16 @@ export const CompanyFormSchema = yup.object().shape({
     .required('*จำเป็นต้องกรอก รายละเอียด และจำนวนตัวอักษรไม่เกิน 200 ตัวอักษร'),
   e_mail_manager: yup.string().email().required('*จำเป็นต้องกรอก อีเมล์ผู้จัดการ'),
   e_mail_coordinator: yup.string().email().required('*จำเป็นต้องกรอก อีเมล์ผู้ประสานงาน'),
-  tel_no: yup.string().matches(/[0-9]/g, 'กรอกเพียงตัวเลขเท่านั้น').max(10).notRequired(),
-  phone_no: yup.string().matches(/[0-9]/g, 'กรอกเพียงตัวเลขเท่านั้น').max(10).notRequired(),
+  tel_no: yup
+    .string()
+    .matches(/[0-9]/g, 'กรอกเพียงตัวเลขเท่านั้น')
+    .max(10)
+    .required('*จำเป็นต้องกรอก เบอร์สำนักงาน'),
+  phone_no: yup
+    .string()
+    .matches(/[0-9]/g, 'กรอกเพียงตัวเลขเท่านั้น')
+    .max(10)
+    .required('*จำเป็นต้องกรอก เบอร์ผู้ประสานงาน'),
   address_one: yup.string().required('*จำเป็นต้องกรอก ที่อยู่ 1'),
   address_two: yup.string(),
   lane: yup.string(),
