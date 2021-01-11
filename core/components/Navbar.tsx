@@ -30,7 +30,7 @@ export default function Navbar() {
         className="fixed flex justify-center w-full h-2 shadow-inner bg-primary navbar-expand-lg">
         <div className="container max-w-screen-lg">
           <div className="flex justify-between">
-            <div className="py-5 font-semibold font-prompt text-white">Logo Logo</div>
+            <div className="py-5 font-semibold text-white font-prompt">Logo Logo</div>
             <ul className="flex flex-row list-none lg:flex-row">
               {navLink.map((data, i) => {
                 return (
@@ -48,7 +48,7 @@ export default function Navbar() {
             <div className="">
               <Button
                 aria-controls="fade-menu"
-                className="h-full p-0 text-right"
+                className="h-full p-0 text-right focus:outline-none"
                 aria-haspopup="true"
                 onClick={context.handleClick}>
                 <AccountCircleIcon fontSize="large" style={{ color: '#ffffff' }} />
