@@ -1,12 +1,14 @@
-import React, { useContext, useEffect } from 'react'
-import { Card } from '../../../core/components/Card/Card'
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
+import React, { useContext, useEffect } from 'react'
+
+import { Card } from '../../../core/components/Card/Card'
+import Pagination from '../../../core/components/Pagination'
+import Search from '../../../core/components/Search'
 import { companySearchPageContext } from '../contexts/company_search_page_context'
 import { paginationContext } from '../../../core/contexts/pagination_context'
 import { searchContext } from '../../../core/contexts/search_context'
 import { useObserver } from 'mobx-react-lite'
-import Search from '../../../core/components/Search'
-import Pagination from '../../../core/components/Pagination'
+
 const AllCompany = () => {
   const context = useContext(companySearchPageContext)
   const contextPagination = useContext(paginationContext)
@@ -18,14 +20,16 @@ const AllCompany = () => {
     { title: 'DevOps' },
     { title: 'Cloud' }
   ]
+
   useEffect(() => {
     context.getCompanies()
     contextPagination.setSliceData()
   }, [context, contextPagination])
+
   return useObserver(() => (
     <div>
       <div
-        className="relative pt-16 pb-32 flex content-center items-center justify-center"
+        className="relative flex items-center content-center justify-center pt-16 pb-32"
         style={{
           minHeight: '60vh'
         }}>
@@ -35,12 +39,12 @@ const AllCompany = () => {
             src="/image/view-modern-business-skyscrapers-glass-sky-view-landscape-commercial-building.jpg"
             className="absolute top-0 w-full h-full bg-center bg-cover"
           />
-          <span id="blackOverlay" className="w-full h-full absolute opacity-75 bg-black"></span>
+          <span id="blackOverlay" className="absolute w-full h-full bg-black opacity-75"></span>
         </div>
         <div className="container relative mx-auto">
-          <div className="items-center flex flex-wrap">
-            <div className="w-full lg:w-5/12 ml-auto mr-auto">
-              <div className="lg:w-11/12 bg-grey-100 mb-5">
+          <div className="flex flex-wrap items-center">
+            <div className="w-full ml-auto mr-auto lg:w-5/12">
+              <div className="mb-5 lg:w-11/12 bg-grey-100">
                 <Search
                   onChange={(event) => {
                     if (typeof event.target.value === 'string') {
@@ -67,7 +71,7 @@ const AllCompany = () => {
                   </Select>
                 </FormControl>
                 <button
-                  className="bg-secondary1 lg:w-2/6 ml-10"
+                  className="ml-10 bg-secondary1 lg:w-2/6"
                   onClick={() => {
                     if (typeof context.companyType || context.companyName === 'string') {
                       const keySearch = ['company_type', 'company_name_th', 'company_name_en']
@@ -89,7 +93,7 @@ const AllCompany = () => {
       </div>
       <div className="container grid max-w-screen-lg grid-flow-row mx-auto mt-5">
         <div>
-          <p className="text-heading-5 font-prompt mb-5">ข้อมูลบริษัท</p>
+          <p className="mb-5 text-heading-5 font-prompt">ข้อมูลบริษัท</p>
         </div>
         <div className="mb-5">
           {context.companies.length !== 0 ? (
@@ -102,11 +106,12 @@ const AllCompany = () => {
                       className="my-3"
                       key={i}
                       title={`${data.company_name_th} - ${data.company_name_en}`}
+                      linkPath={`/company/detail/${data.company_id}`}
                       tags={
                         data.mou_link ? [`${data.company_type}`, 'MOU'] : [`${data.company_type}`]
                       }
                       aboutUs={data.description}
-                      srcImg="https://i.picsum.photos/id/1000/5626/3635.jpg?hmac=qWh065Fr_M8Oa3sNsdDL8ngWXv2Jb-EE49ZIn6c0P-g"
+                      srcImg={data.logo}
                     />
                   )
                 })}
