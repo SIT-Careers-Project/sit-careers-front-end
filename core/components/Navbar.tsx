@@ -12,7 +12,7 @@ export default function Navbar() {
   const context = useContext(navbarContext)
   const navLink = [
     { path: '/', name: 'หน้าหลัก' },
-    { path: '/announcement', name: 'ประกาศรับสมัครงาน' },
+    { path: '/academic-industry/announcement', name: 'ประกาศรับสมัครงาน' },
     { path: '/company/all-company', name: 'ข้อมูลบริษัท' },
     { path: '/contact', name: 'ติดต่อเรา' }
   ]
@@ -66,6 +66,13 @@ export default function Navbar() {
                     <MenuItem onClick={context.handleClose}>
                       <span className="font-prompt-light text-body-2 text-primary">
                         จัดการข้อมูลบริษัท
+                      </span>
+                    </MenuItem>
+                  </Link>
+                  <Link href="/academic-industry/info-management">
+                    <MenuItem onClick={context.handleClose}>
+                      <span className="font-prompt-light text-body-2 text-primary">
+                        ลงประกาศรับสมัครงาน
                       </span>
                     </MenuItem>
                   </Link>
