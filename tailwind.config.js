@@ -27,6 +27,7 @@ module.exports = {
       'grey-100': '#F5F5F5',
       white: '#ffffff',
       black: '#000000',
+      red: '#EB5757'
     },
     fontSize: {
       'heading-1': '96px',
