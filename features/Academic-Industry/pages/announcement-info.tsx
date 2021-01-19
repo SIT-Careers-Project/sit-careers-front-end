@@ -12,7 +12,7 @@ const CompanyInfo = () => {
           <p className="text-heading-5 font-prompt">ลงประกาศรับสมัครงาน</p>
         </div>
         <div>
-          <Link href="">
+          <Link href="/academic-industry/form-create">
             <button className="bg-primary">
               <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
                 <AddCircle className="mr-1" />
