@@ -13,8 +13,8 @@ interface CardProps {
 }
 
 export const CardSmall = ({ className, tags, srcImg, title, date, company }: CardProps) => (
-  <>
-    <MaterialCard style={{ height: '163px' }} className={`${className} w-1/3 flex p-2`}>
+  <div className="pb-3">
+    <MaterialCard style={{ height: '163px' }} className={`${className} flex p-2`}>
       <div className="mr-3">
         <img width="80px" src={srcImg} alt="Small Card" />
       </div>
@@ -40,5 +40,5 @@ export const CardSmall = ({ className, tags, srcImg, title, date, company }: Car
         </div>
       </div>
     </MaterialCard>
-  </>
+  </div>
 )
