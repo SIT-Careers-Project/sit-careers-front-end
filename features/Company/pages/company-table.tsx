@@ -2,8 +2,8 @@ import { AddCircle, SettingsApplications } from '@material-ui/icons'
 /* eslint-disable react/display-name */
 import React, { useContext, useEffect } from 'react'
 
+import CoreTable from '../../../core/components/Table'
 import Link from 'next/link'
-import MaterialTable from 'material-table'
 import { Observer } from 'mobx-react-lite'
 import { companyTablePageContext } from '../contexts/company_table_page_context'
 import getConfig from 'next/config'
@@ -91,17 +91,7 @@ const CompanyTable = () => {
       <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
       <div>
         <Observer>
-          {() => (
-            <MaterialTable
-              columns={column}
-              data={context.companies}
-              options={{
-                showTitle: false,
-                draggable: false,
-                search: true
-              }}
-            />
-          )}
+          {() => <CoreTable column={column} data={context.companies} options={{ search: true }} />}
         </Observer>
       </div>
     </div>
