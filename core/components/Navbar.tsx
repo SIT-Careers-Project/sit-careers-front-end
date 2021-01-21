@@ -12,7 +12,7 @@ export default function Navbar() {
   const context = useContext(navbarContext)
   const navLink = [
     { path: '/', name: 'หน้าหลัก' },
-    { path: '/academic-industry/announcement', name: 'ประกาศรับสมัครงาน' },
+    { path: '/academic-industry/announcements', name: 'ประกาศรับสมัครงาน' },
     { path: '/company/all-company', name: 'ข้อมูลบริษัท' },
     { path: '/contact', name: 'ติดต่อเรา' }
   ]
