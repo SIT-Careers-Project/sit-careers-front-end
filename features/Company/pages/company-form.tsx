@@ -365,7 +365,7 @@ const CompanyForm = () => {
           <FormControl
             error={!!errors?.end_business_day}
             className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="end-business-day-select">วันเปิดทำการ *</InputLabel>
+            <InputLabel htmlFor="end-business-day-select">วันปิดทำการ *</InputLabel>
             <Controller
               control={control}
               name="end_business_day"
