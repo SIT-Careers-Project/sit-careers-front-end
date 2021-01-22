@@ -1,4 +1,4 @@
-import { Button, Fade, Menu, MenuItem } from '@material-ui/core'
+import { Fade, Menu, MenuItem } from '@material-ui/core'
 import React, { useContext } from 'react'
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
@@ -28,9 +28,11 @@ export default function Navbar() {
         }}
         data-cy="core-navbar"
         className="fixed flex justify-center w-full h-2 shadow-inner bg-primary navbar-expand-lg">
-        <div className="container max-w-screen-lg">
-          <div className="flex justify-between">
-            <div className="py-5 font-semibold text-white font-prompt">Logo Logo</div>
+        <div style={{ width: '1280px' }} className="h-full max-w-screen-lg">
+          <div className="flex flex-row items-center justify-between h-full">
+            <div className="text-white nt-semibold font-prompt">
+              <img src="/image/sit-logo.png" alt="sit logo" />
+            </div>
             <ul className="flex flex-row list-none lg:flex-row">
               {navLink.map((data, i) => {
                 return (
@@ -38,25 +40,26 @@ export default function Navbar() {
                     <li
                       className={`${
                         router.asPath === data.path ? 'bg-secondary1 bg-opacity-25' : ''
-                      } table px-4 py-5 font-prompt font-semibold text-subtitle-1 text-white nav-item hover:shadow-none cursor-pointer hover:bg-secondary1 hover:bg-opacity-25`}>
+                      } table px-4 py-4 font-prompt font-semibold text-subtitle-1 text-white nav-item hover:shadow-none cursor-pointer hover:bg-secondary1 hover:bg-opacity-25`}>
                       {data.name}
                     </li>
                   </Link>
                 )
               })}
             </ul>
-            <div className="">
-              <Button
-                aria-controls="fade-menu"
-                className="h-full p-0 text-right focus:outline-none"
-                aria-haspopup="true"
-                onClick={context.handleClick}>
-                <AccountCircleIcon fontSize="large" style={{ color: '#ffffff' }} />
-              </Button>
-              <div className="text-left">
+            <div>
+              <div className="flex flex-row items-center justify-end w-full h-full cursor-pointer">
+                <AccountCircleIcon
+                  aria-controls="fade-menu"
+                  aria-haspopup="true"
+                  onClick={context.handleClick}
+                  style={{ color: '#ffffff', fontSize: '40px' }}
+                />
+              </div>
+              <div className="">
                 <Menu
                   id="fade-menu"
-                  className="w-64 mt-10"
+                  className="w-3/4 mt-10"
                   anchorEl={context.anchorEl}
                   keepMounted
                   TransitionComponent={Fade}
