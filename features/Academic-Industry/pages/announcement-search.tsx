@@ -19,6 +19,7 @@ import Search from '../../../core/components/Search'
 import { CardSmall } from '../../../core/components/Card/Small'
 import { Observer } from 'mobx-react-lite'
 import { useObserver } from 'mobx-react-lite'
+import Link from 'next/link'
 // import Pagination from '../../../core/components/Pagination'
 
 const AnnouncementSearch = () => {
@@ -152,11 +153,13 @@ const AnnouncementSearch = () => {
                           {() => (
                             <>
                               <div className="w-1/4 h-12 flex justify-end grid-cols-12">
-                                <button className="bg-primary text-white">
-                                  <p className="px-5 py-3 text-white font-prompt text-subtitle-1">
-                                    สมัครงาน
-                                  </p>
-                                </button>
+                                <Link href="/academic-industry/form-application">
+                                  <button className="bg-primary text-white">
+                                    <p className="px-5 py-3 text-white font-prompt text-subtitle-1">
+                                      สมัครงาน
+                                    </p>
+                                  </button>
+                                </Link>
                               </div>
                             </>
                           )}
