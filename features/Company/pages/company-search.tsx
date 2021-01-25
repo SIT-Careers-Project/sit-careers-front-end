@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 
 import { Card } from '../../../core/components/Card/Card'
 import Pagination from '../../../core/components/Pagination'
+import PrimaryButton from '../../../core/components/Button/Primary'
 import Search from '../../../core/components/Search'
 import { companySearchPageContext } from '../contexts/company_search_page_context'
 import { paginationContext } from '../../../core/contexts/pagination_context'
@@ -44,7 +45,7 @@ const AllCompany = () => {
         <div className="container relative mx-auto">
           <div className="flex flex-wrap items-center">
             <div className="w-full ml-auto mr-auto lg:w-5/12">
-              <div className="mb-5 lg:w-11/12 bg-grey-100">
+              <div className="p-2 mb-5 lg:w-11/12 bg-grey-100">
                 <Search
                   onChange={(event) => {
                     if (typeof event.target.value === 'string') {
@@ -70,8 +71,9 @@ const AllCompany = () => {
                     ))}
                   </Select>
                 </FormControl>
-                <button
-                  className="ml-10 bg-secondary1 lg:w-2/6"
+                <PrimaryButton
+                  title="ค้นหา"
+                  className="ml-10 shadow-md lg:w-2/6 btn-grad"
                   onClick={() => {
                     if (typeof context.companyType || context.companyName === 'string') {
                       const keySearch = ['company_type', 'company_name_th', 'company_name_en']
@@ -85,7 +87,7 @@ const AllCompany = () => {
                     }
                   }}>
                   <p className="px-4 py-4 text-white font-prompt text-subtitle-1">ค้นหา</p>
-                </button>
+                </PrimaryButton>
               </div>
             </div>
           </div>

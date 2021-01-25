@@ -1,25 +1,28 @@
-import React from 'react'
+import {
+  Assignment,
+  AttachMoney,
+  Business,
+  CheckBox,
+  FreeBreakfast,
+  QueryBuilder
+} from '@material-ui/icons'
 import {
   FormControl,
   InputLabel,
+  Card as MaterialCard,
   MenuItem,
   Select,
-  Card as MaterialCard,
   Typography
 } from '@material-ui/core'
-import {
-  QueryBuilder,
-  Assignment,
-  CheckBox,
-  AttachMoney,
-  FreeBreakfast,
-  Business
-} from '@material-ui/icons'
-import Search from '../../../core/components/Search'
+
 import { CardSmall } from '../../../core/components/Card/Small'
-import { Observer } from 'mobx-react-lite'
-import { useObserver } from 'mobx-react-lite'
 import Link from 'next/link'
+import { Observer } from 'mobx-react-lite'
+import PrimaryButton from '../../../core/components/Button/Primary'
+import React from 'react'
+import Search from '../../../core/components/Search'
+import { useObserver } from 'mobx-react-lite'
+
 // import Pagination from '../../../core/components/Pagination'
 
 const AnnouncementSearch = () => {
@@ -59,9 +62,9 @@ const AnnouncementSearch = () => {
 
   return useObserver(() => (
     <div>
-      <div className="flex w-full h-full pt-16 pb-3 justify-center bg-grey4">
+      <div className="flex justify-center w-full h-full pt-16 pb-3 bg-grey4">
         <div className="w-full max-w-screen-lg my-6">
-          <div className="w-full h-8 bg-grey-100 max-w-screen-lg">
+          <div className="w-full h-8 max-w-screen-lg bg-grey-100">
             <Search />
           </div>
           <div className="flex flex-row justify-between pt-6">
@@ -101,21 +104,24 @@ const AnnouncementSearch = () => {
                 </Select>
               </FormControl>
             </div>
-            <button className="bg-secondary1 w-3/12 h-12 ml-5">
-              <p className="text-white font-prompt text-subtitle-1">ค้นหา</p>
-            </button>
+            <PrimaryButton
+              title="ค้นหา"
+              onClick={() => console.log('Hello')}
+              className="z-50 ml-10 lg:w-2/6">
+              <p className="px-4 py-4 text-white font-prompt text-subtitle-1">ค้นหา</p>
+            </PrimaryButton>
           </div>
         </div>
       </div>
       <div className="w-full h-1 bg-secondary1" />
-      <div className="flex w-full h-full bg-white justify-center pb-10">
+      <div className="flex justify-center w-full h-full pb-10 bg-white">
         <div className="-mt-24">
-          <div className="container mx-auto px-32">
+          <div className="container px-32 mx-auto">
             <div className="flex flex-wrap mt-32">
-              <p className="w-3/4 font-semibold font-prompt text-body-1 pb-6">
+              <p className="w-3/4 pb-6 font-semibold font-prompt text-body-1">
                 การค้นหา: พบ 120 ตำแหน่งงาน
               </p>
-              <div className="w-full md:w-5/12 mr-5">
+              <div className="w-full mr-5 md:w-5/12">
                 <CardSmall
                   title="รับสมัครงานตำแหน่ง Software Engineer"
                   tags={['Software Engineer', 'WiL']}
@@ -126,16 +132,16 @@ const AnnouncementSearch = () => {
                 {/* หน้าละ 6 card
                 <Pagination data={}/> */}
               </div>
-              <div className="w-full md:w-5/12 mr-auto ml-5">
+              <div className="w-full ml-5 mr-auto md:w-5/12">
                 <div>
                   <MaterialCard style={{ height: '1100px', width: '562px' }}>
-                    <div className="w-full rounded-none h-40 flex justify-end items-end bg-grey-100">
+                    <div className="flex items-end justify-end w-full h-40 rounded-none bg-grey-100">
                       <img
                         alt="Announcement Banner"
                         src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
                       />
                     </div>
-                    <div className="align-middle p-5">
+                    <div className="p-5 align-middle">
                       <div className="flex flex-row">
                         <div className="w-3/4">
                           <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
@@ -152,9 +158,9 @@ const AnnouncementSearch = () => {
                         <Observer>
                           {() => (
                             <>
-                              <div className="w-1/4 h-12 flex justify-end grid-cols-12">
+                              <div className="flex justify-end w-1/4 h-12 grid-cols-12">
                                 <Link href="/academic-industry/form-application">
-                                  <button className="bg-primary text-white">
+                                  <button className="text-white bg-primary">
                                     <p className="px-5 py-3 text-white font-prompt text-subtitle-1">
                                       สมัครงาน
                                     </p>
@@ -170,7 +176,7 @@ const AnnouncementSearch = () => {
                         <QueryBuilder className="mb-2 mr-2" />
                         12 มีนาคม - 24 ธันวาคม 2563
                       </Typography>
-                      <div className="pb-2 pt-2">
+                      <div className="pt-2 pb-2">
                         <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
                           <Assignment className="mb-2 mr-2" />
                           รายละเอียดงาน
@@ -181,7 +187,7 @@ const AnnouncementSearch = () => {
                           คีตกวีวันเวย์ ไบเบิลปูอัดอัลบัม...
                         </Typography>
                       </div>
-                      <div className="pb-2 pt-2">
+                      <div className="pt-2 pb-2">
                         <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
                           <CheckBox className="mb-2 mr-2" />
                           คุณสมบัติ
@@ -192,7 +198,7 @@ const AnnouncementSearch = () => {
                           มีประสบการณ์อย่างน้อย 1 ปี
                         </Typography>
                       </div>
-                      <div className="pb-2 pt-2">
+                      <div className="pt-2 pb-2">
                         <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
                           <AttachMoney className="mb-2 mr-2" />
                           เงินเดือน
@@ -201,7 +207,7 @@ const AnnouncementSearch = () => {
                           10,000 - 20,000 บาท
                         </Typography>
                       </div>
-                      <div className="pb-2 pt-2">
+                      <div className="pt-2 pb-2">
                         <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
                           <FreeBreakfast className="mb-2 mr-2" />
                           สวัสดิการ
@@ -210,7 +216,7 @@ const AnnouncementSearch = () => {
                           • ค่ารักษาพยาบาล • ค่ายานพาหนะ
                         </Typography>
                       </div>
-                      <div className="pb-2 pt-2">
+                      <div className="pt-2 pb-2">
                         <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
                           <Business className="mb-2 mr-2" />
                           สถานที่ปฏิบัติงาน
@@ -220,7 +226,7 @@ const AnnouncementSearch = () => {
                           10140
                         </Typography>
                       </div>
-                      <div className="pb-2 pt-2">
+                      <div className="pt-2 pb-2">
                         <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
                           <QueryBuilder className="mb-2 mr-2" />
                           วันที่ทำการ
