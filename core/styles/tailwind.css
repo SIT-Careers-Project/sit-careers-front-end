@@ -63,3 +63,28 @@ textarea {
 input::placeholder {
     font-family: "Sarabun Regular" !important;
 }
+
+.btn-grad {
+    --bg-color: to right, rgba(59,159,197,1) -1%, rgba(38,150,193,1) 0%, rgba(69,161,198,1) 42%, rgba(69,161,198,1) 44%, rgba(84,160,195,1) 59%, rgba(63,101,140,1) 100%, rgba(41,91,141,1) 100%;
+    background: -moz-linear-gradient(var(--bg-color));
+    background: -webkit-linear-gradient(var(--bg-color));
+    background: linear-gradient(var(--bg-color));
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b9fc5', endColorstr='#295b8d',GradientType=1 );
+ }
+ 
+ .btn-grad:hover {
+    background: linear-gradient(to right, 
+    rgba(69,161,198,1) 42%,
+    rgba(41,91,141,1) 100%,
+    rgba(63,101,140,1) 100%,
+    rgba(84,160,195,1) 59%,
+    rgba(69,161,198,1) 44%,
+    rgba(38,150,193,1) 0%,
+    rgba(59,159,197,1) -1%);
+    transition: 0.5s;
+    text-align: center;
+    text-transform: uppercase;
+    background-size: 200% auto;
+    background-position: right center;
+}
+
