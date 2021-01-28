@@ -5,7 +5,7 @@ import React from 'react'
 const CompanyInfo = () => {
   return (
     <MainLayout>
-      <div className="flex justify-center mt-16 ">
+      <div className="flex justify-center h-screen mt-16">
         <AnnouncementPage />
       </div>
     </MainLayout>

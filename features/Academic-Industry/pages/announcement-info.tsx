@@ -10,7 +10,7 @@ const CompanyInfo = () => {
   const context = useContext(announcementDuplicateFormContext)
 
   return useObserver(() => (
-    <div className="w-full h-full max-w-screen-lg mb-16 bg-white">
+    <div className="w-full h-full max-w-screen-lg mb-16">
       <div className="flex justify-between w-full mt-2">
         <div>
           <p className="text-heading-5 font-prompt">ลงประกาศรับสมัครงาน</p>
