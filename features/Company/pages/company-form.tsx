@@ -1,7 +1,5 @@
 import { Controller, useForm } from 'react-hook-form'
 import {
-  Dialog,
-  DialogActions,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -14,9 +12,10 @@ import { companyType, days } from '../services/constantVariable'
 
 import { Avatar } from '../../../core/components/Avatar'
 import { CompanyFormSchema } from '../services/validationSchema'
+import { CoreModal } from '../../../core/components/Modal'
 import { Observer } from 'mobx-react-lite'
 import { companyFormPageContext } from '../contexts/company_form_page_context'
-import { useRouter } from 'next/router'
+import { modalContext } from '../../../core/contexts/modal_context'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 const CompanyForm = () => {
@@ -24,14 +23,13 @@ const CompanyForm = () => {
     resolver: yupResolver(CompanyFormSchema)
   })
   const context = useContext(companyFormPageContext)
-  const router = useRouter()
+  const coreModalContext = useContext(modalContext)
+
   const [file, setFile] = useState(null)
 
   useEffect(() => {
-    if (context.router) {
-      router.push('/company/company-table')
-    }
-  }, [context.router, router])
+    context.keyChange('modal', coreModalContext)
+  }, [context, coreModalContext])
 
   return (
     <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
@@ -426,28 +424,15 @@ const CompanyForm = () => {
         {() => (
           <>
             <div className="flex justify-end grid-cols-12 px-6 my-6 gap-x-8">
-              <button onClick={context.handleModal} className="text-white bg-primary">
+              <button onClick={coreModalContext.openModal} className="text-white bg-primary">
                 <p className="px-5 py-2 font-prompt">บันทึก</p>
               </button>
             </div>
-            <Dialog open={context.showModal} onClose={context.handleCloseModal}>
-              <div className="p-4 text-left">
-                <p className="mb-3 mr-40 font-prompt-medium text-heading-6">บันทึกข้อมูลบริษัท</p>
-                <span className="mb-5 font-prompt text-subtitle-1">
-                  คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
-                </span>
-                <DialogActions className="mt-4">
-                  <button onClick={context.handleCloseModal} className="text-secondary2">
-                    <p className="px-5 py-2 font-prompt">ยกเลิก</p>
-                  </button>
-                  <button
-                    onClick={handleSubmit(context.createCompany)}
-                    className="text-white bg-primary">
-                    <p className="px-5 py-2 font-prompt">บันทึก</p>
-                  </button>
-                </DialogActions>
-              </div>
-            </Dialog>
+            <CoreModal
+              title="บันทึกข้อมูลบริษัท"
+              content="คุณต้องการบันทึกข้อมูลบริษัทหรือไม่"
+              onSubmit={handleSubmit(context.createCompany)}
+            />
           </>
         )}
       </Observer>

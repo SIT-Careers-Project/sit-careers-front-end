@@ -1,33 +1,26 @@
 import { action, makeObservable, observable } from 'mobx'
 
+import Router from 'next/router'
 import apiService from '../services/apiCompany'
 import { createContext } from 'react'
 
 export class CompanyUpdatePageContext {
   showModal
-  router
   company
+  modal
 
   constructor() {
     makeObservable(this, {
       getCompany: action,
       updateCompany: action,
-      handleModal: action,
       showModal: observable,
-      router: observable,
       company: observable
     })
-    this.showModal = false
     this.company = []
-    this.router = false
   }
 
-  handleModal = () => {
-    this.showModal = true
-  }
-
-  handleCloseModal = () => {
-    this.showModal = false
+  keyChange = (key, value) => {
+    this[key] = value
   }
 
   getCompany = async (company_id) => {
@@ -43,8 +36,8 @@ export class CompanyUpdatePageContext {
   updateCompany = async (data) => {
     try {
       await apiService.updateCompany(data).then(() => {
-        this.showModal = false
-        this.router = true
+        this.modal.closeModal()
+        Router.push('/company/company-table')
       })
     } catch (error) {
       console.log(error)
