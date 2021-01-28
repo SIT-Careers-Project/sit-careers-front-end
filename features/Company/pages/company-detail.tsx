@@ -21,7 +21,7 @@ const CompanyDetail = ({ companyId }: CompanyDetailProps) => {
   return (
     <Observer>
       {() => (
-        <div className="flex w-full h-full max-w-screen-lg pt-6 mb-16 bg-white">
+        <div className="flex w-full h-full max-w-screen-lg pt-6 mb-16">
           <div className="md:w-1/4">
             {context?.company?.logo == '-' ? (
               <div className="flex items-center justify-center w-40 h-40 rounded-full bg-secondary1">

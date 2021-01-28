@@ -1,17 +1,14 @@
 import FormCreate from '../../features/Academic-Industry/pages/announcement-form'
-import Footer from '../../core/components/Footer'
-import Navbar from '../../core/components/Navbar'
+import { MainLayout } from '../../core/components/Layout/Main'
 import React from 'react'
 
 const AnnouncementForm = () => {
   return (
-    <div>
-      <Navbar />
+    <MainLayout>
       <div className="flex justify-center mt-16">
         <FormCreate />
       </div>
-      <Footer />
-    </div>
+    </MainLayout>
   )
 }
 

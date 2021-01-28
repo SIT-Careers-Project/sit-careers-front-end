@@ -1,19 +1,14 @@
 import AnnouncementPage from '../../features/Academic-Industry/pages/announcement-info'
-import Footer from '../../core/components/Footer'
-import Navbar from '../../core/components/Navbar'
+import { MainLayout } from '../../core/components/Layout/Main'
 import React from 'react'
 
 const CompanyInfo = () => {
   return (
-    <>
-      <div className="h-auto bg-white bg-cover">
-        <Navbar />
-        <div className="flex justify-center mt-16 ">
-          <AnnouncementPage />
-        </div>
+    <MainLayout>
+      <div className="flex justify-center mt-16 ">
+        <AnnouncementPage />
       </div>
-      <Footer />
-    </>
+    </MainLayout>
   )
 }
 

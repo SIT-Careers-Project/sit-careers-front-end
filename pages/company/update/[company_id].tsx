@@ -1,19 +1,14 @@
 import CompanyPage from '../../../features/Company/pages/company-update'
-import Footer from '../../../core/components/Footer'
-import Navbar from '../../../core/components/Navbar'
+import { MainLayout } from '../../../core/components/Layout/Main'
 import React from 'react'
 
 const UpdateCompany = () => {
   return (
-    <>
-      <div className="h-auto bg-white bg-cover">
-        <Navbar />
-        <div className="flex justify-center mt-16 ">
-          <CompanyPage />
-        </div>
+    <MainLayout>
+      <div className="flex justify-center mt-16 ">
+        <CompanyPage />
       </div>
-      <Footer />
-    </>
+    </MainLayout>
   )
 }
 
