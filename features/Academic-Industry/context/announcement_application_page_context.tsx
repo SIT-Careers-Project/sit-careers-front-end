@@ -1,23 +1,19 @@
 import { action, makeObservable, observable } from 'mobx'
+
 import { createContext } from 'react'
 
 export class AnnouncementApplicationFormContext {
-  showModal
+  modal
 
   constructor() {
     makeObservable(this, {
-      handleModal: action,
-      showModal: observable
+      modal: observable,
+      keyChange: action
     })
-    this.showModal = false
   }
 
-  handleModal = () => {
-    this.showModal = true
-  }
-
-  handleCloseModal = () => {
-    this.showModal = false
+  keyChange = (key, value) => {
+    this[key] = value
   }
 }
 export const announcementApplicationFormContext = createContext(

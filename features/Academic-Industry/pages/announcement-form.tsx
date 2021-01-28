@@ -1,24 +1,20 @@
-import React, { useContext } from 'react'
-import { useObserver } from 'mobx-react-lite'
+import React, { useContext, useEffect } from 'react'
 import { Observer } from 'mobx-react-lite'
-import {
-  TextField,
-  InputLabel,
-  FormControl,
-  MenuItem,
-  Select,
-  Chip,
-  Dialog,
-  DialogActions
-} from '@material-ui/core'
+import { TextField, InputLabel, FormControl, MenuItem, Select, Chip } from '@material-ui/core'
 import { AnnouncementBanner } from '../../../core/components/AnnouncementImage'
 import { announcementFormPageContext } from '../context/announcement_form_page_context'
 import { announcementType, jobPosition, days, salary } from '../services/constantVariable'
+import { modalContext } from '../../../core/contexts/modal_context'
+import { CoreModal } from '../../../core/components/Modal'
 
 const AnnouncementForm = () => {
   const context = useContext(announcementFormPageContext)
+  const coreModalContext = useContext(modalContext)
 
-  return useObserver(() => (
+  useEffect(() => {
+    context.keyChange('modal', coreModalContext)
+  }, [context, coreModalContext])
+  return (
     <div className="w-full h-full max-w-screen-lg">
       <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
         <div className="px-6 pt-6">
@@ -296,34 +292,23 @@ const AnnouncementForm = () => {
           {() => (
             <>
               <div className="flex justify-end grid-cols-12 px-6 my-6">
-                <button onClick={context.handleModal} className="text-white bg-primary">
+                <button onClick={coreModalContext.openModal} className="text-white bg-primary">
                   <p className="px-5 py-3 text-white font-prompt text-subtitle-1">
                     บันทึกและประกาศ
                   </p>
                 </button>
               </div>
-              <Dialog open={context.showModal} onClose={context.handleCloseModal}>
-                <div className="p-4 text-left">
-                  <p className="mb-3 mr-40 font-prompt-medium text-heading-6">บันทึกและประกาศ</p>
-                  <span className="mb-5 font-prompt text-subtitle-1">
-                    คุณต้องการบันทึกและประกาศรับสมัครงานใช่หรือไม่
-                  </span>
-                  <DialogActions className="mt-4">
-                    <button onClick={context.handleCloseModal} className="text-secondary2">
-                      <p className="px-5 py-2 font-prompt">ยกเลิก</p>
-                    </button>
-                    <button className="text-white bg-primary">
-                      <p className="px-5 py-2 font-prompt">บันทึก</p>
-                    </button>
-                  </DialogActions>
-                </div>
-              </Dialog>
+              <CoreModal
+                title="บันทึกและประกาศ"
+                content="คุณต้องการบันทึกและประกาศรับสมัครงานใช่หรือไม่"
+                onSubmit={() => console.log('Just test show modal!!')}
+              />
             </>
           )}
         </Observer>
       </div>
     </div>
-  ))
+  )
 }
 
 export default AnnouncementForm
