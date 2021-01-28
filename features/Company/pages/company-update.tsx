@@ -10,6 +10,7 @@ import {
   TextField
 } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
+import { companyType, days } from '../services/constantVariable'
 
 import { Avatar } from '../../../core/components/Avatar'
 import { CompanyFormSchema } from '../services/validationSchema'
@@ -45,24 +46,6 @@ const CompanyForm = () => {
     setTimeout(() => reset({ ...context.company }), 400)
     setTimeout(() => setRenderDelay(false), 1000)
   }, [context.company, reset])
-
-  const companyType = [
-    { title: 'Software House' },
-    { title: 'Technology Consultant' },
-    { title: 'Big data' },
-    { title: 'DevOps' },
-    { title: 'Cloud' }
-  ]
-
-  const days = [
-    { day: 'จันทร์' },
-    { day: 'อังคาร' },
-    { day: 'พุธ' },
-    { day: 'พฤหัสบดี' },
-    { day: 'ศุกร์' },
-    { day: 'เสาร์' },
-    { day: 'อาทิตย์' }
-  ]
 
   return (
     <>

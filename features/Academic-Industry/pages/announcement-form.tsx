@@ -13,50 +13,10 @@ import {
 } from '@material-ui/core'
 import { AnnouncementBanner } from '../../../core/components/AnnouncementImage'
 import { announcementFormPageContext } from '../context/announcement_form_page_context'
+import { announcementType, jobPosition, days, salary } from '../services/constantVariable'
 
 const AnnouncementForm = () => {
   const context = useContext(announcementFormPageContext)
-
-  const JobType = [
-    { title: 'Software Engineer' },
-    { title: 'Computer programmer' },
-    { title: 'Cloud System Engineer' },
-    { title: 'UX/UI Designer' },
-    { title: 'Tester' },
-    { title: 'Web developer' },
-    { title: 'IT Support' },
-    { title: 'Systems analyst' },
-    { title: 'Network engineer' },
-    { title: 'Database administrator' },
-    { title: 'IT security' },
-    { title: 'Data scientist' },
-    { title: 'Applications Engineer' },
-    { title: 'Other' }
-  ]
-
-  const AnnouncementType = [
-    { title: 'Internship' },
-    { title: 'Part time' },
-    { title: 'Full time' },
-    { title: 'Work-integrated Learning (WiL)' }
-  ]
-
-  const Salary = [
-    { title: '0 - 10,000' },
-    { title: '10,000 - 50,000' },
-    { title: '50,000 - 90,000' },
-    { title: 'เงินเดือนตามตกลง' }
-  ]
-
-  const days = [
-    { day: 'จันทร์' },
-    { day: 'อังคาร' },
-    { day: 'พุธ' },
-    { day: 'พฤหัสบดี' },
-    { day: 'ศุกร์' },
-    { day: 'เสาร์' },
-    { day: 'อาทิตย์' }
-  ]
 
   return useObserver(() => (
     <div className="w-full h-full max-w-screen-lg">
@@ -88,8 +48,8 @@ const AnnouncementForm = () => {
               }}
             />
           </div>
-          <div className="w-2/4 flex justify-end grid-cols-12">
-            <button className="bg-red text-white">
+          <div className="flex justify-end w-2/4 grid-cols-12">
+            <button className="text-white bg-red">
               <p className="px-5 py-3 text-white font-prompt text-subtitle-1">ปิดรับสมัคร</p>
             </button>
           </div>
@@ -98,7 +58,7 @@ const AnnouncementForm = () => {
       <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
         <div className="px-6 pt-6">
           <p className="font-semibold font-prompt text-heading-6">ข้อมูลประกาศรับสมัคร</p>
-          <button className="border-none focus:outline-none w-full h-40">
+          <button className="w-full h-40 border-none focus:outline-none">
             <InputLabel htmlFor="company_logo_image_label">
               <AnnouncementBanner className="mt-5 cursor-pointer bg-grey-100" />
             </InputLabel>
@@ -123,7 +83,7 @@ const AnnouncementForm = () => {
             <FormControl className="w-full font-prompt bg-grey-100">
               <InputLabel htmlFor="trinity-select">ประเภทของงาน *</InputLabel>
               <Select id="trinity-select" name="company_type">
-                {JobType.map((job) => (
+                {jobPosition.map((job) => (
                   <MenuItem key={job.title} value={job.title}>
                     {job.title}
                   </MenuItem>
@@ -149,7 +109,7 @@ const AnnouncementForm = () => {
                     ))}
                   </div>
                 )}>
-                {AnnouncementType.map((announcement) => (
+                {announcementType.map((announcement) => (
                   <MenuItem key={announcement.title} value={announcement.title}>
                     {announcement.title}
                   </MenuItem>
@@ -161,7 +121,7 @@ const AnnouncementForm = () => {
             <FormControl className="w-full font-prompt bg-grey-100">
               <InputLabel htmlFor="trinity-select">{'เงินเดือน (บาท) *'}</InputLabel>
               <Select id="trinity-select" name="company_type">
-                {Salary.map((salary) => (
+                {salary.map((salary) => (
                   <MenuItem key={salary.title} value={salary.title}>
                     {salary.title}
                   </MenuItem>

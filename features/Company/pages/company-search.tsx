@@ -9,18 +9,12 @@ import { companySearchPageContext } from '../contexts/company_search_page_contex
 import { paginationContext } from '../../../core/contexts/pagination_context'
 import { searchContext } from '../../../core/contexts/search_context'
 import { useObserver } from 'mobx-react-lite'
+import { companyType } from '../services/constantVariable'
 
 const AllCompany = () => {
   const context = useContext(companySearchPageContext)
   const contextPagination = useContext(paginationContext)
   const contextSearch = useContext(searchContext)
-  const companyType = [
-    { title: 'Software House' },
-    { title: 'Technology Consultant' },
-    { title: 'Big data' },
-    { title: 'DevOps' },
-    { title: 'Cloud' }
-  ]
 
   useEffect(() => {
     context.getCompanies()

@@ -10,6 +10,7 @@ import {
   TextField
 } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
+import { companyType, days } from '../services/constantVariable'
 
 import { Avatar } from '../../../core/components/Avatar'
 import { CompanyFormSchema } from '../services/validationSchema'
@@ -31,24 +32,6 @@ const CompanyForm = () => {
       router.push('/company/company-table')
     }
   }, [context.router, router])
-
-  const companyType = [
-    { title: 'Software House' },
-    { title: 'Technology Consultant' },
-    { title: 'Big data' },
-    { title: 'DevOps' },
-    { title: 'Cloud' }
-  ]
-
-  const days = [
-    { day: 'จันทร์' },
-    { day: 'อังคาร' },
-    { day: 'พุธ' },
-    { day: 'พฤหัสบดี' },
-    { day: 'ศุกร์' },
-    { day: 'เสาร์' },
-    { day: 'อาทิตย์' }
-  ]
 
   return (
     <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
