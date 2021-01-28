@@ -22,42 +22,11 @@ import PrimaryButton from '../../../core/components/Button/Primary'
 import React from 'react'
 import Search from '../../../core/components/Search'
 import { useObserver } from 'mobx-react-lite'
+import { companyType, announcementType, jobPosition, jobType } from '../services/constantVariable'
 
 // import Pagination from '../../../core/components/Pagination'
 
 const AnnouncementSearch = () => {
-  const CompanyType = [
-    { title: 'Software House' },
-    { title: 'Technology Consultant' },
-    { title: 'Big data' },
-    { title: 'DevOps' },
-    { title: 'Cloud' }
-  ]
-
-  const JobPosition = [
-    { title: 'Software Engineer' },
-    { title: 'Computer programmer' },
-    { title: 'Cloud System Engineer' },
-    { title: 'UX/UI Designer' },
-    { title: 'Tester' },
-    { title: 'Web developer' },
-    { title: 'IT Support' },
-    { title: 'Systems analyst' },
-    { title: 'Network engineer' },
-    { title: 'Database administrator' },
-    { title: 'IT security' },
-    { title: 'Data scientist' },
-    { title: 'Applications Engineer' },
-    { title: 'Other' }
-  ]
-
-  const JobType = [
-    { title: 'Internship' },
-    { title: 'Part time' },
-    { title: 'Full time' },
-    { title: 'Work-integrated Learning (WiL)' }
-  ]
-
   const tag = [{ title: 'Software Engineer' }, { title: 'Full Time' }, { title: 'Internship' }]
 
   return useObserver(() => (
@@ -72,7 +41,7 @@ const AnnouncementSearch = () => {
               <FormControl className="w-full font-prompt bg-grey-100">
                 <InputLabel htmlFor="trinity-select">ประเภทของงาน</InputLabel>
                 <Select id="trinity-select" name="job_position">
-                  {JobPosition.map((position) => (
+                  {jobPosition.map((position) => (
                     <MenuItem key={position.title} value={position.title}>
                       {position.title}
                     </MenuItem>
@@ -84,7 +53,7 @@ const AnnouncementSearch = () => {
               <FormControl className="w-full font-prompt bg-grey-100">
                 <InputLabel htmlFor="trinity-select">ประเภทของประกาศ</InputLabel>
                 <Select id="trinity-select" name="job_type">
-                  {JobType.map((job) => (
+                  {jobType.map((job) => (
                     <MenuItem key={job.title} value={job.title}>
                       {job.title}
                     </MenuItem>
@@ -96,7 +65,7 @@ const AnnouncementSearch = () => {
               <FormControl className="w-full font-prompt bg-grey-100">
                 <InputLabel htmlFor="trinity-select">ประเภทของษริษัท</InputLabel>
                 <Select id="trinity-select" name="company_type">
-                  {CompanyType.map((company) => (
+                  {companyType.map((company) => (
                     <MenuItem key={company.title} value={company.title}>
                       {company.title}
                     </MenuItem>

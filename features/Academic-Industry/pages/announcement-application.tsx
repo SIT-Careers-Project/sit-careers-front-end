@@ -78,7 +78,7 @@ const ApplicationForm = () => {
         </div>
         <div className="w-full px-6 py-3">
           <label htmlFor="upload-photo">
-            <p className="mb-3 mr-40 font-prompt-meduim text-body-1">รายละเอียดงาน</p>
+            <p className="mb-3 mr-40 font-prompt-medium text-body-1">รายละเอียดงาน</p>
             <input id="upload-photo" name="upload-photo" type="file" />
             <br />
             <br />
