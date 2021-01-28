@@ -32,7 +32,7 @@ export default function Navbar() {
           <div className="flex flex-row items-center justify-between h-full">
             <Link href="/">
               <div
-                style={{ height: '35px', width: '77px' }}
+                style={{ height: '40px', width: '82px' }}
                 className="mt-2 font-semibold text-white cursor-pointer font-prompt">
                 <img src="/image/sit-logo.png" alt="sit logo" />
               </div>
