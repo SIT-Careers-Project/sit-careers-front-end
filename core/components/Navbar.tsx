@@ -30,9 +30,13 @@ export default function Navbar() {
         className="fixed flex justify-center w-full h-2 shadow-inner bg-primary navbar-expand-lg">
         <div style={{ width: '1280px' }} className="h-full max-w-screen-lg">
           <div className="flex flex-row items-center justify-between h-full">
-            <div className="text-white nt-semibold font-prompt">
-              <img src="/image/sit-logo.png" alt="sit logo" />
-            </div>
+            <Link href="/">
+              <div
+                style={{ height: '35px', width: '77px' }}
+                className="mt-2 font-semibold text-white cursor-pointer font-prompt">
+                <img src="/image/sit-logo.png" alt="sit logo" />
+              </div>
+            </Link>
             <ul className="flex flex-row list-none lg:flex-row">
               {navLink.map((data, i) => {
                 return (
