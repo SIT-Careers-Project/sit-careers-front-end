@@ -22,7 +22,7 @@ import PrimaryButton from '../../../core/components/Button/Primary'
 import React from 'react'
 import Search from '../../../core/components/Search'
 import { useObserver } from 'mobx-react-lite'
-import { companyType, announcementType, jobPosition, jobType } from '../services/constantVariable'
+import { companyType, jobPosition, jobType } from '../services/constantVariable'
 
 // import Pagination from '../../../core/components/Pagination'
 
