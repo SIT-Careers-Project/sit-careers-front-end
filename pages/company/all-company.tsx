@@ -1,18 +1,13 @@
 import CompanyPage from '../../features/Company/pages/company-search'
-import Footer from '../../core/components/Footer'
-import Navbar from '../../core/components/Navbar'
+import { MainLayout } from '../../core/components/Layout/Main'
 import React from 'react'
 const Companies = () => {
   return (
-    <>
-      <div className="h-auto bg-white bg-cover">
-        <Navbar />
-        <div>
-          <CompanyPage />
-        </div>
+    <MainLayout>
+      <div>
+        <CompanyPage />
       </div>
-      <Footer />
-    </>
+    </MainLayout>
   )
 }
 export default Companies

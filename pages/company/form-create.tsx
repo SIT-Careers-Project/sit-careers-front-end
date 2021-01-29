@@ -1,17 +1,14 @@
 import CompanyForm from '../../features/Company/pages/company-form'
-import Footer from '../../core/components/Footer'
-import Navbar from '../../core/components/Navbar'
+import { MainLayout } from '../../core/components/Layout/Main'
 import React from 'react'
 
 const CompanyInfo = () => {
   return (
-    <div>
-      <Navbar />
+    <MainLayout>
       <div className="flex justify-center mt-16">
         <CompanyForm />
       </div>
-      <Footer />
-    </div>
+    </MainLayout>
   )
 }
 

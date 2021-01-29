@@ -1,19 +1,14 @@
 import AnnouncementSearch from '../../features/Academic-Industry/pages/announcement-search'
-import Footer from '../../core/components/Footer'
-import Navbar from '../../core/components/Navbar'
+import { MainLayout } from '../../core/components/Layout/Main'
 import React from 'react'
 
 const Announcements = () => {
   return (
-    <>
-      <div className="h-auto bg-white bg-cover">
-        <Navbar />
-        <div>
-          <AnnouncementSearch />
-        </div>
+    <MainLayout>
+      <div>
+        <AnnouncementSearch />
       </div>
-      <Footer />
-    </>
+    </MainLayout>
   )
 }
 

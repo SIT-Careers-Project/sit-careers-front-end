@@ -28,7 +28,8 @@ module.exports = {
       white: '#ffffff',
       black: '#000000',
       red: '#EB5757',
-      grey4: '#E0E0E0'
+      grey4: '#E0E0E0',
+      grey1: '#FBFCFB'
     },
     fontSize: {
       'heading-1': '96px',
