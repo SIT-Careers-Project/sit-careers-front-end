@@ -1,19 +1,18 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useObserver } from 'mobx-react-lite'
-import {
-  Dialog,
-  DialogActions,
-  TextField,
-  InputLabel,
-  FormControl,
-  MenuItem,
-  Select
-} from '@material-ui/core'
+import { TextField, InputLabel, FormControl, MenuItem, Select } from '@material-ui/core'
 import { Observer } from 'mobx-react-lite'
 import { announcementApplicationFormContext } from '../context/announcement_application_page_context'
+import { modalContext } from '../../../core/contexts/modal_context'
+import { CoreModal } from '../../../core/components/Modal'
 
 const ApplicationForm = () => {
   const context = useContext(announcementApplicationFormContext)
+  const coreModalContext = useContext(modalContext)
+
+  useEffect(() => {
+    context.keyChange('modal', coreModalContext)
+  }, [context, coreModalContext])
 
   const Prefix = [{ title: 'นาย' }, { title: 'นางสาว' }, { title: 'นาง' }]
 
@@ -90,26 +89,17 @@ const ApplicationForm = () => {
               <div
                 className="flex justify-end grid-cols-12 px-6 my-6 gap-x-8"
                 id="button-application">
-                <button onClick={context.handleModal} className="text-white bg-primary text-body-2">
+                <button
+                  onClick={coreModalContext.openModal}
+                  className="text-white bg-primary text-body-2">
                   <p className="px-5 py-2 font-prompt">ยืนยันการสมัคร</p>
                 </button>
               </div>
-              <Dialog open={context.showModal} onClose={context.handleCloseModal}>
-                <div className="p-4 text-left">
-                  <p className="mb-3 mr-40 font-prompt-medium text-heading-6">ยืนยันการสมัคร</p>
-                  <span className="mb-5 font-prompt text-subtitle-1">
-                    คุณต้องการยืนยันการสมัครใช่หรือไม่
-                  </span>
-                  <DialogActions className="mt-4">
-                    <button onClick={context.handleCloseModal} className="text-secondary2">
-                      <p className="px-5 py-2 font-prompt">ยกเลิก</p>
-                    </button>
-                    <button className="text-white bg-primary">
-                      <p className="px-5 py-2 font-prompt">ยืนยัน</p>
-                    </button>
-                  </DialogActions>
-                </div>
-              </Dialog>
+              <CoreModal
+                title="ยืนยันการสมัคร"
+                content="คุณต้องการยืนยันการสมัครใช่หรือไม่"
+                onSubmit={() => console.log('Just test modal !')}
+              />
             </>
           )}
         </Observer>

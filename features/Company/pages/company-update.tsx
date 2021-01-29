@@ -1,7 +1,5 @@
 import { Controller, useForm } from 'react-hook-form'
 import {
-  Dialog,
-  DialogActions,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -13,6 +11,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { companyType, days } from '../services/constantVariable'
 
 import { Avatar } from '../../../core/components/Avatar'
+import { CoreModal } from '../../../core/components/Modal'
+import { modalContext } from '../../../core/contexts/modal_context'
 import { CompanyFormSchema } from '../services/validationSchema'
 import { Observer } from 'mobx-react-lite'
 import { companyUpdatePageContext } from '../contexts/company_update_page_context'
@@ -24,6 +24,7 @@ const { publicRuntimeConfig } = getConfig()
 
 const CompanyForm = () => {
   const context = useContext(companyUpdatePageContext)
+  const coreModalContext = useContext(modalContext)
 
   const router = useRouter()
   const { company_id } = router.query
@@ -36,11 +37,9 @@ const CompanyForm = () => {
   })
 
   useEffect(() => {
-    if (context.router) {
-      router.push('/company/company-table')
-    }
+    context.keyChange('modal', coreModalContext)
     context.getCompany(company_id)
-  }, [company_id, context, router])
+  }, [company_id, context, coreModalContext])
 
   useEffect(() => {
     setTimeout(() => reset({ ...context.company }), 400)
@@ -399,7 +398,7 @@ const CompanyForm = () => {
                   <FormControl
                     error={!!errors?.end_business_day}
                     className="w-full font-prompt bg-grey-100">
-                    <InputLabel htmlFor="end-business-day-select">วันเปิดทำการ *</InputLabel>
+                    <InputLabel htmlFor="end-business-day-select">วันปิดทำการ *</InputLabel>
                     <Controller
                       control={control}
                       name="end_business_day"
@@ -479,28 +478,15 @@ const CompanyForm = () => {
               </div>
 
               <div className="flex justify-end grid-cols-12 px-6 my-6 gap-x-8">
-                <button onClick={context.handleModal} className="text-white bg-primary">
+                <button onClick={coreModalContext.openModal} className="text-white bg-primary">
                   <p className="px-5 py-2 font-prompt">บันทึก</p>
                 </button>
               </div>
-              <Dialog open={context.showModal} onClose={context.handleCloseModal}>
-                <div className="p-4 text-left">
-                  <p className="mb-3 mr-40 font-prompt-medium text-heading-6">บันทึกข้อมูลบริษัท</p>
-                  <span className="mb-5 font-prompt text-subtitle-1">
-                    คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
-                  </span>
-                  <DialogActions className="mt-4">
-                    <button onClick={context.handleCloseModal} className="text-secondary2">
-                      <p className="px-5 py-2 font-prompt">ยกเลิก</p>
-                    </button>
-                    <button
-                      onClick={handleSubmit(context.updateCompany)}
-                      className="text-white bg-primary">
-                      <p className="px-5 py-2 font-prompt">บันทึก</p>
-                    </button>
-                  </DialogActions>
-                </div>
-              </Dialog>
+              <CoreModal
+                title="บันทึกข้อมูลบริษัท"
+                content="คุณต้องการบันทึกข้อมูลบริษัทหรือไม่"
+                onSubmit={handleSubmit(context.updateCompany)}
+              />
             </div>
           )}
         </Observer>

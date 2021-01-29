@@ -1,17 +1,17 @@
 import { action, makeObservable, observable } from 'mobx'
+
 import { createContext } from 'react'
 
 export class AnnouncementFormPageContext {
-  showModal
   announcementType
+  modal
 
   constructor() {
     makeObservable(this, {
-      handleModal: action,
-      showModal: observable,
-      announcementType: observable
+      announcementType: observable,
+      modal: observable,
+      keyChange: action
     })
-    this.showModal = false
     this.announcementType = []
   }
 
@@ -19,12 +19,8 @@ export class AnnouncementFormPageContext {
     this.announcementType = announcementType
   }
 
-  handleModal = () => {
-    this.showModal = true
-  }
-
-  handleCloseModal = () => {
-    this.showModal = false
+  keyChange = (key, value) => {
+    this[key] = value
   }
 }
 export const announcementFormPageContext = createContext(new AnnouncementFormPageContext())

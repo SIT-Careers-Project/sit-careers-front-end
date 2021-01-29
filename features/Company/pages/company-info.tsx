@@ -19,7 +19,6 @@ const CompanyInfo = () => {
 
   useEffect(() => {
     context.getCompanies()
-    contextForm.router = false
     contextPagination.setSliceData()
   }, [context, contextForm, contextPagination])
 
