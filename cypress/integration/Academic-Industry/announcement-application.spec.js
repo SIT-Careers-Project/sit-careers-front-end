@@ -12,21 +12,11 @@ describe('The Announcement Application Form Page', () => {
     cy.get('button').should('contain.text', 'ยืนยันการสมัคร')
     cy.get('#trinity-select').click()
     cy.contains('นาย').click()
-    cy.get(
-      '#__next > div > div.flex.justify-center.mt-16 > div > div > div > div.col-span-7.px-4 > div:nth-child(2) > div:nth-child(2) > div > div > input'
-    ).type('จิรัฐติกาล')
-    cy.get(
-      '#__next > div > div.flex.justify-center.mt-16 > div > div > div > div.col-span-7.px-4 > div:nth-child(2) > div:nth-child(3) > div > div > input'
-    ).type('วิไลรัตน์')
-    cy.get(
-      '#__next > div > div.flex.justify-center.mt-16 > div > div > div > div.col-span-7.px-4 > div:nth-child(3) > div > div > div > input'
-    ).type('0868226824')
-    cy.get(
-      '#__next > div > div.flex.justify-center.mt-16 > div > div > div > div.col-span-7.px-4 > div:nth-child(4) > div > div > div > input'
-    ).type('jirattikarn.vil@mail.kmutt.ac.th')
-    cy.get(
-      '#__next > div > div.flex.justify-center.mt-16 > div > div > div > div.col-span-7.px-4 > div:nth-child(5) > div > div > div > input'
-    ).type('www.google.com')
+    cy.get('input[name="first_name"]').type('จิรัฐติกาล')
+    cy.get('input[name="last_name"]').type('วิไลรัตน์')
+    cy.get('input[name="tel_no"]').type('0868226824')
+    cy.get('input[name="email"]').type('jirattikarn.vil@mail.kmutt.ac.th')
+    cy.get('input[name="resume_link"]').type('www.google.com')
     cy.get('#button-application > button > p').click()
     cy.contains('ยืนยันการสมัคร')
     cy.contains('คุณต้องการยืนยันการสมัครใช่หรือไม่')
