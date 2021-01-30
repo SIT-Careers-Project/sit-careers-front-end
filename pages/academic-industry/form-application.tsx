@@ -11,7 +11,7 @@ const Announcements = () => {
         <div className="flex justify-center mt-16">
           <ApplicationForm />
         </div>
-        <div className="absolute inset-x-0 bottom-0">
+        <div>
           <Footer />
         </div>
       </div>
