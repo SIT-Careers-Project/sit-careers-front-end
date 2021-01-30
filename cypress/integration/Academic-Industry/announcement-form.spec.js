@@ -12,7 +12,7 @@ describe('The Announcement Form Page', () => {
 		cy.contains('บันทึกและประกาศ').click()
 		cy.contains('บันทึกและประกาศ')
 		cy.contains('คุณต้องการบันทึกและประกาศรับสมัครงานใช่หรือไม่')
-		cy.get('button').should('contain.text', 'บันทึก')
+		cy.get('button').should('contain.text', 'บันทึกและประกาศ')
 		cy.get('button').should('contain.text', 'ยกเลิก')
   })
 })

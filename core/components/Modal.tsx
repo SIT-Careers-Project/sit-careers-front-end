@@ -7,10 +7,11 @@ interface ModalProps {
   onSubmit: () => void
   title: string
   content: string
+  buttonSubmit: string
 }
 
 export const CoreModal = (props: ModalProps) => {
-  const { onSubmit, title, content } = props
+  const { onSubmit, title, content, buttonSubmit } = props
   const context = useContext(modalContext)
 
   return (
@@ -25,7 +26,7 @@ export const CoreModal = (props: ModalProps) => {
                 <p className="px-5 py-2 font-prompt">ยกเลิก</p>
               </button>
               <button onClick={onSubmit} className="text-white bg-primary focus:outline-none">
-                <p className="px-5 py-2 font-prompt">บันทึก</p>
+                <p className="px-5 py-2 font-prompt">{buttonSubmit}</p>
               </button>
             </DialogActions>
           </div>
