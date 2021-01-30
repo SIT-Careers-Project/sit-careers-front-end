@@ -299,6 +299,7 @@ const AnnouncementForm = () => {
                 </button>
               </div>
               <CoreModal
+                buttonSubmit="บันทึกและประกาศ"
                 title="บันทึกและประกาศ"
                 content="คุณต้องการบันทึกและประกาศรับสมัครงานใช่หรือไม่"
                 onSubmit={() => console.log('Just test show modal!!')}
