@@ -89,7 +89,7 @@ const ApplicationForm = () => {
               <div className="w-full">
                 <TextField
                   label="Link ผลงาน *"
-                  name="email"
+                  name="resume_link"
                   className="font-sarabun bg-grey-100"
                   defaultValue=""
                   fullWidth
@@ -99,7 +99,7 @@ const ApplicationForm = () => {
             <div className="w-full px-6 py-3 col-span-7">
               <label htmlFor="upload-photo">
                 <p className="mb-3 mr-40 font-prompt-medium text-body-1">อัพโหลดผลงาน</p>
-                <input id="upload-photo" name="upload-photo" type="file" />
+                <input id="upload-photo" name="path_file" type="file" />
               </label>
             </div>
             <Observer>
