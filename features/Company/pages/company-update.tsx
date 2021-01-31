@@ -485,7 +485,11 @@ const CompanyForm = () => {
               <CoreModal
                 buttonSubmit="บันทึก"
                 title="บันทึกข้อมูลบริษัท"
-                content="คุณต้องการบันทึกข้อมูลบริษัทหรือไม่"
+                content={
+                  <span className="mb-5 font-prompt text-subtitle-1">
+                    คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
+                  </span>
+                }
                 onSubmit={handleSubmit(context.updateCompany)}
               />
             </div>

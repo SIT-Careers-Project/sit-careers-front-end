@@ -6,7 +6,7 @@ import { modalContext } from '../contexts/modal_context'
 interface ModalProps {
   onSubmit: () => void
   title: string
-  content: string
+  content?: React.ReactElement
   buttonSubmit: string
 }
 

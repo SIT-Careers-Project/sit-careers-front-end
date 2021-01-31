@@ -301,7 +301,11 @@ const AnnouncementForm = () => {
               <CoreModal
                 buttonSubmit="บันทึกและประกาศ"
                 title="บันทึกและประกาศ"
-                content="คุณต้องการบันทึกและประกาศรับสมัครงานใช่หรือไม่"
+                content={
+                  <span className="mb-5 font-prompt text-subtitle-1">
+                    คุณต้องการบันทึกและประกาศรับสมัครงานใช่หรือไม่
+                  </span>
+                }
                 onSubmit={() => console.log('Just test show modal!!')}
               />
             </>
