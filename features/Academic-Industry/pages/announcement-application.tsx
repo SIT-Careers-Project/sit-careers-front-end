@@ -119,7 +119,11 @@ const ApplicationForm = () => {
                   <CoreModal
                     buttonSubmit="สมัคร"
                     title="ยืนยันการสมัคร"
-                    content="คุณต้องการยืนยันการสมัครใช่หรือไม่"
+                    content={
+                      <span className="mb-5 font-prompt text-subtitle-1">
+                        คุณต้องการยืนยันการสมัครใช่หรือไม่
+                      </span>
+                    }
                     onSubmit={() => console.log('Just test modal !')}
                   />
                 </>
