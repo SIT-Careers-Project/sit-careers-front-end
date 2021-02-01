@@ -2,7 +2,7 @@ import MaterialTable from 'material-table'
 import React from 'react'
 
 const CoreTable = (props) => {
-  const { column, data, options } = props
+  const { column, data, options, editable } = props
   return (
     <MaterialTable
       columns={column}
@@ -12,6 +12,7 @@ const CoreTable = (props) => {
         draggable: false,
         ...options
       }}
+      editable={editable}
     />
   )
 }
