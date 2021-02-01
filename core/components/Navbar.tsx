@@ -14,7 +14,7 @@ export default function Navbar() {
     { path: '/', name: 'หน้าหลัก' },
     { path: '/academic-industry/announcements', name: 'ประกาศรับสมัครงาน' },
     { path: '/company/all-company', name: 'ข้อมูลบริษัท' },
-    { path: '/contact', name: 'ติดต่อเรา' }
+    { path: '/dashboard', name: 'Dashboard' }
   ]
 
   return useObserver(() => (
@@ -87,6 +87,13 @@ export default function Navbar() {
                     <MenuItem onClick={context.handleClose}>
                       <span className="font-prompt-light text-body-2 text-primary">
                         จัดการผู้ใช้งาน
+                      </span>
+                    </MenuItem>
+                  </Link>
+                  <Link href="/academic-industry/application">
+                    <MenuItem onClick={context.handleClose}>
+                      <span className="font-prompt-light text-body-2 text-primary">
+                        ประวัติการสมัครงาน
                       </span>
                     </MenuItem>
                   </Link>
