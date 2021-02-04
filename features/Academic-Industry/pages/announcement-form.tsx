@@ -1,15 +1,30 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import { Observer } from 'mobx-react-lite'
-import { TextField, InputLabel, FormControl, MenuItem, Select, Chip } from '@material-ui/core'
-import { AnnouncementBanner } from '../../../core/components/AnnouncementImage'
+import {
+  TextField,
+  InputLabel,
+  FormControl,
+  MenuItem,
+  Select,
+  FormHelperText
+} from '@material-ui/core'
+import { BannerImages } from '../../../core/components/BannerImage'
 import { announcementFormPageContext } from '../context/announcement_form_page_context'
-import { announcementType, jobPosition, days, salary } from '../services/constantVariable'
+import { jobType, jobPosition, days, salary } from '../services/constantVariable'
 import { modalContext } from '../../../core/contexts/modal_context'
 import { CoreModal } from '../../../core/components/Modal'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { AnnouncementFormSchema } from '../services/validationSchema'
 
 const AnnouncementForm = () => {
   const context = useContext(announcementFormPageContext)
   const coreModalContext = useContext(modalContext)
+  const { handleSubmit, register, errors, control } = useForm({
+    resolver: yupResolver(AnnouncementFormSchema)
+  })
+
+  const [file, setFile] = useState(null)
 
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
@@ -29,6 +44,10 @@ const AnnouncementForm = () => {
               InputLabelProps={{
                 shrink: true
               }}
+              name="start_date"
+              inputRef={register}
+              error={!!errors.start_date}
+              helperText={errors.start_date?.message}
             />
           </div>
           <div className="flex items-end justify-center pr-6">
@@ -42,6 +61,10 @@ const AnnouncementForm = () => {
               InputLabelProps={{
                 shrink: true
               }}
+              name="end_date"
+              inputRef={register}
+              error={!!errors.end_date}
+              helperText={errors.end_date?.message}
             />
           </div>
           <div className="flex justify-end w-2/4 grid-cols-12">
@@ -55,22 +78,27 @@ const AnnouncementForm = () => {
         <div className="px-6 pt-6">
           <p className="font-semibold font-prompt text-heading-6">ข้อมูลประกาศรับสมัคร</p>
           <button className="w-full h-40 border-none focus:outline-none">
-            <InputLabel htmlFor="company_logo_image_label">
-              <AnnouncementBanner className="mt-5 cursor-pointer bg-grey-100" />
+            <InputLabel htmlFor="picture">
+              <BannerImages imgSrc={file} className="mt-5 cursor-pointer bg-grey-100" />
             </InputLabel>
             <input
-              id="company_logo_image_label"
+              id="picture"
               type="file"
-              name="company_logo_image"
+              name="picture"
               className="hidden"
+              ref={register}
+              onChange={(event) => setFile(URL.createObjectURL(event?.target?.files[0]))}
             />
           </button>
         </div>
         <div className="w-full px-6 pt-6">
           <TextField
             label="หัวข้อ *"
-            name="address_one"
             className="font-sarabun bg-grey-100"
+            name="announcement_title"
+            inputRef={register}
+            error={!!errors.announcement_title}
+            helperText={errors.announcement_title?.message}
             fullWidth
           />
         </div>
@@ -78,66 +106,76 @@ const AnnouncementForm = () => {
           <div className="w-4/12 pl-6 pr-3">
             <FormControl className="w-full font-prompt bg-grey-100">
               <InputLabel htmlFor="trinity-select">ประเภทของงาน *</InputLabel>
-              <Select id="trinity-select" name="company_type">
-                {jobPosition.map((job) => (
-                  <MenuItem key={job.title} value={job.title}>
-                    {job.title}
-                  </MenuItem>
-                ))}
-              </Select>
+              <Controller
+                control={control}
+                name="job_position"
+                as={
+                  <Select id="trinity-select">
+                    {jobPosition.map((job) => (
+                      <MenuItem key={job.title} value={job.title}>
+                        {job.title}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                }
+              />
+              <FormHelperText>{errors.job_position?.message}</FormHelperText>
             </FormControl>
           </div>
           <div className="w-4/12 pl-3 pr-6">
             <FormControl className="w-full font-prompt bg-grey-100">
               <InputLabel htmlFor="trinity-select">ประเภทของประกาศ *</InputLabel>
-              <Select
-                id="trinity-select"
-                name="company_type"
-                value={context.announcementType}
-                multiple
-                onChange={(event) => {
-                  context.setAnnouncementType(event.target.value)
-                }}
-                renderValue={() => (
-                  <div>
-                    {context.announcementType.map((announcement) => (
-                      <Chip key={announcement} label={announcement} />
+              <Controller
+                control={control}
+                name="job_type"
+                as={
+                  <Select id="trinity-select">
+                    {jobType.map((job) => (
+                      <MenuItem key={job.title} value={job.title}>
+                        {job.title}
+                      </MenuItem>
                     ))}
-                  </div>
-                )}>
-                {announcementType.map((announcement) => (
-                  <MenuItem key={announcement.title} value={announcement.title}>
-                    {announcement.title}
-                  </MenuItem>
-                ))}
-              </Select>
+                  </Select>
+                }
+              />
+              <FormHelperText>{errors.job_type?.message}</FormHelperText>
             </FormControl>
           </div>
           <div className="w-4/12 pr-6">
             <FormControl className="w-full font-prompt bg-grey-100">
               <InputLabel htmlFor="trinity-select">{'เงินเดือน (บาท) *'}</InputLabel>
-              <Select id="trinity-select" name="company_type">
-                {salary.map((salary) => (
-                  <MenuItem key={salary.title} value={salary.title}>
-                    {salary.title}
-                  </MenuItem>
-                ))}
-              </Select>
+              <Controller
+                control={control}
+                name="salary"
+                as={
+                  <Select id="trinity-select">
+                    {salary.map((salary) => (
+                      <MenuItem key={salary.title} value={salary.title}>
+                        {salary.title}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                }
+              />
+              <FormHelperText>{errors.salary?.message}</FormHelperText>
             </FormControl>
           </div>
         </div>
         <div className="flex flex-col px-6 pt-6 pb-6">
-          <p className="mb-4 font-semibold font-prompt text-heading-6">รายละเอียดบริษัท</p>
+          <p className="mb-4 font-semibold font-prompt text-heading-6">รายละเอียดงาน</p>
           <FormControl className="w-full font-prompt bg-grey-100">
             <TextField
               label="รายละเอียด *"
-              name="description"
               className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
               variant="outlined"
               defaultValue=""
               rows={5}
               multiline
               fullWidth
+              name="job_description"
+              inputRef={register}
+              error={!!errors.job_description}
+              helperText={errors.job_description?.message}
             />
           </FormControl>
         </div>
@@ -147,13 +185,16 @@ const AnnouncementForm = () => {
           <FormControl className="w-full font-prompt bg-grey-100">
             <TextField
               label="คุณสมบัติ *"
-              name="description"
               className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
               variant="outlined"
               defaultValue=""
               rows={5}
               multiline
               fullWidth
+              name="property"
+              inputRef={register}
+              error={!!errors.property}
+              helperText={errors.property?.message}
             />
           </FormControl>
         </div>
@@ -163,13 +204,16 @@ const AnnouncementForm = () => {
           <FormControl className="w-full font-prompt bg-grey-100">
             <TextField
               label="สวัสดิการ *"
-              name="description"
               className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
               variant="outlined"
               defaultValue=""
               rows={5}
               multiline
               fullWidth
+              name="welfare"
+              inputRef={register}
+              error={!!errors.welfare}
+              helperText={errors.welfare?.message}
             />
           </FormControl>
         </div>
@@ -180,6 +224,9 @@ const AnnouncementForm = () => {
             label="ที่อยู่ 1 *"
             name="address_one"
             className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.address_one}
+            helperText={errors.address_one?.message}
             fullWidth
           />
         </div>
@@ -188,21 +235,43 @@ const AnnouncementForm = () => {
             label="ที่อยู่ 2"
             name="address_two"
             className="font-sarabun bg-grey-100"
+            inputRef={register}
+            error={!!errors.address_two}
+            helperText={errors.address_two?.message}
             fullWidth
           />
         </div>
         <div className="flex flex-row justify-between">
           <div className="w-4/12 pl-6 pr-3">
-            <TextField label="ซอย" name="lane" className="font-sarabun bg-grey-100" fullWidth />
+            <TextField
+              label="ซอย"
+              name="lane"
+              className="font-sarabun bg-grey-100"
+              inputRef={register}
+              error={!!errors.lane}
+              helperText={errors.lane?.message}
+              fullWidth
+            />
           </div>
           <div className="w-4/12 pl-3 pr-3">
-            <TextField name="road" label="ถนน" className="font-sarabun bg-grey-100" fullWidth />
+            <TextField
+              name="road"
+              label="ถนน"
+              className="font-sarabun bg-grey-100"
+              inputRef={register}
+              error={!!errors.road}
+              helperText={errors.road?.message}
+              fullWidth
+            />
           </div>
           <div className="w-4/12 pl-3 pr-6">
             <TextField
               name="sub_district"
               label="ตำบล/เขต *"
               className="font-sarabun bg-grey-100"
+              inputRef={register}
+              error={!!errors.sub_district}
+              helperText={errors.sub_district?.message}
               fullWidth
             />
           </div>
@@ -213,6 +282,9 @@ const AnnouncementForm = () => {
               name="district"
               label="อำเภอ *"
               className="font-sarabun bg-grey-100"
+              inputRef={register}
+              error={!!errors.district}
+              helperText={errors.district?.message}
               fullWidth
             />
           </div>
@@ -221,6 +293,9 @@ const AnnouncementForm = () => {
               name="province"
               label="จังหวัด *"
               className="font-sarabun bg-grey-100"
+              inputRef={register}
+              error={!!errors.province}
+              helperText={errors.province?.message}
               fullWidth
             />
           </div>
@@ -229,6 +304,9 @@ const AnnouncementForm = () => {
               name="postal_code"
               label="รหัสไปรษณีย์ *"
               className="font-sarabun bg-grey-100"
+              inputRef={register}
+              error={!!errors.postal_code}
+              helperText={errors.postal_code?.message}
               fullWidth
             />
           </div>
@@ -239,13 +317,20 @@ const AnnouncementForm = () => {
           <div className="w-4/12 pl-6 pr-3">
             <FormControl className="w-full font-prompt bg-grey-100">
               <InputLabel htmlFor="start-business-day-select">วันเปิดทำการ *</InputLabel>
-              <Select id="start-business-day-select">
-                {days.map((data) => (
-                  <MenuItem key={data.day} value={data.day}>
-                    {data.day}
-                  </MenuItem>
-                ))}
-              </Select>
+              <Controller
+                control={control}
+                name="start_business_day"
+                as={
+                  <Select id="trinity-select">
+                    {days.map((data) => (
+                      <MenuItem key={data.day} value={data.day}>
+                        {data.day}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                }
+              />
+              <FormHelperText>{errors.start_business_day?.message}</FormHelperText>
             </FormControl>
           </div>
           <div className="w-4/12 pl-3 pr-3">
@@ -257,6 +342,9 @@ const AnnouncementForm = () => {
               InputLabelProps={{
                 shrink: true
               }}
+              inputRef={register}
+              error={!!errors.start_business_time}
+              helperText={errors.start_business_time?.message}
               fullWidth
             />
           </div>
@@ -265,14 +353,21 @@ const AnnouncementForm = () => {
           </div>
           <div className="w-4/12 pl-3 pr-3">
             <FormControl className="w-full font-prompt bg-grey-100">
-              <InputLabel htmlFor="end-business-day-select">วันเปิดทำการ *</InputLabel>
-              <Select id="end-business-day-select">
-                {days.map((data) => (
-                  <MenuItem key={data.day} value={data.day}>
-                    {data.day}
-                  </MenuItem>
-                ))}
-              </Select>
+              <InputLabel htmlFor="end-business-day-select">วันปิดทำการ *</InputLabel>
+              <Controller
+                control={control}
+                name="end_business_day"
+                as={
+                  <Select id="trinity-select">
+                    {days.map((data) => (
+                      <MenuItem key={data.day} value={data.day}>
+                        {data.day}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                }
+              />
+              <FormHelperText>{errors.end_business_day?.message}</FormHelperText>
             </FormControl>
           </div>
           <div className="w-4/12 pl-3 pr-6">
@@ -284,6 +379,9 @@ const AnnouncementForm = () => {
               InputLabelProps={{
                 shrink: true
               }}
+              inputRef={register}
+              error={!!errors.end_business_time}
+              helperText={errors.end_business_time?.message}
               fullWidth
             />
           </div>
@@ -306,7 +404,7 @@ const AnnouncementForm = () => {
                     คุณต้องการบันทึกและประกาศรับสมัครงานใช่หรือไม่
                   </span>
                 }
-                onSubmit={() => console.log('Just test show modal!!')}
+                onSubmit={handleSubmit(context.createAnnouncement)}
               />
             </>
           )}
