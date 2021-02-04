@@ -12,8 +12,6 @@ phases:
     commands:
       - echo Logging in Docker Hub
       - docker login --username $USER_DOCKER_HUB -p $PASSWORD_DOCKER_HUB
-      - echo Logging in to Amazon ECR...
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
       - cp $CODEBUILD_SRC_DIR_ENV/.env $CODEBUILD_SRC_DIR/.env
@@ -23,8 +21,12 @@ phases:
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:fe-dev-$IMAGE_TAG -f ./docker/app/Dockerfile.dev .
       - docker build -t $REPOSITORY_URI:nginx-dev-$IMAGE_TAG -f ./docker/nginx/Dockerfile .
+      - docker tag $REPOSITORY_URI:fe-dev-$IMAGE_TAG $REPOSITORY_URI:fe-dev-latest
+      - docker tag $REPOSITORY_URI:nginx-dev-$IMAGE_TAG $REPOSITORY_URI:nginx-dev-latest
   post_build:
     commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - echo Build completed on `date`
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:fe-dev-$IMAGE_TAG
