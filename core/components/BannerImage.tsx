@@ -2,11 +2,11 @@ import { CameraAlt } from '@material-ui/icons'
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 
-type AnnouncementImage = {
+type BannerImage = {
   className?: string
   imgSrc?: any
 }
-export const AnnouncementBanner = (props: AnnouncementImage) => {
+export const BannerImages = (props: BannerImage) => {
   const { className, imgSrc } = props
   return (
     <div
