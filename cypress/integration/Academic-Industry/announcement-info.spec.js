@@ -12,13 +12,13 @@ describe('The Announcement Information Page', () => {
   it('It is a have footer component', () => {
     cy.get('[data-cy=core-footer]').should('be.visible')
   })
-  it('should show button duplicate', () => {
-    cy.get('#button-application > svg > path')
-  })
-  it('should show duplicate modal when click duplicate announcement', () => {
-    cy.get('#button-application > svg > path').click()
-    cy.contains('สร้างประกาศใหม่อีกครั้ง')
-    cy.get('button').should('contain.text', 'สร้าง')
-    cy.get('button').should('contain.text', 'ยกเลิก')
-  })
+  // it('should show button duplicate', () => {
+  //   cy.get('#button-application > svg > path')
+  // })
+  // it('should show duplicate modal when click duplicate announcement', () => {
+  //   cy.get('#button-application > svg > path').click()
+  //   cy.contains('สร้างประกาศใหม่อีกครั้ง')
+  //   cy.get('button').should('contain.text', 'สร้าง')
+  //   cy.get('button').should('contain.text', 'ยกเลิก')
+  // })
 })
