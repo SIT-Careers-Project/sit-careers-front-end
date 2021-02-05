@@ -1,4 +1,4 @@
-FROM cypress/base:10
+FROM cypress/base:14.15.4
 
 WORKDIR /app
 ENV APPLICATION_ROOT /app

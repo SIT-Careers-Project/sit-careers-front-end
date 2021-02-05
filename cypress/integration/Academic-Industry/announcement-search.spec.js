@@ -9,11 +9,9 @@ describe('The Announcement Search Page', () => {
     cy.get('[data-cy=core-footer]').should('be.visible')
   })
   it('should have button ค้นหา', () => {
-    cy.get('button > .px-5').should('be.visible')
-    cy.contains('ค้นหา')
+    cy.get('button').should('contain.text', 'ค้นหา')
   })
   it('should have button สมัครงาน', () => {
-    cy.get('button > .px-5').should('be.visible')
-    cy.contains('สมัครงาน')
+    cy.get('button').should('contain.text', 'สมัครงาน')
   })
 })
