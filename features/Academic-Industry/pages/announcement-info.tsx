@@ -1,13 +1,14 @@
 import React, { useContext, useEffect } from 'react'
-import { useObserver } from 'mobx-react-lite'
-import { Announcement } from '../components/Announcement'
+
 import { AddCircle } from '@material-ui/icons'
+import { Announcement } from '../components/Announcement'
 import Link from 'next/link'
+import Pagination from '../../../core/components/Pagination'
 import Search from '../../../core/components/Search'
 import { announcementDuplicateFormContext } from '../context/announcement_duplicate_form_context'
 import { announcementInfoContext } from '../context/announcement_info_context'
 import { searchContext } from '../../../core/contexts/search_context'
-import Pagination from '../../../core/components/Pagination'
+import { useObserver } from 'mobx-react-lite'
 
 const CompanyInfo = () => {
   const context = useContext(announcementDuplicateFormContext)
@@ -19,7 +20,7 @@ const CompanyInfo = () => {
   }, [contextInfo])
 
   return useObserver(() => (
-    <div className="w-full h-full max-w-screen-lg mb-16">
+    <div className="w-full h-full max-w-screen-lg">
       <div className="flex justify-between w-full mt-2">
         <div>
           <p className="text-heading-5 font-prompt">ลงประกาศรับสมัครงาน</p>
@@ -62,7 +63,8 @@ const CompanyInfo = () => {
                     title={data.announcement_title}
                     tags={[data.job_position, data.job_type, data.status]}
                     date={`${data.start_date} - ${data.end_date}`}
-                    srcImg="https://i.picsum.photos/id/1000/5626/3635.jpg?hmac=qWh065Fr_M8Oa3sNsdDL8ngWXv2Jb-EE49ZIn6c0P-g"
+                    company={`${data.company_name_th} - ${data.company_name_en}`}
+                    srcImg={data.logo}
                     context={context}
                   />
                 </div>

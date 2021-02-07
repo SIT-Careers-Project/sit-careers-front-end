@@ -10,11 +10,15 @@ export const MainLayout = (props: MainLayoutProps) => {
   const { children } = props
   return (
     <>
-      <div className="h-auto bg-cover bg-grey1">
-        <Navbar />
-        {children}
+      <div className="relative bg-cover bg-grey1">
+        <div>
+          <Navbar />
+        </div>
+        <div className="relative mb-12">{children}</div>
+        <div className="absolute w-full">
+          <Footer />
+        </div>
       </div>
-      <Footer />
     </>
   )
 }

@@ -14,6 +14,7 @@ import {
   Select,
   Typography
 } from '@material-ui/core'
+import { companyType, jobPosition, jobType } from '../services/constantVariable'
 
 import { CardSmall } from '../../../core/components/Card/Small'
 import Link from 'next/link'
@@ -22,7 +23,6 @@ import PrimaryButton from '../../../core/components/Button/Primary'
 import React from 'react'
 import Search from '../../../core/components/Search'
 import { useObserver } from 'mobx-react-lite'
-import { companyType, jobPosition, jobType } from '../services/constantVariable'
 
 // import Pagination from '../../../core/components/Pagination'
 
@@ -83,7 +83,7 @@ const AnnouncementSearch = () => {
         </div>
       </div>
       <div className="w-full h-1 bg-secondary1" />
-      <div className="flex justify-center w-full h-full pb-10 bg-white">
+      <div className="flex justify-center w-full h-full pb-10">
         <div className="-mt-24">
           <div className="container px-32 mx-auto">
             <div className="flex flex-wrap mt-32">

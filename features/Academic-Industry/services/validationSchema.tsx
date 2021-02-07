@@ -1,7 +1,29 @@
 import * as yup from 'yup'
 
+const FILE_SIZE = 5242880
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png']
+
 export const AnnouncementFormSchema = yup.object().shape({
   announcement_id: yup.string(),
+  file_picture: yup
+    .mixed()
+    .notRequired()
+    .test('fileSize', 'ไฟล์ต้องมีขนาดไม่เกินใหญ่เกินไป ต้องมีขนาดไม่เกิน 5MB', (value) => {
+      console.log(value.length)
+      if (value.length !== 0) {
+        return value && value[0].size <= FILE_SIZE
+      } else {
+        return true
+      }
+    })
+    .test('fileFormat', 'ไฟล์ต้องเป็นนามสกุล .jpg .jpeg .gif และ .png', (value) => {
+      if (value.length !== 0) {
+        return value && SUPPORTED_FORMATS.includes(value[0].type)
+      } else {
+        return true
+      }
+    }),
+  company_id: yup.string().required('*จำเป็นต้องกรอก บริษัทที่ต้องการสร้างประกาศรับสมัครงาน'),
   address_one: yup.string().required('*จำเป็นต้องกรอก ที่อยู่ 1'),
   address_two: yup.string(),
   lane: yup.string(),
@@ -21,7 +43,7 @@ export const AnnouncementFormSchema = yup.object().shape({
   end_business_time: yup.string().required('*จำเป็นต้องกรอก เวลาปิดทำการ'),
   announcement_title: yup.string().required('*จำเป็นต้องกรอก หัวข้อประกาศ'),
   job_description: yup.string().required('*จำเป็นต้องกรอก รายละเอียดงาน'),
-  job_position_id: yup.string(),
+  job_position_id: yup.string().required('*จำเป็นต้องกรอก ประเภทของงาน'),
   property: yup.string().required('*จำเป็นต้องกรอก คุณสมบัติ'),
   salary: yup.string().required('*จำเป็นต้องกรอก เงินเดือน'),
   start_date: yup.string().required('*จำเป็นต้องกรอก วันประกาศรับสมัคร'),

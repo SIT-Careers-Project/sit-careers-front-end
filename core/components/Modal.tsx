@@ -17,7 +17,7 @@ export const CoreModal = (props: ModalProps) => {
   return (
     <Observer>
       {() => (
-        <Dialog open={context.isOpen} onClose={context.isClose}>
+        <Dialog open={context.isOpen}>
           <div data-cy="core-modal" className="p-4 text-left">
             <p className="mb-3 mr-40 font-prompt-medium text-heading-6">{title}</p>
             <span className="mb-5 font-prompt text-subtitle-1">{content}</span>
