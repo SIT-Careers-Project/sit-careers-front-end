@@ -1,19 +1,30 @@
 import { action, makeObservable, observable } from 'mobx'
-import { createContext } from 'react'
-import apiService from '../services/apiAcademicIndustry'
+
 import Router from 'next/router'
+import apiCompany from '../../Company/services/apiCompany'
+import apiService from '../services/apiAcademicIndustry'
+import { createContext } from 'react'
 
 export class AnnouncementFormPageContext {
   announcementType
   modal
+  jobPositions
+
+  autoCompleteCompany
 
   constructor() {
     makeObservable(this, {
       announcementType: observable,
       modal: observable,
+      jobPositions: observable,
+      autoCompleteCompany: observable,
       keyChange: action,
-      createAnnouncement: action
+      createAnnouncement: action,
+      getAutoCompleteCompanies: action,
+      getAutoCompleteJobPositions: action
     })
+    this.autoCompleteCompany = []
+    this.jobPositions = []
     this.announcementType = []
   }
 
@@ -23,6 +34,26 @@ export class AnnouncementFormPageContext {
 
   keyChange = (key, value) => {
     this[key] = value
+  }
+
+  getAutoCompleteCompanies = async () => {
+    try {
+      await apiCompany.getAllCompanies().then((response) => {
+        this.autoCompleteCompany = response.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  getAutoCompleteJobPositions = async () => {
+    try {
+      await apiService.getJosPositions().then((response) => {
+        this.jobPositions = response.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   createAnnouncement = async (data) => {

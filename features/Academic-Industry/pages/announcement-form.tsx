@@ -1,34 +1,39 @@
-import React, { useContext, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Observer } from 'mobx-react-lite'
 import {
-  TextField,
-  InputLabel,
   FormControl,
+  FormHelperText,
+  InputLabel,
   MenuItem,
   Select,
-  FormHelperText
+  TextField
 } from '@material-ui/core'
-import { BannerImages } from '../../../core/components/BannerImage'
-import { announcementFormPageContext } from '../context/announcement_form_page_context'
-import { jobType, jobPosition, days, salary } from '../services/constantVariable'
-import { modalContext } from '../../../core/contexts/modal_context'
-import { CoreModal } from '../../../core/components/Modal'
-import { yupResolver } from '@hookform/resolvers/yup'
+import React, { useContext, useEffect, useState } from 'react'
+import { days, jobType, salary } from '../services/constantVariable'
+
 import { AnnouncementFormSchema } from '../services/validationSchema'
+import { AutoComplete } from '../components/AutoComplete'
+import { BannerImages } from '../../../core/components/BannerImage'
+import { CoreModal } from '../../../core/components/Modal'
+import { Observer } from 'mobx-react-lite'
+import { announcementFormPageContext } from '../context/announcement_form_page_context'
+import { modalContext } from '../../../core/contexts/modal_context'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 const AnnouncementForm = () => {
   const context = useContext(announcementFormPageContext)
   const coreModalContext = useContext(modalContext)
+  const [file, setFile] = useState(null)
+
   const { handleSubmit, register, errors, control } = useForm({
     resolver: yupResolver(AnnouncementFormSchema)
   })
 
-  const [file, setFile] = useState(null)
-
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
+    context.getAutoCompleteCompanies()
+    context.getAutoCompleteJobPositions()
   }, [context, coreModalContext])
+
   return (
     <div className="w-full h-full max-w-screen-lg">
       <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
@@ -77,53 +82,72 @@ const AnnouncementForm = () => {
       <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
         <div className="px-6 pt-6">
           <p className="font-semibold font-prompt text-heading-6">ข้อมูลประกาศรับสมัคร</p>
-          <button className="w-full h-40 border-none focus:outline-none">
+          <button className="w-1/2 pr-3 border-none focus:outline-none">
             <InputLabel htmlFor="picture">
-              <BannerImages imgSrc={file} className="mt-5 cursor-pointer bg-grey-100" />
+              <BannerImages imgSrc={file} className="mt-5 bg-cover cursor-pointer bg-grey-100" />
             </InputLabel>
             <input
               id="picture"
               type="file"
-              name="picture"
+              name="file_picture"
               className="hidden"
               ref={register}
               onChange={(event) => setFile(URL.createObjectURL(event?.target?.files[0]))}
             />
           </button>
+          <FormHelperText>
+            <span className="leading-8 text-red">{errors.file_picture?.message}</span>
+          </FormHelperText>
         </div>
-        <div className="w-full px-6 pt-6">
-          <TextField
-            label="หัวข้อ *"
-            className="font-sarabun bg-grey-100"
-            name="announcement_title"
-            inputRef={register}
-            error={!!errors.announcement_title}
-            helperText={errors.announcement_title?.message}
-            fullWidth
-          />
+        <div className="grid w-full grid-flow-row grid-cols-12 px-6 pt-6">
+          <div className="col-span-6 pr-3">
+            <TextField
+              label="หัวข้อ *"
+              className="w-full font-sarabun bg-grey-100"
+              name="announcement_title"
+              inputRef={register}
+              error={!!errors.announcement_title}
+              helperText={errors.announcement_title?.message}
+            />
+          </div>
+          <div className="col-span-6 pl-3">
+            <Observer>
+              {() => (
+                <AutoComplete
+                  className="w-full"
+                  label="บริษัท *"
+                  inputRef={register}
+                  keyName="company_id"
+                  error={!!errors.company_id}
+                  helperText={errors.company_id?.message}
+                  options={context.autoCompleteCompany}
+                  keySearch="company_name_th"
+                />
+              )}
+            </Observer>
+          </div>
         </div>
         <div className="flex flex-row justify-between pt-6">
           <div className="w-4/12 pl-6 pr-3">
-            <FormControl className="w-full font-prompt bg-grey-100">
-              <InputLabel htmlFor="trinity-select">ประเภทของงาน *</InputLabel>
-              <Controller
-                control={control}
-                name="job_position"
-                as={
-                  <Select id="trinity-select">
-                    {jobPosition.map((job) => (
-                      <MenuItem key={job.title} value={job.title}>
-                        {job.title}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                }
-              />
-              <FormHelperText>{errors.job_position?.message}</FormHelperText>
-            </FormControl>
+            <Observer>
+              {() => (
+                <AutoComplete
+                  className="w-full"
+                  label="ประเภทของงาน *"
+                  inputRef={register}
+                  keyName="job_position_id"
+                  keySearch="job_position"
+                  error={!!errors.job_position_id}
+                  helperText={errors.job_position_id?.message}
+                  options={context.jobPositions}
+                />
+              )}
+            </Observer>
           </div>
           <div className="w-4/12 pl-3 pr-6">
-            <FormControl className="w-full font-prompt bg-grey-100">
+            <FormControl
+              error={errors.job_type?.message}
+              className="w-full font-prompt bg-grey-100">
               <InputLabel htmlFor="trinity-select">ประเภทของประกาศ *</InputLabel>
               <Controller
                 control={control}
@@ -142,10 +166,11 @@ const AnnouncementForm = () => {
             </FormControl>
           </div>
           <div className="w-4/12 pr-6">
-            <FormControl className="w-full font-prompt bg-grey-100">
-              <InputLabel htmlFor="trinity-select">{'เงินเดือน (บาท) *'}</InputLabel>
+            <FormControl error={errors.salary?.message} className="w-full font-prompt bg-grey-100">
+              <InputLabel htmlFor="salary-select">{'เงินเดือน (บาท) *'}</InputLabel>
               <Controller
                 control={control}
+                id="salary-select"
                 name="salary"
                 as={
                   <Select id="trinity-select">
@@ -315,10 +340,13 @@ const AnnouncementForm = () => {
         <p className="mb-3 ml-6 font-semibold font-prompt text-heading-6">วันที่ทำการ</p>
         <div className="flex flex-row pb-6">
           <div className="w-4/12 pl-6 pr-3">
-            <FormControl className="w-full font-prompt bg-grey-100">
+            <FormControl
+              error={!!errors?.start_business_day}
+              className="w-full font-prompt bg-grey-100">
               <InputLabel htmlFor="start-business-day-select">วันเปิดทำการ *</InputLabel>
               <Controller
                 control={control}
+                id="start-business-day-select"
                 name="start_business_day"
                 as={
                   <Select id="trinity-select">
@@ -352,10 +380,13 @@ const AnnouncementForm = () => {
             <p className="font-semibold text-heading-6 font-prompt">ถึง</p>
           </div>
           <div className="w-4/12 pl-3 pr-3">
-            <FormControl className="w-full font-prompt bg-grey-100">
+            <FormControl
+              error={!!errors.end_business_day}
+              className="w-full font-prompt bg-grey-100">
               <InputLabel htmlFor="end-business-day-select">วันปิดทำการ *</InputLabel>
               <Controller
                 control={control}
+                id="end-business-day-select"
                 name="end_business_day"
                 as={
                   <Select id="trinity-select">
