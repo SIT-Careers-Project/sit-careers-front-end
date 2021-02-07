@@ -13,9 +13,9 @@ const apiAcademic = {
   },
   createAnnouncement: async (data) => {
     const formData = new FormData()
-    console.log(data)
     formData.append('address_one', data.address_one)
     formData.append('address_two', data.address_two)
+    formData.append('company_id', data.company_id)
     formData.append('lane', data.lane)
     formData.append('road', data.road)
     formData.append('sub_district', data.sub_district)
@@ -27,7 +27,8 @@ const apiAcademic = {
     formData.append('job_description', data.job_description)
     formData.append('job_position_id', data.job_position_id)
     formData.append('property', data.property)
-    formData.append('picture', data.picture)
+    formData.append('file_picture', data['file_picture'][0] ? data['file_picture'][0] : '')
+    formData.append('picture', data.picture ? data.picture : '-')
     formData.append('start_date', data.start_date)
     formData.append('end_date', data.end_date)
     formData.append('salary', data.salary)
@@ -42,6 +43,10 @@ const apiAcademic = {
     const response = await api.post('/academic-industry/announcement', formData, {
       headers: { 'Content-type': 'multipart/form-data' }
     })
+    return response
+  },
+  getJosPositions: async () => {
+    const response = await api.get('/academic-industry/job-positions')
     return response
   }
 }
