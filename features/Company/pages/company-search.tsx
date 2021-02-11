@@ -23,70 +23,57 @@ const AllCompany = () => {
 
   return useObserver(() => (
     <div>
-      <div
-        className="relative flex items-center content-center justify-center pt-16 pb-32"
-        style={{
-          minHeight: '60vh'
-        }}>
-        <div className="absolute top-0 w-full h-full bg-center bg-cover">
-          <img
-            alt="company"
-            src="/image/view-modern-business-skyscrapers-glass-sky-view-landscape-commercial-building.jpg"
-            className="absolute top-0 w-full h-full bg-center bg-cover"
-          />
-          <span id="blackOverlay" className="absolute w-full h-full bg-black opacity-75"></span>
-        </div>
-        <div className="container relative mx-auto">
-          <div className="flex flex-wrap items-center">
-            <div className="w-full ml-auto mr-auto lg:w-5/12">
-              <div className="p-2 mb-5 lg:w-11/12 bg-grey-100">
-                <Search
+      <div className="flex justify-center w-full h-full pt-16 pb-3 bg-grey4">
+        <div className="w-full max-w-screen-lg my-6">
+          <div className="flex flex-row justify-between pt-6">
+            <div className="p-2 w-6/12 bg-grey-100">
+              <Search
+                onChange={(event) => {
+                  if (typeof event.target.value === 'string') {
+                    context.setCompanyName(event.target.value)
+                  }
+                }}
+              />
+            </div>
+            <div className="w-4/12 px-5">
+              <FormControl className="w-full font-prompt bg-grey-100 my-4">
+                <InputLabel htmlFor="trinity-select">ประเภทธุรกิจ</InputLabel>
+                <Select
+                  id="trinity-select"
                   onChange={(event) => {
                     if (typeof event.target.value === 'string') {
-                      context.setCompanyName(event.target.value)
-                    }
-                  }}
-                />
-              </div>
-              <div>
-                <FormControl variant="filled" className="lg:w-3/6 font-prompt bg-grey-100">
-                  <InputLabel htmlFor="trinity-select">ประเภทธุรกิจ</InputLabel>
-                  <Select
-                    id="trinity-select"
-                    onChange={(event) => {
-                      if (typeof event.target.value === 'string') {
-                        context.setCompanyType(event.target.value)
-                      }
-                    }}>
-                    {companyType.map((company) => (
-                      <MenuItem key={company.title} value={company.title}>
-                        {company.title}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <PrimaryButton
-                  title="ค้นหา"
-                  className="ml-10 shadow-md lg:w-2/6 btn-grad"
-                  onClick={() => {
-                    if (typeof context.companyType || context.companyName === 'string') {
-                      const keySearch = ['company_type', 'company_name_th', 'company_name_en']
-                      context.setCompanies(
-                        contextSearch.searchMultiFilter(
-                          [context.companyType + ' ' + context.companyName],
-                          context.beforeSearch,
-                          keySearch
-                        )
-                      )
+                      context.setCompanyType(event.target.value)
                     }
                   }}>
-                  <p className="px-4 py-4 text-white font-prompt text-subtitle-1">ค้นหา</p>
-                </PrimaryButton>
-              </div>
+                  {companyType.map((company) => (
+                    <MenuItem key={company.title} value={company.title}>
+                      {company.title}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </div>
+            <PrimaryButton
+              className="lg:w-2/6"
+              title="ค้นหา"
+              onClick={() => {
+                if (typeof context.companyType || context.companyName === 'string') {
+                  const keySearch = ['company_type', 'company_name_th', 'company_name_en']
+                  context.setCompanies(
+                    contextSearch.searchMultiFilter(
+                      [context.companyType + ' ' + context.companyName],
+                      context.beforeSearch,
+                      keySearch
+                    )
+                  )
+                }
+              }}>
+              <p className="text-white font-prompt text-subtitle-1">ค้นหา</p>
+            </PrimaryButton>
           </div>
         </div>
       </div>
+      <div className="w-full h-1 bg-secondary1" />
       <div className="container grid max-w-screen-lg grid-flow-row mx-auto mt-5">
         <div>
           <p className="mb-5 text-heading-5 font-prompt">ข้อมูลบริษัท</p>
