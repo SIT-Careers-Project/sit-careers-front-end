@@ -1,5 +1,5 @@
 import { Business, QueryBuilder } from '@material-ui/icons'
-import { Card as MaterialCard, Typography } from '@material-ui/core'
+import { Card as MaterialCard } from '@material-ui/core'
 
 import React from 'react'
 
@@ -19,9 +19,9 @@ export const CardSmall = ({ className, tags, srcImg, title, date, company }: Car
         <img width="80px" src={srcImg} alt="Small Card" />
       </div>
       <div className="align-middle">
-        <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
+        <p className="mb-3 ml-1 font-bold leading-6 font-prompt text-primary text-heading-6">
           {title}
-        </Typography>
+        </p>
         {tags.map((data, i) => (
           <span
             key={i}
