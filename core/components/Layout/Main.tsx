@@ -14,7 +14,9 @@ export const MainLayout = (props: MainLayoutProps) => {
         <div>
           <Navbar />
         </div>
-        <div className="relative mb-12">{children}</div>
+        <div style={{ minHeight: '70vh' }} className="mb-12">
+          {children}
+        </div>
         <div className="absolute w-full">
           <Footer />
         </div>
