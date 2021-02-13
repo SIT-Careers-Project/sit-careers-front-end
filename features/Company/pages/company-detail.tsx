@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 
-import { AnnouncementCard } from '../components/AnnouncementCard'
+import { AnnouncementCardSection } from '../components/AnnouncementCardSection'
 import Link from 'next/link'
 import { Observer } from 'mobx-react-lite'
 import { companyDetailPageContext } from '../contexts/company_detail_page_context'
@@ -86,7 +86,7 @@ const CompanyDetail = ({ companyId }: CompanyDetailProps) => {
             </div>
           </div>
           <div className="flex">
-            <AnnouncementCard announcements={context.announcements} />
+            <AnnouncementCardSection announcements={context.announcements} />
           </div>
         </div>
       )}
