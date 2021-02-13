@@ -12,7 +12,7 @@ import { Controller } from 'react-hook-form'
 
 const MainInfoForm = (props) => {
   const { register, errors, control } = props
-  
+
   return (
     <div>
       <div className="flex flex-row justify-between px-6 py-6">

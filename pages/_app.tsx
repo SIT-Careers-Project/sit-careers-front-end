@@ -1,4 +1,5 @@
 import '../core/styles/tailwind.css'
+import 'dayjs/locale/th'
 
 import React, { useEffect } from 'react'
 

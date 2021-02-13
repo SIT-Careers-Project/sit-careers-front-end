@@ -5,7 +5,7 @@ import React from 'react'
 const CompanyInfo = ({ query }) => {
   return (
     <MainLayout>
-      <div style={{ height: '60vh' }} className="flex justify-center mt-16 mb-16">
+      <div className="flex justify-center mt-16">
         <CompanyDetail companyId={query.company_id} />
       </div>
     </MainLayout>
