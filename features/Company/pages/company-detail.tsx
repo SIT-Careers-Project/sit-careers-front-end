@@ -26,16 +26,17 @@ const CompanyDetail = ({ companyId }: CompanyDetailProps) => {
         <div className="flex flex-col w-full h-full max-w-screen-lg pt-10">
           <div className="flex">
             <div className="md:w-1/4">
-              {context?.company?.logo == '-' ? (
+              {context?.company?.logo === '-' && (
                 <div className="flex items-center justify-center w-40 h-40 rounded-full bg-secondary1">
                   <span className="text-white uppercase text-heading-1">
                     {context?.company?.company_name_en.substr(0, 1)}
                   </span>
                 </div>
-              ) : (
+              )}
+              {context?.company?.logo && (
                 <img
                   alt="logo of company"
-                  className="w-40 h-40 bg-grey-100"
+                  className="w-40 h-40 rounded-full bg-grey-100"
                   src={`${publicRuntimeConfig.s3_url}/logo/${context?.company?.logo}`}
                 />
               )}
