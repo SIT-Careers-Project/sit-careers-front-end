@@ -97,6 +97,13 @@ export default function Navbar() {
                       </span>
                     </MenuItem>
                   </Link>
+                  <Link href="/report-management/info">
+                    <MenuItem onClick={context.handleClose}>
+                      <span className="font-prompt-light text-body-2 text-primary">
+                        ดาวห์โหลดรายงานสรุป
+                      </span>
+                    </MenuItem>
+                  </Link>
                 </Menu>
               </div>
             </div>
