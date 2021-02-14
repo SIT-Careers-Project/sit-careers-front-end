@@ -5,7 +5,7 @@ import React from 'react'
 const ReportInfo = () => {
   return (
     <MainLayout>
-      <div className="flex justify-center mt-16 ">
+      <div className="flex justify-center mt-16">
         <Report />
       </div>
     </MainLayout>
