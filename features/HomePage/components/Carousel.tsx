@@ -21,7 +21,6 @@ export const Carousel = () => {
 
   useEffect(() => {
     if (!isActive) {
-      ref.current
       const interval = setInterval(() => {
         setActive((oldValue) => {
           let newValue = oldValue + 1
