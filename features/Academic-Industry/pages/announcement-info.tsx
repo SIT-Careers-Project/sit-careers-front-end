@@ -9,15 +9,18 @@ import { announcementDuplicateFormContext } from '../context/announcement_duplic
 import { announcementInfoContext } from '../context/announcement_info_context'
 import { searchContext } from '../../../core/contexts/search_context'
 import { useObserver } from 'mobx-react-lite'
+import { paginationContext } from '../../../core/contexts/pagination_context'
 
-const CompanyInfo = () => {
+const AnnouncementInfo = () => {
   const context = useContext(announcementDuplicateFormContext)
   const contextInfo = useContext(announcementInfoContext)
   const contextSearch = useContext(searchContext)
+  const contextPagination = useContext(paginationContext)
 
   useEffect(() => {
     contextInfo.getAnnouncements()
-  }, [contextInfo])
+    contextPagination.setSliceData()
+  }, [contextInfo, contextPagination])
 
   return useObserver(() => (
     <div className="w-full h-full max-w-screen-lg">
@@ -56,20 +59,23 @@ const CompanyInfo = () => {
       <div>
         {contextInfo.announcements.length !== 0 ? (
           <>
-            {contextInfo.announcements.map((data, i) => {
-              return (
-                <div className="pt-5" key={i}>
-                  <Announcement
-                    title={data.announcement_title}
-                    tags={[data.job_position, data.job_type, data.status]}
-                    date={`${data.start_date} - ${data.end_date}`}
-                    company={`${data.company_name_th} - ${data.company_name_en}`}
-                    srcImg={data.logo}
-                    context={context}
-                  />
-                </div>
-              )
-            })}
+            {contextInfo.announcements
+              .slice(contextPagination.sliceDataStart, contextPagination.sliceDataEnd)
+              .map((data, i) => {
+                return (
+                  <div className="pt-5" key={i}>
+                    <Announcement
+                      title={data.announcement_title}
+                      tags={[data.job_position, data.job_type, data.status]}
+                      date={`${data.start_date} - ${data.end_date}`}
+                      company={`${data.company_name_th} - ${data.company_name_en}`}
+                      srcImg={data.logo}
+                      context={context}
+                      linkPath={`/academic-industry/update/${data.announcement_id}`}
+                    />
+                  </div>
+                )
+              })}
             <Pagination data={contextInfo.announcements} />
           </>
         ) : (
@@ -82,4 +88,4 @@ const CompanyInfo = () => {
   ))
 }
 
-export default CompanyInfo
+export default AnnouncementInfo
