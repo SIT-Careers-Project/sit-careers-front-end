@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { AddCircle } from '@material-ui/icons'
 import { Announcement } from '../components/Announcement'
 import Link from 'next/link'
+import dayjs from 'dayjs'
 import Pagination from '../../../core/components/Pagination'
 import Search from '../../../core/components/Search'
 import { announcementDuplicateFormContext } from '../context/announcement_duplicate_form_context'
@@ -30,7 +31,7 @@ const AnnouncementInfo = () => {
         </div>
         <div>
           <Link href="/academic-industry/form-create">
-            <button className="bg-primary">
+            <button className="bg-primary focus:outline-none">
               <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
                 <AddCircle className="mr-1" />
                 สร้างประกาศ
@@ -62,12 +63,14 @@ const AnnouncementInfo = () => {
             {contextInfo.announcements
               .slice(contextPagination.sliceDataStart, contextPagination.sliceDataEnd)
               .map((data, i) => {
+                const startDate = dayjs(data.start_date).locale('th').format('DD MMMM YYYY hh:mm')
+                const endDate = dayjs(data.end_date).locale('th').format('DD MMMM YYYY hh:mm')
                 return (
                   <div className="pt-5" key={i}>
                     <Announcement
                       title={data.announcement_title}
                       tags={[data.job_position, data.job_type, data.status]}
-                      date={`${data.start_date} - ${data.end_date}`}
+                      date={`${startDate} - ${endDate}`}
                       company={`${data.company_name_th} - ${data.company_name_en}`}
                       srcImg={data.logo}
                       context={context}
