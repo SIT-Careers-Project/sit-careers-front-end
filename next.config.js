@@ -9,6 +9,9 @@ module.exports = () => {
     },
     serverRuntimeConfig: {
       JWT_SECRET: process.env.JWT_SECRET
-    }
+    },
+    images: {
+      domains: ['www.sit.kmutt.ac.th'],
+    },
   }
 }

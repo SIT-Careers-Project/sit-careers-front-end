@@ -1,13 +1,14 @@
 import { Assignment, Domain, People } from '@material-ui/icons'
 
 import { AnnouncementSection } from '../components/Sections/Announcement'
+import { Carousel } from '../components/Carousel'
 import { CompanySection } from '../components/Sections/Company'
 import { StatCard } from '../../../core/components/Card/StatCard'
 
 function Index() {
   return (
     <>
-      <div style={{ height: '450px' }} className="w-full mt-12 bg-primary"></div>
+      <Carousel />
       <div className="max-w-screen-lg mx-auto">
         <div className="grid grid-cols-12 gap-5 py-24">
           <div className="col-span-12">
