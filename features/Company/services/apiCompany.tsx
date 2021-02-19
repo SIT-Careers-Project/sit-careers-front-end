@@ -37,10 +37,11 @@ const apiCompany = {
     formData.append('postal_code', data.postal_code)
     formData.append('mou_link', data.mou_link)
     formData.append('mou_type', data.mou_type)
-    formData.append('contact_period', data.contact_period)
     formData.append('phone_no', data.phone_no)
     formData.append('tel_no', data.tel_no)
     formData.append('logo', data.logo ? data.logo : '-')
+    formData.append('start_date_mou', data.start_mou_date ? data.start_mou_date : '-')
+    formData.append('end_date_mou', data.end_mou_date ? data.end_mou_date : '-')
     formData.append('website', data.website)
     const response = await api.post('/company', formData, {
       headers: { 'Content-type': 'multipart/form-data' }
@@ -72,10 +73,11 @@ const apiCompany = {
     formData.append('postal_code', data.postal_code)
     formData.append('mou_link', data.mou_link)
     formData.append('mou_type', data.mou_type)
-    formData.append('contact_period', data.contact_period)
     formData.append('phone_no', data.phone_no)
     formData.append('tel_no', data.tel_no)
     formData.append('logo', data.logo)
+    formData.append('start_date_mou', data.start_mou_date ? data.start_mou_date : '-')
+    formData.append('end_date_mou', data.end_mou_date ? data.end_mou_date : '-')
     formData.append('website', data.website)
     formData.append('_method', 'put')
 
