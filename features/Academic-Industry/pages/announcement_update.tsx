@@ -1,4 +1,5 @@
 import { Controller, useForm } from 'react-hook-form'
+import dayjs from 'dayjs'
 import {
   FormControl,
   FormHelperText,
@@ -31,7 +32,6 @@ const AnnouncementUpdateForm = () => {
   const router = useRouter()
   const { announcement_id } = router.query
   const [file, setFile] = useState(null)
-  const [renderDelay, setRenderDelay] = useState(true)
 
   const { handleSubmit, register, errors, control, reset } = useForm({
     resolver: yupResolver(AnnouncementFormSchema),
@@ -40,21 +40,24 @@ const AnnouncementUpdateForm = () => {
 
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
-    context.getAnnouncement(announcement_id)
     context.getAutoCompleteCompanies()
     context.getAutoCompleteJobPositions()
-  }, [announcement_id, context, coreModalContext])
+    context.getAnnouncement(announcement_id).then(() => {
+      const startDate = dayjs(context.announcement.start_date).format('YYYY-MM-DDThh:mm')
+      const endDate = dayjs(context.announcement.end_date).format('YYYY-MM-DDThh:mm')
+      context.keyChange('startDate', startDate)
+      context.keyChange('endDate', endDate)
 
-  useEffect(() => {
-    setTimeout(() => reset({ ...context.announcement }), 400)
-    setTimeout(() => setRenderDelay(false), 1500)
-  }, [context.announcement, reset])
+      setTimeout(() => reset({ ...context.announcement }), 400)
+      setTimeout(() => context.keyChange('renderDelay', false), 1000)
+    })
+  }, [announcement_id, context, coreModalContext, reset])
 
   return (
-    <>
-      {!renderDelay && (
-        <Observer>
-          {() => (
+    <Observer>
+      {() => (
+        <>
+          {!context.renderDelay && (
             <div className="w-full h-full max-w-screen-lg">
               <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
                 <div className="px-6 pt-6">
@@ -70,6 +73,10 @@ const AnnouncementUpdateForm = () => {
                         shrink: true
                       }}
                       name="start_date"
+                      value={context.startDate}
+                      onChange={(event) => {
+                        context.keyChange('startDate', event.target.value)
+                      }}
                       inputRef={register}
                       error={!!errors.start_date}
                       helperText={errors.start_date?.message}
@@ -87,6 +94,10 @@ const AnnouncementUpdateForm = () => {
                         shrink: true
                       }}
                       name="end_date"
+                      value={context.endDate}
+                      onChange={(event) => {
+                        context.keyChange('endDate', event.target.value)
+                      }}
                       inputRef={register}
                       error={!!errors.end_date}
                       helperText={errors.end_date?.message}
@@ -155,6 +166,7 @@ const AnnouncementUpdateForm = () => {
                       label="บริษัท *"
                       inputRef={register}
                       keyName="company_id"
+                      defaultValue={context?.announcement?.company_id}
                       error={!!errors.company_id}
                       helperText={errors.company_id?.message}
                       options={context.autoCompleteCompany}
@@ -168,6 +180,7 @@ const AnnouncementUpdateForm = () => {
                       className="w-full"
                       label="ประเภทของงาน *"
                       inputRef={register}
+                      defaultValue={context?.announcement?.job_position_id}
                       keyName="job_position_id"
                       keySearch="job_position"
                       error={!!errors.job_position_id}
@@ -470,9 +483,9 @@ const AnnouncementUpdateForm = () => {
               </div>
             </div>
           )}
-        </Observer>
+        </>
       )}
-    </>
+    </Observer>
   )
 }
 

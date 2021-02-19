@@ -12,6 +12,11 @@ export class AnnouncementUpdatePageContext {
   autoCompleteCompany
   jobPositions
 
+  renderDelay
+
+  startDate
+  endDate
+
   constructor() {
     makeObservable(this, {
       getAnnouncement: action,
@@ -19,11 +24,18 @@ export class AnnouncementUpdatePageContext {
       autoCompleteCompany: observable,
       showModal: observable,
       announcement: observable,
+      startDate: observable,
+      endDate: observable,
+      renderDelay: observable,
       getAutoCompleteCompanies: action,
       getAutoCompleteJobPositions: action
     })
     this.announcement = []
+    this.jobPositions = []
     this.autoCompleteCompany = []
+    this.endDate = ''
+    this.startDate = ''
+    this.renderDelay = true
   }
 
   keyChange = (key, value) => {
@@ -31,7 +43,6 @@ export class AnnouncementUpdatePageContext {
   }
 
   getAnnouncement = async (announcement_id) => {
-    this.announcement = []
     try {
       const response = await apiService.getAnnouncementById(announcement_id)
       this.announcement = response.data
