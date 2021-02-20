@@ -31,10 +31,8 @@ export const AutoComplete = (props: CoreAutoCompleteProps) => {
     helperText,
     defaultValue
   } = props
-
   const ref = useRef(null)
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {
     if (defaultValue) {
       const dataFilter = options.filter((data) => data[keyName] === defaultValue)
@@ -49,8 +47,8 @@ export const AutoComplete = (props: CoreAutoCompleteProps) => {
         options={options}
         ref={ref.current}
         includeInputInList={true}
-        onInputChange={(event) => {
-          setInputValue(event.target?.value)
+        onInputChange={(e, newInputValue) => {
+          setInputValue(newInputValue)
         }}
         onChange={(event, newValue) => {
           if (newValue) {
