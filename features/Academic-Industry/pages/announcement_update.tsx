@@ -43,12 +43,13 @@ const AnnouncementUpdateForm = () => {
     context.getAutoCompleteCompanies()
     context.getAutoCompleteJobPositions()
     context.getAnnouncement(announcement_id).then(() => {
-      const startDate = dayjs(context.announcement.start_date).format('YYYY-MM-DDThh:mm')
-      const endDate = dayjs(context.announcement.end_date).format('YYYY-MM-DDThh:mm')
-      context.keyChange('startDate', startDate)
-      context.keyChange('endDate', endDate)
-
-      setTimeout(() => reset({ ...context.announcement }), 400)
+      setTimeout(() => {
+        reset({ ...context.announcement })
+        const startDate = dayjs(context.announcement.start_date).format('YYYY-MM-DDThh:mm')
+        const endDate = dayjs(context.announcement.end_date).format('YYYY-MM-DDThh:mm')
+        context.keyChange('startDate', startDate)
+        context.keyChange('endDate', endDate)
+      }, 400)
       setTimeout(() => context.keyChange('renderDelay', false), 1000)
     })
   }, [announcement_id, context, coreModalContext, reset])
