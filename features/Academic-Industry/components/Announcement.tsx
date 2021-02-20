@@ -4,6 +4,7 @@ import { Dialog, DialogActions, Card as MaterialCard, Typography } from '@materi
 import { Observer } from 'mobx-react-lite'
 import React from 'react'
 import getConfig from 'next/config'
+import Link from 'next/link'
 
 const { publicRuntimeConfig } = getConfig()
 interface AnnouncementProps {
@@ -13,6 +14,7 @@ interface AnnouncementProps {
   title?: string
   date?: string
   company?: string
+  linkPath?: string
   context
 }
 
@@ -23,7 +25,8 @@ export const Announcement = ({
   title,
   date,
   company,
-  context
+  context,
+  linkPath
 }: AnnouncementProps) => (
   <>
     <MaterialCard
@@ -36,9 +39,18 @@ export const Announcement = ({
         }}
       />
       <div className="col-span-8 pt-8 align-middle">
-        <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
-          {title}
-        </Typography>
+        {linkPath ? (
+          <Link href={linkPath}>
+            <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6 cursor-pointer">
+              {title}
+            </Typography>
+          </Link>
+        ) : (
+          <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
+            {title}
+          </Typography>
+        )}
+
         <div className="mt-2">
           {tags.map((data, i) => (
             <span
