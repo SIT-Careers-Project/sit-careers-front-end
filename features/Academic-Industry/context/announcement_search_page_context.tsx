@@ -61,7 +61,6 @@ export class AnnouncementSearchPageContext {
       this.announcements = response.data
       this.beforeSearch = response.data
       this.announcementDetail = response.data[0]
-      console.log(this.announcementDetail)
     } catch (error) {
       console.log(error)
     }
