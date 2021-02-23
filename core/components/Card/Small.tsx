@@ -10,7 +10,7 @@ interface CardProps {
   title?: string
   date?: string
   company?: string
-  onClick
+  onClick?
 }
 
 export const CardSmall = ({
