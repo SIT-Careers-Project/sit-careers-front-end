@@ -30,6 +30,11 @@ export class PaginationContext {
     this.sliceDataStart = (this.page - 1) * this.itemsPerPage
     this.sliceDataEnd = this.page * this.itemsPerPage
   }
+
+  setSliceAnnouncement = () => {
+    this.sliceDataStart = (this.page - 1) * 6
+    this.sliceDataEnd = this.page * 6
+  }
 }
 
 export const paginationContext = createContext(new PaginationContext())
