@@ -23,6 +23,7 @@ export const AnnouncementCardSection = (props) => {
                 return (
                   <div style={{ width: '403px', height: '201px' }} key={i}>
                     <CardSmall
+                      onClick={''}
                       company={`${data.company_name_en}`}
                       title={data.announcement_title}
                       date={`${dayjs(data.start_date)
