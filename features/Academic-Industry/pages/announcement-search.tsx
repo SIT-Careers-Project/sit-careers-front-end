@@ -22,8 +22,7 @@ const AnnouncementSearch = () => {
   useEffect(() => {
     context.getAnnouncements()
     contextPagination.setSliceAnnouncement()
-    context.setAnnouncementDetail(context.announcements[0])
-    context.getMenuItemJobPositions()
+    context.setValue('announcementDetail', context.announcements[0])
   }, [context, contextPagination])
 
   return (
@@ -36,8 +35,8 @@ const AnnouncementSearch = () => {
                 <Search
                   onChange={(event) => {
                     if (typeof event.target.value === 'string') {
-                      context.setCompanyName(event.target.value)
-                      context.setAnnouncementTitle(event.target.value)
+                      context.setValue('companyName', event.target.value)
+                      context.setValue('announcementTitle', event.target.value)
                     }
                   }}
                 />
@@ -51,12 +50,12 @@ const AnnouncementSearch = () => {
                       name="job_position"
                       onChange={(event) => {
                         if (typeof event.target.value === 'string') {
-                          context.setJobPosition(event.target.value)
+                          context.setValue('jobPosition', event.target.value)
                         }
                       }}>
-                      {context.jobPositions.map((job) => (
-                        <MenuItem key={job.job_position_id} value={job.job_position}>
-                          {job.job_position}
+                      {context.jobPositions.map((position, i) => (
+                        <MenuItem key={i} value={position.job_position}>
+                          {position.job_position}
                         </MenuItem>
                       ))}
                     </Select>
@@ -70,7 +69,7 @@ const AnnouncementSearch = () => {
                       name="job_type"
                       onChange={(event) => {
                         if (typeof event.target.value === 'string') {
-                          context.setJobType(event.target.value)
+                          context.setValue('jobType', event.target.value)
                         }
                       }}>
                       {jobType.map((job) => (
@@ -89,7 +88,7 @@ const AnnouncementSearch = () => {
                       name="company_type"
                       onChange={(event) => {
                         if (typeof event.target.value === 'string') {
-                          context.setCompanyType(event.target.value)
+                          context.setValue('companyType', event.target.value)
                         }
                       }}>
                       {companyType.map((company) => (
@@ -167,7 +166,7 @@ const AnnouncementSearch = () => {
                                   date={`${data.start_date} - ${data.end_date}`}
                                   company={`${data.company_name_th} - ${data.company_name_en}`}
                                   srcImg={`${publicRuntimeConfig.s3_url}/logo/${data.logo}`}
-                                  onClick={() => context.setAnnouncementDetail(data)}
+                                  onClick={() => context.setValue('announcementDetail', data)}
                                 />
                               </div>
                             )
