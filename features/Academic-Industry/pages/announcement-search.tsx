@@ -166,7 +166,7 @@ const AnnouncementSearch = () => {
                                   tags={[data.job_position, data.job_type, data.status]}
                                   date={`${data.start_date} - ${data.end_date}`}
                                   company={`${data.company_name_th} - ${data.company_name_en}`}
-                                  srcImg={data.logo}
+                                  srcImg={`${publicRuntimeConfig.s3_url}/logo/${data.logo}`}
                                   onClick={() => context.setAnnouncementDetail(data)}
                                 />
                               </div>
