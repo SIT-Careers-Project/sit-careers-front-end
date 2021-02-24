@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
-import { companyType, jobPosition, jobType } from '../services/constantVariable'
+import { companyType, jobType } from '../services/constantVariable'
 import { CardSmall } from '../../../core/components/Card/Small'
 import PrimaryButton from '../../../core/components/Button/Primary'
 import React, { useContext, useEffect } from 'react'
@@ -20,6 +20,7 @@ const AnnouncementSearch = () => {
     context.getAnnouncements()
     contextPagination.setSliceAnnouncement()
     context.setAnnouncementDetail(context.announcements[0])
+    context.getMenuItemJobPositions()
   }, [context, contextPagination])
 
   return (
@@ -50,9 +51,9 @@ const AnnouncementSearch = () => {
                           context.setJobPosition(event.target.value)
                         }
                       }}>
-                      {jobPosition.map((position) => (
-                        <MenuItem key={position.title} value={position.title}>
-                          {position.title}
+                      {context.jobPositions.map((job) => (
+                        <MenuItem key={job.job_position_id} value={job.job_position}>
+                          {job.job_position}
                         </MenuItem>
                       ))}
                     </Select>
@@ -101,11 +102,13 @@ const AnnouncementSearch = () => {
                   className="z-50 ml-10 lg:w-2/6"
                   onClick={() => {
                     if (
-                      typeof context.companyType ||
-                      context.companyName ||
-                      context.announcementTitle ||
-                      context.jobPosition ||
-                      context.jobType === 'string'
+                      typeof (
+                        context.companyType ||
+                        context.companyName ||
+                        context.announcementTitle ||
+                        context.jobPosition ||
+                        context.jobType
+                      ) === 'string'
                     ) {
                       const keySearch = [
                         'company_type',

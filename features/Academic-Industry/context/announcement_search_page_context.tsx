@@ -6,6 +6,7 @@ export class AnnouncementSearchPageContext {
   beforeSearch
   companyName
   announcementTitle
+  jobPositions
   jobPosition
   jobType
   companyType
@@ -14,10 +15,12 @@ export class AnnouncementSearchPageContext {
     makeObservable(this, {
       getAnnouncements: action,
       setAnnouncements: action,
+      getMenuItemJobPositions: action,
       announcements: observable,
       beforeSearch: observable,
       companyName: observable,
       announcementTitle: observable,
+      jobPositions: observable,
       jobPosition: observable,
       jobType: observable,
       companyType: observable,
@@ -26,11 +29,12 @@ export class AnnouncementSearchPageContext {
     this.announcements = []
     this.beforeSearch = []
     this.companyName = ''
+    this.jobPositions = []
+    this.announcementDetail = []
     this.announcementTitle = ''
-    this.jobPosition = ''
     this.jobType = ''
     this.companyType = ''
-    this.announcementDetail = []
+    this.jobPosition = ''
   }
   setCompanyName = (companyName) => {
     this.companyName = companyName
@@ -51,9 +55,17 @@ export class AnnouncementSearchPageContext {
     this.announcementDetail = announcementDetail
     console.log(announcementDetail)
   }
-
   setAnnouncements = (announcements) => {
     this.announcements = announcements
+  }
+  getMenuItemJobPositions = async () => {
+    try {
+      await apiService.getJosPositions().then((response) => {
+        this.jobPositions = response.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
   getAnnouncements = async () => {
     try {
