@@ -10,6 +10,9 @@ import { searchContext } from '../../../core/contexts/search_context'
 import { paginationContext } from '../../../core/contexts/pagination_context'
 import Pagination from '../../../core/components/Pagination'
 import { AnnouncementDetail } from '../components/AnnouncementDetail'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
 
 const AnnouncementSearch = () => {
   const context = useContext(announcementSearchPageContext)
