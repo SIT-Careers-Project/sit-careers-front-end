@@ -166,12 +166,12 @@ const AnnouncementUpdateForm = () => {
                       className="w-full"
                       label="บริษัท *"
                       inputRef={register}
-                      keyName="company_id"
                       defaultValue={context?.announcement?.company_id}
+                      keyName="company_id"
+                      keySearch="company_name_th"
                       error={!!errors.company_id}
                       helperText={errors.company_id?.message}
                       options={context.autoCompleteCompany}
-                      keySearch="company_name_th"
                     />
                   </div>
                 </div>
@@ -304,6 +304,12 @@ const AnnouncementUpdateForm = () => {
                     fullWidth
                   />
                 </div>
+                <input
+                  ref={register}
+                  name="address_id"
+                  className="hidden"
+                  value={context.announcement.address_id}
+                />
                 <div className="w-full px-6 my-6">
                   <TextField
                     label="ที่อยู่ 2"

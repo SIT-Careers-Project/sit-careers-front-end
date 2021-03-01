@@ -54,6 +54,7 @@ const apiAcademic = {
     const formData = new FormData()
     formData.append('address_one', data.address_one)
     formData.append('address_two', data.address_two)
+    formData.append('address_id', data.address_id)
     formData.append('company_id', data.company_id)
     formData.append('priority', data.priority)
     formData.append('lane', data.lane)
