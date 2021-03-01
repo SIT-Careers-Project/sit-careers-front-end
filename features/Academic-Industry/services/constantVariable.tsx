@@ -1,18 +1,7 @@
 export const jobPosition = [
   { title: 'Software Engineer' },
-  { title: 'Computer programmer' },
-  { title: 'Cloud System Engineer' },
-  { title: 'UX/UI Designer' },
-  { title: 'Tester' },
-  { title: 'Web developer' },
-  { title: 'IT Support' },
-  { title: 'Systems analyst' },
-  { title: 'Network engineer' },
-  { title: 'Database administrator' },
-  { title: 'IT security' },
-  { title: 'Data scientist' },
-  { title: 'Applications Engineer' },
-  { title: 'Other' }
+  { title: 'UX/UI' },
+  { title: 'Infrastructure' }
 ]
 
 export const announcementType = [

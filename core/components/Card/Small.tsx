@@ -10,11 +10,21 @@ interface CardProps {
   title?: string
   date?: string
   company?: string
+  onClick?
 }
 
-export const CardSmall = ({ className, tags, srcImg, title, date, company }: CardProps) => (
+export const CardSmall = ({
+  className,
+  tags,
+  srcImg,
+  title,
+  date,
+  company,
+  onClick
+}: CardProps) => (
   <div>
     <MaterialCard
+      onClick={() => onClick()}
       style={{ height: '201px', width: '403px' }}
       className={`${className} grid grid-cols-4 p-4 gap-4`}>
       <div className="col-span-1">
