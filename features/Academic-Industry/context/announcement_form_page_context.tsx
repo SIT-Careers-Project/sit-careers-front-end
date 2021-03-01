@@ -4,7 +4,11 @@ import Router from 'next/router'
 import apiCompany from '../../Company/services/apiCompany'
 import apiService from '../services/apiAcademicIndustry'
 import { createContext } from 'react'
+import dayjs from 'dayjs'
+import isToday from 'dayjs/plugin/isToday'
+import { checkStatus } from '../services/utils'
 
+dayjs.extend(isToday)
 export class AnnouncementFormPageContext {
   announcementType
   modal
@@ -58,6 +62,8 @@ export class AnnouncementFormPageContext {
 
   createAnnouncement = async (data) => {
     try {
+      const checkOpen = checkStatus(data.start_date, data.end_date)
+      data.status = checkOpen
       await apiService.createAnnouncement(data).then(() => {
         this.modal.closeModal()
         Router.push('/academic-industry/info-management')
