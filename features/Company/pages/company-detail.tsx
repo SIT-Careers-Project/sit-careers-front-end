@@ -33,7 +33,7 @@ const CompanyDetail = ({ companyId }: CompanyDetailProps) => {
                   </span>
                 </div>
               )}
-              {context?.company?.logo && (
+              {context?.company?.logo !== '-' && (
                 <img
                   alt="logo of company"
                   className="w-40 h-40 rounded-full bg-grey-100"
