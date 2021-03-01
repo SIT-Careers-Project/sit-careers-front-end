@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { AddCircle } from '@material-ui/icons'
 import { Announcement } from '../components/Announcement'
 import Link from 'next/link'
+import { checkStatus } from '../services/utils'
 import dayjs from 'dayjs'
 import Pagination from '../../../core/components/Pagination'
 import Search from '../../../core/components/Search'
@@ -65,11 +66,14 @@ const AnnouncementInfo = () => {
               .map((data, i) => {
                 const startDate = dayjs(data.start_date).locale('th').format('DD MMMM YYYY hh:mm')
                 const endDate = dayjs(data.end_date).locale('th').format('DD MMMM YYYY hh:mm')
+                const status = checkStatus(data.start_date, data.end_date)
+
                 return (
                   <div className="pt-5" key={i}>
                     <Announcement
                       title={data.announcement_title}
-                      tags={[data.job_position, data.job_type, data.status]}
+                      tags={[data.job_position, data.job_type]}
+                      status={status}
                       date={`${startDate} - ${endDate}`}
                       company={`${data.company_name_th} - ${data.company_name_en}`}
                       srcImg={data.logo}
