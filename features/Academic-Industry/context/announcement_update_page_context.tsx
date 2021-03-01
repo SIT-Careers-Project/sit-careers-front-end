@@ -4,6 +4,7 @@ import Router from 'next/router'
 import apiService from '../services/apiAcademicIndustry'
 import apiCompany from '../../Company/services/apiCompany'
 import { createContext } from 'react'
+import { checkStatus } from '../services/utils'
 
 export class AnnouncementUpdatePageContext {
   showModal
@@ -53,6 +54,8 @@ export class AnnouncementUpdatePageContext {
 
   updateAnnouncement = async (data) => {
     try {
+      const checkOpen = checkStatus(data.start_date, data.end_date)
+      data.status = checkOpen
       await apiService.updateAnnouncement(data).then(() => {
         this.modal.closeModal()
         Router.push('/academic-industry/info-management')
