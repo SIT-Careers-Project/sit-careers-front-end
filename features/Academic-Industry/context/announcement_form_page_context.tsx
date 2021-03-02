@@ -4,8 +4,6 @@ import Router from 'next/router'
 import apiCompany from '../../Company/services/apiCompany'
 import apiService from '../services/apiAcademicIndustry'
 import { createContext } from 'react'
-import dayjs from 'dayjs'
-import isToday from 'dayjs/plugin/isToday'
 import { checkStatus } from '../../../core/services/utils'
 
 export class AnnouncementFormPageContext {
