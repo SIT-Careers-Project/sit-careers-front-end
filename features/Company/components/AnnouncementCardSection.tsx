@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react'
 
 import { CardSmall } from '../../../core/components/Card/Small'
+import { checkStatus } from '../../../core/services/utils'
 import dayjs from 'dayjs'
-import getConfig from 'next/config'
-
-const { publicRuntimeConfig } = getConfig()
 
 export const AnnouncementCardSection = (props) => {
   const { announcements } = props
@@ -32,8 +30,9 @@ export const AnnouncementCardSection = (props) => {
                         .locale('th')
                         .add(543, 'year')
                         .format('DD MMMM YYYY')}`}
+                      status={checkStatus(data.start_date, data.end_date, data.status)}
                       tags={[`${data.job_position}`, `${data.job_type}`]}
-                      srcImg={`${publicRuntimeConfig.s3_url}/logo/${data.logo}`}
+                      srcImg={data.logo}
                     />
                   </div>
                 )
