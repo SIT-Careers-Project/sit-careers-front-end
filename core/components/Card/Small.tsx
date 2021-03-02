@@ -35,7 +35,7 @@ export const CardSmall = ({
       <div style={{ height: '80px' }} className="col-span-1">
         {srcImg !== '-' && (
           <div
-            className="w-full col-span-3 bg-cover bg-clip-padding"
+            className="w-full h-full col-span-3 bg-cover bg-clip-padding"
             style={{
               backgroundImage: `url(${publicRuntimeConfig.s3_url}/logo/${srcImg})`
             }}
