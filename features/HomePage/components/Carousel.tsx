@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
@@ -6,6 +7,7 @@ export const Carousel = () => {
   const [active, setActive] = useState(0)
   const [isActive, setIsActive] = useState(false)
   const ref = useRef(null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const image = [
     {
       path_image:
@@ -34,7 +36,7 @@ export const Carousel = () => {
         clearInterval(interval)
       }
     }
-  }, [])
+  }, [image])
 
   const handlerClick = (i) => {
     setActive(i)

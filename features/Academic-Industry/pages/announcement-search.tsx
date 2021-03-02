@@ -10,9 +10,8 @@ import { searchContext } from '../../../core/contexts/search_context'
 import { paginationContext } from '../../../core/contexts/pagination_context'
 import Pagination from '../../../core/components/Pagination'
 import { AnnouncementDetail } from '../components/AnnouncementDetail'
-import getConfig from 'next/config'
-
-const { publicRuntimeConfig } = getConfig()
+import { checkStatus } from '../../../core/services/utils'
+import dayjs from 'dayjs'
 
 const AnnouncementSearch = () => {
   const context = useContext(announcementSearchPageContext)
@@ -159,13 +158,20 @@ const AnnouncementSearch = () => {
                           .slice(contextPagination.sliceDataStart, contextPagination.sliceDataEnd)
                           .map((data, i) => {
                             return (
-                              <div className="pb-5" key={i}>
+                              <div className="pb-5 cursor-pointer" key={i}>
                                 <CardSmall
                                   title={data.announcement_title}
-                                  tags={[data.job_position, data.job_type, data.status]}
-                                  date={`${data.start_date} - ${data.end_date}`}
+                                  status={checkStatus(data.start_date, data.end_date, data.status)}
+                                  tags={[data.job_position, data.job_type]}
+                                  date={`${dayjs(data.start_date)
+                                    .locale('th')
+                                    .add(543, 'year')
+                                    .format('DD MMMM')} - ${dayjs(data.end_date)
+                                    .locale('th')
+                                    .add(543, 'year')
+                                    .format('DD MMMM YYYY')}`}
                                   company={`${data.company_name_th} - ${data.company_name_en}`}
-                                  srcImg={`${publicRuntimeConfig.s3_url}/logo/${data.logo}`}
+                                  srcImg={data.logo}
                                   onClick={() => context.setValue('announcementDetail', data)}
                                 />
                               </div>

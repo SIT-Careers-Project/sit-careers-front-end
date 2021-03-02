@@ -5,6 +5,7 @@ import { Observer } from 'mobx-react-lite'
 import React from 'react'
 import getConfig from 'next/config'
 import Link from 'next/link'
+import { TagStatus } from 'core/components/TagStatus'
 
 const { publicRuntimeConfig } = getConfig()
 interface AnnouncementProps {
@@ -61,6 +62,7 @@ export const Announcement = ({
         )}
 
         <div className="mt-2">
+          <TagStatus status={status} />
           {tags.map((data, i) => (
             <span
               key={i}
@@ -68,15 +70,6 @@ export const Announcement = ({
               {data}
             </span>
           ))}
-          {status === 'OPEN' ? (
-            <span className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-green2">
-              เปิดรับสมัคร
-            </span>
-          ) : (
-            <span className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-red">
-              ปิดรับสมัคร
-            </span>
-          )}
         </div>
         <div className="mt-3 text-black text-body-2">
           <Business className="mb-2 mr-2" />
