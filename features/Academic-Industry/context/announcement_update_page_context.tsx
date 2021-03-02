@@ -4,7 +4,7 @@ import Router from 'next/router'
 import apiService from '../services/apiAcademicIndustry'
 import apiCompany from '../../Company/services/apiCompany'
 import { createContext } from 'react'
-import { checkStatus } from '../services/utils'
+import { checkStatus } from '../../../core/services/utils'
 
 export class AnnouncementUpdatePageContext {
   showModal
@@ -54,7 +54,7 @@ export class AnnouncementUpdatePageContext {
 
   updateAnnouncement = async (data) => {
     try {
-      const checkOpen = checkStatus(data.start_date, data.end_date)
+      const checkOpen = checkStatus(data.start_date, data.end_date, data.status)
       data.status = checkOpen
       await apiService.updateAnnouncement(data).then(() => {
         this.modal.closeModal()

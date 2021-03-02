@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import { sortAnnouncement } from '../services/utils'
+import { sortAnnouncement } from '../../../core/services/utils'
 import apiService from '../services/apiAcademicIndustry'
 import { createContext } from 'react'
 
