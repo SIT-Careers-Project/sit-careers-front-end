@@ -1,5 +1,5 @@
-import { action, makeObservable, observable } from 'mobx'
-
+import { makeAutoObservable } from 'mobx'
+import { sortAnnouncement } from '../services/utils'
 import apiService from '../services/apiAcademicIndustry'
 import { createContext } from 'react'
 
@@ -8,14 +8,10 @@ export class AnnouncementInfoContext {
   beforeSearch
 
   constructor() {
-    makeObservable(this, {
-      getAnnouncements: action,
-      setAnnouncements: action,
-      announcements: observable,
-      beforeSearch: observable
-    })
     this.announcements = []
     this.beforeSearch = []
+
+    makeAutoObservable(this)
   }
 
   setAnnouncements = (announcements) => {
@@ -25,7 +21,7 @@ export class AnnouncementInfoContext {
   getAnnouncements = async () => {
     try {
       const response = await apiService.getAllAnnouncement()
-      this.announcements = response.data
+      this.announcements = sortAnnouncement(response.data, ['start_date'])
       this.beforeSearch = response.data
     } catch (error) {
       console.log(error)
