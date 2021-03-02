@@ -86,9 +86,7 @@ const CompanyDetail = ({ companyId }: CompanyDetailProps) => {
               </div>
             </div>
           </div>
-          <div className="flex">
-            <AnnouncementCardSection announcements={context.announcements} />
-          </div>
+          <AnnouncementCardSection announcements={context.announcements} />
         </div>
       )}
     </Observer>

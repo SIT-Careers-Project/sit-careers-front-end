@@ -13,10 +13,10 @@ export const AnnouncementCardSection = (props) => {
   return (
     <>
       {announcements.length !== 0 && (
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col">
           <p className="font-prompt-semibold text-body-1">ประกาศรับสมัครงาน</p>
-          <div className="flex flex-row">
-            <div className="flex flex-row gap-5 mt-4">
+          <div id="scrollbar-custom" className="flex flex-row w-full overflow-x-scroll">
+            <div className="flex flex-row gap-5 my-4">
               {announcements.map((data, i) => {
                 return (
                   <div style={{ width: '403px', height: '201px' }} key={i}>

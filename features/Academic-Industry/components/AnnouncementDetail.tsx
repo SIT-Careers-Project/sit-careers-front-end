@@ -34,10 +34,10 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
                 src={`${publicRuntimeConfig.s3_url}/cover_announcement/${data?.picture}`}
               />
             )}
-            {data.picture === '-' && (
+            {data?.picture === '-' && (
               <div className="flex items-center justify-center w-full h-full bg-secondary1">
                 <span className="text-white text-heading-1">
-                  {data.company_name_en.substr(0, 1)}
+                  {data?.company_name_en.substr(0, 1)}
                 </span>
               </div>
             )}
