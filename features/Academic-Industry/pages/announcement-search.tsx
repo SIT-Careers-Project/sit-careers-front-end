@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
-import { companyType, jobPosition, jobType } from '../services/constantVariable'
+import { companyType, jobType } from '../services/constantVariable'
 import { CardSmall } from '../../../core/components/Card/Small'
 import PrimaryButton from '../../../core/components/Button/Primary'
 import React, { useContext, useEffect } from 'react'
@@ -10,6 +10,9 @@ import { searchContext } from '../../../core/contexts/search_context'
 import { paginationContext } from '../../../core/contexts/pagination_context'
 import Pagination from '../../../core/components/Pagination'
 import { AnnouncementDetail } from '../components/AnnouncementDetail'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
 
 const AnnouncementSearch = () => {
   const context = useContext(announcementSearchPageContext)
@@ -19,7 +22,7 @@ const AnnouncementSearch = () => {
   useEffect(() => {
     context.getAnnouncements()
     contextPagination.setSliceAnnouncement()
-    context.setAnnouncementDetail(context.announcements[0])
+    context.setValue('announcementDetail', context.announcements[0])
   }, [context, contextPagination])
 
   return (
@@ -32,8 +35,8 @@ const AnnouncementSearch = () => {
                 <Search
                   onChange={(event) => {
                     if (typeof event.target.value === 'string') {
-                      context.setCompanyName(event.target.value)
-                      context.setAnnouncementTitle(event.target.value)
+                      context.setValue('companyName', event.target.value)
+                      context.setValue('announcementTitle', event.target.value)
                     }
                   }}
                 />
@@ -47,12 +50,12 @@ const AnnouncementSearch = () => {
                       name="job_position"
                       onChange={(event) => {
                         if (typeof event.target.value === 'string') {
-                          context.setJobPosition(event.target.value)
+                          context.setValue('jobPosition', event.target.value)
                         }
                       }}>
-                      {jobPosition.map((position) => (
-                        <MenuItem key={position.title} value={position.title}>
-                          {position.title}
+                      {context.jobPositions.map((position, i) => (
+                        <MenuItem key={i} value={position.job_position}>
+                          {position.job_position}
                         </MenuItem>
                       ))}
                     </Select>
@@ -66,7 +69,7 @@ const AnnouncementSearch = () => {
                       name="job_type"
                       onChange={(event) => {
                         if (typeof event.target.value === 'string') {
-                          context.setJobType(event.target.value)
+                          context.setValue('jobType', event.target.value)
                         }
                       }}>
                       {jobType.map((job) => (
@@ -85,7 +88,7 @@ const AnnouncementSearch = () => {
                       name="company_type"
                       onChange={(event) => {
                         if (typeof event.target.value === 'string') {
-                          context.setCompanyType(event.target.value)
+                          context.setValue('companyType', event.target.value)
                         }
                       }}>
                       {companyType.map((company) => (
@@ -101,11 +104,13 @@ const AnnouncementSearch = () => {
                   className="z-50 ml-10 lg:w-2/6"
                   onClick={() => {
                     if (
-                      typeof context.companyType ||
-                      context.companyName ||
-                      context.announcementTitle ||
-                      context.jobPosition ||
-                      context.jobType === 'string'
+                      typeof (
+                        context.companyType ||
+                        context.companyName ||
+                        context.announcementTitle ||
+                        context.jobPosition ||
+                        context.jobType
+                      ) === 'string'
                     ) {
                       const keySearch = [
                         'company_type',
@@ -160,8 +165,8 @@ const AnnouncementSearch = () => {
                                   tags={[data.job_position, data.job_type, data.status]}
                                   date={`${data.start_date} - ${data.end_date}`}
                                   company={`${data.company_name_th} - ${data.company_name_en}`}
-                                  srcImg={data.logo}
-                                  onClick={() => context.setAnnouncementDetail(data)}
+                                  srcImg={`${publicRuntimeConfig.s3_url}/logo/${data.logo}`}
+                                  onClick={() => context.setValue('announcementDetail', data)}
                                 />
                               </div>
                             )

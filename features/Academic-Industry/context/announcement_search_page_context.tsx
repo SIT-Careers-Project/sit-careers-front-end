@@ -6,6 +6,7 @@ export class AnnouncementSearchPageContext {
   beforeSearch
   companyName
   announcementTitle
+  jobPositions
   jobPosition
   jobType
   companyType
@@ -18,6 +19,7 @@ export class AnnouncementSearchPageContext {
       beforeSearch: observable,
       companyName: observable,
       announcementTitle: observable,
+      jobPositions: observable,
       jobPosition: observable,
       jobType: observable,
       companyType: observable,
@@ -26,38 +28,24 @@ export class AnnouncementSearchPageContext {
     this.announcements = []
     this.beforeSearch = []
     this.companyName = ''
+    this.jobPositions = []
+    this.announcementDetail = []
     this.announcementTitle = ''
-    this.jobPosition = ''
     this.jobType = ''
     this.companyType = ''
-    this.announcementDetail = []
+    this.jobPosition = ''
   }
-  setCompanyName = (companyName) => {
-    this.companyName = companyName
-  }
-  setAnnouncementTitle = (announcementTitle) => {
-    this.announcementTitle = announcementTitle
-  }
-  setJobPosition = (jobPosition) => {
-    this.jobPosition = jobPosition
-  }
-  setJobType = (jobType) => {
-    this.jobType = jobType
-  }
-  setCompanyType = (companyType) => {
-    this.companyType = companyType
-  }
-  setAnnouncementDetail = (announcementDetail) => {
-    this.announcementDetail = announcementDetail
-    console.log(announcementDetail)
-  }
-
   setAnnouncements = (announcements) => {
     this.announcements = announcements
+  }
+  setValue = (key, value) => {
+    this[key] = value
   }
   getAnnouncements = async () => {
     try {
       const response = await apiService.getAllAnnouncement()
+      const jobPosition = await apiService.getJosPositions()
+      this.jobPositions = jobPosition.data
       this.announcements = response.data
       this.beforeSearch = response.data
       this.announcementDetail = response.data[0]
