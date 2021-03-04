@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios'
+import Cookie from 'js-cookie'
 /* eslint-disable no-undef */
 import getConfig from 'next/config'
 
@@ -8,7 +9,11 @@ const { publicRuntimeConfig } = getConfig()
 // eslint-disable-next-line no-unused-vars
 const createInstance = (headers) => {
   return axios.create({
-    baseURL: publicRuntimeConfig.API_URL
+    baseURL: publicRuntimeConfig.API_URL,
+    headers: {
+      Authorization: `Bearer ${Cookie.get('token')}`,
+      'Content-Type': 'application/json'
+    }
   })
 }
 
