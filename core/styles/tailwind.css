@@ -82,8 +82,6 @@ input::placeholder {
     rgba(38,150,193,1) 0%,
     rgba(59,159,197,1) -1%);
     transition: 0.5s;
-    text-align: center;
-    text-transform: uppercase;
     background-size: 200% auto;
     background-position: right center;
 }
