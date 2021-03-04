@@ -1,21 +1,22 @@
 import { Fade, Menu, MenuItem } from '@material-ui/core'
-import React, { useContext } from 'react'
-
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import React, { useContext, useEffect } from 'react'
+import { AccountCircle as AccountCircleIcon, ExitToApp } from '@material-ui/icons'
 import Link from 'next/link'
 import { navbarContext } from '../contexts/navbar_context'
 import { useObserver } from 'mobx-react-lite'
 import { useRouter } from 'next/router'
+import _ from 'lodash'
+import { dropdownLink, navLink } from '../config/menuItem'
+import { AuthContext } from '../../core/contexts/auth_context'
 
 export default function Navbar() {
   const router = useRouter()
   const context = useContext(navbarContext)
-  const navLink = [
-    { path: '/', name: 'หน้าหลัก' },
-    { path: '/academic-industry/announcements', name: 'ประกาศรับสมัครงาน' },
-    { path: '/company/all-company', name: 'ข้อมูลบริษัท' },
-    { path: '/dashboard', name: 'Dashboard' }
-  ]
+  const authContext = useContext(AuthContext)
+
+  useEffect(() => {
+    authContext.fetchMe()
+  }, [authContext])
 
   return useObserver(() => (
     <div className="flex justify-center gap-16 mx-auto grid-col-12">
@@ -38,18 +39,22 @@ export default function Navbar() {
               </div>
             </Link>
             <ul className="flex flex-row list-none lg:flex-row">
-              {navLink.map((data, i) => {
-                return (
-                  <Link key={i} href={data.path}>
-                    <li
-                      className={`${
-                        router.asPath === data.path ? 'bg-secondary1 bg-opacity-25' : ''
-                      } table px-4 py-4 font-prompt font-semibold text-subtitle-1 text-white nav-item hover:shadow-none cursor-pointer hover:bg-secondary1 hover:bg-opacity-25`}>
-                      {data.name}
-                    </li>
-                  </Link>
-                )
-              })}
+              {authContext.isLoggedIn && (
+                <>
+                  {_.map(navLink, (data, i) => {
+                    return (
+                      <Link key={i} href={data.path}>
+                        <li
+                          className={`${
+                            router.asPath === data.path ? 'bg-secondary1 bg-opacity-25' : ''
+                          } table px-4 py-4 font-prompt font-semibold text-subtitle-1 text-white nav-item hover:shadow-none cursor-pointer hover:bg-secondary1 hover:bg-opacity-25`}>
+                          {data.name}
+                        </li>
+                      </Link>
+                    )
+                  })}
+                </>
+              )}
             </ul>
             <div>
               <div className="flex flex-row items-center justify-end w-full h-full cursor-pointer">
@@ -69,41 +74,36 @@ export default function Navbar() {
                   TransitionComponent={Fade}
                   open={Boolean(context.anchorEl)}
                   onClose={context.handleClose}>
-                  <Link href="/company/company-table">
-                    <MenuItem onClick={context.handleClose}>
-                      <span className="font-prompt-light text-body-2 text-primary">
-                        จัดการข้อมูลบริษัท
-                      </span>
-                    </MenuItem>
-                  </Link>
-                  <Link href="/academic-industry/info-management">
-                    <MenuItem onClick={context.handleClose}>
-                      <span className="font-prompt-light text-body-2 text-primary">
-                        ลงประกาศรับสมัครงาน
-                      </span>
-                    </MenuItem>
-                  </Link>
-                  <Link href="/user-management/info">
-                    <MenuItem onClick={context.handleClose}>
-                      <span className="font-prompt-light text-body-2 text-primary">
-                        จัดการผู้ใช้งาน
-                      </span>
-                    </MenuItem>
-                  </Link>
-                  <Link href="/academic-industry/application">
-                    <MenuItem onClick={context.handleClose}>
-                      <span className="font-prompt-light text-body-2 text-primary">
-                        ประวัติการสมัครงาน
-                      </span>
-                    </MenuItem>
-                  </Link>
-                  <Link href="/report-management/info">
-                    <MenuItem onClick={context.handleClose}>
-                      <span className="font-prompt-light text-body-2 text-primary">
-                        ดาวห์โหลดรายงานสรุป
-                      </span>
-                    </MenuItem>
-                  </Link>
+                  {authContext.isLoggedIn ? (
+                    <>
+                      {_.map(dropdownLink, (data, j) => (
+                        <Link href={data.path} key={j}>
+                          <MenuItem onClick={context.handleClose}>
+                            <div className="font-prompt-light text-body-2 text-primary">
+                              {data.icon} {data.name}
+                            </div>
+                          </MenuItem>
+                        </Link>
+                      ))}
+                      <MenuItem
+                        onClick={() => {
+                          context.handleClose()
+                          authContext.logout()
+                        }}>
+                        <span className="font-prompt-light text-body-2 text-red">
+                          <ExitToApp /> Logout
+                        </span>
+                      </MenuItem>
+                    </>
+                  ) : (
+                    <Link href="/login">
+                      <MenuItem onClick={context.handleClose}>
+                        <span className="font-prompt-light text-body-2 text-primary">
+                          <ExitToApp /> Login
+                        </span>
+                      </MenuItem>
+                    </Link>
+                  )}
                 </Menu>
               </div>
             </div>
