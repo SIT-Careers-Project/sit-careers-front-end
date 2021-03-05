@@ -24,7 +24,6 @@ export class authContext {
       const response = await apiAuth.login(data)
       if (response?.status === 200) {
         Cookies.set('token', response.data.token)
-        Cookies.set('permission', response.data.permission)
         this.isLoggedIn = true
         Router.push('/')
       }
@@ -44,6 +43,7 @@ export class authContext {
         const response = await apiAuth.me()
         if (response?.status === 200) {
           this.isLoggedIn = true
+          this.permission = response.data.permission
         }
       }
     } catch (error) {
