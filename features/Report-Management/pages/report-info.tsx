@@ -95,8 +95,8 @@ const UserInfo = () => {
           {() => (
             <CoreTable
               title={
-                <div className="flex flex-row pt-8 items-center">
-                  <p className="font-sarabun-meduim text-body-2 pr-5">ช่วงเวลา:</p>
+                <div className="flex flex-row items-center pt-8">
+                  <p className="pr-5 font-sarabun-meduim text-body-2">ช่วงเวลา:</p>
                   <BasicDateRangePicker />
                 </div>
               }
@@ -107,6 +107,7 @@ const UserInfo = () => {
                 search: false,
                 showTitle: true
               }}
+              getData={() => console.log('Hello')}
               action={[
                 {
                   tooltip: 'Export Data',
@@ -119,7 +120,15 @@ const UserInfo = () => {
         </Observer>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Observer>{() => <CoreTable column={reportsColumn} data={dataReport} />}</Observer>
+        <Observer>
+          {() => (
+            <CoreTable
+              column={reportsColumn}
+              data={dataReport}
+              getData={() => console.log('Hello')}
+            />
+          )}
+        </Observer>
       </TabPanel>
     </div>
   )
