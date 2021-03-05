@@ -1,7 +1,7 @@
 import { Assignment } from '@material-ui/icons'
 /* eslint-disable react/display-name */
 import React, { useContext } from 'react'
-import CoreTable from '../../../core/components/Table'
+import CoreTableWithAction from '../../../core/components/TableWithAction'
 import { Observer } from 'mobx-react-lite'
 import Link from 'next/link'
 import { applicationHistoryContext } from '../context/announcement_application_history_context'
@@ -73,9 +73,9 @@ const ApplicationHistory = () => {
       <div>
         <Observer>
           {() => (
-            <CoreTable
+            <CoreTableWithAction
               column={column}
-              dataTable={context?.applications}
+              data={context?.applications}
               isEditable={true}
               getData={context.getApplications}
               updateData={context.updateApplication}
