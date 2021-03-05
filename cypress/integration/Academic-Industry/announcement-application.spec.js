@@ -1,14 +1,14 @@
 describe('The Announcement Application Form Page', () => {
-  it('successfully loads', () => {
-    cy.visit('/academic-industry/form-application')
+  it.skip('successfully loads', () => {
+    cy.visit('/academic-industry/announcements')
   })
-  it('This page contains navbar component', () => {
+  it.skip('This page contains navbar component', () => {
     cy.get('[data-cy=core-navbar]').should('be.visible')
   })
-  it('It is a have footer component', () => {
+  it.skip('It is a have footer component', () => {
     cy.get('[data-cy=core-footer]').should('be.visible')
   })
-  it('should show modal ยืนยันการสมัคร when all of the required input has been filled', () => {
+  it.skip('should show modal ยืนยันการสมัคร when all of the required input has been filled', () => {
     cy.get('button').should('contain.text', 'ยืนยันการสมัคร')
     cy.get('#trinity-select').click()
     cy.contains('นาย').click()

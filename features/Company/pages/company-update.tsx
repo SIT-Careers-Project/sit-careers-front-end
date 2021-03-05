@@ -38,13 +38,11 @@ const CompanyForm = () => {
 
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
-    context.getCompany(company_id)
-  }, [company_id, context, coreModalContext])
-
-  useEffect(() => {
-    setTimeout(() => reset({ ...context.company }), 400)
-    setTimeout(() => setRenderDelay(false), 1000)
-  }, [context.company, reset])
+    context.getCompany(company_id).then(() => {
+      setTimeout(() => reset({ ...context.company }), 400)
+      setTimeout(() => setRenderDelay(false), 1000)
+    })
+  }, [company_id, context, coreModalContext, reset])
 
   return (
     <>

@@ -59,7 +59,7 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
               </div>
               <div className="flex justify-end w-1/4 h-12 grid-cols-12">
                 {checkStatus(data?.start_date, data?.end_date, data?.status) === 'OPEN' && (
-                  <Link href="/academic-industry/form-application">
+                  <Link href={`applications/create/${data?.announcement_id}`}>
                     <button className="text-white cursor-pointer bg-primary">
                       <p className="px-5 py-3 text-white font-prompt text-subtitle-1">สมัคร</p>
                     </button>
