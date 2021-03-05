@@ -11,7 +11,7 @@ export const dropdownLink = [
   { path: '/company/company-table', name: 'จัดการข้อมูลบริษัท', icon: <Business /> },
   { path: '/academic-industry/info-management', name: 'ลงประกาศรับสมัครงาน', icon: <Assignment /> },
   {
-    path: '/academic-industry/application',
+    path: '/academic-industry/applications/history',
     name: 'ประวัติการสมัครงาน',
     icon: <AssignmentTurnedIn />
   },
