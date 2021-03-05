@@ -3,10 +3,10 @@ import HomePage from '../features/HomePage/pages'
 import Navbar from '../core/components/Navbar'
 import React from 'react'
 
-const Home = () => {
+const Home = ({ authContext }) => {
   return (
     <>
-      <Navbar />
+      <Navbar authContext={authContext} />
       <HomePage />
       <Footer />
     </>

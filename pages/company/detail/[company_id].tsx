@@ -2,9 +2,9 @@ import CompanyDetail from '../../../features/Company/pages/company-detail'
 import { MainLayout } from '../../../core/components/Layout/Main'
 import React from 'react'
 
-const CompanyInfo = ({ query }) => {
+const CompanyInfo = ({ query, authContext }) => {
   return (
-    <MainLayout>
+    <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16">
         <CompanyDetail companyId={query.company_id} />
       </div>

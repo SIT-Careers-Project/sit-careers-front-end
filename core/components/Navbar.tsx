@@ -1,5 +1,5 @@
 import { Fade, Menu, MenuItem } from '@material-ui/core'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { AccountCircle as AccountCircleIcon, ExitToApp } from '@material-ui/icons'
 import Link from 'next/link'
 import { navbarContext } from '../contexts/navbar_context'
@@ -7,16 +7,10 @@ import { useObserver } from 'mobx-react-lite'
 import { useRouter } from 'next/router'
 import _ from 'lodash'
 import { dropdownLink, navLink } from '../config/menuItem'
-import { AuthContext } from '../../core/contexts/auth_context'
 
-export default function Navbar() {
+export default function Navbar({ authContext }) {
   const router = useRouter()
   const context = useContext(navbarContext)
-  const authContext = useContext(AuthContext)
-
-  useEffect(() => {
-    authContext.fetchMe()
-  }, [authContext])
 
   return useObserver(() => (
     <div className="flex justify-center gap-16 mx-auto grid-col-12">

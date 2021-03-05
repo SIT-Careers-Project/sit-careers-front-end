@@ -2,9 +2,9 @@ import AnnouncementPage from '../../features/Academic-Industry/pages/announcemen
 import { MainLayout } from '../../core/components/Layout/Main'
 import React from 'react'
 
-const CompanyInfo = () => {
+const CompanyInfo = ({ authContext }) => {
   return (
-    <MainLayout>
+    <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16">
         <AnnouncementPage />
       </div>

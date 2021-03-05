@@ -2,9 +2,9 @@ import AnnouncementSearch from '../../features/Academic-Industry/pages/announcem
 import { MainLayout } from '../../core/components/Layout/Main'
 import React from 'react'
 
-const Announcements = () => {
+const Announcements = ({ authContext }) => {
   return (
-    <MainLayout>
+    <MainLayout authContext={authContext}>
       <div>
         <AnnouncementSearch />
       </div>

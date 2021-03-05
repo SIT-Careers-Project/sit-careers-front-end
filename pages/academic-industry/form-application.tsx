@@ -3,11 +3,11 @@ import Footer from '../../core/components/Footer'
 import Navbar from '../../core/components/Navbar'
 import React from 'react'
 
-const Announcements = () => {
+const Announcements = ({ authContext }) => {
   return (
     <>
       <div>
-        <Navbar />
+        <Navbar authContext={authContext} />
         <div className="flex justify-center mt-16">
           <ApplicationForm />
         </div>
