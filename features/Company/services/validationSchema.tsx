@@ -60,5 +60,6 @@ export const CompanyFormSchema = yup.object().shape({
   end_business_time: yup.string().required('*จำเป็นต้องกรอก เวลาปิดทำการ'),
   mou_type: yup.string(),
   mou_link: yup.string(),
-  contact_period: yup.string()
+  start_date_mou: yup.string(),
+  end_date_mou: yup.string()
 })
