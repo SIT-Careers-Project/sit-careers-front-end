@@ -40,8 +40,8 @@ const apiCompany = {
     formData.append('phone_no', data.phone_no)
     formData.append('tel_no', data.tel_no)
     formData.append('logo', data.logo ? data.logo : '-')
-    formData.append('start_date_mou', data.start_mou_date ? data.start_mou_date : '-')
-    formData.append('end_date_mou', data.end_mou_date ? data.end_mou_date : '-')
+    formData.append('start_date_mou', data.start_date_mou ? data.start_date_mou : '-')
+    formData.append('end_date_mou', data.end_date_mou ? data.end_date_mou : '-')
     formData.append('website', data.website)
     const response = await api.post('/company', formData, {
       headers: { 'Content-type': 'multipart/form-data' }
