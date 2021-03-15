@@ -18,7 +18,10 @@ interface CardProps {
 export const Card = ({ className, tags, srcImg, aboutUs, title, linkPath }: CardProps) => (
   <>
     <MaterialCard
-      style={{ height: '199px' }}
+      style={{
+        height: '199px',
+        boxShadow: '10px -3px 15px rgba(0, 0, 0, 0.10), 4px -2px 6px rgba(0, 0, 0, 0.05)'
+      }}
       className={`${className} w-full grid grid-cols-12 gap-4`}>
       {srcImg === '-' ? (
         <div className="flex items-center justify-center w-full h-full col-span-3 bg-secondary1">
