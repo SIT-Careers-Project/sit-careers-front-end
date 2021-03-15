@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Primary from '../../../../core/components/Button/Primary'
 import React from 'react'
+import Link from 'next/link'
 
 export const CompanySection = () => {
   return (
@@ -29,9 +30,11 @@ export const CompanySection = () => {
               </p>
             </div>
             <div className="w-2/3">
-              <Primary className="h-16 mt-6 rounded-full">
-                <span className="text-white font-prompt text-heading-5">ค้นหาบริษัท</span>
-              </Primary>
+              <Link href="/company/all-company">
+                <Primary className="h-16 mt-6 rounded-full">
+                  <span className="text-white font-prompt text-heading-5">ค้นหาบริษัท</span>
+                </Primary>
+              </Link>
             </div>
           </div>
         </div>

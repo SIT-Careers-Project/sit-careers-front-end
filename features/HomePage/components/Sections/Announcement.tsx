@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Primary from '../../../../core/components/Button/Primary'
 import React from 'react'
+import Link from 'next/link'
 
 export const AnnouncementSection = () => {
   return (
@@ -18,9 +19,11 @@ export const AnnouncementSection = () => {
               </p>
             </div>
             <div className="w-2/3">
-              <Primary className="h-16 mt-6 rounded-full">
-                <span className="text-white font-prompt text-heading-5">ค้นหางาน</span>
-              </Primary>
+              <Link href="/academic-industry/announcements">
+                <Primary className="h-16 mt-6 rounded-full">
+                  <span className="text-white font-prompt text-heading-5">ค้นหางาน</span>
+                </Primary>
+              </Link>
             </div>
           </div>
           <div className="col-span-7">
