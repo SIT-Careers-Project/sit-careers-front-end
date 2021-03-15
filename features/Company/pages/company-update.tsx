@@ -433,7 +433,7 @@ const CompanyForm = () => {
               <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
               <p className="mb-3 ml-6 font-semibold font-prompt text-heading-6">MOU</p>
               <div className="flex flex-row justify-between">
-                <div className="w-1/2 pl-6 pr-3">
+                <div className="w-full pl-6 pr-5">
                   <TextField
                     label="ประเภท MOU"
                     name="mou_type"
@@ -445,16 +445,37 @@ const CompanyForm = () => {
                     fullWidth
                   />
                 </div>
-                <div className="w-1/2 pl-3 pr-6">
+              </div>
+              <div className="p-6 flex flex-row">
+                <div className="w-1/2">
                   <TextField
-                    label="ระยะสัญญา"
-                    name="contact_period"
+                    label="เริ่มสัญญา"
+                    name="start_date_mou"
                     className="font-sarabun bg-grey-100"
                     type="date"
                     defaultValue=""
                     inputRef={register}
-                    error={!!errors.contact_period}
-                    helperText={errors.contact_period?.message}
+                    error={!!errors.start_date_mou}
+                    helperText={errors.start_date_mou?.message}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    fullWidth
+                  />
+                </div>
+                <div className="flex items-end justify-center col-span-1 px-5">
+                  <p className="font-semibold text-heading-6 font-prompt">ถึง</p>
+                </div>
+                <div className="w-1/2">
+                  <TextField
+                    label="สิ้นสุดสัญญา"
+                    name="end_date_mou"
+                    className="font-sarabun bg-grey-100"
+                    type="date"
+                    defaultValue=""
+                    inputRef={register}
+                    error={!!errors.end_date_mou}
+                    helperText={errors.end_date_mou?.message}
                     InputLabelProps={{
                       shrink: true
                     }}
@@ -462,7 +483,7 @@ const CompanyForm = () => {
                   />
                 </div>
               </div>
-              <div className="p-6">
+              <div className="px-6">
                 <TextField
                   label="MOU Link"
                   name="mou_link"
