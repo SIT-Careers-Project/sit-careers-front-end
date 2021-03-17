@@ -9,7 +9,7 @@ export const AnnouncementFormSchema = yup.object().shape({
   file_picture: yup
     .mixed()
     .notRequired()
-    .test('fileSize', 'ไฟล์ต้องมีขนาดไม่เกินใหญ่เกินไป ต้องมีขนาดไม่เกิน 5MB', (value) => {
+    .test('fileSize', 'ไฟล์นามสกุล .png และ .jpg ต้องมีขนาดไม่เกิน 5MB', (value) => {
       console.log(value.length)
       if (value.length !== 0) {
         return value && value[0].size <= FILE_SIZE

@@ -17,11 +17,12 @@ const AnnouncementMainInfoForm = (props) => {
 
   return (
     <div>
-      <div className="grid w-full grid-flow-row grid-cols-12 px-6 pt-6">
+      <div className="grid w-full grid-flow-row grid-cols-12 pt-6">
         <div className="col-span-6 pr-3">
           <TextField
             label="หัวข้อ *"
-            className="w-full font-sarabun bg-grey-100"
+            variant="outlined"
+            className="w-full font-sarabun"
             name="announcement_title"
             inputRef={register}
             error={!!errors.announcement_title}
@@ -46,7 +47,7 @@ const AnnouncementMainInfoForm = (props) => {
         </div>
       </div>
       <div className="flex flex-row justify-between pt-6">
-        <div className="w-4/12 pl-6 pr-3">
+        <div className="w-4/12 pr-3">
           <Observer>
             {() => (
               <AutoComplete
@@ -63,13 +64,18 @@ const AnnouncementMainInfoForm = (props) => {
           </Observer>
         </div>
         <div className="w-4/12 pl-3 pr-6">
-          <FormControl error={errors.job_type?.message} className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="trinity-select">ประเภทของประกาศ *</InputLabel>
+          <FormControl
+            error={errors.job_type?.message}
+            className="w-full font-prompt"
+            variant="outlined">
+            <InputLabel htmlFor="trinity-select" id="select-outlined-label">
+              ประเภทของประกาศ *
+            </InputLabel>
             <Controller
               control={control}
               name="job_type"
               as={
-                <Select id="trinity-select">
+                <Select id="select-outlined-label">
                   {jobType.map((job) => (
                     <MenuItem key={job.title} value={job.title}>
                       {job.title}
@@ -81,15 +87,20 @@ const AnnouncementMainInfoForm = (props) => {
             <FormHelperText>{errors.job_type?.message}</FormHelperText>
           </FormControl>
         </div>
-        <div className="w-4/12 pr-6">
-          <FormControl error={errors.salary?.message} className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="salary-select">{'เงินเดือน (บาท) *'}</InputLabel>
+        <div className="w-4/12">
+          <FormControl
+            error={errors.salary?.message}
+            className="w-full font-prompt"
+            variant="outlined">
+            <InputLabel htmlFor="salary-select" id="select-outlined-label">
+              {'เงินเดือน (บาท) *'}
+            </InputLabel>
             <Controller
               control={control}
               id="salary-select"
               name="salary"
               as={
-                <Select id="trinity-select">
+                <Select id="select-outlined-label">
                   {salary.map((salary) => (
                     <MenuItem key={salary.title} value={salary.title}>
                       {salary.title}
@@ -102,12 +113,12 @@ const AnnouncementMainInfoForm = (props) => {
           </FormControl>
         </div>
       </div>
-      <div className="flex flex-col px-6 pt-6 pb-6">
+      <div className="flex flex-col pt-6 pb-3">
         <p className="mb-4 font-semibold font-prompt text-heading-6">รายละเอียดงาน</p>
-        <FormControl className="w-full font-prompt bg-grey-100">
+        <FormControl className="w-full font-prompt">
           <TextField
             label="รายละเอียด *"
-            className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
+            className="border-opacity-50 place-content-start border-DEFAULT"
             variant="outlined"
             defaultValue=""
             rows={5}

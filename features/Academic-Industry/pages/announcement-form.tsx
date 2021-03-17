@@ -15,6 +15,7 @@ import AnnouncementPropertyInfoForm from '../components/FormCreate/AnnouncementP
 import AnnouncementWalfareInfoForm from '../components/FormCreate/AnnouncementWelfareInfo'
 import AnnouncementCompanyLocationInfo from '../components/FormCreate/AnnouncementCompanyLocationInfo'
 import AnnouncementBusinessDateInfo from '../components/FormCreate/AnnouncementBusinessDateInfo'
+import PrimaryButton from '../../../core/components/Button/Primary'
 
 const AnnouncementForm = () => {
   const context = useContext(announcementFormPageContext)
@@ -34,8 +35,8 @@ const AnnouncementForm = () => {
   return (
     <div className="w-full h-full max-w-screen-lg">
       <AnnouncementDateInfoForm register={register} errors={errors} />
-      <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
-        <div className="px-6 pt-6">
+      <div>
+        <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
           <p className="font-semibold font-prompt text-heading-6">ข้อมูลประกาศรับสมัคร</p>
           <button className="w-1/2 pr-3 border-none focus:outline-none">
             <InputLabel htmlFor="picture">
@@ -53,30 +54,33 @@ const AnnouncementForm = () => {
           <FormHelperText>
             <span className="leading-8 text-red">{errors.file_picture?.message}</span>
           </FormHelperText>
+          <AnnouncementMainInfoForm
+            register={register}
+            errors={errors}
+            control={control}
+            data={context}
+          />
         </div>
-        <AnnouncementMainInfoForm
-          register={register}
-          errors={errors}
-          control={control}
-          data={context}
-        />
-        <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
-        <AnnouncementPropertyInfoForm register={register} errors={errors} />
-        <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
-        <AnnouncementWalfareInfoForm register={register} errors={errors} />
-        <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
-        <AnnouncementCompanyLocationInfo register={register} errors={errors} />
-        <hr className="mt-3 mb-6 font-semibold opacity-25 text-secondary2" />
-        <AnnouncementBusinessDateInfo register={register} errors={errors} control={control} />
+        <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+          <AnnouncementPropertyInfoForm register={register} errors={errors} />
+          <AnnouncementWalfareInfoForm register={register} errors={errors} />
+        </div>
+        <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+          <AnnouncementCompanyLocationInfo register={register} errors={errors} />
+        </div>
+        <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+          <AnnouncementBusinessDateInfo register={register} errors={errors} control={control} />
+        </div>
         <Observer>
           {() => (
             <>
-              <div className="flex justify-end grid-cols-12 px-6 my-6">
-                <button onClick={coreModalContext.openModal} className="text-white bg-primary">
-                  <p className="px-5 py-3 text-white font-prompt text-subtitle-1">
-                    บันทึกและประกาศ
-                  </p>
-                </button>
+              <div className="flex justify-end grid-cols-12 my-6 gap-x-8">
+                <PrimaryButton
+                  onClick={coreModalContext.openModal}
+                  className="lg:w-1/4 py-4"
+                  title="ค้นหา">
+                  <p className="text-white font-prompt text-subtitle-1">บันทึกและประกาศ</p>
+                </PrimaryButton>
               </div>
               <CoreModal
                 buttonSubmit="บันทึกและประกาศ"
