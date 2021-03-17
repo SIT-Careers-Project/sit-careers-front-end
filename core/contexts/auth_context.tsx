@@ -58,6 +58,21 @@ export class authContext {
     Cookies.remove('permission')
     Router.push('/')
   }
+
+  SITLogin = async (code, state) => {
+    try {
+      if (code && state) {
+        const response = await apiAuth.SITLogin(code, state)
+        if (response?.status === 200) {
+          Cookies.set('token', response.data.token)
+          this.isLoggedIn = true
+          Router.push('/')
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 export const AuthContext = createContext(new authContext())
