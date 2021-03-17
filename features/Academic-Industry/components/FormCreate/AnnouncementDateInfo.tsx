@@ -5,15 +5,16 @@ const AnnouncementDateInfoForm = (props) => {
   const { errors, register } = props
 
   return (
-    <div className="w-full max-w-screen-lg my-6 bg-white border-opacity-50 rounded font-prompt border-DEFAULT border-secondary2">
-      <div className="px-6 pt-6">
+    <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+      <div>
         <p className="font-semibold font-prompt text-heading-6">วันประกาศรับสมัคร</p>
       </div>
-      <div className="flex flex-row px-6 py-6">
+      <div className="flex flex-row pb-3 pt-5">
         <div className="pr-6">
           <TextField
             id="datetime-local"
             label="เปิดรับสมัคร *"
+            variant="outlined"
             type="datetime-local"
             InputLabelProps={{
               shrink: true
@@ -31,6 +32,7 @@ const AnnouncementDateInfoForm = (props) => {
           <TextField
             id="datetime-local"
             label="ปิดรับสมัคร *"
+            variant="outlined"
             type="datetime-local"
             InputLabelProps={{
               shrink: true
@@ -43,7 +45,7 @@ const AnnouncementDateInfoForm = (props) => {
         </div>
         <div className="flex justify-end w-2/4 grid-cols-12">
           <button className="text-white bg-red">
-            <p className="px-5 py-3 text-white font-prompt text-subtitle-1">ปิดรับสมัคร</p>
+            <p className="px-5 text-white font-prompt text-subtitle-1">ปิดรับสมัคร</p>
           </button>
         </div>
       </div>

@@ -60,11 +60,11 @@ export const AutoComplete = (props: CoreAutoCompleteProps) => {
         inputValue={inputValue}
         renderInput={(params) => (
           <TextField
+            variant="outlined"
             {...params}
             error={error}
             helperText={helperText}
             label={label}
-            className="bg-grey-100"
           />
         )}
         freeSolo
