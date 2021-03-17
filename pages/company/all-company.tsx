@@ -1,9 +1,10 @@
 import CompanyPage from '../../features/Company/pages/company-search'
 import { MainLayout } from '../../core/components/Layout/Main'
 import React from 'react'
-const Companies = () => {
+
+const Companies = ({ authContext }) => {
   return (
-    <MainLayout>
+    <MainLayout authContext={authContext}>
       <div>
         <CompanyPage />
       </div>

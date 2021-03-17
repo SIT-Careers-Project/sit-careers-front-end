@@ -3,11 +3,11 @@ import Footer from '../../core/components/Footer'
 import Navbar from '../../core/components/Navbar'
 import React from 'react'
 
-const CompanyInfo = () => {
+const CompanyInfo = ({ authContext }) => {
   return (
     <>
       <div className="h-auto bg-white bg-cover">
-        <Navbar />
+        <Navbar authContext={authContext} />
         <div className="flex justify-center mt-16 ">
           <CompanyPage />
         </div>

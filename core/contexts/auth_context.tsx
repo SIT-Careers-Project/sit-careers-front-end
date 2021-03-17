@@ -24,7 +24,6 @@ export class authContext {
       const response = await apiAuth.login(data)
       if (response?.status === 200) {
         Cookies.set('token', response.data.token)
-        Cookies.set('permission', response.data.permission)
         this.isLoggedIn = true
         Router.push('/')
       }
@@ -44,6 +43,7 @@ export class authContext {
         const response = await apiAuth.me()
         if (response?.status === 200) {
           this.isLoggedIn = true
+          this.permission = response.data.permission
         }
       }
     } catch (error) {
@@ -57,6 +57,21 @@ export class authContext {
     Cookies.remove('token')
     Cookies.remove('permission')
     Router.push('/')
+  }
+
+  SITLogin = async (code, state) => {
+    try {
+      if (code && state) {
+        const response = await apiAuth.SITLogin(code, state)
+        if (response?.status === 200) {
+          Cookies.set('token', response.data.token)
+          this.isLoggedIn = true
+          Router.push('/')
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

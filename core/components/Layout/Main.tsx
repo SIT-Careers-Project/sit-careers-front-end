@@ -1,18 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Footer from '../Footer'
 import Navbar from '../Navbar'
 import React from 'react'
 
 type MainLayoutProps = {
   children: React.ReactElement
+  authContext?: any
 }
 
 export const MainLayout = (props: MainLayoutProps) => {
-  const { children } = props
+  const { children, authContext } = props
   return (
     <>
       <div className="relative bg-cover bg-grey1">
         <div>
-          <Navbar />
+          <Navbar authContext={authContext} />
         </div>
         <div style={{ minHeight: '70vh' }} className="mb-12">
           {children}

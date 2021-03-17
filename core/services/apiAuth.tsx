@@ -8,5 +8,12 @@ export const apiAuth = {
   me: async () => {
     const response = await api.get('/me')
     return response
+  },
+  SITLogin: async (code, state) => {
+    const response = await api.post('/sit-login', {
+      state: state,
+      code: code
+    })
+    return response
   }
 }

@@ -4,8 +4,21 @@ import { AnnouncementSection } from '../components/Sections/Announcement'
 import { Carousel } from '../components/Carousel'
 import { CompanySection } from '../components/Sections/Company'
 import { StatCard } from '../../../core/components/Card/StatCard'
+import { useRouter } from 'next/router'
+import { useEffect, useContext } from 'react'
+import { AuthContext } from '../../../core/contexts/auth_context'
 
 function Index() {
+  const router = useRouter()
+  const authContext = useContext(AuthContext)
+  const { code, state } = router.query
+
+  useEffect(() => {
+    if (code && state) {
+      authContext.SITLogin(code, state)
+    }
+  }, [authContext, code, state])
+
   return (
     <>
       <Carousel />
