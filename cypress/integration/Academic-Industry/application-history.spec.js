@@ -1,6 +1,6 @@
 describe('The Application History Page', () => {
   it('successfully loads', () => {
-    cy.visit('/academic-industry/application')
+    cy.visit('/academic-industry/applications/history')
   })
   it('This page contains navbar component', () => {
     cy.get('[data-cy=core-navbar]').should('be.visible')

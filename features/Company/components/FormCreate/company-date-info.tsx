@@ -15,18 +15,21 @@ const CompanyDateInfoForm = (props) => {
 
   return (
     <div>
-      <p className="mb-3 ml-6 font-semibold font-prompt text-heading-6">วันที่ทำการ</p>
+      <p className="mb-3 font-semibold font-prompt text-heading-6">วันที่ทำการ</p>
       <div className="flex flex-row pb-6">
-        <div className="w-4/12 pl-6 pr-3">
+        <div className="w-4/12 pr-3">
           <FormControl
             error={!!errors?.start_business_day}
-            className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="start-business-day-select">วันเปิดทำการ *</InputLabel>
+            className="w-full font-prompt"
+            variant="outlined">
+            <InputLabel htmlFor="start-business-day-select" id="select-outlined-label">
+              วันเปิดทำการ *
+            </InputLabel>
             <Controller
               control={control}
               name="start_business_day"
               as={
-                <Select id="start-business-day-select">
+                <Select id="select-outlined-label">
                   {days.map((data) => (
                     <MenuItem key={data.day} value={data.day}>
                       {data.day}
@@ -41,8 +44,9 @@ const CompanyDateInfoForm = (props) => {
         <div className="w-4/12 pl-3 pr-3">
           <TextField
             name="start_business_time"
+            variant="outlined"
             label="เวลาเปิดทำการ *"
-            className="font-sarabun bg-grey-100"
+            className="font-sarabun"
             type="time"
             InputLabelProps={{
               shrink: true
@@ -59,13 +63,16 @@ const CompanyDateInfoForm = (props) => {
         <div className="w-4/12 pl-3 pr-3">
           <FormControl
             error={!!errors?.end_business_day}
-            className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="end-business-day-select">วันปิดทำการ *</InputLabel>
+            className="w-full font-prompt"
+            variant="outlined">
+            <InputLabel htmlFor="end-business-day-select" id="select-outlined-label">
+              วันปิดทำการ *
+            </InputLabel>
             <Controller
               control={control}
               name="end_business_day"
               as={
-                <Select id="end-business-day-select">
+                <Select id="select-outlined-label">
                   {days.map((data) => (
                     <MenuItem key={data.day} value={data.day}>
                       {data.day}
@@ -77,11 +84,12 @@ const CompanyDateInfoForm = (props) => {
             <FormHelperText>{errors.end_business_day?.message}</FormHelperText>
           </FormControl>
         </div>
-        <div className="w-4/12 pl-3 pr-6">
+        <div className="w-4/12 pl-3">
           <TextField
             name="end_business_time"
+            variant="outlined"
             label="เวลาปิดทำการ *"
-            className="font-sarabun bg-grey-100"
+            className="font-sarabun"
             type="time"
             InputLabelProps={{
               shrink: true

@@ -15,12 +15,13 @@ const MainInfoForm = (props) => {
 
   return (
     <div>
-      <div className="flex flex-row justify-between px-6 py-6">
+      <div className="flex flex-row justify-between py-6">
         <div className="w-1/2 pr-3">
           <TextField
             label="ชื่อภาษาไทย *"
             name="company_name_th"
-            className="font-sarabun bg-grey-100"
+            variant="outlined"
+            className="font-sarabun"
             defaultValue=""
             inputRef={register}
             error={!!errors.company_name_th}
@@ -32,7 +33,8 @@ const MainInfoForm = (props) => {
           <TextField
             label="ชื่อภาษาอังกฤษ *"
             name="company_name_en"
-            className="font-sarabun bg-grey-100"
+            variant="outlined"
+            className="font-sarabun"
             defaultValue=""
             inputRef={register}
             error={!!errors.company_name_en}
@@ -41,15 +43,20 @@ const MainInfoForm = (props) => {
           />
         </div>
       </div>
-      <div className="flex flex-row justify-between px-6">
+      <div className="flex flex-row justify-between">
         <div className="w-1/2 pr-3">
-          <FormControl error={!!errors?.company_type} className="w-full font-prompt bg-grey-100">
-            <InputLabel htmlFor="trinity-select">ประเภทธุรกิจ *</InputLabel>
+          <FormControl
+            error={!!errors?.company_type}
+            className="w-full font-prompt"
+            variant="outlined">
+            <InputLabel htmlFor="trinity-select" id="select-outlined-label">
+              ประเภทธุรกิจ *
+            </InputLabel>
             <Controller
               control={control}
               name="company_type"
               as={
-                <Select id="trinity-select">
+                <Select id="select-outlined-label">
                   {companyType.map((company) => (
                     <MenuItem key={company.title} value={company.title}>
                       {company.title}
@@ -65,7 +72,8 @@ const MainInfoForm = (props) => {
           <TextField
             label="เว็บไซต์"
             name="website"
-            className="font-sarabun bg-grey-100"
+            variant="outlined"
+            className="font-sarabun"
             defaultValue=""
             inputRef={register}
             error={!!errors.website}
@@ -74,8 +82,8 @@ const MainInfoForm = (props) => {
           />
         </div>
       </div>
-      <div className="flex flex-col justify-between p-6">
-        <FormControl error={!!errors?.about_us} className="w-full font-prompt bg-grey-100">
+      <div className="flex flex-col justify-between py-6">
+        <FormControl error={!!errors?.about_us} className="w-full font-prompt">
           <Controller
             control={control}
             name="about_us"
@@ -83,7 +91,7 @@ const MainInfoForm = (props) => {
               <TextField
                 label="แนะนำ *"
                 name="about_us"
-                className="border-opacity-50 place-content-start bg-grey-100 border-DEFAULT"
+                className="border-opacity-50 place-content-start border-DEFAULT"
                 variant="outlined"
                 defaultValue=""
                 error={!!errors?.about_us}

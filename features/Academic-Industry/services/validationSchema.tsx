@@ -2,6 +2,7 @@ import * as yup from 'yup'
 
 const FILE_SIZE = 5242880
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png']
+const SUPPORTED_FORMATS_RESUME = ['image/png', 'application/pdf']
 
 export const AnnouncementFormSchema = yup.object().shape({
   announcement_id: yup.string(),
@@ -51,4 +52,35 @@ export const AnnouncementFormSchema = yup.object().shape({
   welfare: yup.string().required('*จำเป็นต้องกรอก สวัสดิการ'),
   job_type: yup.string().required('*จำเป็นต้องเลือก ประเภทของประกาศ'),
   status: yup.string()
+})
+
+export const ApplicationFormSchema = yup.object().shape({
+  announcement_id: yup.string().required('*จำเป็นต้องกรอก วันประกาศรับสมัคร'),
+  status: yup.string(),
+  first_name: yup.string().required('*จำเป็นต้องกรอก ชื่อ'),
+  last_name: yup.string().required('*จำเป็นต้องกรอก นามสกุล'),
+  curriculum: yup.string().required('*จำเป็นต้องกรอก สาขาวิชา'),
+  year: yup.string().required('*จำเป็นต้องกรอก ชั้นปี'),
+  tel_no: yup.string().required('*จำเป็นต้องกรอก เบอร์โทรศัพท์'),
+  email: yup.string().required('*จำเป็นต้องกรอก email'),
+  resume_link: yup.string().required('*จำเป็นต้องกรอก resume link'),
+  prefix: yup.string().required('*จำเป็นต้องกรอก คำนำหน้า'),
+  file_resume: yup
+    .mixed()
+    .notRequired()
+    .test('fileSize', 'ไฟล์ต้องมีขนาดไม่เกินใหญ่เกินไป ต้องมีขนาดไม่เกิน 5MB', (value) => {
+      console.log(value.length)
+      if (value.length !== 0) {
+        return value && value[0].size <= FILE_SIZE
+      } else {
+        return true
+      }
+    })
+    .test('fileFormat', 'ไฟล์ต้องเป็นนามสกุล .jpg .jpeg .gif และ .png', (value) => {
+      if (value.length !== 0) {
+        return value && SUPPORTED_FORMATS_RESUME.includes(value[0].type)
+      } else {
+        return true
+      }
+    })
 })

@@ -77,7 +77,16 @@ const UserInfo = () => {
       </div>
       <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
       <div>
-        <Observer>{() => <CoreTable column={column} data={data} options={{}} />}</Observer>
+        <Observer>
+          {() => (
+            <CoreTable
+              column={column}
+              data={data}
+              getData={() => console.log('hello')}
+              options={{}}
+            />
+          )}
+        </Observer>
       </div>
     </div>
   )

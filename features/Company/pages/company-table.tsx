@@ -91,7 +91,14 @@ const CompanyTable = () => {
       <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
       <div>
         <Observer>
-          {() => <CoreTable column={column} data={context.companies} options={{ search: true }} />}
+          {() => (
+            <CoreTable
+              column={column}
+              data={context.companies}
+              getData={context.getCompanies}
+              options={{ search: true }}
+            />
+          )}
         </Observer>
       </div>
     </div>

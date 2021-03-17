@@ -23,10 +23,10 @@ const AllCompany = () => {
 
   return useObserver(() => (
     <div>
-      <div className="flex justify-center w-full h-full pt-16 pb-3 bg-grey4">
+      <div className="container grid max-w-screen-lg grid-flow-row mx-auto mt-20 bg-white shadow-lg rounded-lg font-prompt px-10">
         <div className="w-full max-w-screen-lg my-6">
-          <div className="flex flex-row justify-between pt-6">
-            <div className="p-2 w-6/12 bg-grey-100">
+          <div className="flex flex-row justify-between">
+            <div className="p-2 w-6/12 bg-white border-opacity-50 rounded border-DEFAULT border-secondary2">
               <Search
                 onChange={(event) => {
                   if (typeof event.target.value === 'string') {
@@ -36,7 +36,7 @@ const AllCompany = () => {
               />
             </div>
             <div className="w-4/12 px-5">
-              <FormControl className="w-full font-prompt bg-grey-100 my-4">
+              <FormControl variant="outlined" className="w-full font-prompt my-4">
                 <InputLabel htmlFor="trinity-select">ประเภทธุรกิจ</InputLabel>
                 <Select
                   id="trinity-select"
@@ -73,10 +73,9 @@ const AllCompany = () => {
           </div>
         </div>
       </div>
-      <div className="w-full h-1 bg-secondary1" />
       <div className="container grid max-w-screen-lg grid-flow-row mx-auto mt-5">
         <div>
-          <p className="mb-5 text-heading-5 font-prompt">ข้อมูลบริษัท</p>
+          <p className="text-heading-5 font-prompt">ข้อมูลบริษัท</p>
         </div>
         <div className="mb-5">
           {context.companies.length !== 0 ? (
@@ -86,7 +85,7 @@ const AllCompany = () => {
                 .map((data, i) => {
                   return (
                     <Card
-                      className="my-3"
+                      className="my-5"
                       key={i}
                       title={`${data.company_name_th} - ${data.company_name_en}`}
                       linkPath={`/company/detail/${data.company_id}`}

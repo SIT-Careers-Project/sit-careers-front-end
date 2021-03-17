@@ -87,6 +87,53 @@ const apiAcademic = {
       headers: { 'Content-type': 'multipart/form-data' }
     })
     return response
+  },
+  createApplication: async (data) => {
+    const formData = new FormData()
+    formData.append('announcement_id', data.announcement_id)
+    formData.append('note', data.note ? data.note : '-')
+    formData.append('name_title', data.prefix)
+    formData.append('first_name', data.first_name)
+    formData.append('last_name', data.last_name)
+    formData.append('email', data.email)
+    formData.append('curriculum', data.curriculum)
+    formData.append('year', data.year)
+    formData.append('tel_no', data.tel_no)
+    formData.append('resume_link', data.resume_link)
+    formData.append('path_file', data.path_file ? data.path_file : '-')
+    formData.append('file_resume', data.file_resume[0])
+
+    const response = await api.post('/academic-industry/application', formData, {
+      headers: { 'Content-type': 'multipart/form-data' }
+    })
+    return response
+  },
+  getApplications: async () => {
+    const response = await api.get('/academic-industry/applications')
+    return response
+  },
+  updateApplication: async (data) => {
+    const formData = new FormData()
+    formData.append('announcement_id', data.announcement_id)
+    formData.append('application_id', data.application_id)
+    formData.append('note', data.note ? data.note : '-')
+    formData.append('name_title', data.prefix)
+    formData.append('first_name', data.first_name)
+    formData.append('last_name', data.last_name)
+    formData.append('email', data.email)
+    formData.append('curriculum', data.curriculum)
+    formData.append('year', data.year)
+    formData.append('status', data.status)
+    formData.append('tel_no', data.tel_no)
+    formData.append('resume_link', data.resume_link)
+    formData.append('path_file', data.path_file ? data.path_file : '-')
+    // formData.append('file_resume', data.file_resume[0])
+    formData.append('_method', 'put')
+
+    const response = await api.post('/academic-industry/application', formData, {
+      headers: { 'Content-type': 'multipart/form-data' }
+    })
+    return response
   }
 }
 

@@ -1,16 +1,42 @@
 import { Assignment } from '@material-ui/icons'
 /* eslint-disable react/display-name */
-import React, { useState } from 'react'
-import CoreTable from '../../../core/components/Table'
+import React, { useContext } from 'react'
+import CoreTableWithAction from '../../../core/components/TableWithAction'
 import { Observer } from 'mobx-react-lite'
 import Link from 'next/link'
+import { applicationHistoryContext } from '../context/announcement_application_history_context'
 
 const ApplicationHistory = () => {
-  const [column] = useState([
+  const context = useContext(applicationHistoryContext)
+
+  const column = [
     { title: 'ประกาศรับสมัครงาน', field: 'announcement_title', editable: 'never' },
+    { title: 'ID', field: 'announcement_id', editable: 'never', hidden: true },
+    { title: 'ID', field: 'application_id', editable: 'never', hidden: true },
+    { title: 'Prefix', field: 'name_title', editable: 'never', hidden: true },
     {
       title: 'บริษัท',
-      field: 'company_name_en',
+      field: 'company_name_th',
+      editable: 'never'
+    },
+    {
+      title: 'ชื่อ',
+      field: 'first_name',
+      editable: 'never'
+    },
+    {
+      title: 'นามสกุล',
+      field: 'last_name',
+      editable: 'never'
+    },
+    {
+      title: 'สาขาวิชา',
+      field: 'curriculum',
+      editable: 'never'
+    },
+    {
+      title: 'ชั้นปี',
+      field: 'year',
       editable: 'never'
     },
     {
@@ -22,7 +48,7 @@ const ApplicationHistory = () => {
       title: 'สถานะ',
       field: 'status',
       editable: 'onUpdate',
-      lookup: { 1: 'เรียกสัมภาษณ์', 2: 'รออนุมัติ', 3: 'เสร็จสิ้น' }
+      lookup: { 0: 'เรียกสัมภาษณ์', 1: 'รออนุมัติ', 2: 'เสร็จสิ้น', 3: 'ปฏิเสธการรับสมัครงาน' }
     },
     {
       title: 'รายละเอียด',
@@ -34,28 +60,7 @@ const ApplicationHistory = () => {
         </Link>
       )
     }
-  ])
-
-  const [data, setData] = useState([
-    {
-      announcement_title: 'รับสมัคร Software Engineer Internship 2 อัตรา',
-      company_name_en: 'SIT Company',
-      application_date: '31/01/2021',
-      status: 1
-    },
-    {
-      announcement_title: 'รับสมัคร IT Support',
-      company_name_en: 'Stark Industry',
-      application_date: '01/01/2021',
-      status: 2
-    },
-    {
-      announcement_title: 'รับ FullTime/PartTime Infra 2 ตำแหน่ง',
-      company_name_en: 'Google Co.',
-      application_date: '12/12/2020',
-      status: 3
-    }
-  ])
+  ]
 
   return (
     <div className="w-full h-auto max-w-screen-lg mb-10 bg-grey1">
@@ -68,22 +73,12 @@ const ApplicationHistory = () => {
       <div>
         <Observer>
           {() => (
-            <CoreTable
+            <CoreTableWithAction
               column={column}
-              data={data}
-              options={{}}
-              editable={{
-                onRowUpdate: (newData, oldData) =>
-                  new Promise((resolve) => {
-                    setTimeout(() => {
-                      const dataUpdate = [...data]
-                      const index = oldData.tableData.id
-                      dataUpdate[index] = newData
-                      setData([...dataUpdate])
-                      resolve
-                    }, 1000)
-                  })
-              }}
+              data={context?.applications}
+              isEditable={true}
+              getData={context.getApplications}
+              updateData={context.updateApplication}
             />
           )}
         </Observer>
