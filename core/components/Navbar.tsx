@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { navbarContext } from '../contexts/navbar_context'
 import { Observer } from 'mobx-react-lite'
 import { useRouter } from 'next/router'
+import _ from 'lodash'
 import { dropdownLinkAdmin, navLink } from '../config/menuItem'
 
 export default function Navbar({ authContext }) {

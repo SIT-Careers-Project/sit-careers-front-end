@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
 import { createContext } from 'react'
-import _ from 'lodash'
 
 export class NavbarContext {
   anchorEl
