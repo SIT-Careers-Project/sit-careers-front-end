@@ -101,7 +101,6 @@ export default function Navbar({ authContext }) {
                             const checkRoleRender = _.find(data.role, (item) =>
                               _.includes(item, authContext.roleUser)
                             )
-                            console.log(checkRoleRender)
                             return (
                               <>
                                 {checkPermissionRender && checkRoleRender && (
