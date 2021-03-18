@@ -28,9 +28,9 @@ const AnnouncementSearch = () => {
     <Observer>
       {() => (
         <div>
-          <div className="flex justify-center w-full h-full pt-16 pb-3 bg-grey4">
+          <div className="container grid max-w-screen-lg grid-flow-row mx-auto mt-20 bg-white shadow-lg rounded-lg font-prompt px-10">
             <div className="w-full max-w-screen-lg my-6">
-              <div className="w-full h-8 max-w-screen-lg bg-grey-100">
+              <div className="p-2 w-full bg-white border-opacity-50 rounded border-DEFAULT border-secondary2">
                 <Search
                   onChange={(event) => {
                     if (typeof event.target.value === 'string') {
@@ -41,8 +41,8 @@ const AnnouncementSearch = () => {
                 />
               </div>
               <div className="flex flex-row justify-between pt-6">
-                <div className="w-3/12 pr-5">
-                  <FormControl className="w-full font-prompt bg-grey-100">
+                <div className="w-3/12">
+                  <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของงาน</InputLabel>
                     <Select
                       id="trinity-select"
@@ -60,8 +60,8 @@ const AnnouncementSearch = () => {
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-3/12 pl-6 pr-5">
-                  <FormControl className="w-full font-prompt bg-grey-100">
+                <div className="w-3/12 pl-5">
+                  <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของประกาศ</InputLabel>
                     <Select
                       id="trinity-select"
@@ -79,8 +79,8 @@ const AnnouncementSearch = () => {
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-3/12 pl-6 pr-5">
-                  <FormControl className="w-full font-prompt bg-grey-100">
+                <div className="w-3/12 pl-5">
+                  <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของษริษัท</InputLabel>
                     <Select
                       id="trinity-select"
@@ -143,7 +143,6 @@ const AnnouncementSearch = () => {
               </div>
             </div>
           </div>
-          <div className="w-full h-1 bg-secondary1" />
           <div className="flex justify-center w-full h-full pb-10">
             <div className="-mt-24">
               <div className="container px-32 mx-auto">
