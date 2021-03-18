@@ -30,7 +30,11 @@ export const CardSmall = ({
   <div>
     <MaterialCard
       onClick={() => onClick()}
-      style={{ height: '201px', width: '403px' }}
+      style={{
+        height: '201px',
+        width: '403px',
+        boxShadow: '10px -3px 15px rgba(0, 0, 0, 0.10), 4px -2px 6px rgba(0, 0, 0, 0.05)'
+      }}
       className={`${className} grid grid-cols-4 p-4 gap-4`}>
       <div style={{ height: '80px' }} className="col-span-1">
         {srcImg !== '-' && (
