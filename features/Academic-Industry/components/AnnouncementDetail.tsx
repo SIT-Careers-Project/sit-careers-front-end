@@ -26,7 +26,12 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
   return (
     <div className="w-full ml-5 mr-auto md:w-5/12">
       <div>
-        <MaterialCard style={{ height: '1100px', width: '562px' }}>
+        <MaterialCard
+          style={{
+            height: '1100px',
+            width: '562px',
+            boxShadow: '10px -3px 15px rgba(0, 0, 0, 0.10), 4px -2px 6px rgba(0, 0, 0, 0.05)'
+          }}>
           <div className="flex items-end justify-end w-full h-40 rounded-none bg-grey-100">
             {data?.picture !== '-' && (
               <img
