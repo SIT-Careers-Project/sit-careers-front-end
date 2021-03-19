@@ -94,6 +94,7 @@ const MainInfoForm = (props) => {
                 className="border-opacity-50 place-content-start border-DEFAULT"
                 variant="outlined"
                 defaultValue=""
+                data-cy="about_us"
                 error={!!errors?.about_us}
                 helperText={errors.about_us?.message}
                 rows={5}

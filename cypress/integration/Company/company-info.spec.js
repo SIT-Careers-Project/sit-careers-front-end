@@ -1,4 +1,3 @@
-
 describe('The Company Information Page', () => {
   it('successfully loads', () => {
     cy.visit('/company/info-management')

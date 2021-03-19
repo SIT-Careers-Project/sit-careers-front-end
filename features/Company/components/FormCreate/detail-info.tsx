@@ -12,6 +12,7 @@ const DetailInfoForm = (props) => {
         <Controller
           control={control}
           name="description"
+          data-cy="description"
           as={
             <TextField
               label="รายละเอียด *"
