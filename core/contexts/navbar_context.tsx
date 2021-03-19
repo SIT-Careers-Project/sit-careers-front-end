@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
 import { createContext } from 'react'
 
@@ -6,11 +6,8 @@ export class NavbarContext {
   anchorEl
 
   constructor() {
-    makeObservable(this, {
-      handleClose: action,
-      handleClick: action,
-      anchorEl: observable
-    })
+    makeAutoObservable(this)
+
     this.anchorEl = null
   }
 
