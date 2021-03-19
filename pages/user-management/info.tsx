@@ -1,20 +1,14 @@
 import UserInfo from '../../features/User-Management/pages/user-info'
 import { MainLayout } from '../../core/components/Layout/Main'
 import React, { useEffect } from 'react'
-import _ from 'lodash'
 import Router from 'next/router'
+import { checkLoggedIn } from 'core/services/utils'
 
 const CompanyInfo = ({ authContext }) => {
   useEffect(() => {
     authContext.fetchMe().then(() => {
-      const checkRole = _.includes(['admin'], authContext.roleUser)
-      if (authContext.isLoggedIn) {
-        if (!checkRole) {
-          Router.replace('/401')
-        }
-      } else {
-        Router.replace('/login')
-      }
+      const path = checkLoggedIn(authContext.isLoggedIn, ['admin'], authContext.roleUser)
+      Router.replace(path)
     })
   }, [authContext])
 

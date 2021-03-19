@@ -2,20 +2,14 @@ import ApplicationForm from '../../../../features/Academic-Industry/pages/announ
 import Footer from '../../../../core/components/Footer'
 import Navbar from '../../../../core/components/Navbar'
 import React, { useEffect } from 'react'
-import _ from 'lodash'
 import Router from 'next/router'
+import { checkLoggedIn } from 'core/services/utils'
 
 const CreateApplication = ({ authContext }) => {
   useEffect(() => {
     authContext.fetchMe().then(() => {
-      const checkRole = _.includes(['admin', 'student'], authContext.roleUser)
-      if (authContext.isLoggedIn) {
-        if (!checkRole) {
-          Router.replace('/401')
-        }
-      } else {
-        Router.replace('/login')
-      }
+      const path = checkLoggedIn(authContext.isLoggedIn, ['admin', 'student'], authContext.roleUser)
+      Router.replace(path)
     })
   }, [authContext])
 

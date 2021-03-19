@@ -1,20 +1,18 @@
-import CompanyDetail from '../../../features/Company/pages/company-detail'
-import { MainLayout } from '../../../core/components/Layout/Main'
+import CompanyDetail from 'features/Company/pages/company-detail'
+import { MainLayout } from 'core/components/Layout/Main'
 import React, { useEffect } from 'react'
-import _ from 'lodash'
 import Router from 'next/router'
+import { checkLoggedIn } from 'core/services/utils'
 
 const CompanyInfo = ({ query, authContext }) => {
   useEffect(() => {
     authContext.fetchMe().then(() => {
-      const checkRole = _.includes(['admin', 'manager', 'coordinator'], authContext.roleUser)
-      if (authContext.isLoggedIn) {
-        if (!checkRole) {
-          Router.replace('/401')
-        }
-      } else {
-        Router.replace('/login')
-      }
+      const path = checkLoggedIn(
+        authContext.isLoggedIn,
+        ['admin', 'manager', 'coordinator'],
+        authContext.roleUser
+      )
+      Router.replace(path)
     })
   }, [authContext])
 
