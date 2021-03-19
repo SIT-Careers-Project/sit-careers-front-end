@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useMemo, useState, useRef } from 'react'
-import { Pie } from 'react-chartjs-2'
+import React, { useContext, useEffect } from 'react'
+// import { Pie } from 'react-chartjs-2'
 import { dashboardPageContext } from '../../context/dashboard_page_context'
-import { Observer } from 'mobx-react-lite'
+// import { Observer } from 'mobx-react-lite'
 
 export const ChartInfoSection = () => {
   const context = useContext(dashboardPageContext)
-  const [renderDelay, setRenderDelay] = useState(true)
-  const chartRef = useRef(null)
   useEffect(() => {
     context.getStudentJobPositions(), context.getAnnouncementJobPositions()
     context.getCompanyTypes()
@@ -102,14 +100,14 @@ export const ChartInfoSection = () => {
   //   []
   // )
 
-  const options = {
-    legend: {
-      position: 'bottom',
-      labels: {
-        boxWidth: 20
-      }
-    }
-  }
+  // const options = {
+  //   legend: {
+  //     position: 'bottom',
+  //     labels: {
+  //       boxWidth: 20
+  //     }
+  //   }
+  // }
 
   return (
     <div>
