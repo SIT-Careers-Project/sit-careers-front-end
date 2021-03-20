@@ -4,7 +4,7 @@ export const navLink = [
   { path: '/', name: 'หน้าหลัก', permission: 'general' },
   { path: '/academic-industry/announcements', name: 'ประกาศรับสมัครงาน', permission: 'general' },
   { path: '/company/all-company', name: 'ข้อมูลบริษัท', permission: 'general' },
-  { path: '/dashboard', name: 'Dashboard', permission: 'access_dashboard' }
+  { path: '/dashboard/info', name: 'Dashboard', permission: 'access_dashboard' }
 ]
 
 export const dropdownLinkAdmin = [

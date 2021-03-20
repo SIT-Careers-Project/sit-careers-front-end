@@ -7,7 +7,7 @@ export const checkStatus = (startDate, endDate, status) => {
     return 'CLOSE'
   }
   dayjs.extend(isBetween)
-  if (dayjs().isBetween(startDate, endDate, null, '[)')) {
+  if (dayjs().isBetween(startDate, endDate, null, '[]')) {
     return 'OPEN'
   } else {
     return 'CLOSE'

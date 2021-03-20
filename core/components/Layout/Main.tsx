@@ -16,9 +16,7 @@ export const MainLayout = (props: MainLayoutProps) => {
         <div>
           <Navbar authContext={authContext} />
         </div>
-        <div style={{ minHeight: '70vh' }} className="mb-12">
-          {children}
-        </div>
+        <div style={{ minHeight: '70vh' }}>{children}</div>
         <div className="absolute w-full">
           <Footer />
         </div>
