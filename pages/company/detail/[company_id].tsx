@@ -19,7 +19,7 @@ const CompanyInfo = ({ query, authContext }) => {
 
   return (
     <MainLayout authContext={authContext}>
-      <div className="flex justify-center mt-16">
+      <div className="flex justify-center my-16">
         <CompanyDetail companyId={query.company_id} />
       </div>
     </MainLayout>
