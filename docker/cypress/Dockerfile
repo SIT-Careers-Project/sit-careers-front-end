@@ -17,6 +17,8 @@ COPY tailwind.config.js $APPLICATION_ROOT
 COPY tsconfig.json $APPLICATION_ROOT
 COPY cypress.json $APPLICATION_ROOT
 
+COPY .testing.env $APPLICATION_ROOT/.env
+
 COPY ./cypress $APPLICATION_ROOT/cypress
 COPY ./utils $APPLICATION_ROOT/utils
 COPY ./pages $APPLICATION_ROOT/pages
