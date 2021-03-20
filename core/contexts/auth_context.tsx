@@ -2,8 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import { apiAuth } from '../services/apiAuth'
 import { createContext } from 'react'
 import Cookies from 'js-cookie'
-import Router from 'next/router'
-
+import { Router } from 'next/router'
 export class authContext {
   user
   permission
@@ -29,7 +28,7 @@ export class authContext {
         this.isLoggedIn = true
         this.permission = response.data.permissions
         this.roleUser = response.data.user.role_name
-        Router.push('/')
+        Router.prototype.push('/')
       }
     } catch (error) {
       if (error.response?.status === 401) {
@@ -61,7 +60,7 @@ export class authContext {
     this.isLoggedIn = false
     Cookies.remove('token')
     Cookies.remove('permission')
-    Router.push('/')
+    Router.prototype.push('/')
   }
 
   SITLogin = async (code, state) => {
@@ -73,7 +72,7 @@ export class authContext {
           this.permission = response.data.permissions
           this.roleUser = response.data.user.role_name
           this.isLoggedIn = true
-          Router.push('/')
+          Router.prototype.push('/')
         }
       }
     } catch (error) {

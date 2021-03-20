@@ -2,16 +2,18 @@ import CompanyPage from '../../features/Company/pages/company-info'
 import Footer from '../../core/components/Footer'
 import Navbar from '../../core/components/Navbar'
 import React, { useEffect } from 'react'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 const CompanyInfo = ({ authContext }) => {
+  const router = useRouter()
+
   useEffect(() => {
     authContext.fetchMe().then(() => {
       if (!authContext.isLoggedIn) {
-        Router.replace('/login')
+        router.push('/login')
       }
     })
-  }, [authContext])
+  }, [authContext, router])
 
   return (
     <>

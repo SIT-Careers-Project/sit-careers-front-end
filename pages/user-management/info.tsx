@@ -1,16 +1,17 @@
 import UserInfo from '../../features/User-Management/pages/user-info'
 import { MainLayout } from '../../core/components/Layout/Main'
 import React, { useEffect } from 'react'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
 
 const CompanyInfo = ({ authContext }) => {
+  const router = useRouter()
   useEffect(() => {
     authContext.fetchMe().then(() => {
       const path = checkLoggedIn(authContext.isLoggedIn, ['admin'], authContext.roleUser)
-      Router.replace(path)
+      router.push(path)
     })
-  }, [authContext])
+  }, [authContext, router])
 
   return (
     <MainLayout authContext={authContext}>

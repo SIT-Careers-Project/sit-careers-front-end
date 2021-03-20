@@ -1,10 +1,11 @@
 import Application from '../../../features/Academic-Industry/pages/application-history'
 import { MainLayout } from '../../../core/components/Layout/Main'
 import React, { useEffect } from 'react'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
 
 const ApplicationHistory = ({ authContext }) => {
+  const router = useRouter()
   useEffect(() => {
     authContext.fetchMe().then(() => {
       const path = checkLoggedIn(
@@ -12,9 +13,9 @@ const ApplicationHistory = ({ authContext }) => {
         ['admin', 'manager', 'coordinator', 'student'],
         authContext.roleUser
       )
-      Router.replace(path)
+      path && router.push(path)
     })
-  }, [authContext])
+  }, [authContext, router])
 
   return (
     <MainLayout authContext={authContext}>
