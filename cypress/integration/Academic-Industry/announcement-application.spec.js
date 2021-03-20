@@ -1,17 +1,19 @@
 describe('The Announcement Application Form Page', () => {
-  it.skip('successfully loads', () => {
+  it('successfully loads', () => {
     cy.visit('/academic-industry/announcements')
   })
-  it.skip('This page contains navbar component', () => {
+  it('This page contains navbar component', () => {
     cy.get('[data-cy=core-navbar]').should('be.visible')
   })
-  it.skip('It is a have footer component', () => {
+  it('It is a have footer component', () => {
     cy.get('[data-cy=core-footer]').should('be.visible')
   })
+  it('Go to application page', () => {
+    cy.contains('สมัคร').click()
+  })
   it.skip('should show modal ยืนยันการสมัคร when all of the required input has been filled', () => {
-    cy.get('button').should('contain.text', 'ยืนยันการสมัคร')
-    cy.get('#trinity-select').click()
     cy.contains('นาย').click()
+    cy.get('#trinity-select').click()
     cy.get('input[name="first_name"]').type('จิรัฐติกาล')
     cy.get('input[name="last_name"]').type('วิไลรัตน์')
     cy.get('input[name="tel_no"]').type('0868226824')
@@ -22,5 +24,6 @@ describe('The Announcement Application Form Page', () => {
     cy.contains('คุณต้องการยืนยันการสมัครใช่หรือไม่')
     cy.get('button').should('contain.text', 'สมัคร')
     cy.get('button').should('contain.text', 'ยกเลิก')
+    cy.get('button').should('contain.text', 'ยืนยันการสมัคร')
   })
 })

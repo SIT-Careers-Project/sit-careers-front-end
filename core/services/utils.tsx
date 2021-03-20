@@ -17,3 +17,14 @@ export const checkStatus = (startDate, endDate, status) => {
 export const sortAnnouncement = (announcements, key) => {
   return _.orderBy(announcements, key, ['desc'])
 }
+
+export const checkLoggedIn = (isLoggedIn, roleCheck: Array<string>, roleUser) => {
+  const checkRole = _.includes(roleCheck, roleUser)
+  if (isLoggedIn) {
+    if (!checkRole) {
+      return '/401'
+    }
+  } else {
+    return '/login'
+  }
+}

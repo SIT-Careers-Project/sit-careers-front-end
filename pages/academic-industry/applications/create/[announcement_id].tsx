@@ -1,9 +1,18 @@
 import ApplicationForm from '../../../../features/Academic-Industry/pages/announcement-application'
 import Footer from '../../../../core/components/Footer'
 import Navbar from '../../../../core/components/Navbar'
-import React from 'react'
+import React, { useEffect } from 'react'
+import Router from 'next/router'
+import { checkLoggedIn } from 'core/services/utils'
 
 const CreateApplication = ({ authContext }) => {
+  useEffect(() => {
+    authContext.fetchMe().then(() => {
+      const path = checkLoggedIn(authContext.isLoggedIn, ['admin', 'student'], authContext.roleUser)
+      Router.replace(path)
+    })
+  }, [authContext])
+
   return (
     <>
       <div>
