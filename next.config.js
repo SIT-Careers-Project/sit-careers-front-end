@@ -1,5 +1,12 @@
 // This uses phases as outlined here: https://nextjs.org/docs/#custom-configuration
-module.exports = () => {
+const { PHASE_DEVELOPMENT_SERVER,  PHASE_PRODUCTION_SERVER, PHASE_PRODUCTION_BUILD  } = require('next/constants')
+
+module.exports = (phases) => {
+  console.log(
+    'isDev =>', phases === PHASE_DEVELOPMENT_SERVER,
+    'isProdBuild =>', phases === PHASE_PRODUCTION_BUILD,
+    'isProd: =>', phases === PHASE_PRODUCTION_SERVER
+  )
   return {
     publicRuntimeConfig: {
       // can add static folder instead public folder.
