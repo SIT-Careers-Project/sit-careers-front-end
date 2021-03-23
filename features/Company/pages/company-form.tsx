@@ -80,6 +80,7 @@ const CompanyForm = () => {
                   คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
                 </span>
               }
+              isDisable={context.modalDisable}
               onSubmit={handleSubmit(context.createCompany)}
             />
           </>
