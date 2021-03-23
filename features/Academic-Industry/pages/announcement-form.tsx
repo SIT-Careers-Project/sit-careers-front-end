@@ -90,6 +90,7 @@ const AnnouncementForm = () => {
                     คุณต้องการบันทึกและประกาศรับสมัครงานใช่หรือไม่
                   </span>
                 }
+                isDisable={context.modalDisable}
                 onSubmit={handleSubmit(context.createAnnouncement)}
               />
             </>
