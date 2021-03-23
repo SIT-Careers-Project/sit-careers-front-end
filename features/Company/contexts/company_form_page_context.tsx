@@ -8,13 +8,16 @@ export class CompanyFormPageContext {
   companies
   formCompany
   modal
+  modalDisable
 
   constructor() {
     makeObservable(this, {
       getCompanies: action,
       createCompany: action,
-      formCompany: observable
+      formCompany: observable,
+      modalDisable: observable
     })
+    this.modalDisable = false
   }
 
   keyChange = (key, value) => {
@@ -33,6 +36,7 @@ export class CompanyFormPageContext {
   createCompany = async (data) => {
     try {
       await apiService.createCompany(data).then(() => {
+        this.modalDisable = true
         this.modal.closeModal()
         Router.push('/company/company-table')
       })
