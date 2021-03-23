@@ -7,7 +7,8 @@ import {
   Business,
   CheckBox,
   FreeBreakfast,
-  QueryBuilder
+  QueryBuilder,
+  Launch
 } from '@material-ui/icons'
 import dayjs from 'dayjs'
 import { Card as MaterialCard, Typography } from '@material-ui/core'
@@ -22,7 +23,7 @@ interface AnnouncementDetailProps {
 
 export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  useEffect(() => {}, [data])
+  useEffect(() => { }, [data])
   return (
     <div className="w-full ml-5 mr-auto md:w-5/12">
       <div>
@@ -126,8 +127,15 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
               </div>
               <div className="pt-2 pb-2">
                 <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
-                  <Business className="mb-2 mr-2" />
-                  สถานที่ปฏิบัติงาน
+                  <div className="flex flex-row">
+                    <Business className="mb-2 mr-2" />
+                    <Link href={`/company/detail/${data?.company_id}`}>
+                      <div className="cursor-pointer hover:underline hover:text-secondary1">
+                        สถานที่ปฏิบัติงาน
+                        <Launch style={{ fontSize: 'small' }} />
+                      </div>
+                    </Link>
+                  </div>
                 </Typography>
                 <Typography className="mb-3 ml-1 font-bold text-black font-prompt text-heading-6">
                   {data?.company_name_th} {data?.address_one} {data?.lane} {data?.road}
