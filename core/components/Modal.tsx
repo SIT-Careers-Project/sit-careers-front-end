@@ -8,10 +8,11 @@ interface ModalProps {
   title: string
   content?: React.ReactElement
   buttonSubmit: string
+  isDisable?: boolean
 }
 
 export const CoreModal = (props: ModalProps) => {
-  const { onSubmit, title, content, buttonSubmit } = props
+  const { onSubmit, title, content, buttonSubmit, isDisable } = props
   const context = useContext(modalContext)
 
   return (
@@ -25,7 +26,10 @@ export const CoreModal = (props: ModalProps) => {
               <button onClick={context.closeModal} className="text-secondary2 focus:outline-none">
                 <p className="px-5 py-2 font-prompt">ยกเลิก</p>
               </button>
-              <button onClick={onSubmit} className="text-white bg-primary focus:outline-none">
+              <button
+                onClick={onSubmit}
+                disabled={isDisable}
+                className="text-white bg-primary focus:outline-none">
                 <p className="px-5 py-2 font-prompt">{buttonSubmit}</p>
               </button>
             </DialogActions>

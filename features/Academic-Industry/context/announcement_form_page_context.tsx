@@ -10,7 +10,7 @@ export class AnnouncementFormPageContext {
   announcementType
   modal
   jobPositions
-
+  modalDisable
   autoCompleteCompany
 
   constructor() {
@@ -19,6 +19,7 @@ export class AnnouncementFormPageContext {
       modal: observable,
       jobPositions: observable,
       autoCompleteCompany: observable,
+      modalDisable: observable,
       keyChange: action,
       createAnnouncement: action,
       getAutoCompleteCompanies: action,
@@ -27,6 +28,7 @@ export class AnnouncementFormPageContext {
     this.autoCompleteCompany = []
     this.jobPositions = []
     this.announcementType = []
+    this.modalDisable = false
   }
 
   setAnnouncementType = (announcementType) => {
@@ -62,6 +64,7 @@ export class AnnouncementFormPageContext {
       const checkOpen = checkStatus(data.start_date, data.end_date, data.status)
       data.status = checkOpen
       await apiService.createAnnouncement(data).then(() => {
+        this.modalDisable = true
         this.modal.closeModal()
         Router.push('/academic-industry/info-management')
       })
