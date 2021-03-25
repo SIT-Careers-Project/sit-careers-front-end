@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
 import Router from 'next/router'
 import apiService from '../services/apiCompany'
@@ -8,15 +8,13 @@ export class CompanyUpdatePageContext {
   showModal
   company
   modal
+  modalDelete
 
   constructor() {
-    makeObservable(this, {
-      getCompany: action,
-      updateCompany: action,
-      showModal: observable,
-      company: observable
-    })
     this.company = []
+    this.modalDelete = false
+
+    makeAutoObservable(this)
   }
 
   keyChange = (key, value) => {
@@ -36,6 +34,22 @@ export class CompanyUpdatePageContext {
   updateCompany = async (data) => {
     try {
       await apiService.updateCompany(data).then(() => {
+        this.modal.closeModal()
+        Router.push('/company/company-table')
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  handlerModal = (isDeleteModal, openModal) => {
+    openModal()
+    this.modalDelete = isDeleteModal
+  }
+
+  requestDeleteCompany = async () => {
+    try {
+      await apiService.requestDelete().then(() => {
         this.modal.closeModal()
         Router.push('/company/company-table')
       })
