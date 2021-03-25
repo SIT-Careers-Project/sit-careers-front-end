@@ -23,7 +23,7 @@ interface AnnouncementDetailProps {
 
 export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  useEffect(() => { }, [data])
+  useEffect(() => {}, [data])
   return (
     <div className="w-full ml-5 mr-auto md:w-5/12">
       <div>

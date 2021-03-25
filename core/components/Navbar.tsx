@@ -12,9 +12,8 @@ export default function Navbar({ authContext }) {
   const router = useRouter()
   const context = useContext(navbarContext)
 
-  useEffect(() => {
-    authContext.fetchMe()
-  }, [authContext, authContext.permission, context])
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  useEffect(() => {}, [authContext, authContext.permission, context])
 
   return (
     <Observer>
