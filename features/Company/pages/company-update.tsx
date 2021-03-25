@@ -51,7 +51,7 @@ const CompanyForm = () => {
         <Observer>
           {() => (
             <div className="w-full max-w-screen-lg">
-              <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+              <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <p className="font-semibold font-prompt text-heading-6">ข้อมูลบริษัท</p>
                 <button className="border-none focus:outline-none">
                   <label htmlFor="company_logo_image">
@@ -196,7 +196,7 @@ const CompanyForm = () => {
                   </FormControl>
                 </div>
               </div>
-              <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+              <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <p className="mb-5 font-semibold font-prompt text-heading-6">ข้อมูลติดต่อ</p>
                 <div className="flex flex-row justify-between">
                   <div className="w-1/2 pb-6 pr-3">
@@ -257,7 +257,7 @@ const CompanyForm = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+              <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <p className="mb-5 font-semibold font-prompt text-heading-6">สถานที่ทำการ</p>
                 <div className="w-full">
                   <TextField
@@ -368,7 +368,7 @@ const CompanyForm = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+              <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <p className="mb-5 font-semibold font-prompt text-heading-6">วันที่ทำการ</p>
                 <div className="flex flex-row pb-3">
                   <div className="w-4/12 pr-3">
@@ -458,7 +458,7 @@ const CompanyForm = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+              <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <p className="mb-5 font-semibold font-prompt text-heading-6">MOU</p>
                 <div className="flex flex-row justify-between">
                   <div className="w-full">
@@ -475,7 +475,7 @@ const CompanyForm = () => {
                     />
                   </div>
                 </div>
-                <div className="py-6 flex flex-row">
+                <div className="flex flex-row py-6">
                   <div className="w-1/2">
                     <TextField
                       label="เริ่มสัญญา"
@@ -529,24 +529,43 @@ const CompanyForm = () => {
                 </div>
               </div>
 
-              <div className="flex justify-end grid-cols-12 my-6 gap-x-8">
+              <div className="flex justify-end grid-cols-12 my-6 gap-x-8 focus:outline-none">
+                <button
+                  onClick={() => context.handlerModal(true, coreModalContext.openModal)}
+                  className="py-4 lg:w-1/4 bg-red">
+                  <p className="text-white font-prompt text-subtitle-1 focus:outline-none">
+                    ลบบริษัท
+                  </p>
+                </button>
                 <PrimaryButton
-                  onClick={coreModalContext.openModal}
-                  className="lg:w-1/4 py-4"
-                  title="ค้นหา">
+                  onClick={() => context.handlerModal(false, coreModalContext.openModal)}
+                  className="py-4 lg:w-1/4">
                   <p className="text-white font-prompt text-subtitle-1">บันทึก</p>
                 </PrimaryButton>
               </div>
-              <CoreModal
-                buttonSubmit="บันทึก"
-                title="บันทึกข้อมูลบริษัท"
-                content={
-                  <span className="mb-5 font-prompt text-subtitle-1">
-                    คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
-                  </span>
-                }
-                onSubmit={handleSubmit(context.updateCompany)}
-              />
+              {context.modalDelete && coreModalContext.isOpen && (
+                <CoreModal
+                  buttonSubmit="ส่งคำขอ"
+                  title="คุณต้องการส่งคำขอลบข้อมูลบริษัทใช่หรือไม่"
+                  color="bg-red"
+                  content={
+                    <span className="mb-5 font-prompt text-subtitle-1">ส่งคำขอลบข้อมูลบริษัท</span>
+                  }
+                  onSubmit={context.requestDeleteCompany}
+                />
+              )}
+              {!context.modalDelete && coreModalContext.isOpen && (
+                <CoreModal
+                  buttonSubmit="บันทึก"
+                  title="บันทึกข้อมูลบริษัท"
+                  content={
+                    <span className="mb-5 font-prompt text-subtitle-1">
+                      คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
+                    </span>
+                  }
+                  onSubmit={handleSubmit(context.updateCompany)}
+                />
+              )}
             </div>
           )}
         </Observer>

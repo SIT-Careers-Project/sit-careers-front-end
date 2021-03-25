@@ -85,6 +85,10 @@ const apiCompany = {
       headers: { 'Content-type': 'multipart/form-data' }
     })
     return response
+  },
+  requestDelete: async () => {
+    const response = await api.put(`/company/request-delete`)
+    return response
   }
 }
 
