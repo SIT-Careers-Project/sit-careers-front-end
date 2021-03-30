@@ -2,7 +2,6 @@ import { makeAutoObservable } from 'mobx'
 
 import { createContext } from 'react'
 import apiResume from '../services/apiResume'
-import { checkStatus } from '../../../core/services/utils'
 import Router from 'next/router'
 
 export class ResumeInfoPageContext {
