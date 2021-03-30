@@ -42,8 +42,6 @@ export class ResumeInfoPageContext {
 
   updateResume = async (data) => {
     try {
-      const checkOpen = checkStatus(data.start_date, data.end_date, data.status)
-      data.status = checkOpen
       await apiResume.updateResume(data).then(() => {
         this.modal.closeModal()
         Router.reload()
