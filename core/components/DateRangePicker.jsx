@@ -11,8 +11,8 @@ const BasicDateRangePicker = (props) => {
   return (
     <LocalizationProvider dateAdapter={DateFnsUtils}>
       <DateRangePicker
-        startText="วันที่เริ่มต้น"
-        endText="วันที่สิ้นสุด"
+        startText="เริ่มต้น"
+        endText="สิ้นสุด"
         value={value}
         onChange={(date) => onClick(date)}
         renderInput={(startProps, endProps) => (
