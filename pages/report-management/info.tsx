@@ -9,7 +9,7 @@ const ReportInfo = ({ authContext }) => {
   useEffect(() => {
     authContext.fetchMe().then(() => {
       const path = checkLoggedIn(authContext.isLoggedIn, ['admin'], authContext.roleUser)
-      router.push(path)
+      path && router.push(path)
     })
   }, [authContext, router])
 
