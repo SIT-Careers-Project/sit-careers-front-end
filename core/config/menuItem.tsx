@@ -1,4 +1,11 @@
-import { Business, People, Assignment, SaveAlt, AssignmentTurnedIn } from '@material-ui/icons'
+import {
+  Business,
+  People,
+  Assignment,
+  SaveAlt,
+  AssignmentTurnedIn,
+  AccountBox
+} from '@material-ui/icons'
 
 export const navLink = [
   { path: '/', name: 'หน้าหลัก', permission: 'general' },
@@ -8,6 +15,13 @@ export const navLink = [
 ]
 
 export const dropdownLinkAdmin = [
+  {
+    path: '/resume/info',
+    name: 'โปรไฟล์สมัครงาน',
+    icon: <AccountBox />,
+    role: ['admin', 'student'],
+    permission: ['access_resume', 'create_resume']
+  },
   {
     path: '/company/company-table',
     name: 'จัดการข้อมูลบริษัท',

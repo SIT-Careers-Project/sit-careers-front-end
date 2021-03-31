@@ -1,14 +1,15 @@
-import Report from '../../features/Report-Management/pages/report-info'
+import ResumeForm from '../../features/Resume/pages/resume-info'
 import { MainLayout } from '../../core/components/Layout/Main'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
 
-const ReportInfo = ({ authContext }) => {
+const ResumeInfo = ({ authContext }) => {
   const router = useRouter()
+
   useEffect(() => {
     authContext.fetchMe().then(() => {
-      const path = checkLoggedIn(authContext.isLoggedIn, ['admin'], authContext.roleUser)
+      const path = checkLoggedIn(authContext.isLoggedIn, ['admin', 'student'], authContext.roleUser)
       path && router.push(path)
     })
   }, [authContext, router])
@@ -16,10 +17,10 @@ const ReportInfo = ({ authContext }) => {
   return (
     <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16">
-        <Report />
+        <ResumeForm />
       </div>
     </MainLayout>
   )
 }
 
-export default ReportInfo
+export default ResumeInfo
