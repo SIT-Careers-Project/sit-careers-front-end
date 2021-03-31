@@ -57,6 +57,17 @@ export class CompanyUpdatePageContext {
       console.log(error)
     }
   }
+
+  deleteCompany = async (companyId) => {
+    try {
+      await apiService.deleteCompany(companyId).then(() => {
+        this.modal.closeModal()
+        Router.push('/company/company-table')
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 export const companyUpdatePageContext = createContext(new CompanyUpdatePageContext())

@@ -21,7 +21,7 @@ const UpdateCompany = ({ authContext }) => {
   return (
     <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16 ">
-        <CompanyPage />
+        <CompanyPage authContext={authContext} />
       </div>
     </MainLayout>
   )
