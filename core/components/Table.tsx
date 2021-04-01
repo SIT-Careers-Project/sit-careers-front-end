@@ -28,6 +28,7 @@ const CoreTable = (props) => {
         ...props.options
       }}
       actions={action}
+      {...props}
     />
   )
 }

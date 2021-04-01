@@ -1,105 +1,79 @@
 /* eslint-disable react/display-name */
-import React from 'react'
-import { AppBar, Tabs, Tab } from '@material-ui/core'
+import React, { useContext, useEffect } from 'react'
 import CoreTable from '../../../core/components/Table'
 import { Observer } from 'mobx-react-lite'
-import { TabPanel } from '../../../core/components/TabPanel'
-import { GetApp } from '@material-ui/icons'
 import BasicDateRangePicker from '../../../core/components/DateRangePicker'
+import { reportInfoPageContext } from '../context/report_info_page_context'
+import getConfig from 'next/config'
+import { selectData, data } from '../services/constantVariable'
+import { createMuiTheme } from '@material-ui/core/styles'
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 
-const UserInfo = () => {
-  const [value, setValue] = React.useState(0)
+const { publicRuntimeConfig } = getConfig()
 
-  const handleChange = (event, newValue: number) => {
-    setValue(newValue)
-  }
+const ReportInfo = () => {
+  const context = useContext(reportInfoPageContext)
+  const [selectedDate, handleDateChange] = React.useState([null, null])
 
-  const selectData = [{ title: 'ข้อมูลทั้งหมด', field: 'summaryInfo' }]
-
-  const data = [
-    {
-      summaryInfo: (
-        <div>
-          <p className="font-sarabun-meduim text-body-2">ข้อมูลบริษัท</p>
-          <p className="text-body-2 text-secondary2 font-sarabun-light">
-            ข้อมูลพื้นฐานทั้งหมดและ MOU ของบริษัท
-          </p>
-        </div>
-      )
-    },
-    {
-      summaryInfo: (
-        <div>
-          <p className="font-sarabun-meduim text-body-2">ข้อมูลประกาศรับสมัครงาน</p>
-          <p className="text-body-2 text-secondary2 font-sarabun-light">
-            ข้อมูลประกาศรับสมัครงานทั้งหมดที่แต่ละบริษัทประกาศ
-          </p>
-        </div>
-      )
-    },
-    {
-      summaryInfo: (
-        <div>
-          <p className="font-sarabun-meduim text-body-2">Dashboard</p>
-          <p className="text-body-2 text-secondary2 font-sarabun-light">
-            ข้อมูลสรุปผู้เข้าใช้งาน บริษัท และประกาศรับสมัครงานแต่ละประเภททั้งหมด
-          </p>
-        </div>
-      )
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#295B8D'
+      },
+      secondary: {
+        main: '#168FBD'
+      }
     }
-  ]
+  })
 
-  const reportsColumn = [
-    {
-      title: 'สำเนาที่มี',
-      field: 'report',
-      render: () => (
-        <div>
-          <p className="font-sarabun-meduim text-body-2">01/01/2021 - 30/01/2021</p>
-          <p className="text-body-2 text-secondary2 font-sarabun-light">ข้อมูลบริษัท, Dashboard</p>
-        </div>
-      )
-    },
-    {
-      title: 'ดาวห์โหลด',
-      field: 'download',
-      render: () => <GetApp className="cursor-pointer text-secondary1" fontSize="large" />
-    }
-  ]
-
-  const dataReport = [
-    {
-      report: 'report 1'
-    }
-  ]
+  useEffect(() => {
+    context
+  }, [context])
 
   return (
-    <div className="w-full max-w-screen-lg">
+    <div className="w-full max-w-screen-lg pb-10">
       <div className="flex justify-between w-full mt-2">
         <div>
           <p className="text-heading-5 font-prompt">ดาวห์โหลดรายงานสรุป</p>
         </div>
       </div>
       <div className="w-full h-1 mt-4 mb-6 bg-secondary1" />
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          TabIndicatorProps={{ style: { background: '#295B8D' } }}>
-          <Tab label="เลือกข้อมูล" className="font-prompt" />
-          <Tab label="สำเนาที่มี" className="font-prompt" />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0}>
-        <Observer>
-          {() => (
+      <div className="flex flex-row items-center w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-5 my-5">
+        <p className="pr-5 font-sarabun-meduim text-body-2">เลือกช่วงเวลา:</p>
+        <BasicDateRangePicker onClick={handleDateChange} value={selectedDate} />
+      </div>
+      <Observer>
+        {() => (
+          <>
+            <a
+              href={`${publicRuntimeConfig.s3_url}${context?.pathFileCompanies}`}
+              target="_self"
+              id="company_download"
+              className="hidden">
+              <p>ดาวโหลดบริษัท</p>
+            </a>
+            <a
+              href={`${publicRuntimeConfig.s3_url}${context?.pathFileDashboard}`}
+              target="_self"
+              id="dashboard_download"
+              className="hidden">
+              <p>ดาวโหลด dashboard</p>
+            </a>
+            <a
+              href={`${publicRuntimeConfig.s3_url}${context?.pathFileAnnouncements}`}
+              target="_self"
+              id="announcement_download"
+              className="hidden">
+              <p>ดาวโหลดประกาศรับสมัครงาน</p>
+            </a>
+          </>
+        )}
+      </Observer>
+      <Observer>
+        {() => (
+          <MuiThemeProvider theme={theme}>
             <CoreTable
-              title={
-                <div className="flex flex-row items-center pt-8">
-                  <p className="pr-5 font-sarabun-meduim text-body-2">ช่วงเวลา:</p>
-                  <BasicDateRangePicker />
-                </div>
-              }
+              title={<p className="pr-5 font-sarabun-meduim text-body-2">เลือกข้อมูลที่ต้องการ</p>}
               column={selectData}
               data={data}
               options={{
@@ -107,31 +81,51 @@ const UserInfo = () => {
                 search: false,
                 showTitle: true
               }}
-              getData={() => console.log('Hello')}
+              getData={() => console.log('hello')}
+              onSelectionChange={(rows) => context.setSelectRows(rows)}
               action={[
                 {
                   tooltip: 'Export Data',
                   icon: 'get_app',
-                  onClick: (event, data) => alert('You want to export ' + data.length + ' data')
+                  onClick: () => {
+                    if (context.selectRows.includes(0)) {
+                      context.getCompaniesByFilterDate(selectedDate).then(() => {
+                        const link = document.getElementById('company_download')
+                        link.setAttribute(
+                          'download',
+                          `${publicRuntimeConfig.s3_url}${context?.pathFileCompanies}`
+                        )
+                        link.click()
+                      })
+                    }
+                    if (context.selectRows.includes(1)) {
+                      context.getAnnouncementsByFilterDate(selectedDate).then(() => {
+                        const link = document.getElementById('announcement_download')
+                        link.setAttribute(
+                          'download',
+                          `${publicRuntimeConfig.s3_url}${context?.pathFileAnnouncements}`
+                        )
+                        link.click()
+                      })
+                    }
+                    if (context.selectRows.includes(2)) {
+                      context.getDashboardByFilterDate(selectedDate).then(() => {
+                        const link = document.getElementById('dashboard_download')
+                        link.setAttribute(
+                          'download',
+                          `${publicRuntimeConfig.s3_url}${context?.pathFileDashboard}`
+                        )
+                        link.click()
+                      })
+                    }
+                  }
                 }
               ]}
             />
-          )}
-        </Observer>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Observer>
-          {() => (
-            <CoreTable
-              column={reportsColumn}
-              data={dataReport}
-              getData={() => console.log('Hello')}
-            />
-          )}
-        </Observer>
-      </TabPanel>
+          </MuiThemeProvider>
+        )}
+      </Observer>
     </div>
   )
 }
-
-export default UserInfo
+export default ReportInfo
