@@ -92,7 +92,7 @@ const AllCompany = () => {
                       tags={
                         data.mou_link ? [`${data.company_type}`, 'MOU'] : [`${data.company_type}`]
                       }
-                      aboutUs={data.description}
+                      aboutUs={data.about_us}
                       srcImg={data.logo}
                     />
                   )
