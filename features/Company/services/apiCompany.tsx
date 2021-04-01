@@ -89,6 +89,10 @@ const apiCompany = {
   requestDelete: async () => {
     const response = await api.put(`/company/request-delete`)
     return response
+  },
+  deleteCompany: async (companyId) => {
+    const response = await api.delete(`/company/${companyId}`)
+    return response
   }
 }
 

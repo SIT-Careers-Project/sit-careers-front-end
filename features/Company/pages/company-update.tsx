@@ -1,14 +1,5 @@
-import { Controller, useForm } from 'react-hook-form'
-import {
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField
-} from '@material-ui/core'
+import { useForm } from 'react-hook-form'
 import React, { useContext, useEffect, useState } from 'react'
-import { companyType, days } from '../services/constantVariable'
 
 import { Avatar } from '../../../core/components/Avatar'
 import { CoreModal } from '../../../core/components/Modal'
@@ -20,10 +11,16 @@ import getConfig from 'next/config'
 import { useRouter } from 'next/router'
 import { yupResolver } from '@hookform/resolvers/yup'
 import PrimaryButton from '../../../core/components/Button/Primary'
+import MainInfoForm from '../components/FormCreate/main-info'
+import DetailInfoForm from '../components/FormCreate/detail-info'
+import ContractInfoForm from '../components/FormCreate/contract-info'
+import LocationInfoForm from '../components/FormCreate/location-info'
+import CompanyDateInfoForm from '../components/FormCreate/company-date-info'
+import MouInfoForm from '../components/FormCreate/mou-info'
 
 const { publicRuntimeConfig } = getConfig()
 
-const CompanyForm = () => {
+const CompanyForm = ({ authContext }) => {
   const context = useContext(companyUpdatePageContext)
   const coreModalContext = useContext(modalContext)
 
@@ -75,485 +72,72 @@ const CompanyForm = () => {
                     }}
                   />
                   <input name="logo" className="hidden" ref={register} />
+                  <input name="company_id" className="hidden" ref={register} />
                 </button>
-
-                <div className="flex flex-row justify-between py-6 pt-10">
-                  <div className="w-1/2 pr-3">
-                    <input
-                      className="hidden"
-                      value={context?.company?.company_id}
-                      name="company_id"
-                      ref={register}
-                    />
-                    <TextField
-                      name="company_name_th"
-                      label="ชื่อภาษาไทย *"
-                      className="font-sarabun"
-                      variant="outlined"
-                      defaultValue={context?.company?.company_name_th}
-                      inputRef={register}
-                      error={!!errors.company_name_th}
-                      helperText={errors.company_name_th?.message}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="w-1/2 pl-3">
-                    <TextField
-                      label="ชื่อภาษาอังกฤษ *"
-                      name="company_name_en"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.company_name_en}
-                      helperText={errors.company_name_en?.message}
-                      fullWidth
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-row justify-between">
-                  <div className="w-1/2 pr-3">
-                    <FormControl
-                      error={!!errors?.company_type}
-                      className="w-full font-prompt"
-                      variant="outlined">
-                      <InputLabel htmlFor="trinity-select" id="select-outlined-label">
-                        ประเภทธุรกิจ *
-                      </InputLabel>
-                      <Controller
-                        control={control}
-                        name="company_type"
-                        as={
-                          <Select id="select-outlined-label">
-                            {companyType.map((company) => (
-                              <MenuItem key={company.title} value={company.title}>
-                                {company.title}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        }
-                      />
-                      <FormHelperText>{errors.company_type?.message}</FormHelperText>
-                    </FormControl>
-                  </div>
-                  <div className="w-1/2 pl-3">
-                    <TextField
-                      label="เว็บไซต์"
-                      name="website"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.website}
-                      helperText={errors.website?.message}
-                      fullWidth
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col justify-between py-6">
-                  <FormControl error={!!errors?.about_us} className="w-full font-prompt">
-                    <Controller
-                      control={control}
-                      name="about_us"
-                      as={
-                        <TextField
-                          label="แนะนำ *"
-                          name="about_us"
-                          className="border-opacity-50 place-content-start border-DEFAULT"
-                          variant="outlined"
-                          defaultValue=""
-                          error={!!errors?.about_us}
-                          helperText={errors.about_us?.message}
-                          rows={5}
-                          multiline
-                          fullWidth
-                        />
-                      }
-                    />
-                  </FormControl>
-                </div>
-                <div className="flex flex-col pb-3">
-                  <p className="mb-4 font-semibold font-prompt text-heading-6">รายละเอียดบริษัท</p>
-                  <FormControl error={!!errors?.description} className="w-full font-prompt">
-                    <Controller
-                      control={control}
-                      name="description"
-                      as={
-                        <TextField
-                          label="รายละเอียด *"
-                          name="description"
-                          className="border-opacity-50 place-content-start border-DEFAULT"
-                          variant="outlined"
-                          defaultValue=""
-                          error={!!errors.description}
-                          helperText={errors.description?.message}
-                          rows={5}
-                          multiline
-                          fullWidth
-                        />
-                      }
-                    />
-                  </FormControl>
-                </div>
+                <MainInfoForm register={register} errors={errors} control={control} />
+                <DetailInfoForm errors={errors} control={control} />
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                <p className="mb-5 font-semibold font-prompt text-heading-6">ข้อมูลติดต่อ</p>
-                <div className="flex flex-row justify-between">
-                  <div className="w-1/2 pb-6 pr-3">
-                    <TextField
-                      label="อีเมล์ผู้จัดการ *"
-                      name="e_mail_manager"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.e_mail_manager}
-                      helperText={errors.e_mail_manager?.message}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="w-1/2 pl-3">
-                    <TextField
-                      label="อีเมล์ผู้ประสานงาน *"
-                      name="e_mail_coordinator"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.e_mail_coordinator}
-                      helperText={errors.e_mail_coordinator?.message}
-                      fullWidth
-                    />
-                  </div>
-                </div>
-                <p className="mb-5 font-semibold font-prompt text-heading-6">เบอร์ติดต่อ</p>
-                <div className="flex flex-row justify-between pb-3">
-                  <div className="w-1/2 pr-3">
-                    <TextField
-                      label="เบอร์สำนักงาน *"
-                      name="tel_no"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.tel_no}
-                      helperText={errors.tel_no?.message}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="w-1/2 pl-3">
-                    <TextField
-                      label="เบอร์ผู้ประสานงาน *"
-                      name="phone_no"
-                      variant="outlined"
-                      className="font-sarabun"
-                      type="phone"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.phone_no}
-                      helperText={errors.phone_no?.message}
-                      fullWidth
-                    />
-                  </div>
-                </div>
+                <ContractInfoForm register={register} errors={errors} />
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                <p className="mb-5 font-semibold font-prompt text-heading-6">สถานที่ทำการ</p>
-                <div className="w-full">
-                  <TextField
-                    label="ที่อยู่ 1 *"
-                    name="address_one"
-                    variant="outlined"
-                    className="font-sarabun"
-                    defaultValue=""
-                    inputRef={register}
-                    error={!!errors.address_one}
-                    helperText={errors.address_one?.message}
-                    fullWidth
-                  />
-                </div>
-                <div className="w-full my-6">
-                  <TextField
-                    label="ที่อยู่ 2"
-                    name="address_two"
-                    variant="outlined"
-                    className="font-sarabun"
-                    defaultValue=""
-                    inputRef={register}
-                    error={!!errors.address_two}
-                    helperText={errors.address_two?.message}
-                    fullWidth
-                  />
-                </div>
-                <div className="flex flex-row justify-between">
-                  <div className="w-4/12 pr-3">
-                    <TextField
-                      label="ซอย"
-                      name="lane"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.lane}
-                      helperText={errors.lane?.message}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="w-4/12 pl-3 pr-3">
-                    <TextField
-                      name="road"
-                      label="ถนน"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.road}
-                      helperText={errors.road?.message}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="w-4/12 pl-3">
-                    <TextField
-                      name="sub_district"
-                      label="ตำบล/เขต *"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.sub_district}
-                      helperText={errors.sub_district?.message}
-                      fullWidth
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-row justify-between pb-3 mt-6">
-                  <div className="w-4/12 pr-3">
-                    <TextField
-                      name="district"
-                      label="อำเภอ *"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.district}
-                      helperText={errors.district?.message}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="w-4/12 px-3">
-                    <TextField
-                      name="province"
-                      label="จังหวัด *"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.province}
-                      helperText={errors.province?.message}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="w-4/12 pl-3">
-                    <TextField
-                      name="postal_code"
-                      label="รหัสไปรษณีย์ *"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.postal_code}
-                      helperText={errors.postal_code?.message}
-                      fullWidth
-                    />
-                  </div>
-                </div>
+                <LocationInfoForm register={register} errors={errors} />
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                <p className="mb-5 font-semibold font-prompt text-heading-6">วันที่ทำการ</p>
-                <div className="flex flex-row pb-3">
-                  <div className="w-4/12 pr-3">
-                    <FormControl
-                      error={!!errors?.start_business_day}
-                      className="w-full font-prompt"
-                      variant="outlined">
-                      <InputLabel htmlFor="start-business-day-select" id="select-outlined-label">
-                        วันเปิดทำการ *
-                      </InputLabel>
-                      <Controller
-                        control={control}
-                        name="start_business_day"
-                        as={
-                          <Select id="select-outlined-label">
-                            {days.map((data) => (
-                              <MenuItem key={data.day} value={data.day}>
-                                {data.day}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        }
-                      />
-                      <FormHelperText>{errors.start_business_day?.message}</FormHelperText>
-                    </FormControl>
-                  </div>
-                  <div className="w-4/12 pl-3 pr-3">
-                    <TextField
-                      name="start_business_time"
-                      label="เวลาเปิดทำการ *"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      type="time"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      inputRef={register}
-                      error={!!errors.start_business_time}
-                      helperText={errors.start_business_time?.message}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="flex items-end justify-center col-span-1">
-                    <p className="font-semibold text-heading-6 font-prompt">ถึง</p>
-                  </div>
-                  <div className="w-4/12 pl-3 pr-3">
-                    <FormControl
-                      error={!!errors?.end_business_day}
-                      className="w-full font-prompt"
-                      variant="outlined">
-                      <InputLabel htmlFor="end-business-day-select" id="select-outlined-label">
-                        วันปิดทำการ *
-                      </InputLabel>
-                      <Controller
-                        control={control}
-                        name="end_business_day"
-                        as={
-                          <Select id="select-outlined-label">
-                            {days.map((data) => (
-                              <MenuItem key={data.day} value={data.day}>
-                                {data.day}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        }
-                      />
-                      <FormHelperText>{errors.end_business_day?.message}</FormHelperText>
-                    </FormControl>
-                  </div>
-                  <div className="w-4/12 pl-3">
-                    <TextField
-                      name="end_business_time"
-                      label="เวลาปิดทำการ *"
-                      variant="outlined"
-                      className="font-sarabun"
-                      type="time"
-                      defaultValue=""
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      inputRef={register}
-                      error={!!errors.end_business_time}
-                      helperText={errors.end_business_time?.message}
-                      fullWidth
-                    />
-                  </div>
-                </div>
+                <CompanyDateInfoForm register={register} errors={errors} control={control} />
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                <p className="mb-5 font-semibold font-prompt text-heading-6">MOU</p>
-                <div className="flex flex-row justify-between">
-                  <div className="w-full">
-                    <TextField
-                      label="ประเภท MOU"
-                      name="mou_type"
-                      variant="outlined"
-                      className="font-sarabun"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.mou_type}
-                      helperText={errors.mou_type?.message}
-                      fullWidth
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-row py-6">
-                  <div className="w-1/2">
-                    <TextField
-                      label="เริ่มสัญญา"
-                      name="start_date_mou"
-                      variant="outlined"
-                      className="font-sarabun"
-                      type="date"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.start_date_mou}
-                      helperText={errors.start_date_mou?.message}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      fullWidth
-                    />
-                  </div>
-                  <div className="flex items-end justify-center col-span-1 px-5">
-                    <p className="font-semibold text-heading-6 font-prompt">ถึง</p>
-                  </div>
-                  <div className="w-1/2">
-                    <TextField
-                      label="สิ้นสุดสัญญา"
-                      name="end_date_mou"
-                      variant="outlined"
-                      className="font-sarabun"
-                      type="date"
-                      defaultValue=""
-                      inputRef={register}
-                      error={!!errors.end_date_mou}
-                      helperText={errors.end_date_mou?.message}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      fullWidth
-                    />
-                  </div>
-                </div>
-                <div className="pb-3">
-                  <TextField
-                    label="MOU Link"
-                    name="mou_link"
-                    variant="outlined"
-                    className="font-sarabun"
-                    defaultValue=""
-                    inputRef={register}
-                    error={!!errors.mou_link}
-                    helperText={errors.mou_link?.message}
-                    fullWidth
-                  />
-                </div>
+                <MouInfoForm register={register} errors={errors} />
               </div>
-
               <div className="flex justify-end grid-cols-12 my-6 gap-x-8 focus:outline-none">
-                <button
-                  onClick={() => context.handlerModal(true, coreModalContext.openModal)}
-                  className="py-4 lg:w-1/4 bg-red">
-                  <p className="text-white font-prompt text-subtitle-1 focus:outline-none">
-                    ลบบริษัท
-                  </p>
-                </button>
+                {authContext.roleUser === 'admin' && (
+                  <button
+                    onClick={() => context.handlerModal(true, coreModalContext.openModal)}
+                    className="py-4 lg:w-1/4 bg-red focus:outline-none">
+                    <p className="text-white font-prompt text-subtitle-1">ลบบริษัท</p>
+                  </button>
+                )}
+                {(authContext.roleUser === 'coordinator' || authContext.roleUser === 'manager') && (
+                  <button
+                    onClick={() => context.handlerModal(true, coreModalContext.openModal)}
+                    className="py-4 lg:w-1/4 bg-red focus:outline-none">
+                    <p className="text-white font-prompt text-subtitle-1">ลบบริษัท</p>
+                  </button>
+                )}
                 <PrimaryButton
                   onClick={() => context.handlerModal(false, coreModalContext.openModal)}
                   className="py-4 lg:w-1/4">
                   <p className="text-white font-prompt text-subtitle-1">บันทึก</p>
                 </PrimaryButton>
               </div>
-              {context.modalDelete && coreModalContext.isOpen && (
-                <CoreModal
-                  buttonSubmit="ส่งคำขอ"
-                  title="คุณต้องการส่งคำขอลบข้อมูลบริษัทใช่หรือไม่"
-                  color="bg-red"
-                  content={
-                    <span className="mb-5 font-prompt text-subtitle-1">ส่งคำขอลบข้อมูลบริษัท</span>
-                  }
-                  onSubmit={context.requestDeleteCompany}
-                />
-              )}
+              {context.modalDelete &&
+                coreModalContext.isOpen &&
+                authContext.roleUser === 'admin' && (
+                  <CoreModal
+                    buttonSubmit="ลบข้อมูลบริษัท"
+                    title="คุณต้องการลบข้อมูลบริษัทใช่หรือไม่"
+                    color="bg-red"
+                    content={
+                      <span className="mb-5 font-prompt text-subtitle-1">ลบข้อมูลบริษัท</span>
+                    }
+                    onSubmit={() => context.deleteCompany(company_id)}
+                  />
+                )}
+              {context.modalDelete &&
+                coreModalContext.isOpen &&
+                authContext.roleUser !== 'admin' && (
+                  <CoreModal
+                    buttonSubmit="ส่งคำขอ"
+                    title="คุณต้องการส่งคำขอลบข้อมูลบริษัทใช่หรือไม่"
+                    color="bg-red"
+                    content={
+                      <span className="mb-5 font-prompt text-subtitle-1">
+                        ส่งคำขอลบข้อมูลบริษัท
+                      </span>
+                    }
+                    onSubmit={context.requestDeleteCompany}
+                  />
+                )}
               {!context.modalDelete && coreModalContext.isOpen && (
                 <CoreModal
                   buttonSubmit="บันทึก"
