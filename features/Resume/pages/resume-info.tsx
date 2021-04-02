@@ -53,6 +53,12 @@ const ResumeInfo = () => {
                 <div className="grid w-full grid-cols-12 px-6 py-6">
                   <div className="col-span-6">
                     <div className="flex flex-row justify-between px-6 py-3">
+                      <input
+                        className="hidden"
+                        value={context?.resume?.resume_id}
+                        name="resume_id"
+                        ref={register}
+                      />
                       <div className="w-3/12">
                         <FormControl
                           error={!!errors?.name_title}
@@ -61,7 +67,7 @@ const ResumeInfo = () => {
                           <InputLabel htmlFor="prefix-select">คำนำหน้า *</InputLabel>
                           <Controller
                             control={control}
-                            id="prefix-select"
+                            id="name-title-select"
                             name="name_title"
                             as={
                               <Select>
@@ -77,12 +83,6 @@ const ResumeInfo = () => {
                         </FormControl>
                       </div>
                       <div className="w-4/12">
-                        <input
-                          className="hidden"
-                          value={context?.resume?.resume_id}
-                          name="resume_id"
-                          ref={register}
-                        />
                         <FormControl className="w-full font-prompt">
                           <TextField
                             label="ชื่อ *"
@@ -217,7 +217,7 @@ const ResumeInfo = () => {
                 <Observer>
                   {() => (
                     <>
-                      {context.resume === null && (
+                      {!context.resume && (
                         <div>
                           <div
                             className="flex justify-end grid-cols-12 px-6 my-6 gap-x-8"
@@ -226,23 +226,23 @@ const ResumeInfo = () => {
                               onClick={coreModalContext.openModal}
                               className="ml-10 shadow-md lg:w-2/6 btn-grad">
                               <p className="px-4 py-3 text-white font-prompt text-subtitle-1">
-                                ยืนยันการสมัคร
+                                สร้างโปรไฟล์
                               </p>
                             </PrimaryButton>
                           </div>
                           <CoreModal
-                            buttonSubmit="สมัคร"
-                            title="ยืนยันการสมัคร"
+                            buttonSubmit="สร้าง"
+                            title="สร้างโปรไฟล์"
                             content={
                               <span className="mb-5 font-prompt text-subtitle-1">
-                                คุณต้องการยืนยันการสมัครใช่หรือไม่
+                                คุณต้องการสร้างโปรไฟล์ใช่หรือไม่
                               </span>
                             }
                             onSubmit={handleSubmit(context.createResume)}
                           />
                         </div>
                       )}
-                      {context.resume !== null && (
+                      {context.resume && (
                         <div>
                           <div
                             className="flex justify-end grid-cols-12 px-16 mb-5"
@@ -251,16 +251,16 @@ const ResumeInfo = () => {
                               onClick={coreModalContext.openModal}
                               className="ml-10 shadow-md lg:w-1/6 btn-grad">
                               <p className="px-4 py-3 text-white font-prompt text-subtitle-1">
-                                อัพเดต
+                                บันทึกโปรไฟล์
                               </p>
                             </PrimaryButton>
                           </div>
                           <CoreModal
-                            buttonSubmit="สมัคร"
-                            title="อัพเดต"
+                            buttonSubmit="บันทึก"
+                            title="บันทึกโปรไฟล์"
                             content={
                               <span className="mb-5 font-prompt text-subtitle-1">
-                                คุณต้องการยืนยันการสมัครใช่หรือไม่
+                                คุณต้องการบันทึกโปรไฟล์ใช่หรือไม่
                               </span>
                             }
                             onSubmit={handleSubmit(context.updateResume)}
