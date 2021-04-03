@@ -70,7 +70,7 @@ const MainInfoForm = (props) => {
         </div>
         <div className="w-1/2 pl-3">
           <TextField
-            label="เว็บไซต์"
+            label="เว็บไซต์ *"
             name="website"
             variant="outlined"
             className="font-sarabun"
