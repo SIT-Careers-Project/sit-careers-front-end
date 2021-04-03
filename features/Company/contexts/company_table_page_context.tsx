@@ -13,6 +13,24 @@ export class CompanyTablePageContext {
     })
   }
 
+  getCompaniesByAdmin = async () => {
+    try {
+      const response = await apiService.getAllCompaniesByAdmin()
+      this.companies = response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  getCompaniesByCompany = async () => {
+    try {
+      const response = await apiService.getAllCompaniesByCompany()
+      this.companies = response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   getCompanies = async () => {
     try {
       const response = await apiService.getAllCompanies()
