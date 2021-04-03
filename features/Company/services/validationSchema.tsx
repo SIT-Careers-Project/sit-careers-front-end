@@ -18,7 +18,7 @@ export const CompanyFormSchema = yup.object().shape({
     .matches(/[a-zA-Z0-9]/, '*จำเป็นต้องกรอก ชื่ออังกฤษ และต้องกรอกเป็นภาษาอังกฤษเท่านั้น')
     .required('*จำเป็นต้องกรอก ชื่ออังกฤษ'),
   company_type: yup.string().required('*จำเป็นต้องกรอก ประเภทบริษัท'),
-  website: yup.string(),
+  website: yup.string().required('*จำเป็นต้องกรอก เว็บไซต์บริษัท'),
   about_us: yup
     .string()
     .min(1)
