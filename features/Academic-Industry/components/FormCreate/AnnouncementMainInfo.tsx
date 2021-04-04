@@ -13,7 +13,7 @@ import { Observer } from 'mobx-react-lite'
 import { jobType, salary } from '../../services/constantVariable'
 
 const AnnouncementMainInfoForm = (props) => {
-  const { errors, register, control, data } = props
+  const { errors, register, control, data, jobPosition, companyName } = props
 
   return (
     <div>
@@ -37,6 +37,7 @@ const AnnouncementMainInfoForm = (props) => {
                 label="บริษัท *"
                 inputRef={register}
                 keyName="company_id"
+                defaultValue={companyName}
                 error={!!errors.company_id}
                 helperText={errors.company_id?.message}
                 options={data.autoCompleteCompany}
@@ -52,6 +53,7 @@ const AnnouncementMainInfoForm = (props) => {
             {() => (
               <AutoComplete
                 className="w-full"
+                defaultValue={jobPosition}
                 label="ประเภทของงาน *"
                 inputRef={register}
                 keyName="job_position_id"
