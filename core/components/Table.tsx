@@ -18,7 +18,7 @@ const CoreTable = (props) => {
 
   return (
     <MaterialTable
-      title={title}
+      title={title || ''}
       columns={column}
       data={data}
       options={{

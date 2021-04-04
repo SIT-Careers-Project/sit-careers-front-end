@@ -18,6 +18,10 @@ module.exports = (phases) => {
       SIT_SSO_CLIENT_ID: process.env.SIT_SSO_CLIENT_ID,
       staticFolder: '/public'
     },
+    future: {
+      webpack5: true,
+      strictPostcssConfiguration: true
+    },
     serverRuntimeConfig: {
       JWT_SECRET: process.env.JWT_SECRET
     },

@@ -9,6 +9,14 @@ const apiCompany = {
     const response = await api.get('/companies')
     return response
   },
+  getAllCompaniesByAdmin: async () => {
+    const response = await api.get('admin/companies')
+    return response
+  },
+  getAllCompaniesByCompany: async () => {
+    const response = await api.get('company/companies')
+    return response
+  },
   getAnnouncementByCompanyId: async (companyId) => {
     const response = await api.get(`/academic-industry/announcements/${companyId}`)
     return response

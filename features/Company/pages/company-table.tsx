@@ -10,11 +10,15 @@ import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
 
-const CompanyTable = () => {
+const CompanyTable = ({ authContext }) => {
   const context = useContext(companyTablePageContext)
   useEffect(() => {
-    context.getCompanies()
-  }, [context])
+    if (authContext.roleUser === 'admin') {
+      context.getCompaniesByAdmin()
+    } else {
+      context.getCompaniesByCompany()
+    }
+  }, [authContext.roleUser, context])
 
   const column = [
     {
@@ -79,7 +83,7 @@ const CompanyTable = () => {
         </div>
         <div>
           <Link href="/company/form-create">
-            <button className="bg-primary">
+            <button className="bg-primary focus:outline-none">
               <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
                 <AddCircle className="mr-1" />
                 เพิ่มบริษัท
@@ -92,12 +96,24 @@ const CompanyTable = () => {
       <div>
         <Observer>
           {() => (
-            <CoreTable
-              column={column}
-              data={context.companies}
-              getData={context.getCompanies}
-              options={{ search: true }}
-            />
+            <>
+              {authContext.roleUser === 'admin' && (
+                <CoreTable
+                  column={column}
+                  data={context.companies}
+                  getData={context.getCompaniesByAdmin}
+                  options={{ search: true }}
+                />
+              )}
+              {(authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') && (
+                <CoreTable
+                  column={column}
+                  data={context.companies}
+                  getData={context.getCompaniesByCompany}
+                  options={{ search: true }}
+                />
+              )}
+            </>
           )}
         </Observer>
       </div>

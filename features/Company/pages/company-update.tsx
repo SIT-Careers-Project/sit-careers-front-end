@@ -97,7 +97,7 @@ const CompanyForm = ({ authContext }) => {
                     <p className="text-white font-prompt text-subtitle-1">ลบบริษัท</p>
                   </button>
                 )}
-                {(authContext.roleUser === 'coordinator' || authContext.roleUser === 'manager') && (
+                {authContext.roleUser === 'manager' && (
                   <button
                     onClick={() => context.handlerModal(true, coreModalContext.openModal)}
                     className="py-4 lg:w-1/4 bg-red focus:outline-none">
@@ -138,18 +138,20 @@ const CompanyForm = ({ authContext }) => {
                     onSubmit={context.requestDeleteCompany}
                   />
                 )}
-              {!context.modalDelete && coreModalContext.isOpen && (
-                <CoreModal
-                  buttonSubmit="บันทึก"
-                  title="บันทึกข้อมูลบริษัท"
-                  content={
-                    <span className="mb-5 font-prompt text-subtitle-1">
-                      คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
-                    </span>
-                  }
-                  onSubmit={handleSubmit(context.updateCompany)}
-                />
-              )}
+              {!context.modalDelete &&
+                coreModalContext.isOpen &&
+                authContext.roleUser === 'manager' && (
+                  <CoreModal
+                    buttonSubmit="บันทึก"
+                    title="บันทึกข้อมูลบริษัท"
+                    content={
+                      <span className="mb-5 font-prompt text-subtitle-1">
+                        คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
+                      </span>
+                    }
+                    onSubmit={handleSubmit(context.updateCompany)}
+                  />
+                )}
             </div>
           )}
         </Observer>
