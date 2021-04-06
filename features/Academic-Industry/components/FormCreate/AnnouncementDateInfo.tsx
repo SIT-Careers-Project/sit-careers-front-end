@@ -2,7 +2,7 @@ import { TextField } from '@material-ui/core'
 import React from 'react'
 
 const AnnouncementDateInfoForm = (props) => {
-  const { errors, register } = props
+  const { errors, register, startDate, endDate, changeStartDate, changeEndDate } = props
 
   return (
     <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
@@ -20,6 +20,8 @@ const AnnouncementDateInfoForm = (props) => {
               shrink: true
             }}
             name="start_date"
+            value={startDate}
+            onChange={changeStartDate}
             inputRef={register}
             error={!!errors.start_date}
             helperText={errors.start_date?.message}
@@ -38,6 +40,8 @@ const AnnouncementDateInfoForm = (props) => {
               shrink: true
             }}
             name="end_date"
+            value={endDate}
+            onChange={changeEndDate}
             inputRef={register}
             error={!!errors.end_date}
             helperText={errors.end_date?.message}
