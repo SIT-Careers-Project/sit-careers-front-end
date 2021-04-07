@@ -1,41 +1,36 @@
-import { AddCircle, Delete } from '@material-ui/icons'
-import { TextField } from '@material-ui/core'
+/* eslint-disable no-fallthrough */
+import { AddCircle } from '@material-ui/icons'
 /* eslint-disable react/display-name */
-import React, { useContext } from 'react'
-
+import React, { useContext, useEffect } from 'react'
 import CoreTable from '../../../core/components/Table'
 import { Observer } from 'mobx-react-lite'
-import { CoreModal } from '../../../core/components/Modal'
+import { checkRoleRender } from 'core/services/utils'
 import { modalContext } from '../../../core/contexts/modal_context'
+import { userInfoPageContext } from '../contexts/user_info_page_context'
+import { toJS } from 'mobx'
+import { ModalAdmin } from '../components/Modal/Admin'
 
-const UserInfo = () => {
+const UserInfo = ({ authContext }) => {
   const coreModalContext = useContext(modalContext)
+  const context = useContext(userInfoPageContext)
+
+  useEffect(() => {
+    if (authContext.roleUser === 'admin') {
+      context.getUserByAdmin()
+    } else {
+      context.getUserByCompany()
+    }
+  }, [authContext.roleUser, context])
 
   const column = [
     { title: 'อีเมล', field: 'email' },
     {
       title: 'สิทธิการใช้งาน',
-      field: 'role_name'
-    },
-    {
-      title: 'ตั้งค่า',
-      field: 'company_id',
-      render: () => <Delete className="cursor-pointer text-secondary1" fontSize="large" />
-    }
-  ]
-
-  const data = [
-    {
-      email: 'jirattikarn.vil@mail.kmutt.ac.th',
-      role_name: 'ผู้จัดการ'
-    },
-    {
-      email: 'peepoi@mail.kmutt.ac.th',
-      role_name: 'ผู้ประสานงาน'
-    },
-    {
-      email: 'peepoinaja@mail.kmutt.ac.th',
-      role_name: 'ผู้ประสานงาน'
+      field: 'role_name',
+      render: (rowData) => {
+        const roleName = checkRoleRender(rowData?.role_name)
+        return <p>{roleName}</p>
+      }
     }
   ]
 
@@ -49,28 +44,16 @@ const UserInfo = () => {
           {() => (
             <>
               <div className="flex justify-end grid-cols-12 gap-x-8" id="button-add-user">
-                <button className="bg-primary" onClick={coreModalContext.openModal}>
+                <button
+                  className="bg-primary focus:outline-none"
+                  onClick={coreModalContext.openModal}>
                   <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
                     <AddCircle className="mr-1" />
                     เพิ่มผู้ประสานงาน
                   </p>
                 </button>
               </div>
-              <CoreModal
-                buttonSubmit="เพิ่ม"
-                title="เพิ่มผู้ประสานงาน"
-                content={
-                  <div className="w-full">
-                    <TextField
-                      name="email"
-                      label="อีเมล"
-                      className="font-sarabun bg-grey-100"
-                      fullWidth
-                    />
-                  </div>
-                }
-                onSubmit={() => console.log('Just test modal !')}
-              />
+              {authContext.roleUser === 'admin' && <ModalAdmin />}
             </>
           )}
         </Observer>
@@ -79,12 +62,23 @@ const UserInfo = () => {
       <div>
         <Observer>
           {() => (
-            <CoreTable
-              column={column}
-              data={data}
-              getData={() => console.log('hello')}
-              options={{}}
-            />
+            <>
+              <CoreTable
+                column={column}
+                data={toJS(context.users)}
+                getData={() => console.log('hello')}
+                options={{
+                  selection: true
+                }}
+                actions={[
+                  {
+                    tooltip: 'Remove All Selected Users',
+                    icon: 'delete',
+                    onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
+                  }
+                ]}
+              />
+            </>
           )}
         </Observer>
       </div>

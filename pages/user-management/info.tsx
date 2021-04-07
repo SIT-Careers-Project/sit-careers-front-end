@@ -8,7 +8,7 @@ const CompanyInfo = ({ authContext }) => {
   const router = useRouter()
   useEffect(() => {
     authContext.fetchMe().then(() => {
-      const path = checkLoggedIn(authContext.isLoggedIn, ['admin'], authContext.roleUser)
+      const path = checkLoggedIn(authContext.isLoggedIn, ['admin', 'manager'], authContext.roleUser)
       path && router.push(path)
     })
   }, [authContext, router])
@@ -16,7 +16,7 @@ const CompanyInfo = ({ authContext }) => {
   return (
     <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16 ">
-        <UserInfo />
+        <UserInfo authContext={authContext} />
       </div>
     </MainLayout>
   )
