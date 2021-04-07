@@ -7,7 +7,7 @@ import {
   TextField
 } from '@material-ui/core'
 import React from 'react'
-import { AutoComplete } from '../../components/AutoComplete'
+import { AutoComplete } from 'core/components/AutoComplete'
 import { Controller } from 'react-hook-form'
 import { Observer } from 'mobx-react-lite'
 import { jobType, salary } from '../../services/constantVariable'

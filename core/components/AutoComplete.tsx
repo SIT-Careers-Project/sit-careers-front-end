@@ -8,11 +8,11 @@ type CoreAutoCompleteProps = {
   options: Array<string>
   keySearch: string
   keyName: string
-  inputRef: any
+  inputRef?: any
   className: string
   label: string
-  error: boolean
-  helperText: string
+  error?: boolean
+  helperText?: string
   defaultValue?: any
 }
 

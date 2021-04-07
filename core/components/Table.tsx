@@ -25,7 +25,7 @@ const CoreTable = (props) => {
         actionsColumnIndex: -1,
         showTitle: false,
         draggable: false,
-        ...props.options
+        ...props?.options
       }}
       actions={action}
       {...props}
