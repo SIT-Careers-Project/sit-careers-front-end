@@ -88,46 +88,43 @@ const apiAcademic = {
     })
     return response
   },
-  createApplication: async (data) => {
+  getResumeById: async (resume_id) => {
+    const response = await api.get(`/academic-industry/resume/?resumes_id=${resume_id}`)
+    return response
+  },
+  getResumeByUserId: async () => {
+    const response = await api.get(`/academic-industry/resume`)
+    return response
+  },
+  getResumes: async () => {
+    const response = await api.get('/academic-industry/resumes')
+    return response
+  },
+  getAllAnnouncementResumes: async () => {
+    const response = await api.get('/academic-industry/applications')
+    return response
+  },
+  getAnnouncementResumeByAdmin: async () => {
+    const response = await api.get(`academic-industry/admin/applications `)
+    return response
+  },
+  CreateAnnouncementResume: async (data) => {
     const formData = new FormData()
     formData.append('announcement_id', data.announcement_id)
     formData.append('note', data.note ? data.note : '-')
-    formData.append('name_title', data.prefix)
-    formData.append('first_name', data.first_name)
-    formData.append('last_name', data.last_name)
-    formData.append('email', data.email)
-    formData.append('curriculum', data.curriculum)
-    formData.append('year', data.year)
-    formData.append('tel_no', data.tel_no)
-    formData.append('resume_link', data.resume_link)
-    formData.append('path_file', data.path_file ? data.path_file : '-')
-    formData.append('file_resume', data.file_resume[0])
+    formData.append('resume_id', data.resume_id)
+    formData.append('status', data.status)
 
     const response = await api.post('/academic-industry/application', formData, {
       headers: { 'Content-type': 'multipart/form-data' }
     })
     return response
   },
-  getApplications: async () => {
-    const response = await api.get('/academic-industry/applications')
-    return response
-  },
-  updateApplication: async (data) => {
+  updateAnnouncementResume: async (data) => {
     const formData = new FormData()
-    formData.append('announcement_id', data.announcement_id)
-    formData.append('application_id', data.application_id)
+    formData.append('announcement_resume_id', data.announcement_resume_id)
     formData.append('note', data.note ? data.note : '-')
-    formData.append('name_title', data.prefix)
-    formData.append('first_name', data.first_name)
-    formData.append('last_name', data.last_name)
-    formData.append('email', data.email)
-    formData.append('curriculum', data.curriculum)
-    formData.append('year', data.year)
-    formData.append('status', data.status)
-    formData.append('tel_no', data.tel_no)
-    formData.append('resume_link', data.resume_link)
-    formData.append('path_file', data.path_file ? data.path_file : '-')
-    // formData.append('file_resume', data.file_resume[0])
+    formData.append('status', data.status ? data.status : '-')
     formData.append('_method', 'put')
 
     const response = await api.post('/academic-industry/application', formData, {
