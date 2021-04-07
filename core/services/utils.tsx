@@ -28,3 +28,22 @@ export const checkLoggedIn = (isLoggedIn, roleCheck: Array<string>, roleUser) =>
     return '/login'
   }
 }
+
+export const checkRoleRender = (roleName) => {
+  let tmpRoleName = ''
+  switch (roleName) {
+    case 'admin':
+      tmpRoleName = 'ผู้ดูแล'
+      break
+    case 'manager':
+      tmpRoleName = 'ผู้จัดการ'
+      break
+    case 'coordinator':
+      tmpRoleName = 'ผู้ประสานงาน'
+      break
+    case 'student':
+      tmpRoleName = 'นักศึกษา'
+      break
+  }
+  return tmpRoleName
+}
