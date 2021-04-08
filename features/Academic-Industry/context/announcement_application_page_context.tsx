@@ -42,7 +42,7 @@ export class AnnouncementApplicationFormContext {
 
   createApplication = async (data) => {
     try {
-      await apiAcademic.CreateAnnouncementResume(data).then(() => {
+      await apiAcademic.createAnnouncementResume(data).then(() => {
         this.modal.closeModal()
         Router.push('/academic-industry/applications/history')
       })
