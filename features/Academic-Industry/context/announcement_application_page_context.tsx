@@ -6,16 +6,29 @@ import Router from 'next/router'
 export class AnnouncementApplicationFormContext {
   modal
   announcement
+  resume
+  renderDelay
 
   constructor() {
     this.modal = ''
     this.announcement = ''
+    this.resume = ''
+    this.renderDelay = true
 
     makeAutoObservable(this)
   }
 
   keyChange = (key, value) => {
     this[key] = value
+  }
+
+  getResumeByUserId = async () => {
+    try {
+      const response = await apiAcademic.getResumeByUserId()
+      this.resume = response.data[0]
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   getAnnouncementById = async (announcementId) => {
@@ -29,7 +42,7 @@ export class AnnouncementApplicationFormContext {
 
   createApplication = async (data) => {
     try {
-      await apiAcademic.createApplication(data).then(() => {
+      await apiAcademic.createAnnouncementResume(data).then(() => {
         this.modal.closeModal()
         Router.push('/academic-industry/applications/history')
       })

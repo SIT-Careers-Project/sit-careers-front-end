@@ -46,7 +46,15 @@ const AnnouncementInfo = () => {
         <Search
           onChange={(event) => {
             if (typeof event.target.value === 'string') {
-              const keySearch = ['announcement_title', 'company_name_en', 'company_name_th']
+              const keySearch = [
+                'announcement_title',
+                'company_name_en',
+                'company_name_th',
+                'job_position',
+                'job_type',
+                'start_date',
+                'end_date'
+              ]
               contextInfo.setAnnouncements(
                 contextSearch.setSearchItems(
                   [event.target.value],

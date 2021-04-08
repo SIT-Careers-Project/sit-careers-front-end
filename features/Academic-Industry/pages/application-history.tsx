@@ -77,7 +77,7 @@ const ApplicationHistory = () => {
               column={column}
               data={context?.applications}
               isEditable={true}
-              getData={context.getApplications}
+              getData={context.getAnnouncementApplicationByAdmin}
               updateData={context.updateApplication}
             />
           )}
