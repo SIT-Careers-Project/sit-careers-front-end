@@ -6,6 +6,7 @@ import { checkLoggedIn } from 'core/services/utils'
 
 const ApplicationHistory = ({ authContext }) => {
   const router = useRouter()
+
   useEffect(() => {
     authContext.fetchMe().then(() => {
       const path = checkLoggedIn(
@@ -19,7 +20,7 @@ const ApplicationHistory = ({ authContext }) => {
 
   return (
     <MainLayout authContext={authContext}>
-      <div className="flex justify-center mt-16 ">
+      <div className="flex justify-center mt-16">
         <Application />
       </div>
     </MainLayout>
