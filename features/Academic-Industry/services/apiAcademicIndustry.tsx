@@ -108,7 +108,7 @@ const apiAcademic = {
     const response = await api.get(`academic-industry/admin/applications `)
     return response
   },
-  CreateAnnouncementResume: async (data) => {
+  createAnnouncementResume: async (data) => {
     const formData = new FormData()
     formData.append('announcement_id', data.announcement_id)
     formData.append('note', data.note ? data.note : '-')
