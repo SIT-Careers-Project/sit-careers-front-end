@@ -1,11 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-fallthrough */
 import { AddCircle } from '@material-ui/icons'
 /* eslint-disable react/display-name */
-import React, { useContext, useEffect } from 'react'
-import CoreTable from '../../../core/components/Table'
+import React, { useContext, useEffect, useCallback, useMemo } from 'react'
+import CoreTable from 'core/components/Table'
 import { Observer } from 'mobx-react-lite'
 import { checkRoleRender } from 'core/services/utils'
-import { modalContext } from '../../../core/contexts/modal_context'
+import { modalContext } from 'core/contexts/modal_context'
 import { userInfoPageContext } from '../contexts/user_info_page_context'
 import { toJS } from 'mobx'
 import { ModalAdmin } from '../components/Modal/Admin'
@@ -14,13 +15,44 @@ const UserInfo = ({ authContext }) => {
   const coreModalContext = useContext(modalContext)
   const context = useContext(userInfoPageContext)
 
-  useEffect(() => {
+  const getData = useCallback(() => {
     if (authContext.roleUser === 'admin') {
       context.getUserByAdmin()
     } else {
       context.getUserByCompany()
     }
-  }, [authContext.roleUser, context])
+  }, [])
+
+  const Table = useMemo(() => {
+    return (
+      <Observer>
+        {() => (
+          <>
+            <CoreTable
+              column={column}
+              data={toJS(context.users)}
+              getData={getData}
+              options={{
+                selection: true
+              }}
+              actions={[
+                {
+                  tooltip: 'Remove All Selected Users',
+                  icon: 'delete',
+                  onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
+                }
+              ]}
+            />
+          </>
+        )}
+      </Observer>
+    )
+  }, [context.users])
+
+  useEffect(() => {
+    context.keyChange('modal', coreModalContext)
+    getData()
+  }, [])
 
   const column = [
     { title: 'อีเมล', field: 'email' },
@@ -59,29 +91,7 @@ const UserInfo = ({ authContext }) => {
         </Observer>
       </div>
       <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
-      <div>
-        <Observer>
-          {() => (
-            <>
-              <CoreTable
-                column={column}
-                data={toJS(context.users)}
-                getData={() => console.log('hello')}
-                options={{
-                  selection: true
-                }}
-                actions={[
-                  {
-                    tooltip: 'Remove All Selected Users',
-                    icon: 'delete',
-                    onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
-                  }
-                ]}
-              />
-            </>
-          )}
-        </Observer>
-      </div>
+      <div>{Table}</div>
     </div>
   )
 }
