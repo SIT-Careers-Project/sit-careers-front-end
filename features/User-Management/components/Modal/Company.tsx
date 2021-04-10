@@ -64,7 +64,7 @@ export const ModalCompany = () => {
               </div>
             </div>
           }
-          onSubmit={handleSubmit(context.createUser)}
+          onSubmit={handleSubmit(context.createUserByCompany)}
         />
       )}
     </Observer>
