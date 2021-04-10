@@ -75,7 +75,7 @@ export const ModalAdmin = () => {
               />
             </div>
           }
-          onSubmit={handleSubmit(context.createUser)}
+          onSubmit={handleSubmit(context.createUserByAdmin)}
         />
       )}
     </Observer>
