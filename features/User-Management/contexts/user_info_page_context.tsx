@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 
 import { createContext } from 'react'
 import apiUser from '../services/apiUser'
@@ -32,7 +32,9 @@ export class UserInfoPageContext {
   getUserByAdmin = async () => {
     try {
       const response = await apiUser.getUsersByAdmin()
-      this.users = response.data
+      runInAction(() => {
+        this.users = response.data
+      })
     } catch (error) {
       console.log(error)
     }
@@ -41,16 +43,31 @@ export class UserInfoPageContext {
   getUserByCompany = async () => {
     try {
       const response = await apiUser.getUsersByCompany()
-      this.users = response.data
+      runInAction(() => {
+        this.users = response.data
+      })
     } catch (error) {
       console.log(error)
     }
   }
 
-  createUser = async (data) => {
+  createUserByAdmin = async (data) => {
     try {
-      const response = await apiUser.createUser(data)
-      console.log(response)
+      await apiUser.createUser(data).then(() => {
+        this.getUserByAdmin()
+        this.modal.closeModal()
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  createUserByCompany = async (data) => {
+    try {
+      await apiUser.createUser(data).then(() => {
+        this.getUserByCompany()
+        this.modal.closeModal()
+      })
     } catch (error) {
       console.log(error)
     }
