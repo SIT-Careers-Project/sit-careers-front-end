@@ -40,8 +40,8 @@ export const dropdownLinkAdmin = [
     path: '/academic-industry/applications/history',
     name: 'ประวัติการสมัครงาน',
     icon: <AssignmentTurnedIn />,
-    role: ['student', 'admin'],
-    permission: ['access_academic_application']
+    role: ['admin', 'student', 'manager', 'coordinator'],
+    permission: ['access_history']
   },
   {
     path: '/report-management/info',

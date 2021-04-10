@@ -23,9 +23,9 @@ export class ApplicationHistoryContext {
     this[key] = value
   }
 
-  getApplications = async () => {
+  getAnnouncementApplicationByAdmin = async () => {
     try {
-      const response = await apiAcademic.getApplications()
+      const response = await apiAcademic.getAnnouncementResumeByAdmin()
       this.applications = this.convertStatus(response.data)
     } catch (error) {
       console.log(error)
@@ -43,7 +43,7 @@ export class ApplicationHistoryContext {
   updateApplication = async (data) => {
     try {
       data.status = this.statusTemp[data.status]
-      await apiAcademic.updateApplication(data)
+      await apiAcademic.updateAnnouncementResume(data)
     } catch (error) {
       console.log(error)
     }
