@@ -15,5 +15,9 @@ export const apiAuth = {
       code: code
     })
     return response
+  },
+  setPassword: async (data) => {
+    const response = await api.put('user/first-time', data)
+    return response
   }
 }

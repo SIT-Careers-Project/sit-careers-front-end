@@ -3,12 +3,15 @@ import { apiAuth } from '../services/apiAuth'
 import { createContext } from 'react'
 import Cookies from 'js-cookie'
 import { Router } from 'next/router'
+import axios from 'axios'
+
 export class authContext {
   user
   permission
   token
   isLoggedIn
   roleUser
+  verify
 
   constructor() {
     this.user = ''
@@ -16,6 +19,7 @@ export class authContext {
     this.token = ''
     this.roleUser = ''
     this.isLoggedIn = false
+    this.verify = false
 
     makeAutoObservable(this)
   }
@@ -75,6 +79,33 @@ export class authContext {
           Router.prototype.push('/')
         }
       }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  verifyEmail = async (link) => {
+    try {
+      await axios.get(link).then((data) => {
+        if (data.status === 204 || data?.status === 400) {
+          this.verify = false
+        } else {
+          Cookies.set('token', data.data.token)
+          this.verify = true
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  setPassword = async (items) => {
+    try {
+      await apiAuth.setPassword(items).then((data) => {
+        if (data.status === 200) {
+          Router.prototype.push('/login')
+        }
+      })
     } catch (error) {
       console.log(error)
     }
