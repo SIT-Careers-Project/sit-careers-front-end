@@ -4,44 +4,27 @@ import React, { useContext } from 'react'
 import CoreTableWithAction from '../../../core/components/TableWithAction'
 import { Observer } from 'mobx-react-lite'
 import Link from 'next/link'
+import CoreTable from '../../../core/components/Table'
 import { applicationHistoryContext } from '../context/announcement_application_history_context'
 
-const ApplicationHistory = () => {
+const ApplicationHistory = ({ authContext }) => {
   const context = useContext(applicationHistoryContext)
 
   const column = [
     { title: 'ประกาศรับสมัครงาน', field: 'announcement_title', editable: 'never' },
-    { title: 'ID', field: 'announcement_id', editable: 'never', hidden: true },
-    { title: 'ID', field: 'application_id', editable: 'never', hidden: true },
-    { title: 'Prefix', field: 'name_title', editable: 'never', hidden: true },
     {
       title: 'บริษัท',
       field: 'company_name_th',
       editable: 'never'
     },
     {
-      title: 'ชื่อ',
+      title: 'ชื่อผู้สมัคร',
       field: 'first_name',
       editable: 'never'
     },
     {
-      title: 'นามสกุล',
-      field: 'last_name',
-      editable: 'never'
-    },
-    {
-      title: 'สาขาวิชา',
-      field: 'curriculum',
-      editable: 'never'
-    },
-    {
-      title: 'ชั้นปี',
-      field: 'year',
-      editable: 'never'
-    },
-    {
       title: 'วันที่สมัคร',
-      field: 'application_date',
+      field: 'created_at',
       editable: 'never'
     },
     {
@@ -71,17 +54,44 @@ const ApplicationHistory = () => {
       </div>
       <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
       <div>
-        <Observer>
-          {() => (
-            <CoreTableWithAction
-              column={column}
-              data={context?.applications}
-              isEditable={true}
-              getData={context.getAnnouncementApplicationByAdmin}
-              updateData={context.updateApplication}
-            />
-          )}
-        </Observer>
+        {authContext.roleUser === 'admin' && (
+          <Observer>
+            {() => (
+              <CoreTableWithAction
+                column={column}
+                data={context?.applications}
+                isEditable={true}
+                getData={context.getAnnouncementApplicationByAdmin}
+                updateData={context.updateApplication}
+              />
+            )}
+          </Observer>
+        )}
+        {authContext.roleUser === 'manager' && authContext.roleUser === 'coordinator' && (
+          <Observer>
+            {() => (
+              <CoreTableWithAction
+                column={column}
+                data={context?.applications}
+                isEditable={true}
+                getData={context.getAnnouncementApplicationByCompany}
+                updateData={context.updateApplication}
+              />
+            )}
+          </Observer>
+        )}
+        {authContext.roleUser === 'student' && (
+          <Observer>
+            {() => (
+              <CoreTable
+                column={column}
+                data={context?.applications}
+                getData={context.getAnnouncementApplicationByStudent}
+                options={{ search: true }}
+              />
+            )}
+          </Observer>
+        )}
       </div>
     </div>
   )
