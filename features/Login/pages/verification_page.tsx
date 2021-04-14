@@ -19,8 +19,8 @@ export const VerificationPage = () => {
   useEffect(() => {
     if (urlVerify && signature) {
       const url = `${urlVerify}&signature=${signature}`
-      url.trim().replace('http://', 'https://')
-      context.verifyEmail(url)
+      const httpsUrl = url.trim().replace('http://', 'https://')
+      context.verifyEmail(httpsUrl)
     }
   }, [context, signature, urlVerify])
 
