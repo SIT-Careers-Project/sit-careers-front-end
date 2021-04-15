@@ -140,7 +140,7 @@ const CompanyForm = ({ authContext }) => {
                 )}
               {!context.modalDelete &&
                 coreModalContext.isOpen &&
-                authContext.roleUser === 'manager' && (
+                (authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') && (
                   <CoreModal
                     buttonSubmit="บันทึก"
                     title="บันทึกข้อมูลบริษัท"
