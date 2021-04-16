@@ -87,7 +87,11 @@ const CompanyForm = ({ authContext }) => {
                 <CompanyDateInfoForm register={register} errors={errors} control={control} />
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                <MouInfoForm register={register} errors={errors} />
+                {authContext.roleUser === 'admin' ? (
+                  <MouInfoForm disable={false} register={register} errors={errors} />
+                ) : (
+                  <MouInfoForm disable={true} register={register} errors={errors} />
+                )}
               </div>
               <div className="flex justify-end grid-cols-12 my-6 gap-x-8 focus:outline-none">
                 {authContext.roleUser === 'admin' && (
@@ -138,20 +142,18 @@ const CompanyForm = ({ authContext }) => {
                     onSubmit={context.requestDeleteCompany}
                   />
                 )}
-              {!context.modalDelete &&
-                coreModalContext.isOpen &&
-                (authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') && (
-                  <CoreModal
-                    buttonSubmit="บันทึก"
-                    title="บันทึกข้อมูลบริษัท"
-                    content={
-                      <span className="mb-5 font-prompt text-subtitle-1">
-                        คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
-                      </span>
-                    }
-                    onSubmit={handleSubmit(context.updateCompany)}
-                  />
-                )}
+              {!context.modalDelete && coreModalContext.isOpen && (
+                <CoreModal
+                  buttonSubmit="บันทึก"
+                  title="บันทึกข้อมูลบริษัท"
+                  content={
+                    <span className="mb-5 font-prompt text-subtitle-1">
+                      คุณต้องการบันทึกข้อมูลบริษัทหรือไม่
+                    </span>
+                  }
+                  onSubmit={handleSubmit(context.updateCompany)}
+                />
+              )}
             </div>
           )}
         </Observer>
