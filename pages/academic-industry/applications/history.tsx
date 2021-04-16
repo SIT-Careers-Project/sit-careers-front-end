@@ -21,7 +21,7 @@ const ApplicationHistory = ({ authContext }) => {
   return (
     <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16">
-        <Application />
+        <Application authContext={authContext} />
       </div>
     </MainLayout>
   )
