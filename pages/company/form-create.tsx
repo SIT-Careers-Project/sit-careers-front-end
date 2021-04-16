@@ -21,7 +21,7 @@ const CompanyInfo = ({ authContext }) => {
   return (
     <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16">
-        <CompanyForm />
+        <CompanyForm authContext={authContext} />
       </div>
     </MainLayout>
   )

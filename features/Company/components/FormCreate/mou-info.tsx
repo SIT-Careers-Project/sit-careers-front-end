@@ -2,10 +2,10 @@ import { TextField } from '@material-ui/core'
 import React from 'react'
 
 const MouInfoForm = (props) => {
-  const { errors, register } = props
+  const { errors, register, disable } = props
 
   return (
-    <div>
+    <div className={`${disable ? 'opacity-50' : ''}`}>
       <p className="mb-3 font-semibold font-prompt text-heading-6">MOU</p>
       <div className="flex flex-row justify-between">
         <div className="w-full">
@@ -13,6 +13,7 @@ const MouInfoForm = (props) => {
             label="ประเภท MOU"
             variant="outlined"
             name="mou_type"
+            disabled={disable}
             className="font-sarabun"
             inputRef={register}
             error={!!errors.mou_type}
@@ -21,7 +22,7 @@ const MouInfoForm = (props) => {
           />
         </div>
       </div>
-      <div className="py-6 flex flex-row">
+      <div className="flex flex-row py-6">
         <div className="w-1/2">
           <TextField
             label="เริ่มสัญญา"
@@ -29,6 +30,7 @@ const MouInfoForm = (props) => {
             name="start_date_mou"
             className="font-sarabun"
             type="date"
+            disabled={disable}
             inputRef={register}
             error={!!errors.start_date_mou}
             helperText={errors.start_date_mou?.message}
@@ -48,6 +50,7 @@ const MouInfoForm = (props) => {
             name="end_date_mou"
             className="font-sarabun"
             type="date"
+            disabled={disable}
             inputRef={register}
             error={!!errors.end_date_mou}
             helperText={errors.end_date_mou?.message}
@@ -64,6 +67,7 @@ const MouInfoForm = (props) => {
           variant="outlined"
           name="mou_link"
           className="font-sarabun"
+          disabled={disable}
           inputRef={register}
           error={!!errors.mou_link}
           helperText={errors.mou_link?.message}
