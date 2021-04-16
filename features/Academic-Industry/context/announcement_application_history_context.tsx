@@ -32,6 +32,24 @@ export class ApplicationHistoryContext {
     }
   }
 
+  getAnnouncementApplicationByStudent = async () => {
+    try {
+      const response = await apiAcademic.getAnnouncementResumeByStudent()
+      this.applications = this.convertStatus(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  getAnnouncementApplicationByCompany = async () => {
+    try {
+      const response = await apiAcademic.getAnnouncementResumeByCompany()
+      this.applications = this.convertStatus(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   convertStatus = (data) => {
     _.map(data, (item) => {
       const findStatus = _.findIndex(this.statusTemp, (status) => status === item.status)
