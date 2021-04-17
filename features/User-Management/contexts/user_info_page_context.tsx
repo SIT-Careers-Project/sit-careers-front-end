@@ -64,7 +64,7 @@ export class UserInfoPageContext {
 
   createUserByCompany = async (data) => {
     try {
-      await apiUser.createUser(data).then(() => {
+      await apiUser.createUserByManger(data).then(() => {
         this.getUserByCompany()
         this.modal.closeModal()
       })
