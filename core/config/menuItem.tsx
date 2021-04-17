@@ -54,7 +54,7 @@ export const dropdownLinkAdmin = [
     path: '/user-management/info',
     name: 'จัดการผู้ใช้งาน',
     icon: <People />,
-    role: ['admin'],
+    role: ['admin', 'manager'],
     permission: ['access_user']
   }
 ]
