@@ -60,6 +60,8 @@ export const ModalAdmin = () => {
                   label="อีเมล *"
                   variant="outlined"
                   inputRef={register}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
                   fullWidth
                 />
               </div>
