@@ -5,3 +5,7 @@ export const UserFormSchema = yup.object().shape({
   email: yup.string().email().required('*จำเป็นต้องกรอก อีเมล์'),
   role_id: yup.string().required('*จำเป็นต้องเลือกบทบาทผู้ใช้')
 })
+
+export const UserManagerFormSchema = yup.object().shape({
+  email: yup.string().email().required('*จำเป็นต้องกรอก อีเมล์')
+})

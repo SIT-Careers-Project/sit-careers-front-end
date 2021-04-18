@@ -10,6 +10,7 @@ import { modalContext } from 'core/contexts/modal_context'
 import { userInfoPageContext } from '../contexts/user_info_page_context'
 import { toJS } from 'mobx'
 import { ModalAdmin } from '../components/Modal/Admin'
+import { ModalCompany } from '../components/Modal/Company'
 
 const UserInfo = ({ authContext }) => {
   const coreModalContext = useContext(modalContext)
@@ -86,6 +87,7 @@ const UserInfo = ({ authContext }) => {
                 </button>
               </div>
               {authContext.roleUser === 'admin' && <ModalAdmin />}
+              {authContext.roleUser === 'manager' && <ModalCompany />}
             </>
           )}
         </Observer>

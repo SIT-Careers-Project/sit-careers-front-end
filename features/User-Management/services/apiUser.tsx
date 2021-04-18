@@ -16,6 +16,10 @@ const apiUser = {
   createUser: async (data) => {
     const response = await api.post('user', data)
     return response
+  },
+  createUserByManger: async (data) => {
+    const response = await api.post('company/user', data)
+    return response
   }
 }
 
