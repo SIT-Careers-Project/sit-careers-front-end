@@ -11,6 +11,10 @@ const apiAcademic = {
     const response = await api.get('/academic-industry/announcements')
     return response
   },
+  getAnnouncementByCompany: async () => {
+    const response = await api.get('/academic-industry/company/announcements')
+    return response
+  },
   createAnnouncement: async (data) => {
     const formData = new FormData()
     formData.append('address_one', data.address_one)
@@ -52,6 +56,7 @@ const apiAcademic = {
   },
   updateAnnouncement: async (data) => {
     const formData = new FormData()
+    formData.append('address_id', data.address_id)
     formData.append('address_one', data.address_one)
     formData.append('address_two', data.address_two)
     formData.append('address_id', data.address_id)
