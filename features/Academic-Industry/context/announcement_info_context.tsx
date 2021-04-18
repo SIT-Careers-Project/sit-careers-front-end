@@ -27,6 +27,16 @@ export class AnnouncementInfoContext {
       console.log(error)
     }
   }
+
+  getAnnouncementByCompany = async () => {
+    try {
+      const response = await apiService.getAnnouncementByCompany()
+      this.announcements = sortAnnouncement(response.data, ['start_date'])
+      this.beforeSearch = response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 export const announcementInfoContext = createContext(new AnnouncementInfoContext())

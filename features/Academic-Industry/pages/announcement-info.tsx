@@ -13,16 +13,20 @@ import { searchContext } from '../../../core/contexts/search_context'
 import { useObserver } from 'mobx-react-lite'
 import { paginationContext } from '../../../core/contexts/pagination_context'
 
-const AnnouncementInfo = () => {
+const AnnouncementInfo = ({ authContext }) => {
   const context = useContext(announcementDuplicateFormContext)
   const contextInfo = useContext(announcementInfoContext)
   const contextSearch = useContext(searchContext)
   const contextPagination = useContext(paginationContext)
 
   useEffect(() => {
-    contextInfo.getAnnouncements()
+    if (authContext.roleUser === 'admin') {
+      contextInfo.getAnnouncements()
+    } else {
+      contextInfo.getAnnouncementByCompany()
+    }
     contextPagination.setSliceData()
-  }, [contextInfo, contextPagination])
+  }, [authContext.roleUser, contextInfo, contextPagination])
 
   return useObserver(() => (
     <div className="w-full h-full max-w-screen-lg">
