@@ -34,7 +34,7 @@ const ReportInfo = () => {
     <div className="w-full max-w-screen-lg pb-10">
       <div className="flex justify-between w-full mt-2">
         <div>
-          <p className="text-heading-5 font-prompt">ดาวห์โหลดรายงานสรุป</p>
+          <p className="text-heading-5 font-prompt">ดาวน์โหลดรายงานสรุป</p>
         </div>
       </div>
       <div className="w-full h-1 mt-4 mb-6 bg-secondary1" />
