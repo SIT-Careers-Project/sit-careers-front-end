@@ -6,19 +6,21 @@ import {
   Select,
   TextField
 } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AutoComplete } from 'core/components/AutoComplete'
 import { Controller } from 'react-hook-form'
 import { Observer } from 'mobx-react-lite'
 import { jobType, salary } from '../../services/constantVariable'
 
 const AnnouncementMainInfoForm = (props) => {
-  const { errors, register, control, data, jobPosition, companyName } = props
+  const { errors, register, control, data, jobPosition, companyName, authContext } = props
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  useEffect(() => {}, [authContext])
 
   return (
     <div>
       <div className="grid w-full grid-flow-row grid-cols-12 pt-6">
-        <div className="col-span-6 pr-3">
+        <div className={`${authContext?.roleUser === 'admin' ? 'col-span-6 pr-3' : 'col-span-12'}`}>
           <TextField
             label="หัวข้อ *"
             variant="outlined"
@@ -29,23 +31,25 @@ const AnnouncementMainInfoForm = (props) => {
             helperText={errors.announcement_title?.message}
           />
         </div>
-        <div className="col-span-6 pl-3">
-          <Observer>
-            {() => (
-              <AutoComplete
-                className="w-full"
-                label="บริษัท *"
-                inputRef={register}
-                keyName="company_id"
-                defaultValue={companyName}
-                error={!!errors.company_id}
-                helperText={errors.company_id?.message}
-                options={data.autoCompleteCompany}
-                keySearch="company_name_th"
-              />
-            )}
-          </Observer>
-        </div>
+        {authContext?.roleUser === 'admin' && (
+          <div className="col-span-6 pl-3">
+            <Observer>
+              {() => (
+                <AutoComplete
+                  className="w-full"
+                  label="บริษัท *"
+                  inputRef={register}
+                  keyName="company_id"
+                  defaultValue={companyName}
+                  error={!!errors.company_id}
+                  helperText={errors.company_id?.message}
+                  options={data.autoCompleteCompany}
+                  keySearch="company_name_th"
+                />
+              )}
+            </Observer>
+          </div>
+        )}
       </div>
       <div className="flex flex-row justify-between pt-6">
         <div className="w-4/12 pr-3">
