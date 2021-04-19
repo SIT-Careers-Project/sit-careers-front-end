@@ -21,7 +21,7 @@ const AnnouncementForm = ({ authContext }) => {
   return (
     <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16">
-        <FormCreate />
+        <FormCreate authContext={authContext} />
       </div>
     </MainLayout>
   )

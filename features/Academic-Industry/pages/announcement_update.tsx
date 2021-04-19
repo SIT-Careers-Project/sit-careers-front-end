@@ -24,7 +24,7 @@ import AnnouncementBusinessDateInfo from '../components/FormCreate/AnnouncementB
 
 const { publicRuntimeConfig } = getConfig()
 
-const AnnouncementUpdateForm = () => {
+const AnnouncementUpdateForm = ({ authContext }) => {
   const context = useContext(announcementUpdatePageContext)
   const coreModalContext = useContext(modalContext)
 
@@ -105,6 +105,7 @@ const AnnouncementUpdateForm = () => {
                     errors={errors}
                     control={control}
                     data={context}
+                    authContext={authContext}
                     jobPosition={context?.announcement?.job_position_id}
                     companyName={context?.announcement?.company_id}
                   />
