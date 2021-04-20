@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { FormHelperText, InputLabel } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 
-import { AnnouncementFormSchema } from '../services/validationSchema'
+import { AnnouncementFormAdminSchema, AnnouncementFormSchema } from '../services/validationSchema'
 import { BannerImages } from '../../../core/components/BannerImage'
 import { CoreModal } from '../../../core/components/Modal'
 import { Observer } from 'mobx-react-lite'
@@ -23,7 +23,9 @@ const AnnouncementForm = ({ authContext }) => {
   const [file, setFile] = useState(null)
 
   const { handleSubmit, register, errors, control } = useForm({
-    resolver: yupResolver(AnnouncementFormSchema)
+    resolver: yupResolver(
+      authContext === 'admin' ? AnnouncementFormAdminSchema : AnnouncementFormSchema
+    )
   })
 
   useEffect(() => {
