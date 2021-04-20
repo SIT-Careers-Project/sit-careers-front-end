@@ -24,7 +24,7 @@ import AnnouncementBusinessDateInfo from '../components/FormCreate/AnnouncementB
 
 const { publicRuntimeConfig } = getConfig()
 
-const AnnouncementUpdateForm = () => {
+const AnnouncementUpdateForm = ({ authContext }) => {
   const context = useContext(announcementUpdatePageContext)
   const coreModalContext = useContext(modalContext)
 
@@ -72,7 +72,7 @@ const AnnouncementUpdateForm = () => {
                 }}
               />
               <div>
-                <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+                <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                   <p className="font-semibold font-prompt text-heading-6">ข้อมูลประกาศรับสมัคร</p>
                   <button className="w-1/2 pr-3 border-none focus:outline-none">
                     <label htmlFor="picture">
@@ -105,6 +105,7 @@ const AnnouncementUpdateForm = () => {
                     errors={errors}
                     control={control}
                     data={context}
+                    authContext={authContext}
                     jobPosition={context?.announcement?.job_position_id}
                     companyName={context?.announcement?.company_id}
                   />
@@ -116,14 +117,14 @@ const AnnouncementUpdateForm = () => {
                     name="announcement_id"
                     ref={register}
                   />
-                  <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+                  <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                     <AnnouncementPropertyInfoForm register={register} errors={errors} />
                     <AnnouncementWalfareInfoForm register={register} errors={errors} />
                   </div>
-                  <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+                  <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                     <AnnouncementCompanyLocationInfo register={register} errors={errors} />
                   </div>
-                  <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+                  <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                     <AnnouncementBusinessDateInfo
                       register={register}
                       errors={errors}
@@ -134,7 +135,7 @@ const AnnouncementUpdateForm = () => {
                 <div className="flex justify-end grid-cols-12 my-6 gap-x-8">
                   <PrimaryButton
                     onClick={coreModalContext.openModal}
-                    className="lg:w-1/4 py-4"
+                    className="py-4 lg:w-1/4"
                     title="ค้นหา">
                     <p className="text-white font-prompt text-subtitle-1">บันทึก</p>
                   </PrimaryButton>
