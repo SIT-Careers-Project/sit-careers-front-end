@@ -8,8 +8,8 @@ describe('The Report Management Page', () => {
   it('It is a have footer component', () => {
     cy.get('[data-cy=core-footer]').should('be.visible')
   })
-  it('should show header ดาวห์โหลดรายงานสรุป', () => {
-    cy.contains('ดาวห์โหลดรายงานสรุป')
+  it('should show header ดาวน์โหลดรายงานสรุป', () => {
+    cy.contains('ดาวน์โหลดรายงานสรุป')
     cy.contains('เลือกข้อมูลที่ต้องการ')
   })
 })
