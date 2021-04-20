@@ -1,4 +1,4 @@
-import AnnouncementPage from '../../../features/Academic-Industry/pages/announcement_update'
+import AnnouncementPage from '../../../features/Academic-Industry/pages/announcement-update'
 import { MainLayout } from '../../../core/components/Layout/Main'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
