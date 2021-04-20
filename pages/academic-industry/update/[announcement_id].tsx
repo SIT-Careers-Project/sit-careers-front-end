@@ -1,10 +1,10 @@
-import AnnouncementPage from '../../../features/Academic-Industry/pages/announcement-update'
-import { MainLayout } from '../../../core/components/Layout/Main'
+import AnnouncementPage from 'features/Academic-Industry/pages/announcement-update'
+import { MainLayout } from 'core/components/Layout/Main'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
 
-const UpdateCompany = ({ authContext }) => {
+const UpdateAnnouncement = ({ authContext }) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -21,10 +21,10 @@ const UpdateCompany = ({ authContext }) => {
   return (
     <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16 ">
-        <AnnouncementPage />
+        <AnnouncementPage authContext={authContext} />
       </div>
     </MainLayout>
   )
 }
 
-export default UpdateCompany
+export default UpdateAnnouncement
