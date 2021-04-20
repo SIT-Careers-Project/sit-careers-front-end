@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
 
-const UpdateCompany = ({ authContext }) => {
+const UpdateAnnouncement = ({ authContext }) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -27,4 +27,4 @@ const UpdateCompany = ({ authContext }) => {
   )
 }
 
-export default UpdateCompany
+export default UpdateAnnouncement
