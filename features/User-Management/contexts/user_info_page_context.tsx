@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable, runInAction, toJS } from 'mobx'
 
 import { createContext } from 'react'
 import apiUser from '../services/apiUser'
@@ -9,18 +9,24 @@ export class UserInfoPageContext {
   modal
   users
   roles
+  userDelete
+  disableTrashButton
 
   selectRoleName
   email
   autoCompleteCompany
+  modalDelete
 
   constructor() {
     this.modal = ''
+    this.modalDelete = false
     this.selectRoleName = ''
     this.email = ''
     this.autoCompleteCompany = []
     this.users = []
     this.roles = []
+    this.userDelete = []
+    this.disableTrashButton = true
 
     makeAutoObservable(this)
   }
@@ -89,6 +95,19 @@ export class UserInfoPageContext {
     try {
       await apiCompany.getAllCompanies().then((response) => {
         this.autoCompleteCompany = response.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  onDeleteUserByAdmin = async () => {
+    try {
+      const item = { data: toJS(this.userDelete) }
+      await apiUser.deleteUserByAdmin(item).then(async () => {
+        const response = await apiUser.getUsersByAdmin()
+        this.users = response.data
+        this.modal.closeModal()
       })
     } catch (error) {
       console.log(error)
