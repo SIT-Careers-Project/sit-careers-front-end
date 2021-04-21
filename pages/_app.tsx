@@ -6,6 +6,8 @@ import React, { useEffect, useContext } from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Head from 'next/head'
 import { AuthContext } from '../core/contexts/auth_context'
+import theme from '../core/config/theme'
+import { ThemeProvider } from '@material-ui/core/styles'
 
 function App({ Component, pageProps }) {
   const useStore = () => useContext(AuthContext)
@@ -27,7 +29,9 @@ function App({ Component, pageProps }) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
       <CssBaseline />
-      <Component {...pageProps} authContext={useStore()} />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} authContext={useStore()} />
+      </ThemeProvider>
     </>
   )
 }
