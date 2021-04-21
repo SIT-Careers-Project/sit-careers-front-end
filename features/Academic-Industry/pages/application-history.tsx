@@ -1,7 +1,6 @@
-import { Assignment } from '@material-ui/icons'
 /* eslint-disable react/display-name */
-import React, { useContext } from 'react'
-import CoreTableWithAction from '../../../core/components/TableWithAction'
+import { Assignment } from '@material-ui/icons'
+import React, { useContext, useEffect } from 'react'
 import { Observer } from 'mobx-react-lite'
 import Link from 'next/link'
 import CoreTable from '../../../core/components/Table'
@@ -10,35 +9,40 @@ import { applicationHistoryContext } from '../context/announcement_application_h
 const ApplicationHistory = ({ authContext }) => {
   const context = useContext(applicationHistoryContext)
 
+  useEffect(() => {
+    if (authContext.roleUser === 'admin') {
+      context.getAnnouncementApplicationByAdmin()
+    } else if (authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') {
+      context.getAnnouncementApplicationByCompany()
+    } else if (authContext.roleUser === 'student') {
+      context.getAnnouncementApplicationByStudent()
+    }
+  }, [authContext.roleUser, context])
+
   const column = [
     { title: 'ประกาศรับสมัครงาน', field: 'announcement_title', editable: 'never' },
     {
       title: 'บริษัท',
-      field: 'company_name_th',
-      editable: 'never'
+      field: 'company_name_th'
     },
     {
       title: 'ชื่อผู้สมัคร',
-      field: 'first_name',
-      editable: 'never'
+      field: 'first_name'
     },
     {
       title: 'วันที่สมัคร',
       field: 'created_at',
-      editable: 'never'
+      render: (rowData) => new Date(rowData.created_at).toLocaleDateString('en-GB')
     },
     {
       title: 'สถานะ',
-      field: 'status',
-      editable: 'onUpdate',
-      lookup: { 0: 'เรียกสัมภาษณ์', 1: 'รออนุมัติ', 2: 'เสร็จสิ้น', 3: 'ปฏิเสธการรับสมัครงาน' }
+      field: 'status'
     },
     {
       title: 'รายละเอียด',
-      field: 'application_id',
-      editable: 'never',
-      render: () => (
-        <Link href="/academic-industry/form-application">
+      field: 'announcement_resume_id',
+      render: (rowData) => (
+        <Link href={`/academic-industry/applications/${rowData.announcement_resume_id}`}>
           <Assignment className="cursor-pointer text-secondary1" fontSize="large" />
         </Link>
       )
@@ -54,44 +58,36 @@ const ApplicationHistory = ({ authContext }) => {
       </div>
       <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
       <div>
-        {authContext.roleUser === 'admin' && (
-          <Observer>
-            {() => (
-              <CoreTableWithAction
-                column={column}
-                data={context?.applications}
-                isEditable={true}
-                getData={context.getAnnouncementApplicationByAdmin}
-                updateData={context.updateApplication}
-              />
-            )}
-          </Observer>
-        )}
-        {authContext.roleUser === 'manager' && authContext.roleUser === 'coordinator' && (
-          <Observer>
-            {() => (
-              <CoreTableWithAction
-                column={column}
-                data={context?.applications}
-                isEditable={true}
-                getData={context.getAnnouncementApplicationByCompany}
-                updateData={context.updateApplication}
-              />
-            )}
-          </Observer>
-        )}
-        {authContext.roleUser === 'student' && (
-          <Observer>
-            {() => (
-              <CoreTable
-                column={column}
-                data={context?.applications}
-                getData={context.getAnnouncementApplicationByStudent}
-                options={{ search: true }}
-              />
-            )}
-          </Observer>
-        )}
+        <Observer>
+          {() => (
+            <>
+              {authContext.roleUser === 'admin' && (
+                <CoreTable
+                  column={column}
+                  data={context?.applications}
+                  getData={context.getAnnouncementApplicationByAdmin}
+                  options={{ search: true }}
+                />
+              )}
+              {(authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') && (
+                <CoreTable
+                  column={column}
+                  data={context?.applications}
+                  getData={context.getAnnouncementApplicationByCompany}
+                  options={{ search: true }}
+                />
+              )}
+              {authContext.roleUser === 'student' && (
+                <CoreTable
+                  column={column}
+                  data={context?.applications}
+                  getData={context.getAnnouncementApplicationByStudent}
+                  options={{ search: true }}
+                />
+              )}
+            </>
+          )}
+        </Observer>
       </div>
     </div>
   )
