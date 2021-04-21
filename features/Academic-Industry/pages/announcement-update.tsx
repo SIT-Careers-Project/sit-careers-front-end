@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { FormHelperText } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 
-import { AnnouncementFormSchema } from '../services/validationSchema'
+import { AnnouncementFormSchema, AnnouncementFormAdminSchema } from '../services/validationSchema'
 import { BannerImages } from '../../../core/components/BannerImage'
 import { CoreModal } from '../../../core/components/Modal'
 import { Observer } from 'mobx-react-lite'
@@ -33,7 +33,9 @@ const AnnouncementUpdateForm = ({ authContext }) => {
   const [file, setFile] = useState(null)
 
   const { handleSubmit, register, errors, control, reset } = useForm({
-    resolver: yupResolver(AnnouncementFormSchema),
+    resolver: yupResolver(
+      authContext === 'admin' ? AnnouncementFormAdminSchema : AnnouncementFormSchema
+    ),
     defaultValues: { ...context.announcement }
   })
 
@@ -115,6 +117,12 @@ const AnnouncementUpdateForm = ({ authContext }) => {
                     className="hidden"
                     value={context?.announcement?.announcement_id}
                     name="announcement_id"
+                    ref={register}
+                  />
+                  <input
+                    className="hidden"
+                    value={context?.announcement?.address_id}
+                    name="address_id"
                     ref={register}
                   />
                   <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
