@@ -133,3 +133,7 @@ export const ApplicationFormSchema = yup.object().shape({
       }
     })
 })
+
+export const StatusFormSchema = yup.object().shape({
+  status: yup.string().required('*จำเป็นต้องกรอก สถานะ')
+})
