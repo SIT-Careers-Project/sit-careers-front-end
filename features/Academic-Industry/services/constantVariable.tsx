@@ -97,3 +97,10 @@ export const jobType = [
   { title: 'Full time' },
   { title: 'Work-integrated Learning (WiL)' }
 ]
+
+export const applicationStatus = [
+  { title: 'เรียกสัมภาษณ์' },
+  { title: 'รออนุมัติ' },
+  { title: 'เสร็จสิ้น' },
+  { title: 'ปฏิเสธการรับสมัคร' }
+]
