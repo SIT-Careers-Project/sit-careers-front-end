@@ -20,6 +20,10 @@ const apiUser = {
   createUserByManger: async (data) => {
     const response = await api.post('company/user', data)
     return response
+  },
+  deleteUserByAdmin: async (data) => {
+    const response = await api.delete('users', data)
+    return response
   }
 }
 
