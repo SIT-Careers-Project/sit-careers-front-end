@@ -110,23 +110,39 @@ const apiAcademic = {
     return response
   },
   getAnnouncementResumeByAdmin: async () => {
-    const response = await api.get(`academic-industry/admin/applications `)
+    const response = await api.get(`academic-industry/admin/applications`)
     return response
   },
   getAnnouncementResumeByCompany: async () => {
-    const response = await api.get(`academic-industry/company/applications `)
+    const response = await api.get(`academic-industry/company/applications`)
     return response
   },
   getAnnouncementResumeByStudent: async () => {
-    const response = await api.get(`academic-industry/student/applications `)
+    const response = await api.get(`academic-industry/student/applications`)
+    return response
+  },
+  getAnnouncementResumeById: async (announcement_resume_id) => {
+    const response = await api.get(`/academic-industry/admin/application/${announcement_resume_id}`)
+    return response
+  },
+  getAnnouncementResumeByIdForCompanyId: async (announcement_resume_id) => {
+    const response = await api.get(
+      `/academic-industry/company/application/${announcement_resume_id}`
+    )
+    return response
+  },
+  getAnnouncementResumeByIdForUserId: async (announcement_resume_id) => {
+    const response = await api.get(
+      `/academic-industry/student/application/${announcement_resume_id}`
+    )
     return response
   },
   createAnnouncementResume: async (data) => {
     const formData = new FormData()
     formData.append('announcement_id', data.announcement_id)
-    formData.append('note', data.note ? data.note : '-')
+    formData.append('note', '-')
     formData.append('resume_id', data.resume_id)
-    formData.append('status', data.status)
+    formData.append('status', 'รออนุมัติ')
 
     const response = await api.post('/academic-industry/application', formData, {
       headers: { 'Content-type': 'multipart/form-data' }
