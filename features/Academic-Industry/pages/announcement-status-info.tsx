@@ -29,7 +29,7 @@ const ApplicationInfo = ({ authContext }) => {
   const router = useRouter()
   const { announcement_resume_id } = router.query
 
-  const { register, reset, control, errors } = useForm({
+  const { handleSubmit, register, reset, control, errors } = useForm({
     resolver: yupResolver(StatusFormSchema),
     defaultValues: { ...context.application }
   })
@@ -41,12 +41,12 @@ const ApplicationInfo = ({ authContext }) => {
     if (authContext.roleUser === 'admin') {
       context.getAnnouncementResumeByIdForAdmin(announcement_resume_id).then(() => {
         setTimeout(() => reset({ ...context.application }), 400)
-        setTimeout(() => context.keyChange('renderDelay', false), 1000)
+        context.setCheckStatus(context?.application?.status)
       })
     } else if (authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') {
       context.getAnnouncementResumeByIdForCompanyId(announcement_resume_id).then(() => {
         setTimeout(() => reset({ ...context.application }), 400)
-        setTimeout(() => context.keyChange('renderDelay', false), 1000)
+        context.setCheckStatus(context?.application?.status)
       })
     } else if (authContext.roleUser === 'student') {
       context.getAnnouncementResumeByIdForUserId(announcement_resume_id).then(() => {
@@ -86,19 +86,23 @@ const ApplicationInfo = ({ authContext }) => {
                     error={!!errors?.status}
                     className="w-full font-prompt"
                     variant="outlined">
-                    <InputLabel htmlFor="status-select">สถานะ *</InputLabel>
+                    <InputLabel htmlFor="status-select" id="select-outlined-label">
+                      สถานะ *
+                    </InputLabel>
                     <Controller
                       control={control}
                       id="status-select"
                       name="status"
-                      render={(e) => (
+                      render={({ onChange, value }) => (
                         <Select
+                          id="select-outlined-label"
                           name="status"
-                          defaultValue={e.value}
+                          value={value ? value : ''}
                           onChange={(event) => {
                             if (typeof event.target.value === 'string') {
                               context.setCheckStatus(event.target.value)
                             }
+                            onChange(event)
                           }}>
                           {applicationStatus.map((status) => (
                             <MenuItem key={status.title} value={status.title}>
@@ -146,7 +150,7 @@ const ApplicationInfo = ({ authContext }) => {
                         คุณต้องการบันทึกสถานะของผู้สมัครหรือไม่
                       </span>
                     }
-                    onSubmit={() => console.log('waiting')}
+                    onSubmit={handleSubmit(context.updateAnnouncementResume)}
                   />
                 </div>
               </div>
