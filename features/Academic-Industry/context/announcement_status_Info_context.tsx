@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import apiService from '../services/apiAcademicIndustry'
 import { createContext } from 'react'
+import Router from 'next/router'
 
 export class AnnouncementStatusInfoContext {
   showModal
@@ -69,10 +70,11 @@ export class AnnouncementStatusInfoContext {
     }
   }
 
-  updateCompany = async (data) => {
+  updateAnnouncementResume = async (data) => {
     try {
       await apiService.updateAnnouncementResume(data).then(() => {
         this.modal.closeModal()
+        Router.push('/academic-industry/applications/history')
       })
     } catch (error) {
       console.log(error)

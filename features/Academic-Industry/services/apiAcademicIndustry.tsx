@@ -153,7 +153,7 @@ const apiAcademic = {
     const formData = new FormData()
     formData.append('announcement_resume_id', data.announcement_resume_id)
     formData.append('note', data.note ? data.note : '-')
-    formData.append('status', data.status ? data.status : '-')
+    formData.append('status', data.status)
     formData.append('_method', 'put')
 
     const response = await api.post('/academic-industry/application', formData, {
