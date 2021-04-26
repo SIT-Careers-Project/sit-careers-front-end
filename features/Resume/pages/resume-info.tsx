@@ -51,7 +51,7 @@ const ResumeInfo = () => {
       {() => (
         <>
           {!context.renderDelay && (
-            <div className="w-full h-full max-w-screen-lg pb-3">
+            <div className="w-full h-full max-w-screen-lg pb-8">
               <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-5">
                 <div className="px-12 pt-6">
                   <p className="font-semibold font-prompt text-heading-6 text-primary">
