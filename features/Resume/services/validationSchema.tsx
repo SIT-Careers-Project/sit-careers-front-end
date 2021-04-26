@@ -1,8 +1,6 @@
 import * as yup from 'yup'
-
 const FILE_SIZE = 5242880
-const SUPPORTED_FORMATS_RESUME = ['image/png', 'application/pdf']
-
+const SUPPORTED_FORMATS_RESUME = ['application/pdf']
 export const ResumeFormSchema = yup.object().shape({
   first_name: yup.string().required('*จำเป็นต้องกรอก ชื่อ'),
   last_name: yup.string().required('*จำเป็นต้องกรอก นามสกุล'),
@@ -12,6 +10,7 @@ export const ResumeFormSchema = yup.object().shape({
   email: yup.string().required('*จำเป็นต้องกรอก email'),
   resume_link: yup.string().required('*จำเป็นต้องกรอก resume link'),
   name_title: yup.string().required('*จำเป็นต้องกรอก คำนำหน้า'),
+  path_file: yup.string(),
   file_resume: yup
     .mixed()
     .notRequired()
@@ -23,7 +22,7 @@ export const ResumeFormSchema = yup.object().shape({
         return true
       }
     })
-    .test('fileFormat', 'ไฟล์ต้องเป็นนามสกุล .jpg .jpeg .gif และ .png', (value) => {
+    .test('fileFormat', 'ไฟล์ต้องเป็นนามสกุล .pdf', (value) => {
       if (value.length !== 0) {
         return value && SUPPORTED_FORMATS_RESUME.includes(value[0].type)
       } else {
