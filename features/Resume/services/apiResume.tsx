@@ -1,5 +1,4 @@
 import api from '../../../utils/api'
-
 const apiResume = {
   getResumeById: async (resume_id) => {
     const response = await api.get(`/academic-industry/resume/?resumes_id=${resume_id}`)
@@ -23,6 +22,7 @@ const apiResume = {
     formData.append('year', data.year)
     formData.append('tel_no', data.tel_no)
     formData.append('resume_link', data.resume_link)
+    formData.append('file_resume', data['file_resume'][0])
     formData.append('path_file', data.path_file ? data.path_file : '-')
     const response = await api.post('/academic-industry/resume', formData, {
       headers: { 'Content-type': 'multipart/form-data' }
@@ -40,7 +40,8 @@ const apiResume = {
     formData.append('year', data.year)
     formData.append('tel_no', data.tel_no)
     formData.append('resume_link', data.resume_link)
-    formData.append('path_file', data.path_file ? data.path_file : '-')
+    formData.append('file_resume', data['file_resume'][0])
+    formData.append('path_file', data.path_file)
     formData.append('_method', 'put')
     const response = await api.post('/academic-industry/resume', formData, {
       headers: { 'Content-type': 'multipart/form-data' }
@@ -52,5 +53,4 @@ const apiResume = {
     return response
   }
 }
-
 export default apiResume

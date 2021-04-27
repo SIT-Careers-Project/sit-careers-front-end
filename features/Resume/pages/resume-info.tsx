@@ -1,13 +1,17 @@
-import React, { useContext, useEffect } from 'react'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useContext, useEffect, useState } from 'react'
 import {
   TextField,
   InputLabel,
   FormControl,
   MenuItem,
   Select,
-  FormHelperText
+  FormHelperText,
+  Button
 } from '@material-ui/core'
+import { GetApp } from '@material-ui/icons'
 import { Observer } from 'mobx-react-lite'
+import getConfig from 'next/config'
 import { resumeInfoPageContext } from '../context/resume_info_page_context'
 import { modalContext } from '../../../core/contexts/modal_context'
 import { CoreModal } from '../../../core/components/Modal'
@@ -18,9 +22,13 @@ import { useRouter } from 'next/router'
 import { ResumeFormSchema } from '../services/validationSchema'
 import { nameTitle, curriculum, years } from '../services/constantVariable'
 
+const { publicRuntimeConfig } = getConfig()
+
 const ResumeInfo = () => {
   const context = useContext(resumeInfoPageContext)
   const coreModalContext = useContext(modalContext)
+  // eslint-disable-next-line no-unused-vars
+  const [file, setFile] = useState(null)
   const router = useRouter()
 
   const { handleSubmit, register, errors, control, reset } = useForm({
@@ -34,7 +42,7 @@ const ResumeInfo = () => {
       setTimeout(() => {
         reset({ ...context.resume })
       }, 400)
-      setTimeout(() => context.keyChange('renderDelay', false), 1000)
+      setTimeout(() => context.keyChange('renderDelay', false), 400)
     })
   }, [context, coreModalContext, router, reset])
 
@@ -43,15 +51,15 @@ const ResumeInfo = () => {
       {() => (
         <>
           {!context.renderDelay && (
-            <div className="w-full h-full max-w-screen-lg pb-3">
+            <div className="w-full h-full max-w-screen-lg pb-8">
               <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-5">
                 <div className="px-12 pt-6">
                   <p className="font-semibold font-prompt text-heading-6 text-primary">
                     โปรไฟล์สมัครงาน
                   </p>
                 </div>
-                <div className="grid w-full grid-cols-12 px-6 py-6">
-                  <div className="col-span-6">
+                <div className="grid w-full grid-cols-12 px-6 py-3">
+                  <div className="col-span-12">
                     <div className="flex flex-row justify-between px-6 py-3">
                       <input
                         className="hidden"
@@ -110,6 +118,8 @@ const ResumeInfo = () => {
                         />
                       </div>
                     </div>
+                  </div>
+                  <div className="col-span-12">
                     <div className="flex flex-row justify-between gap-5 px-6 py-3">
                       <div className="w-1/2">
                         <FormControl
@@ -158,8 +168,8 @@ const ResumeInfo = () => {
                         </FormControl>
                       </div>
                     </div>
-                    <div className="flex flex-row justify-between px-6 py-3">
-                      <div className="w-full">
+                    <div className="flex flex-row justify-between gap-5 px-6 py-3">
+                      <div className="w-1/2">
                         <TextField
                           label="เบอร์โทรศัพท์ *"
                           name="tel_no"
@@ -172,11 +182,7 @@ const ResumeInfo = () => {
                           fullWidth
                         />
                       </div>
-                    </div>
-                  </div>
-                  <div className="col-span-6 px-4">
-                    <div className="flex flex-row justify-between px-6 py-3">
-                      <div className="w-full">
+                      <div className="w-1/2">
                         <TextField
                           label="อีเมล *"
                           name="email"
@@ -190,6 +196,14 @@ const ResumeInfo = () => {
                         />
                       </div>
                     </div>
+                  </div>
+                  <div className="col-span-12">
+                    <div className="px-6 pt-6 py-3">
+                      <p className="font-semibold font-prompt text-heading-6 text-primary">
+                        อัพโหลดผลงาน
+                      </p>
+                    </div>
+
                     <div className="flex flex-row justify-between px-6 py-3">
                       <div className="w-full">
                         <TextField
@@ -206,11 +220,48 @@ const ResumeInfo = () => {
                       </div>
                     </div>
                     <div className="w-full col-span-7 px-6 py-3">
-                      <label htmlFor="upload-photo">
-                        <p className="mb-3 mr-40 font-prompt-medium text-body-1">อัพโหลดผลงาน</p>
-                        <input name="file_resume" type="file" ref={register} />
-                        <input name="path_file" className="hidden" ref={register} />
-                      </label>
+                      <div className="flex flex-row">
+                        {!(
+                          context?.resume?.path_file === undefined ||
+                          context?.resume?.path_file === '-'
+                        ) && (
+                          <div className="pr-5">
+                            <a
+                              href={`${publicRuntimeConfig.s3_url}/resume/${context?.resume?.path_file}`}
+                              target="_self"
+                              id="path_file"
+                              download
+                              onClick={() => {
+                                const link = document.getElementById('path_file')
+                                link.setAttribute(
+                                  'download',
+                                  `${publicRuntimeConfig.s3_url}/resume/${context?.resume?.path_file}`
+                                )
+                              }}>
+                              <Button variant="contained" color="primary">
+                                <GetApp />
+                                ดาวน์โหลดผลงาน
+                              </Button>
+                            </a>
+                          </div>
+                        )}
+                        <Button variant="contained" component="label">
+                          Upload File
+                          <input
+                            id="file_resume"
+                            name="file_resume"
+                            type="file"
+                            style={{ display: 'none' }}
+                            ref={register}
+                            onChange={(event) => {
+                              setFile(URL.createObjectURL(event.target.files[0]))
+                              context.keyChange('fileName', event.target.value)
+                            }}
+                          />
+                          <input name="path_file" className="hidden" ref={register} />
+                        </Button>
+                        <span className="pl-5 pt-2">{context.fileName}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -220,8 +271,8 @@ const ResumeInfo = () => {
                       {!context.resume && (
                         <div>
                           <div
-                            className="flex justify-end grid-cols-12 px-6 my-6 gap-x-8"
-                            id="button-application">
+                            className="flex justify-end grid-cols-12 px-12 my-6 gap-x-8"
+                            id="button-create-resume">
                             <PrimaryButton
                               onClick={coreModalContext.openModal}
                               className="ml-10 shadow-md lg:w-2/6 btn-grad">
@@ -245,11 +296,11 @@ const ResumeInfo = () => {
                       {context.resume && (
                         <div>
                           <div
-                            className="flex justify-end grid-cols-12 px-16 mb-5"
+                            className="flex justify-end grid-cols-12 px-12 my-6 gap-x-8"
                             id="button-application">
                             <PrimaryButton
                               onClick={coreModalContext.openModal}
-                              className="ml-10 shadow-md lg:w-1/6 btn-grad">
+                              className="ml-10 shadow-md lg:w-2/6 btn-grad">
                               <p className="px-4 py-3 text-white font-prompt text-subtitle-1">
                                 บันทึกโปรไฟล์
                               </p>

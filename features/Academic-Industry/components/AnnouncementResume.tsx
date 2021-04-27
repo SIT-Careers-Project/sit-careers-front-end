@@ -1,5 +1,8 @@
 import React from 'react'
-import { Business, CheckBox, Event } from '@material-ui/icons'
+import { Business, CheckBox, Event, Launch } from '@material-ui/icons'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
 
 const AnnouncementResumeInfo = (props) => {
   const { data, register, applicationDate } = props
@@ -70,9 +73,24 @@ const AnnouncementResumeInfo = (props) => {
               <p className="col-span-1">อีเมล:</p>
               <p className="col-span-3 "> {data.email}</p>
             </div>
-            <div className="flex flex-row grid grid-cols-6">
+            <div className="flex flex-row pb-3 grid grid-cols-6">
               <p className="col-span-1">Link ผลงาน:</p>
               <p className="col-span-3 "> {data.resume_link}</p>
+            </div>
+            <div className="flex flex-row grid grid-cols-6">
+              <p className="col-span-1">ไฟล์ผลงาน:</p>
+              <div className="col-span-3">
+                {!(data.path_file === undefined || data.path_file === '-') && (
+                  <div>
+                    <a href={`${publicRuntimeConfig.s3_url}/resume/${data.path_file}`}>
+                      <div className="cursor-pointer hover:underline text-secondary1">
+                        ดาวน์โหลดผลงาน
+                        <Launch style={{ fontSize: 'medium' }} className="ml-1 mb-1" />
+                      </div>
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
