@@ -29,10 +29,16 @@ module.exports = {
       'grey-200': '#F3F3F3',
       white: '#ffffff',
       black: '#000000',
+      'red-light': '#FCE7E7',
       red: '#EB5757',
+      'red-dark-1': '#E53935',
+      'red-dark': '#C62828',
       grey4: '#E0E0E0',
       grey1: '#FBFCFB',
-      green2: '#27AE60'
+      green1:'#ECF9F3',
+      green2: '#27AE60',
+      green3: '#00C853',
+      green4: '#5CB660',
     },
     fontSize: {
       'heading-1': '96px',
