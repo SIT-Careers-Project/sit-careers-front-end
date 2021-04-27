@@ -5,6 +5,7 @@ import { createContext } from 'react'
 
 export class CompanyTablePageContext {
   companies
+  alert
 
   constructor() {
     makeObservable(this, {
@@ -13,12 +14,22 @@ export class CompanyTablePageContext {
     })
   }
 
+  changeKey = (key, value) => {
+    this[key] = value
+  }
+
   getCompaniesByAdmin = async () => {
     try {
       const response = await apiService.getAllCompaniesByAdmin()
       this.companies = response.data
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดึงข้อมูลได้',
+        'error',
+        'error',
+        true
+      )
     }
   }
 
@@ -28,6 +39,12 @@ export class CompanyTablePageContext {
       this.companies = response.data
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดึงข้อมูลได้',
+        'error',
+        'error',
+        true
+      )
     }
   }
 
@@ -37,6 +54,12 @@ export class CompanyTablePageContext {
       this.companies = response.data
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดึงข้อมูลได้',
+        'error',
+        'error',
+        true
+      )
     }
   }
 }
