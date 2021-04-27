@@ -7,6 +7,8 @@ import _ from 'lodash'
 
 export class UserInfoPageContext {
   modal
+  alert
+
   users
   roles
   userDelete
@@ -18,6 +20,7 @@ export class UserInfoPageContext {
   modalDelete
 
   constructor() {
+    this.alert = ''
     this.modal = ''
     this.modalDelete = false
     this.selectRoleName = ''
@@ -63,8 +66,15 @@ export class UserInfoPageContext {
         this.getUserByAdmin()
         this.modal.closeModal()
       })
+      this.alert.setAlert('เพิ่มผู้ใช้งานสำเร็จ', 'success', 'success', true)
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้',
+        'error',
+        'error',
+        true
+      )
     }
   }
 
@@ -74,8 +84,15 @@ export class UserInfoPageContext {
         this.getUserByCompany()
         this.modal.closeModal()
       })
+      this.alert.setAlert('เพิ่มผู้ใช้งานสำเร็จ', 'success', 'success', true)
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้',
+        'error',
+        'error',
+        true
+      )
     }
   }
 
@@ -88,6 +105,12 @@ export class UserInfoPageContext {
       })
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดึงข้อมูลได้',
+        'error',
+        'error',
+        true
+      )
     }
   }
 
@@ -98,6 +121,12 @@ export class UserInfoPageContext {
       })
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดึงข้อมูลได้',
+        'error',
+        'error',
+        true
+      )
     }
   }
 
@@ -109,8 +138,16 @@ export class UserInfoPageContext {
         this.users = response.data
         this.modal.closeModal()
       })
+      this.alert.setAlert('ลบผู้ใช้สำเร็จ', 'success', 'info', true)
+      this.disableTrashButton = true
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่ลบผู้ประสานงานได้',
+        'error',
+        'error',
+        true
+      )
     }
   }
 }
