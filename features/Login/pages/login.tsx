@@ -4,10 +4,12 @@ import { useForm } from 'react-hook-form'
 import { LoginFormSchema } from '../services/validationSchema'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { AuthContext } from '../../../core/contexts/auth_context'
+import { Alert } from 'core/components/Alert'
 import { Observer } from 'mobx-react-lite'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import getConfig from 'next/config'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const { publicRuntimeConfig } = getConfig()
 export const Login = () => {
@@ -15,14 +17,16 @@ export const Login = () => {
     resolver: yupResolver(LoginFormSchema)
   })
   const context = useContext(AuthContext)
+  const alertContext = useContext(AlertContext)
   const router = useRouter()
 
   useEffect(() => {
+    context.changeKey('alert', alertContext)
     context.fetchMe()
     if (context.isLoggedIn) {
       router.push('/')
     }
-  }, [context, router])
+  }, [alertContext, context, router])
 
   const handlerLogin = () => {
     const { SIT_SSO_URL, SIT_SSO_STATE, SIT_SSO_REDIRECT, SIT_SSO_CLIENT_ID } = publicRuntimeConfig
@@ -32,7 +36,8 @@ export const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <Card style={{ width: '410px' }}>
+      <Alert />
+      <Card style={{ width: '410px', marginTop: '16px' }}>
         <div className="p-10">
           <p className="font-semibold text-center text-heading-6 font-prompt">Sign In</p>
           <Observer>
