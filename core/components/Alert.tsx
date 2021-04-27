@@ -16,7 +16,7 @@ export const Alert = () => {
         <>
           {_.map(context.alert, (data, i) => {
             return (
-              <div className="w-full max-w-screen-lg">
+              <div className="w-full max-w-screen-lg m-2">
                 <Collapse key={i} in={data.isOpen}>
                   <AlertMaterial
                     icon={
@@ -33,6 +33,7 @@ export const Alert = () => {
                         aria-label="close"
                         color="inherit"
                         size="small"
+                        className="focus:outline-none"
                         onClick={() => {
                           data.isOpen = false
                         }}>
