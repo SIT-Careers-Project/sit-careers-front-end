@@ -3,7 +3,7 @@ import api from '../../../utils/api'
 const apiAcademic = {
   getAnnouncementById: async (announcement_id) => {
     const response = await api.get(
-      `/academic-industry/announcement?announcement_id=${announcement_id}`
+      `/academic-industry/announcement/${announcement_id}`
     )
     return response
   },
