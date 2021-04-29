@@ -1,7 +1,5 @@
-import { Business, FileCopy, QueryBuilder } from '@material-ui/icons'
-import { Dialog, DialogActions, Card as MaterialCard, Typography } from '@material-ui/core'
-
-import { Observer } from 'mobx-react-lite'
+import { Business, QueryBuilder } from '@material-ui/icons'
+import { Card as MaterialCard, Typography } from '@material-ui/core'
 import React from 'react'
 import getConfig from 'next/config'
 import Link from 'next/link'
@@ -17,7 +15,6 @@ interface AnnouncementProps {
   company?: string
   linkPath?: string
   status?: string
-  context
 }
 
 export const Announcement = ({
@@ -28,7 +25,6 @@ export const Announcement = ({
   title,
   date,
   company,
-  context,
   linkPath
 }: AnnouncementProps) => (
   <>
@@ -80,37 +76,6 @@ export const Announcement = ({
           <span className="mt-2 text-subtitle-2">{date}</span>
         </div>
       </div>
-      <Observer>
-        {() => (
-          <>
-            <div className="col-span-1 pt-8 pl-5" id="button-application">
-              <FileCopy color="action" className="cursor-pointer" onClick={context.handleModal} />
-            </div>
-            <Dialog open={context.showModal} onClose={context.handleCloseModal} maxWidth={'xs'}>
-              <div className="p-4 text-left">
-                <p className="mb-3 mr-40 font-prompt-medium text-heading-6">
-                  สร้างประกาศใหม่อีกครั้ง
-                </p>
-                <span className="mb-5 font-prompt text-subtitle-1">
-                  คุณต้องการสร้างประกาศรับสมัครชื่อ
-                </span>
-                <span className="mb-5 font-prompt text-subtitle-1 text-primary">
-                  {` ประกาศรับสมัคร Software Engineer 2 อัตรา `}
-                </span>
-                <span className="mb-5 font-prompt text-subtitle-1">อีกครั้งใช่หรือไม่</span>
-                <DialogActions className="mt-4">
-                  <button onClick={context.handleCloseModal} className="text-secondary2">
-                    <p className="px-5 py-2 font-prompt">ยกเลิก</p>
-                  </button>
-                  <button className="text-white bg-primary">
-                    <p className="px-5 py-2 font-prompt">สร้าง</p>
-                  </button>
-                </DialogActions>
-              </div>
-            </Dialog>
-          </>
-        )}
-      </Observer>
     </MaterialCard>
   </>
 )
