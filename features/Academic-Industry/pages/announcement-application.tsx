@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Card as MaterialCard, CardMedia } from '@material-ui/core'
-import { InfoOutlined } from '@material-ui/icons'
+import { InfoOutlined, Launch } from '@material-ui/icons'
 import { Observer } from 'mobx-react-lite'
 import { announcementApplicationFormContext } from '../context/announcement_application_page_context'
 import { modalContext } from '../../../core/contexts/modal_context'
@@ -9,6 +9,9 @@ import PrimaryButton from '../../../core/components/Button/Primary'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
 
 const ApplicationInfo = () => {
   const context = useContext(announcementApplicationFormContext)
@@ -127,6 +130,25 @@ const ApplicationInfo = () => {
                       <div className="flex flex-row pb-3 grid grid-cols-4">
                         <p className="col-span-1">Link ผลงาน:</p>
                         <p className="col-span-3 "> {context?.resume?.resume_link}</p>
+                      </div>
+                      <div className="flex flex-row pb-3 grid grid-cols-4 text">
+                        <p className="col-span-1">ไฟล์ผลงาน:</p>
+                        <div className="col-span-3 ">
+                          {!(
+                            context?.resume?.path_file === undefined ||
+                            context?.resume?.path_file === '-'
+                          ) && (
+                            <div>
+                              <a
+                                href={`${publicRuntimeConfig.s3_url}/resume/${context?.resume?.path_file}`}>
+                                <div className="cursor-pointer hover:underline text-secondary1">
+                                  ดาวน์โหลดผลงาน
+                                  <Launch style={{ fontSize: 'medium' }} className="ml-1 mb-1" />
+                                </div>
+                              </a>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                     <Observer>

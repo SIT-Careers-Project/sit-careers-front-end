@@ -1,19 +1,18 @@
 import { makeAutoObservable } from 'mobx'
-
 import { createContext } from 'react'
 import apiResume from '../services/apiResume'
 import Router from 'next/router'
-
 export class ResumeInfoPageContext {
   modal
   resume
+  fileName
   renderDelay
 
   constructor() {
     this.modal = ''
     this.resume = ''
+    this.fileName = 'No file chosen'
     this.renderDelay = true
-
     makeAutoObservable(this)
   }
 
@@ -25,6 +24,7 @@ export class ResumeInfoPageContext {
     try {
       const response = await apiResume.getResumeById(resumeId)
       this.resume = response.data
+      this.fileName = 'No file chosen'
     } catch (error) {
       console.log(error)
     }
@@ -34,6 +34,7 @@ export class ResumeInfoPageContext {
     try {
       const response = await apiResume.getResumeByUserId()
       this.resume = response.data[0]
+      this.fileName = 'No file chosen'
     } catch (error) {
       console.log(error)
     }
@@ -42,6 +43,7 @@ export class ResumeInfoPageContext {
   updateResume = async (data) => {
     try {
       await apiResume.updateResume(data).then(() => {
+        this.fileName = 'No file chosen'
         this.modal.closeModal()
         Router.reload()
       })
@@ -53,6 +55,7 @@ export class ResumeInfoPageContext {
   createResume = async (data) => {
     try {
       await apiResume.createResume(data).then(() => {
+        this.fileName = 'No file chosen'
         this.modal.closeModal()
         Router.reload()
       })
@@ -61,5 +64,4 @@ export class ResumeInfoPageContext {
     }
   }
 }
-
 export const resumeInfoPageContext = createContext(new ResumeInfoPageContext())
