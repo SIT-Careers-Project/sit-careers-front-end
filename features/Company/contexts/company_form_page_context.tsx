@@ -1,11 +1,10 @@
 import { action, makeObservable, observable } from 'mobx'
-
-import Router from 'next/router'
 import apiService from '../services/apiCompany'
 import { createContext } from 'react'
 
 export class CompanyFormPageContext {
   companies
+  alert
   formCompany
   modal
   modalDisable
@@ -15,8 +14,10 @@ export class CompanyFormPageContext {
       getCompanies: action,
       createCompany: action,
       formCompany: observable,
+      alert: observable,
       modalDisable: observable
     })
+    this.alert = ''
     this.modalDisable = false
   }
 
@@ -30,6 +31,12 @@ export class CompanyFormPageContext {
       this.companies = response
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดึงข้อมูลได้',
+        'error',
+        'error',
+        true
+      )
     }
   }
 
@@ -38,10 +45,25 @@ export class CompanyFormPageContext {
       await apiService.createCompany(data).then(() => {
         this.modalDisable = true
         this.modal.closeModal()
-        Router.push('/company/company-table')
+        this.alert.setAlert('บันทึกข้อมูลสำเร็จ', 'success', 'success', true)
       })
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถบันทึกข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 }

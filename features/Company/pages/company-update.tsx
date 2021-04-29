@@ -17,12 +17,14 @@ import ContractInfoForm from '../components/FormCreate/contract-info'
 import LocationInfoForm from '../components/FormCreate/location-info'
 import CompanyDateInfoForm from '../components/FormCreate/company-date-info'
 import MouInfoForm from '../components/FormCreate/mou-info'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const { publicRuntimeConfig } = getConfig()
 
 const CompanyForm = ({ authContext }) => {
   const context = useContext(companyUpdatePageContext)
   const coreModalContext = useContext(modalContext)
+  const alertContext = useContext(AlertContext)
 
   const router = useRouter()
   const { company_id } = router.query
@@ -36,11 +38,12 @@ const CompanyForm = ({ authContext }) => {
 
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
+    context.keyChange('alert', alertContext)
     context.getCompany(company_id).then(() => {
       setTimeout(() => reset({ ...context.company }), 400)
       setTimeout(() => setRenderDelay(false), 1000)
     })
-  }, [company_id, context, coreModalContext, reset])
+  }, [alertContext, company_id, context, coreModalContext, reset])
 
   return (
     <>
