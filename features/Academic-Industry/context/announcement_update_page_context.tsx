@@ -12,11 +12,13 @@ export class AnnouncementUpdatePageContext {
   modal
   autoCompleteCompany
   jobPositions
-
+  showCloseButton
   renderDelay
+  modalCloseAnnouncement
 
   startDate
   endDate
+  closeDate
 
   constructor() {
     makeObservable(this, {
@@ -25,9 +27,12 @@ export class AnnouncementUpdatePageContext {
       autoCompleteCompany: observable,
       showModal: observable,
       announcement: observable,
+      showCloseButton: observable,
       startDate: observable,
       endDate: observable,
       renderDelay: observable,
+      modalCloseAnnouncement: observable,
+      closeDate: observable,
       getAutoCompleteCompanies: action,
       getAutoCompleteJobPositions: action
     })
@@ -36,11 +41,19 @@ export class AnnouncementUpdatePageContext {
     this.autoCompleteCompany = []
     this.endDate = ''
     this.startDate = ''
+    this.closeDate = ''
     this.renderDelay = true
+    this.showCloseButton = true
+    this.modalCloseAnnouncement = false
   }
 
   keyChange = (key, value) => {
     this[key] = value
+  }
+
+  handlerModal = (isAnnouncementModal, openModal) => {
+    openModal()
+    this.modalCloseAnnouncement = isAnnouncementModal
   }
 
   getAnnouncement = async (announcement_id) => {
