@@ -68,7 +68,6 @@ const AnnouncementUpdateForm = ({ authContext }) => {
                 onSubmit={handleSubmit(context.updateAnnouncement)}
                 showCloseButton={context.showCloseButton}
                 register={register}
-                control={control}
                 errors={errors}
                 startDate={context.startDate}
                 changeStartDate={(event) => {
