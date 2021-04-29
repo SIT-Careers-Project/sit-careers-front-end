@@ -50,7 +50,7 @@ export class authContext {
         )
       } else {
         this.alert.setAlert(
-          `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.data?.status}`,
+          `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.status}`,
           'error',
           'error',
           true
@@ -72,7 +72,7 @@ export class authContext {
       }
     } catch (error) {
       this.alert.setAlert(
-        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.data?.status}`,
+        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.status}`,
         'error',
         'error',
         true
@@ -103,7 +103,7 @@ export class authContext {
     } catch (error) {
       console.log(error)
       this.alert.setAlert(
-        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.data?.status}`,
+        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.status}`,
         'error',
         'error',
         true
@@ -124,7 +124,7 @@ export class authContext {
     } catch (error) {
       console.log(error)
       this.alert.setAlert(
-        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.data?.status}`,
+        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.status}`,
         'error',
         'error',
         true
@@ -142,7 +142,7 @@ export class authContext {
     } catch (error) {
       console.log(error)
       this.alert.setAlert(
-        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.data?.status}`,
+        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.status}`,
         'error',
         'error',
         true
