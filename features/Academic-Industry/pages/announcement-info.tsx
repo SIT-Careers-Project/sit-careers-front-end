@@ -7,14 +7,12 @@ import { checkStatus } from '../../../core/services/utils'
 import dayjs from 'dayjs'
 import Pagination from '../../../core/components/Pagination'
 import Search from '../../../core/components/Search'
-import { announcementDuplicateFormContext } from '../context/announcement_duplicate_form_context'
 import { announcementInfoContext } from '../context/announcement_info_context'
 import { searchContext } from '../../../core/contexts/search_context'
 import { useObserver } from 'mobx-react-lite'
 import { paginationContext } from '../../../core/contexts/pagination_context'
 
 const AnnouncementInfo = ({ authContext }) => {
-  const context = useContext(announcementDuplicateFormContext)
   const contextInfo = useContext(announcementInfoContext)
   const contextSearch = useContext(searchContext)
   const contextPagination = useContext(paginationContext)
@@ -89,7 +87,6 @@ const AnnouncementInfo = ({ authContext }) => {
                       date={`${startDate} - ${endDate}`}
                       company={`${data.company_name_th} - ${data.company_name_en}`}
                       srcImg={data.logo}
-                      context={context}
                       linkPath={`/academic-industry/update/${data.announcement_id}`}
                     />
                   </div>
