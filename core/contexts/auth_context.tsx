@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import { apiAuth } from '../services/apiAuth'
 import { createContext } from 'react'
 import Cookies from 'js-cookie'
@@ -35,9 +35,11 @@ export class authContext {
       const response = await apiAuth.login(data)
       if (response?.status === 200) {
         Cookies.set('token', response.data.token)
-        this.isLoggedIn = true
-        this.permission = response.data.permissions
-        this.roleUser = response.data.user.role_name
+        runInAction(() => {
+          this.isLoggedIn = true
+          this.permission = response.data.permissions
+          this.roleUser = response.data.user.role_name
+        })
         Router.prototype.push('/')
       }
     } catch (error) {
@@ -65,9 +67,11 @@ export class authContext {
       if (Cookies.get('token')) {
         const response = await apiAuth.me()
         if (response?.status === 200) {
-          this.isLoggedIn = true
-          this.permission = response.data.permissions
-          this.roleUser = response.data.user.role_name
+          runInAction(() => {
+            this.isLoggedIn = true
+            this.permission = response.data.permissions
+            this.roleUser = response.data.user.role_name
+          })
         }
       }
     } catch (error) {
@@ -94,9 +98,11 @@ export class authContext {
         const response = await apiAuth.SITLogin(code, state)
         if (response?.status === 200) {
           Cookies.set('token', response.data.token)
-          this.permission = response.data.permissions
-          this.roleUser = response.data.user.role_name
-          this.isLoggedIn = true
+          runInAction(() => {
+            this.permission = response.data.permissions
+            this.roleUser = response.data.user.role_name
+            this.isLoggedIn = true
+          })
           Router.prototype.push('/')
         }
       }
