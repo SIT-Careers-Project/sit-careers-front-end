@@ -48,8 +48,10 @@ const AnnouncementUpdateForm = ({ authContext }) => {
         reset({ ...context.announcement })
         const startDate = dayjs(context.announcement.start_date).format('YYYY-MM-DDThh:mm')
         const endDate = dayjs(context.announcement.end_date).format('YYYY-MM-DDThh:mm')
+        const closeDate = dayjs().format('YYYY-MM-DDThh:mm')
         context.keyChange('startDate', startDate)
         context.keyChange('endDate', endDate)
+        context.keyChange('closeDate', closeDate)
       }, 400)
       setTimeout(() => context.keyChange('renderDelay', false), 1000)
     })
@@ -62,6 +64,9 @@ const AnnouncementUpdateForm = ({ authContext }) => {
           {!context.renderDelay && (
             <div className="w-full h-full max-w-screen-lg">
               <AnnouncementDateInfoForm
+                openModal={() => context.handlerModal(true, coreModalContext.openModal)}
+                onSubmit={handleSubmit(context.updateAnnouncement)}
+                showCloseButton={context.showCloseButton}
                 register={register}
                 errors={errors}
                 startDate={context.startDate}
@@ -72,6 +77,7 @@ const AnnouncementUpdateForm = ({ authContext }) => {
                 changeEndDate={(event) => {
                   context.keyChange('endDate', event.target.value)
                 }}
+                closeAnnouncement={() => context.keyChange('endDate', context.closeDate)}
               />
               <div>
                 <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
@@ -142,22 +148,24 @@ const AnnouncementUpdateForm = ({ authContext }) => {
                 </div>
                 <div className="flex justify-end grid-cols-12 my-6 gap-x-8">
                   <PrimaryButton
-                    onClick={coreModalContext.openModal}
+                    onClick={() => context.handlerModal(false, coreModalContext.openModal)}
                     className="py-4 lg:w-1/4"
                     title="ค้นหา">
                     <p className="text-white font-prompt text-subtitle-1">บันทึก</p>
                   </PrimaryButton>
                 </div>
-                <CoreModal
-                  buttonSubmit="บันทึก"
-                  title="บันทึกข้อมูลประกาศรับสมัคร"
-                  content={
-                    <span className="mb-5 font-prompt text-subtitle-1">
-                      คุณต้องการบันทึกข้อมูลประกาศรับสมัครหรือไม่
-                    </span>
-                  }
-                  onSubmit={handleSubmit(context.updateAnnouncement)}
-                />
+                {!context.modalCloseAnnouncement && coreModalContext.isOpen && (
+                  <CoreModal
+                    buttonSubmit="บันทึก"
+                    title="บันทึกข้อมูลประกาศรับสมัคร"
+                    content={
+                      <span className="mb-5 font-prompt text-subtitle-1">
+                        คุณต้องการบันทึกข้อมูลประกาศรับสมัครหรือไม่
+                      </span>
+                    }
+                    onSubmit={handleSubmit(context.updateAnnouncement)}
+                  />
+                )}
               </div>
             </div>
           )}

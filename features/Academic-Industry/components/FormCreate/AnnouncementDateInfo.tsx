@@ -1,8 +1,23 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { TextField } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { CoreModal } from '../../../../core/components/Modal'
 
 const AnnouncementDateInfoForm = (props) => {
-  const { errors, register, startDate, endDate, changeStartDate, changeEndDate } = props
+  const {
+    errors,
+    register,
+    startDate,
+    endDate,
+    closeAnnouncement,
+    changeStartDate,
+    changeEndDate,
+    showCloseButton,
+    onSubmit,
+    openModal
+  } = props
+
+  useEffect(() => {}, [startDate, endDate])
 
   return (
     <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
@@ -47,11 +62,34 @@ const AnnouncementDateInfoForm = (props) => {
             helperText={errors.end_date?.message}
           />
         </div>
-        <div className="flex justify-end w-2/4 grid-cols-12">
-          <button className="text-white bg-red">
-            <p className="px-5 text-white font-prompt text-subtitle-1">ปิดรับสมัคร</p>
-          </button>
-        </div>
+        {showCloseButton && (
+          <>
+            <div className="flex justify-end w-2/4 grid-cols-12">
+              <button
+                className="text-white bg-red"
+                onClick={() => {
+                  openModal()
+                  closeAnnouncement()
+                }}>
+                <p className="px-5 text-white font-prompt text-subtitle-1">ปิดรับสมัคร</p>
+              </button>
+            </div>
+            {openModal && (
+              <CoreModal
+                buttonSubmit="ปิดรับสมัคร"
+                title="ปิดรับสมัคร"
+                content={
+                  <>
+                    <span className="mb-5 font-prompt text-subtitle-1">
+                      คุณต้องการปิดรับสมัครหรือไม่
+                    </span>
+                  </>
+                }
+                onSubmit={onSubmit}
+              />
+            )}
+          </>
+        )}
       </div>
     </div>
   )
