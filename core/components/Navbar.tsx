@@ -1,19 +1,25 @@
 import { Fade, Menu, MenuItem } from '@material-ui/core'
 import React, { useContext, useEffect } from 'react'
-import { AccountCircle as AccountCircleIcon, ExitToApp } from '@material-ui/icons'
+import { AccountCircle as AccountCircleIcon, ExitToApp, Notifications } from '@material-ui/icons'
 import Link from 'next/link'
 import { navbarContext } from '../contexts/navbar_context'
 import { Observer } from 'mobx-react-lite'
 import { useRouter } from 'next/router'
 import _ from 'lodash'
 import { dropdownLinkAdmin, navLink } from '../config/menuItem'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 
 export default function Navbar({ authContext }) {
   const router = useRouter()
   const context = useContext(navbarContext)
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  useEffect(() => {}, [authContext, authContext.permission, context])
+  useEffect(() => {
+    context.getNotifications()
+  }, [authContext, authContext.permission, context])
 
   return (
     <Observer>
@@ -74,15 +80,71 @@ export default function Navbar({ authContext }) {
                   )}
                 </ul>
                 <div>
-                  <div className="flex flex-row items-center justify-end w-full h-full cursor-pointer">
+                  <div className="relative flex flex-row items-center justify-end w-full h-full cursor-pointer">
+                    {authContext.isLoggedIn && (
+                      <div className="absolute w-10 h-full mt-2 mr-10">
+                        <Notifications
+                          onClick={(e) => {
+                            context.handleClick('showNotification', e)
+                          }}
+                          fontSize="large"
+                          className="absolute text-white cursor-pointer"
+                        />
+                        {_.filter(context.notifications, ['read_at', null]).length > 0 && (
+                          <div className="absolute z-50 flex items-center justify-center w-4 h-4 ml-4 text-white rounded-full bg-red" />
+                        )}
+                      </div>
+                    )}
                     <AccountCircleIcon
                       aria-controls="fade-menu"
                       aria-haspopup="true"
-                      onClick={context.handleClick}
+                      onClick={(e) => context.handleClick('anchorEl', e)}
                       style={{ color: '#ffffff', fontSize: '40px' }}
                     />
                   </div>
-                  <div className="">
+                  <div>
+                    <Menu
+                      id="fade-menu"
+                      className="mt-10"
+                      style={{ width: '550px' }}
+                      anchorEl={context.showNotification}
+                      keepMounted
+                      TransitionComponent={Fade}
+                      open={context.showNotification}
+                      onClose={() => context.handleClose('showNotification')}>
+                      <p className="ml-2 text-body-2 font-prompt-semibold">การแจ้งเตือน</p>
+                      <hr className="opacity-25 bg-secondary2" />
+                      {_.map(context.notifications, (data, i) => {
+                        return (
+                          <div
+                            style={{ width: '400px' }}
+                            className={`flex h-24 px-4 border-opacity-25 border-b-DEFAULT border-secondary2 ${
+                              !data.read_at ? 'bg-white' : 'bg-grey-300'
+                            } cursor-pointer`}>
+                            <div
+                              className={`w-2 h-2 pl-1 pb-1 pr-1 mt-4 rounded-full ${
+                                !data.read_at ? 'bg-red' : 'bg-red opacity-25'
+                              }`}
+                            />
+                            <button
+                              key={i}
+                              onClick={() => context.updateReadAt(data)}
+                              className="flex flex-col items-center justify-between h-full pt-2 focus:outline-none">
+                              <div
+                                style={{ wordWrap: 'break-word' }}
+                                className="flex flex-col items-end justify-between h-full ml-3">
+                                <span className="text-left font-prompt-light text-body-2">
+                                  {data?.message}
+                                </span>
+                                <p className="text-black opacity-50 font-prompt text-body-2">
+                                  {dayjs(data?.created_at).locale('th').fromNow()}
+                                </p>
+                              </div>
+                            </button>
+                          </div>
+                        )
+                      })}
+                    </Menu>
                     <Menu
                       id="fade-menu"
                       className="w-3/4 mt-10"
@@ -90,9 +152,9 @@ export default function Navbar({ authContext }) {
                       keepMounted
                       TransitionComponent={Fade}
                       open={Boolean(context.anchorEl)}
-                      onClose={context.handleClose}>
+                      onClose={() => context.handleClose('anchorEl')}>
                       {authContext.isLoggedIn ? (
-                        <>
+                        <div>
                           {_.map(dropdownLinkAdmin, (data, j) => {
                             const checkPermissionRender = _.find(authContext.permission, (item) =>
                               _.includes(data.permission, item.permission_name)
@@ -116,14 +178,14 @@ export default function Navbar({ authContext }) {
                           })}
                           <MenuItem
                             onClick={() => {
-                              context.handleClose()
+                              context.handleClose('anchorEl')
                               authContext.logout()
                             }}>
                             <span className="font-prompt-light text-body-2 text-red">
                               <ExitToApp /> Logout
                             </span>
                           </MenuItem>
-                        </>
+                        </div>
                       ) : (
                         <Link href="/login">
                           <MenuItem onClick={context.handleClose}>
