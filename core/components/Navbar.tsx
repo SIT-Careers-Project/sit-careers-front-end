@@ -82,18 +82,17 @@ export default function Navbar({ authContext }) {
                 <div>
                   <div className="relative flex flex-row items-center justify-end w-full h-full cursor-pointer">
                     {authContext.isLoggedIn && (
-                      <div className="absolute w-10 h-full mt-2 mr-10">
+                      <button
+                        onClick={(e) => context.handleClick('showNotification', e)}
+                        className="absolute top-0 w-10 h-full mt-1 mr-16 focus:outline-none">
                         <Notifications
-                          onClick={(e) => {
-                            context.handleClick('showNotification', e)
-                          }}
                           fontSize="large"
-                          className="absolute text-white cursor-pointer"
+                          className="absolute top-0 text-white cursor-pointer"
                         />
                         {_.filter(context.notifications, ['read_at', null]).length > 0 && (
-                          <div className="absolute z-50 flex items-center justify-center w-4 h-4 ml-4 text-white rounded-full bg-red" />
+                          <div className="absolute top-0 z-50 flex items-center justify-center w-4 h-4 ml-10 text-white rounded-full bg-red" />
                         )}
-                      </div>
+                      </button>
                     )}
                     <AccountCircleIcon
                       aria-controls="fade-menu"
@@ -112,38 +111,50 @@ export default function Navbar({ authContext }) {
                       TransitionComponent={Fade}
                       open={context.showNotification}
                       onClose={() => context.handleClose('showNotification')}>
-                      <p className="ml-2 text-body-2 font-prompt-semibold">การแจ้งเตือน</p>
-                      <hr className="opacity-25 bg-secondary2" />
-                      {_.map(context.notifications, (data, i) => {
-                        return (
+                      <div
+                        id="scrollbar-custom"
+                        style={{ height: '300px' }}
+                        className="w-full overflow-y-auto">
+                        <p className="ml-2 text-body-2 font-prompt-semibold">การแจ้งเตือน</p>
+                        <hr className="opacity-25 bg-secondary2" />
+                        {context.notifications.length === 0 && (
                           <div
-                            style={{ width: '400px' }}
-                            className={`flex h-24 px-4 border-opacity-25 border-b-DEFAULT border-secondary2 ${
-                              !data.read_at ? 'bg-white' : 'bg-grey-300'
-                            } cursor-pointer`}>
-                            <div
-                              className={`w-2 h-2 pl-1 pb-1 pr-1 mt-4 rounded-full ${
-                                !data.read_at ? 'bg-red' : 'bg-red opacity-25'
-                              }`}
-                            />
-                            <button
-                              key={i}
-                              onClick={() => context.updateReadAt(data)}
-                              className="flex flex-col items-center justify-between h-full pt-2 focus:outline-none">
-                              <div
-                                style={{ wordWrap: 'break-word' }}
-                                className="flex flex-col items-end justify-between h-full ml-3">
-                                <span className="text-left font-prompt-light text-body-2">
-                                  {data?.message}
-                                </span>
-                                <p className="text-black opacity-50 font-prompt text-body-2">
-                                  {dayjs(data?.created_at).locale('th').fromNow()}
-                                </p>
-                              </div>
-                            </button>
+                            style={{ wordWrap: 'break-word' }}
+                            className="flex items-center justify-center w-64 h-24">
+                            <p className="text-center text-body-2 font-prompt">ไม่พบการแจ้งเตือน</p>
                           </div>
-                        )
-                      })}
+                        )}
+                        {_.map(context.notifications, (data, i) => {
+                          return (
+                            <div
+                              style={{ width: '400px' }}
+                              className={`flex h-24 px-4 border-opacity-25 border-b-DEFAULT border-secondary2 ${
+                                !data.read_at ? 'bg-white' : 'bg-grey-300'
+                              } cursor-pointer`}>
+                              <div
+                                className={`w-2 h-2 pl-1 pb-1 pr-1 mt-4 rounded-full ${
+                                  !data.read_at ? 'bg-red' : 'bg-red opacity-25'
+                                }`}
+                              />
+                              <button
+                                key={i}
+                                onClick={() => context.updateReadAt(data)}
+                                className="flex flex-col items-center justify-between h-full pt-2 focus:outline-none">
+                                <div
+                                  style={{ wordWrap: 'break-word' }}
+                                  className="flex flex-col items-end justify-between h-full ml-3">
+                                  <span className="text-left font-prompt-light text-body-2">
+                                    {data?.message}
+                                  </span>
+                                  <p className="text-black opacity-50 font-prompt text-body-2">
+                                    {dayjs(data?.created_at).locale('th').fromNow()}
+                                  </p>
+                                </div>
+                              </button>
+                            </div>
+                          )
+                        })}
+                      </div>
                     </Menu>
                     <Menu
                       id="fade-menu"
