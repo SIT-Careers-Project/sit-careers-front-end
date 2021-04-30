@@ -15,19 +15,22 @@ import LocationInfoForm from '../components/FormCreate/location-info'
 import CompanyDateInfoForm from '../components/FormCreate/company-date-info'
 import MouInfoForm from '../components/FormCreate/mou-info'
 import PrimaryButton from '../../../core/components/Button/Primary'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const CompanyForm = ({ authContext }) => {
   const { handleSubmit, register, errors, control } = useForm({
     resolver: yupResolver(CompanyFormSchema)
   })
   const context = useContext(companyFormPageContext)
+  const alertContext = useContext(AlertContext)
   const coreModalContext = useContext(modalContext)
 
   const [file, setFile] = useState(null)
 
   useEffect(() => {
+    context.keyChange('alert', alertContext)
     context.keyChange('modal', coreModalContext)
-  }, [context, coreModalContext])
+  }, [alertContext, context, coreModalContext])
 
   return (
     <div className="w-full max-w-screen-lg">

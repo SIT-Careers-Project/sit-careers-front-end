@@ -30,7 +30,6 @@ export class AnnouncementStatusInfoContext {
     this.isDisable = true
     this.checkStatus = checkStatus
     if (this.checkStatus === 'ปฏิเสธการรับสมัคร') {
-      console.log(this.checkStatus)
       this.isDisable = false
     }
   }

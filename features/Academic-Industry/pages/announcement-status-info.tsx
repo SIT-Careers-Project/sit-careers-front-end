@@ -22,10 +22,12 @@ import PrimaryButton from '../../../core/components/Button/Primary'
 import { CoreModal } from '../../../core/components/Modal'
 import { StatusFormSchema } from '../services/validationSchema'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { AuthContext } from 'core/contexts/auth_context'
 
 const ApplicationInfo = ({ authContext }) => {
   const context = useContext(announcementStatusInfoContext)
   const coreModalContext = useContext(modalContext)
+  const coreAuthContext = useContext(AuthContext)
   const router = useRouter()
   const { announcement_resume_id } = router.query
 
@@ -35,25 +37,28 @@ const ApplicationInfo = ({ authContext }) => {
   })
 
   useEffect(() => {
-    context.keyChange('modal', coreModalContext)
-    const applicationDate = dayjs(context?.application?.created_at).format('DD MMMM YYYY')
-    context.keyChange('applicationDate', applicationDate)
-    if (authContext.roleUser === 'admin') {
-      context.getAnnouncementResumeByIdForAdmin(announcement_resume_id).then(() => {
-        setTimeout(() => reset({ ...context.application }), 400)
-        context.setCheckStatus(context?.application?.status)
-      })
-    } else if (authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') {
-      context.getAnnouncementResumeByIdForCompanyId(announcement_resume_id).then(() => {
-        setTimeout(() => reset({ ...context.application }), 400)
-        context.setCheckStatus(context?.application?.status)
-      })
-    } else if (authContext.roleUser === 'student') {
-      context.getAnnouncementResumeByIdForUserId(announcement_resume_id).then(() => {
-        setTimeout(() => reset({ ...context.application }), 400)
-      })
-    }
-  }, [authContext.roleUser, announcement_resume_id, context, coreModalContext, reset])
+    coreAuthContext.fetchMe().then(() => {
+      context.keyChange('modal', coreModalContext)
+      const applicationDate = dayjs(context?.application?.created_at).format('DD MMMM YYYY')
+      context.keyChange('applicationDate', applicationDate)
+      if (coreAuthContext.roleUser === 'admin') {
+        context.getAnnouncementResumeByIdForAdmin(announcement_resume_id).then(() => {
+          context.setCheckStatus(context?.application?.status)
+        })
+      } else if (
+        coreAuthContext.roleUser === 'manager' ||
+        coreAuthContext.roleUser === 'coordinator'
+      ) {
+        context.getAnnouncementResumeByIdForCompanyId(announcement_resume_id).then(() => {
+          context.setCheckStatus(context?.application?.status)
+        })
+      } else if (coreAuthContext.roleUser === 'student') {
+        context.getAnnouncementResumeByIdForUserId(announcement_resume_id).then(() => {
+          setTimeout(() => reset({ ...context.application }), 400)
+        })
+      }
+    })
+  }, [coreAuthContext, announcement_resume_id, context, coreModalContext, reset])
 
   return (
     <Observer>
@@ -70,7 +75,7 @@ const ApplicationInfo = ({ authContext }) => {
               authContext.roleUser === 'coordinator') && (
               <div className="w-full max-w-screen-lg px-10 py-5 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <span className="font-semibold font-prompt text-heading-6">สถานะของผู้สมัคร</span>
-                <div className="font-prompt-light text-body-2 text-secondary2 pt-3">
+                <div className="pt-3 font-prompt-light text-body-2 text-secondary2">
                   <InfoOutlined className="mb-2 mr-2" fontSize="small" />
                   หมายเหตุ: หากเลือก "ปฏิเสธการรับสมัคร" กรุณาระบุรายละเอียด
                   (ผู้สมัครจะไม่เห็นรายละเอียดดังกล่าว)
@@ -137,7 +142,7 @@ const ApplicationInfo = ({ authContext }) => {
                   <div className="flex justify-end grid-cols-12 my-6">
                     <PrimaryButton
                       onClick={coreModalContext.openModal}
-                      className="lg:w-1/4 py-4"
+                      className="py-4 lg:w-1/4"
                       title="บันทึก">
                       <p className="text-white font-prompt text-subtitle-1">บันทึก</p>
                     </PrimaryButton>
