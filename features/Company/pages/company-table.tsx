@@ -3,6 +3,7 @@ import { AddCircle, SettingsApplications } from '@material-ui/icons'
 import React, { useContext, useEffect } from 'react'
 
 import CoreTable from '../../../core/components/Table'
+import { AlertContext } from 'core/contexts/alert_context'
 import Link from 'next/link'
 import { Observer } from 'mobx-react-lite'
 import { companyTablePageContext } from '../contexts/company_table_page_context'
@@ -12,13 +13,16 @@ const { publicRuntimeConfig } = getConfig()
 
 const CompanyTable = ({ authContext }) => {
   const context = useContext(companyTablePageContext)
+  const alertContext = useContext(AlertContext)
+
   useEffect(() => {
+    context.changeKey('alert', alertContext)
     if (authContext.roleUser === 'admin') {
       context.getCompaniesByAdmin()
     } else {
       context.getCompaniesByCompany()
     }
-  }, [authContext.roleUser, context])
+  }, [alertContext, authContext.roleUser, context])
 
   const column = [
     {

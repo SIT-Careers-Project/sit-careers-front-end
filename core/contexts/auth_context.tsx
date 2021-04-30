@@ -12,6 +12,7 @@ export class authContext {
   isLoggedIn
   roleUser
   verify
+  alert
 
   constructor() {
     this.user = ''
@@ -20,8 +21,13 @@ export class authContext {
     this.roleUser = ''
     this.isLoggedIn = false
     this.verify = false
+    this.alert = ''
 
     makeAutoObservable(this)
+  }
+
+  changeKey = (key, value) => {
+    this[key] = value
   }
 
   login = async (data) => {
@@ -36,9 +42,19 @@ export class authContext {
       }
     } catch (error) {
       if (error.response?.status === 401) {
-        alert(error.response?.data?.message)
+        this.alert.setAlert(
+          `ไม่สามารถ login ได้ เนื่องจาก ${error.response?.data?.message}`,
+          'error',
+          'error',
+          true
+        )
       } else {
-        alert(`เกิดข้อผิดพลาด status code ${error.response?.status}`)
+        this.alert.setAlert(
+          `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.status}`,
+          'error',
+          'error',
+          true
+        )
       }
       this.isLoggedIn = false
     }
@@ -55,7 +71,12 @@ export class authContext {
         }
       }
     } catch (error) {
-      alert(`เกิดข้อผิดพลาด status code ${error.response?.status}`)
+      this.alert.setAlert(
+        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.status}`,
+        'error',
+        'error',
+        true
+      )
       this.isLoggedIn = false
     }
   }
@@ -81,6 +102,12 @@ export class authContext {
       }
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.status}`,
+        'error',
+        'error',
+        true
+      )
     }
   }
 
@@ -96,6 +123,12 @@ export class authContext {
       })
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.status}`,
+        'error',
+        'error',
+        true
+      )
     }
   }
 
@@ -108,6 +141,12 @@ export class authContext {
       })
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        `เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ status code ${error.response?.status}`,
+        'error',
+        'error',
+        true
+      )
     }
   }
 }

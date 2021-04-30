@@ -8,6 +8,7 @@ import { Observer } from 'mobx-react-lite'
 import { CoreModal } from 'core/components/Modal'
 import { checkRoleRender } from 'core/services/utils'
 import { modalContext } from 'core/contexts/modal_context'
+import { AlertContext } from 'core/contexts/alert_context'
 import { userInfoPageContext } from '../contexts/user_info_page_context'
 import { toJS } from 'mobx'
 import { ModalAdmin } from '../components/Modal/Admin'
@@ -15,6 +16,7 @@ import { ModalCompany } from '../components/Modal/Company'
 
 const UserInfo = ({ authContext }) => {
   const coreModalContext = useContext(modalContext)
+  const alertContext = useContext(AlertContext)
   const context = useContext(userInfoPageContext)
 
   const getData = useCallback(() => {
@@ -61,6 +63,7 @@ const UserInfo = ({ authContext }) => {
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
     context.keyChange('modalDelete', coreModalContext)
+    context.keyChange('alert', alertContext)
     getData()
     return () => {
       context.keyChange('disableTrashButton', true)

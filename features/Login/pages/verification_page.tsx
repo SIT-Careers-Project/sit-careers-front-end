@@ -6,10 +6,13 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Observer } from 'mobx-react-lite'
 import { useRouter } from 'next/router'
 import { AuthContext } from 'core/contexts/auth_context'
+import { AlertContext } from 'core/contexts/alert_context'
 import Link from 'next/link'
+import { Alert } from 'core/components/Alert'
 
 export const VerificationPage = () => {
   const context = useContext(AuthContext)
+  const alertContext = useContext(AlertContext)
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(VerificationFormSchema)
   })
@@ -17,15 +20,17 @@ export const VerificationPage = () => {
   const { urlVerify, signature } = router.query
 
   useEffect(() => {
+    context.changeKey('alert', alertContext)
     if (urlVerify && signature) {
       const url = `${urlVerify}&signature=${signature}`
       const httpsUrl = url.trim().replace('http://', 'https://')
       context.verifyEmail(httpsUrl)
     }
-  }, [context, signature, urlVerify])
+  }, [alertContext, context, signature, urlVerify])
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
+      <Alert />
       <Observer>
         {() => (
           <>
