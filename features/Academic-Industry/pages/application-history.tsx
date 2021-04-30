@@ -42,7 +42,7 @@ const ApplicationHistory = ({ authContext }) => {
       title: 'รายละเอียด',
       field: 'announcement_resume_id',
       render: (rowData) => (
-        <Link href={`/academic-industry/applications/${rowData.announcement_resume_id}`}>
+        <Link href={`/academic-industry/applications/${rowData.resume_id}`}>
           <Assignment className="cursor-pointer text-secondary1" fontSize="large" />
         </Link>
       )
