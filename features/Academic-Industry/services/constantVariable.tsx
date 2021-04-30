@@ -101,6 +101,6 @@ export const jobType = [
 export const applicationStatus = [
   { title: 'เรียกสัมภาษณ์' },
   { title: 'รออนุมัติ' },
-  { title: 'เสร็จสิ้น' },
+  { title: 'ผ่านการคัดเลือก' },
   { title: 'ปฏิเสธการรับสมัคร' }
 ]
