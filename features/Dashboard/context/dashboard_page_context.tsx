@@ -3,6 +3,8 @@ import { makeAutoObservable } from 'mobx'
 import apiService from '../services/apiDashboard'
 import { createContext } from 'react'
 import _ from 'lodash'
+import * as d3 from 'd3-scale-chromatic'
+import dynamicColor from '../components/DynamicColor'
 
 export class DashboardPageContext {
   companyTypes
@@ -67,28 +69,27 @@ export class DashboardPageContext {
   convertFormatChart = (data, key, keyCount) => {
     const labels = _.map(data, key)
     const countData = _.map(data, keyCount)
+
+    const dataLength = labels.length
+
+    const colorScale = d3.interpolateBlues
+
+    const colorRangeInfo = {
+      colorStart: 0,
+      colorEnd: 1,
+      useEndAsStart: true
+    }
+
+    const randomColor = dynamicColor(dataLength, colorScale, colorRangeInfo)
+
     return {
       labels: labels,
       datasets: [
         {
-          label: '# of Votes',
+          label: 'data for pie chart',
           data: countData,
-          backgroundColor: [
-            '#168FBD',
-            '#adadad',
-            '#295B8D',
-            '#008888',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            '#168FBD',
-            '#adadad',
-            '#295B8D',
-            '#008888',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
+          backgroundColor: randomColor,
+          borderColor: randomColor,
           borderWidth: 1
         }
       ]
