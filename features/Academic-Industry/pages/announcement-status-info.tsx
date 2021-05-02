@@ -44,6 +44,7 @@ const ApplicationInfo = ({ authContext }) => {
       if (coreAuthContext.roleUser === 'admin') {
         context.getAnnouncementResumeByIdForAdmin(announcement_resume_id).then(() => {
           context.setCheckStatus(context?.application?.status)
+          setTimeout(() => reset({ ...context.application }), 400)
         })
       } else if (
         coreAuthContext.roleUser === 'manager' ||
@@ -51,6 +52,7 @@ const ApplicationInfo = ({ authContext }) => {
       ) {
         context.getAnnouncementResumeByIdForCompanyId(announcement_resume_id).then(() => {
           context.setCheckStatus(context?.application?.status)
+          setTimeout(() => reset({ ...context.application }), 400)
         })
       } else if (coreAuthContext.roleUser === 'student') {
         context.getAnnouncementResumeByIdForUserId(announcement_resume_id).then(() => {

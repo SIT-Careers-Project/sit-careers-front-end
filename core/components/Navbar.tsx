@@ -177,7 +177,7 @@ export default function Navbar({ authContext }) {
                               <>
                                 {checkPermissionRender && checkRoleRender && (
                                   <Link href={data.path} key={j}>
-                                    <MenuItem onClick={context.handleClose}>
+                                    <MenuItem onClick={() => context.handleClose('anchorEl')}>
                                       <div className="font-prompt-light text-body-2 text-primary">
                                         {data.icon} {data.name}
                                       </div>
@@ -199,7 +199,7 @@ export default function Navbar({ authContext }) {
                         </div>
                       ) : (
                         <Link href="/login">
-                          <MenuItem onClick={context.handleClose}>
+                          <MenuItem onClick={() => context.handleClose('anchorEl')}>
                             <span className="font-prompt-light text-body-2 text-primary">
                               <ExitToApp /> Login
                             </span>
