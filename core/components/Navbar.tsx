@@ -109,7 +109,7 @@ export default function Navbar({ authContext }) {
                       anchorEl={context.showNotification}
                       keepMounted
                       TransitionComponent={Fade}
-                      open={context.showNotification}
+                      open={Boolean(context.showNotification)}
                       onClose={() => context.handleClose('showNotification')}>
                       <div
                         id="scrollbar-custom"
