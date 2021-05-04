@@ -12,6 +12,10 @@ const apiDashboard = {
   getAnnouncementJobPositions: async () => {
     const response = await api.get('/dashboard/announcements/job-positions')
     return response
+  },
+  getStat: async () => {
+    const response = await api.get('/dashboard/stats')
+    return response
   }
 }
 
