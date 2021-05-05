@@ -26,7 +26,7 @@ export const ChartInfoSection = () => {
     <Observer>
       {() => (
         <>
-          <div className="max-w-screen-lg mx-auto mb-40">
+          <div className="max-w-screen-lg mx-auto bg-grey-fbfcfd pb-40">
             <div className="grid grid-cols-12 gap-5">
               <div className="col-span-4">
                 <p className="pb-5 text-center text-primary text-heading-5 font-prompt">

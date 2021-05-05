@@ -5,58 +5,67 @@ import { Carousel } from '../components/Carousel'
 import { CompanySection } from '../components/Sections/Company'
 import { StatCard } from '../../../core/components/Card/StatCard'
 import { useRouter } from 'next/router'
-import { useEffect, useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AuthContext } from '../../../core/contexts/auth_context'
+
+import { homePageContext } from '../contexts/homepage_context'
+import { Observer } from 'mobx-react-lite'
 
 function Index() {
   const router = useRouter()
   const authContext = useContext(AuthContext)
   const { code, state } = router.query
+  const context = useContext(homePageContext)
 
   useEffect(() => {
+    context.getStat()
     if (code && state) {
       authContext.SITLogin(code, state)
     }
-  }, [authContext, code, state])
+  }, [authContext, code, context, state])
 
   return (
-    <>
-      <Carousel />
-      <div className="max-w-screen-lg mx-auto">
-        <div className="grid grid-cols-12 gap-5 py-24">
-          <div className="col-span-12">
-            <p className="text-center text-primary text-heading-5">
-              SIT Industry Collaboration Service System
-            </p>
+    <Observer>
+      {() => (
+        <>
+          <Carousel />
+          <div className="max-w-screen-lg mx-auto">
+            <div className="grid grid-cols-12 gap-5 py-24">
+              <div className="col-span-12">
+                <p className="text-center text-primary text-heading-3 font-prompt-medium text-primary">
+                  SIT Career Center
+                </p>
+              </div>
+              <div className="col-span-4">
+                <StatCard
+                  title="บริษัททั้งหมด"
+                  stat={context?.statInfo?.count_all_companies}
+                  icon={<Domain style={{ color: 'white', fontSize: '87px' }} />}
+                />
+              </div>
+              <div className="col-span-4">
+                <StatCard
+                  title="ประการรับสมัครงาน"
+                  stat={context.statInfo.count_all_announcements}
+                  icon={<Assignment style={{ color: 'white', fontSize: '87px' }} />}
+                />
+              </div>
+              <div className="col-span-4">
+                <StatCard
+                  title="บริษัททั้งหมด"
+                  stat={context.statInfo.count_all_users}
+                  icon={<People style={{ color: 'white', fontSize: '87px' }} />}
+                />
+              </div>
+            </div>
           </div>
-          <div className="col-span-4">
-            <StatCard
-              title="บริษัททั้งหมด"
-              stat={385}
-              icon={<Domain style={{ color: 'white', fontSize: '87px' }} />}
-            />
+          <div style={{ height: '1400px' }} className="relative overflow-hidden bg-grey-fbfcfd">
+            <AnnouncementSection />
+            <CompanySection />
           </div>
-          <div className="col-span-4">
-            <StatCard
-              title="ประการรับสมัครงาน"
-              stat={128}
-              icon={<Assignment style={{ color: 'white', fontSize: '87px' }} />}
-            />
-          </div>
-          <div className="col-span-4">
-            <StatCard
-              title="บริษัททั้งหมด"
-              stat={3442}
-              icon={<People style={{ color: 'white', fontSize: '87px' }} />}
-            />
-          </div>
-        </div>
-      </div>
-      <div style={{ height: '1400px' }} className="relative overflow-hidden bg-grey-fbfcfd">
-        <AnnouncementSection />
-        <CompanySection />
-      </div>
-    </>
+        </>
+      )}
+    </Observer>
   )
 }
 
