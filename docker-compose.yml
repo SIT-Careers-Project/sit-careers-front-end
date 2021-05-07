@@ -19,6 +19,8 @@ services:
     working_dir: /etc/nginx
     container_name: sit-careers-fe-nginx
     restart: always
+    volumes:
+      - /var/log/nginx:/var/log/nginx
     ports:
       - "80:80"
     networks:
