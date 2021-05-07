@@ -17,10 +17,15 @@ COPY tailwind.config.js $APPLICATION_ROOT
 COPY tsconfig.json $APPLICATION_ROOT
 COPY ./utils $APPLICATION_ROOT/utils
 
-COPY ./docker/app/yarn-local.sh $APPLICATION_ROOT/docker/app
+COPY .sit-cc.env $APPLICATION_ROOT/.env
+
 COPY ./pages $APPLICATION_ROOT/pages
 COPY ./public $APPLICATION_ROOT/public
 COPY ./core $APPLICATION_ROOT/core
 COPY ./features $APPLICATION_ROOT/features
+
+RUN yarn build
+
+CMD yarn start
 
 EXPOSE 3000

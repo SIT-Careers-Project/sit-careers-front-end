@@ -27,3 +27,5 @@ COPY ./features $APPLICATION_ROOT/features
 RUN yarn build
 
 CMD yarn start
+
+EXPOSE 3000

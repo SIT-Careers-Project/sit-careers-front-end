@@ -20,7 +20,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:fe-dev-$IMAGE_TAG -f ./docker/app/Dockerfile.dev .
-      - docker build -t $REPOSITORY_URI:nginx-dev-$IMAGE_TAG -f ./docker/nginx/Dockerfile .
+      - docker build -t $REPOSITORY_URI:nginx-dev-$IMAGE_TAG -f ./docker/nginx/Dockerfile.dev .
       - docker tag $REPOSITORY_URI:fe-dev-$IMAGE_TAG $REPOSITORY_URI:fe-dev-latest
       - docker tag $REPOSITORY_URI:nginx-dev-$IMAGE_TAG $REPOSITORY_URI:nginx-dev-latest
   post_build:
@@ -31,6 +31,8 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:fe-dev-$IMAGE_TAG
       - docker push $REPOSITORY_URI:nginx-dev-$IMAGE_TAG
+      - docker push $REPOSITORY_URI:fe-dev-latest
+      - docker push $REPOSITORY_URI:nginx-dev-latest
       - echo Writing images definitions file...
       - printf '[{"name":"sit-careers-fe","imageUri":"%s"},' $REPOSITORY_URI:fe-dev-$IMAGE_TAG > imagedefinitions.json
       - printf '{"name":"sit-careers-fe-nginx","imageUri":"%s"}]' $REPOSITORY_URI:nginx-dev-$IMAGE_TAG >> imagedefinitions.json
