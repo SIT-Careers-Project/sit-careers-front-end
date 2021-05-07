@@ -8,7 +8,6 @@ services:
       dockerfile: ./docker/app/Dockerfile
     working_dir: /app
     container_name: sit-careers-fe
-    env_file: .sit-cc.env
     networks:
       - sit-careers
 
