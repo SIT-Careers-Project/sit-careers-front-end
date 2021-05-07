@@ -22,3 +22,5 @@ COPY ./pages $APPLICATION_ROOT/pages
 COPY ./public $APPLICATION_ROOT/public
 COPY ./core $APPLICATION_ROOT/core
 COPY ./features $APPLICATION_ROOT/features
+
+EXPOSE 3000
