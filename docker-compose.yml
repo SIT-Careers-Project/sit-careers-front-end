@@ -2,20 +2,18 @@ version: "3.8"
 services:
 
   frontend:
-    image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers:fe-dev
+    image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers:fe
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile.dev
+      dockerfile: ./docker/app/Dockerfile
     working_dir: /app
     container_name: sit-careers-fe
-    env_file: .env
-    ports:
-      - "3000:3000"
+    env_file: .sit-cc.env
     networks:
       - sit-careers
 
   fe-nginx:
-    image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers:fe-nginx-dev
+    image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers:fe-nginx
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
@@ -24,11 +22,11 @@ services:
     restart: always
     ports:
       - "80:80"
-    volumes:
-      - ./docker/nginx/frontend-dev.conf:/etc/nginx/conf.d/default.conf
     networks:
       - sit-careers
 
 networks:
   sit-careers:
     driver: bridge
+  sit-careers-api_sit-careers:
+    external: true
