@@ -4,12 +4,10 @@ import CoreTable from '../../../core/components/Table'
 import { Observer } from 'mobx-react-lite'
 import BasicDateRangePicker from '../../../core/components/DateRangePicker'
 import { reportInfoPageContext } from '../context/report_info_page_context'
-import getConfig from 'next/config'
 import { selectData, data } from '../services/constantVariable'
 import { createMuiTheme } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-
-const { publicRuntimeConfig } = getConfig()
+import JSZip from 'jszip'
 
 const ReportInfo = () => {
   const context = useContext(reportInfoPageContext)
@@ -44,33 +42,6 @@ const ReportInfo = () => {
       </div>
       <Observer>
         {() => (
-          <>
-            <a
-              href={`${publicRuntimeConfig.s3_url}${context?.pathFileCompanies}`}
-              target="_self"
-              id="company_download"
-              className="hidden">
-              <p>ดาวโหลดบริษัท</p>
-            </a>
-            <a
-              href={`${publicRuntimeConfig.s3_url}${context?.pathFileDashboard}`}
-              target="_self"
-              id="dashboard_download"
-              className="hidden">
-              <p>ดาวโหลด dashboard</p>
-            </a>
-            <a
-              href={`${publicRuntimeConfig.s3_url}${context?.pathFileAnnouncements}`}
-              target="_self"
-              id="announcement_download"
-              className="hidden">
-              <p>ดาวโหลดประกาศรับสมัครงาน</p>
-            </a>
-          </>
-        )}
-      </Observer>
-      <Observer>
-        {() => (
           <MuiThemeProvider theme={theme}>
             <CoreTable
               title={<p className="pr-5 font-sarabun-meduim text-body-2">เลือกข้อมูลที่ต้องการ</p>}
@@ -88,36 +59,37 @@ const ReportInfo = () => {
                   tooltip: 'Export Data',
                   icon: 'get_app',
                   onClick: () => {
-                    if (context.selectRows.includes(0)) {
-                      context.getCompaniesByFilterDate(selectedDate).then(() => {
-                        const link = document.getElementById('company_download')
-                        link.setAttribute(
-                          'download',
-                          `${publicRuntimeConfig.s3_url}${context?.pathFileCompanies}`
-                        )
-                        link.click()
+                    // const link = document.createElement('a')
+                    // link.target = '_blank'
+                    // link.download = 'SITCareerCenter'
+                    context
+                      .createReport(selectedDate)
+                      //  .then((res) => {
+                      // link.href = URL.createObjectURL(new Blob([data], { type: 'zip' }))
+                      //   link.click()
+                      // })
+                      .then(({ data }) => {
+                        // const zip = new JSZip()
+                        // zip.loadAsync(data)
+                        // zip.generateAsync({ type: 'blob' }).then(function (content) {
+                        //   // see FileSaver.js
+                        //   saveAs(new Blob([data], { type: 'zip' }), content, 'poytest.zip')
+                        // })
+                        // const file = new Blob([data], { type: 'application/zip' })
+                        // saveAs(file, 'dcdiacnislajails.zip')
+                        // link.click()
+                        const zip = new JSZip()
+                        // const folder = zip.folder('collection')
+                        // folder.file(`araigordai.xlsx`, data)
+                        // folder
+                        //   .generateAsync({ type: 'blob' })
+                        //   .then((content) => saveAs(content, 'hello'))
+                        zip.folder('testkub').file(data)
+                        zip.generateAsync({ type: 'base64' }).then(function (base64) {
+                          window.location.href = 'data:application/zip;base64,' + base64
+                        })
+                        console.log(typeof data)
                       })
-                    }
-                    if (context.selectRows.includes(1)) {
-                      context.getAnnouncementsByFilterDate(selectedDate).then(() => {
-                        const link = document.getElementById('announcement_download')
-                        link.setAttribute(
-                          'download',
-                          `${publicRuntimeConfig.s3_url}${context?.pathFileAnnouncements}`
-                        )
-                        link.click()
-                      })
-                    }
-                    if (context.selectRows.includes(2)) {
-                      context.getDashboardByFilterDate(selectedDate).then(() => {
-                        const link = document.getElementById('dashboard_download')
-                        link.setAttribute(
-                          'download',
-                          `${publicRuntimeConfig.s3_url}${context?.pathFileDashboard}`
-                        )
-                        link.click()
-                      })
-                    }
                   }
                 }
               ]}
