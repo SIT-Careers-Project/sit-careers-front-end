@@ -7,7 +7,6 @@ import { reportInfoPageContext } from '../context/report_info_page_context'
 import { selectData, data } from '../services/constantVariable'
 import { createMuiTheme } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import JSZip from 'jszip'
 
 const ReportInfo = () => {
   const context = useContext(reportInfoPageContext)
@@ -36,7 +35,7 @@ const ReportInfo = () => {
         </div>
       </div>
       <div className="w-full h-1 mt-4 mb-6 bg-secondary1" />
-      <div className="flex flex-row items-center w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-5 my-5">
+      <div className="flex flex-row items-center w-full max-w-screen-lg p-5 mx-auto my-5 mt-5 bg-white rounded-lg shadow-lg font-prompt">
         <p className="pr-5 font-sarabun-meduim text-body-2">เลือกช่วงเวลา:</p>
         <BasicDateRangePicker onClick={handleDateChange} value={selectedDate} />
       </div>
@@ -59,37 +58,15 @@ const ReportInfo = () => {
                   tooltip: 'Export Data',
                   icon: 'get_app',
                   onClick: () => {
-                    // const link = document.createElement('a')
-                    // link.target = '_blank'
-                    // link.download = 'SITCareerCenter'
-                    context
-                      .createReport(selectedDate)
-                      //  .then((res) => {
-                      // link.href = URL.createObjectURL(new Blob([data], { type: 'zip' }))
-                      //   link.click()
-                      // })
-                      .then(({ data }) => {
-                        // const zip = new JSZip()
-                        // zip.loadAsync(data)
-                        // zip.generateAsync({ type: 'blob' }).then(function (content) {
-                        //   // see FileSaver.js
-                        //   saveAs(new Blob([data], { type: 'zip' }), content, 'poytest.zip')
-                        // })
-                        // const file = new Blob([data], { type: 'application/zip' })
-                        // saveAs(file, 'dcdiacnislajails.zip')
-                        // link.click()
-                        const zip = new JSZip()
-                        // const folder = zip.folder('collection')
-                        // folder.file(`araigordai.xlsx`, data)
-                        // folder
-                        //   .generateAsync({ type: 'blob' })
-                        //   .then((content) => saveAs(content, 'hello'))
-                        zip.folder('testkub').file(data)
-                        zip.generateAsync({ type: 'base64' }).then(function (base64) {
-                          window.location.href = 'data:application/zip;base64,' + base64
-                        })
-                        console.log(typeof data)
-                      })
+                    context.createReport(selectedDate).then((response) => {
+                      const fileURL = window.URL.createObjectURL(new Blob([response.data]))
+                      const fileLink = document.createElement('a')
+                      fileLink.href = fileURL
+                      fileLink.setAttribute('download', 'SITCC_report.zip')
+                      document.body.appendChild(fileLink)
+                      fileLink.click()
+                      fileLink.remove()
+                    })
                   }
                 }
               ]}
