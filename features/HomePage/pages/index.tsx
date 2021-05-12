@@ -32,7 +32,7 @@ function Index() {
           <div className="max-w-screen-lg mx-auto">
             <div className="grid grid-cols-12 gap-5 py-24">
               <div className="col-span-12">
-                <p className="text-center text-primary text-heading-3 font-prompt-medium text-primary">
+                <p className="text-center text-primary text-heading-3 font-prompt-medium">
                   SIT Career Center
                 </p>
               </div>
@@ -52,7 +52,7 @@ function Index() {
               </div>
               <div className="col-span-4">
                 <StatCard
-                  title="บริษัททั้งหมด"
+                  title="ผู้เข้าใช้งานทั้งหมด"
                   stat={context.statInfo.count_all_users}
                   icon={<People style={{ color: 'white', fontSize: '87px' }} />}
                 />

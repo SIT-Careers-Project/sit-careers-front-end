@@ -58,7 +58,6 @@ export class ReportInfoPageContext {
         start_date: startDate,
         end_date: endDate
       })
-      console.log(response)
       this.isDownload = true
       return response
     } catch (error) {
