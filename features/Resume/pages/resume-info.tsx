@@ -202,6 +202,9 @@ const ResumeInfo = () => {
                       <p className="font-semibold font-prompt text-heading-6 text-primary">
                         อัพโหลดผลงาน
                       </p>
+                      <p className="font-prompt-light font-prompt text-body-2 text-secondary2 pt-3">
+                        * ผลงานต้องเป็นไฟล์นามสกุล .pdf และมีขนาดไม่เกิน 5 MB
+                      </p>
                     </div>
 
                     <div className="flex flex-row justify-between px-6 py-3">
