@@ -1,9 +1,16 @@
-import api from '../../../utils/api'
+import axios from 'axios'
+import Cookie from 'js-cookie'
+import getConfig from 'next/config'
 
+const { publicRuntimeConfig } = getConfig()
 const apiReport = {
   createReport: async (data) => {
-    const response = await api.post('/dashboard/report', data, {
-      headers: { 'Content-type': 'application/octet-stream' }
+    const response = axios.post(`${publicRuntimeConfig.API_URL}/dashboard/report`, data, {
+      headers: {
+        Authorization: `Bearer ${Cookie.get('token')}`,
+        'Content-Type': 'application/json'
+      },
+      responseType: 'blob'
     })
     return response
   }
