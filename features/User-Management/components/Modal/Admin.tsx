@@ -28,7 +28,7 @@ export const ModalAdmin = () => {
       {() => (
         <CoreModal
           buttonSubmit="เพิ่ม"
-          title="เพิ่มผู้ประสานงาน"
+          title="เพิ่มผู้ใช้งาน"
           content={
             <div className="w-full">
               <FormControl
