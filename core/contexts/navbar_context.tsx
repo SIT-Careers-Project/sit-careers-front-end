@@ -4,10 +4,12 @@ import { createContext } from 'react'
 import { apiNotification } from '../services/apiNotification'
 import dayjs from 'dayjs'
 import { Router } from 'next/router'
+
 export class NavbarContext {
   anchorEl
   notifications
   showNotification
+  isOpenModalBanner
 
   constructor() {
     makeAutoObservable(this)
@@ -15,6 +17,11 @@ export class NavbarContext {
     this.anchorEl = null
     this.notifications = []
     this.showNotification = null
+    this.isOpenModalBanner = false
+  }
+
+  changeKey = (key, value) => {
+    this[key] = value
   }
 
   handleClick = (key, event) => {
