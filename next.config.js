@@ -26,7 +26,7 @@ module.exports = (phases) => {
       JWT_SECRET: process.env.JWT_SECRET
     },
     images: {
-      domains: ['www.sit.kmutt.ac.th'],
+      domains: ['www.sit.kmutt.ac.th', 'dev-storage.sit-industry.systems'],
     },
   }
 }

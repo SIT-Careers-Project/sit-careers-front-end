@@ -1,6 +1,11 @@
 import { Fade, Menu, MenuItem } from '@material-ui/core'
 import React, { useContext, useEffect } from 'react'
-import { AccountCircle as AccountCircleIcon, ExitToApp, Notifications } from '@material-ui/icons'
+import {
+  AccountCircle as AccountCircleIcon,
+  ExitToApp,
+  Notifications,
+  ViewCarousel
+} from '@material-ui/icons'
 import Link from 'next/link'
 import { navbarContext } from '../contexts/navbar_context'
 import { Observer } from 'mobx-react-lite'
@@ -187,6 +192,17 @@ export default function Navbar({ authContext }) {
                               </>
                             )
                           })}
+                          {authContext.roleUser === 'admin' && (
+                            <MenuItem
+                              onClick={() => {
+                                context.handleClose('anchorEl')
+                                context.changeKey('isOpenModalBanner', true)
+                              }}>
+                              <div className="font-prompt-light text-body-2 text-primary">
+                                <ViewCarousel /> จัดการ Banner
+                              </div>
+                            </MenuItem>
+                          )}
                           <MenuItem
                             onClick={() => {
                               context.handleClose('anchorEl')
