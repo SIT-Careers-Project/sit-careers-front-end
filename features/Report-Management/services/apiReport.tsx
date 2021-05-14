@@ -1,22 +1,17 @@
-import api from '../../../utils/api'
+import axios from 'axios'
+import Cookie from 'js-cookie'
+import getConfig from 'next/config'
 
+const { publicRuntimeConfig } = getConfig()
 const apiReport = {
-  getCompaniesByFilterDate: async (startDate, endDate) => {
-    const response = await api.get(
-      `/dashboard/companies/export?start_date=${startDate}&end_date=${endDate}`
-    )
-    return response
-  },
-  getAnnouncementsByFilterDate: async (startDate, endDate) => {
-    const response = await api.get(
-      `/dashboard/announcements/export?start_date=${startDate}&end_date=${endDate}`
-    )
-    return response
-  },
-  getDashboardByFilterDate: async (startDate, endDate) => {
-    const response = await api.get(
-      `/dashboard/dashboard/export?start_date=${startDate}&end_date=${endDate}`
-    )
+  createReport: async (data) => {
+    const response = axios.post(`${publicRuntimeConfig.API_URL}/dashboard/report`, data, {
+      headers: {
+        Authorization: `Bearer ${Cookie.get('token')}`,
+        'Content-Type': 'application/json'
+      },
+      responseType: 'blob'
+    })
     return response
   }
 }

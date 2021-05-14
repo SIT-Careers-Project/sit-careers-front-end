@@ -8,6 +8,7 @@ import Head from 'next/head'
 import { AuthContext } from '../core/contexts/auth_context'
 import theme from '../core/config/theme'
 import { ThemeProvider } from '@material-ui/core/styles'
+import { ModalBanner } from 'core/components/ModalBanner'
 
 function App({ Component, pageProps }) {
   const useStore = () => useContext(AuthContext)
@@ -30,6 +31,7 @@ function App({ Component, pageProps }) {
       </Head>
       <CssBaseline />
       <ThemeProvider theme={theme}>
+        <ModalBanner />
         <Component {...pageProps} authContext={useStore()} />
       </ThemeProvider>
     </>
