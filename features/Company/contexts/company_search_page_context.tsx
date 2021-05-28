@@ -18,17 +18,17 @@ export class CompanySearchPageContext {
     this.companies = []
     this.beforeSearch = []
     this.companyName = ''
-    this.companyType = ''
+    this.companyType = []
   }
-  setCompanyName = (companyName) => {
-    this.companyName = companyName
+
+  setValue = (key, value) => {
+    this[key] = value
   }
-  setCompanyType = (companyType) => {
-    this.companyType = companyType
-  }
+
   setCompanies = (companies) => {
     this.companies = companies
   }
+
   getCompanies = async () => {
     try {
       const response = await apiService.getAllCompanies()
