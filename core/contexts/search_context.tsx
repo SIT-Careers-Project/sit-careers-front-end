@@ -1,32 +1,35 @@
-import { action, makeObservable, observable } from 'mobx'
+import { toJS, makeAutoObservable } from 'mobx'
 import { createContext } from 'react'
 import { matchSorter } from 'match-sorter'
+import _ from 'lodash'
+
 export class SearchContext {
-  items
   constructor() {
-    makeObservable(this, {
-      setSearchItems: action,
-      items: observable,
-      searchMultiFilter: action
-    })
+    makeAutoObservable(this)
   }
+
   setSearchItems = (value, items, keySearch) => {
     return matchSorter(items, value, {
       keys: keySearch
     })
   }
-  matchSorterAcrossKeys = (list, search, options) => {
-    const joinedKeysString = (item) => options.keys.map((key) => item[key]).join(' ')
-    return matchSorter(list, search, {
-      ...options,
-      keys: [...options.keys, joinedKeysString]
-    })
-  }
+
   searchMultiFilter = (value, items, keySearch) => {
-    const search = this.matchSorterAcrossKeys(items, value, {
-      keys: keySearch
+    _.remove(value, (data) => data === '' || data.length === 0)
+
+    if (value.length === 0) {
+      return items
+    }
+
+    const search = []
+    _.flattenDeep(value).forEach((element) => {
+      const matched = toJS(this.setSearchItems(element, items, keySearch))[0]
+      if (matched) {
+        search.unshift(matched)
+      }
     })
-    return search
+
+    return _.uniqWith(search, _.isEqual)
   }
 }
 export const searchContext = createContext(new SearchContext())

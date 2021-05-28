@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
+import { FormControl, InputLabel, MenuItem, Select, Input } from '@material-ui/core'
 import { companyType, jobType } from '../services/constantVariable'
 import { CardSmall } from '../../../core/components/Card/Small'
 import PrimaryButton from '../../../core/components/Button/Primary'
@@ -12,6 +12,8 @@ import Pagination from '../../../core/components/Pagination'
 import { AnnouncementDetail } from '../components/AnnouncementDetail'
 import { checkStatus } from '../../../core/services/utils'
 import dayjs from 'dayjs'
+import _ from 'lodash'
+import { toJS } from 'mobx'
 
 const AnnouncementSearch = () => {
   const context = useContext(announcementSearchPageContext)
@@ -24,14 +26,55 @@ const AnnouncementSearch = () => {
     context.setValue('announcementDetail', context.announcements[0])
   }, [context, contextPagination])
 
+  const ITEM_HEIGHT = 48
+  const ITEM_PADDING_TOP = 8
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250
+      }
+    }
+  }
+
+  const keySearch = [
+    'company_type',
+    'company_name_th',
+    'company_name_en',
+    'announcement_title',
+    'job_position',
+    'job_type'
+  ]
+
+  const handlerSearch = () => {
+    context.setAnnouncements(
+      contextSearch.searchMultiFilter(
+        [
+          toJS(context.companyType),
+          context.companyName,
+          context.announcementTitle,
+          toJS(context.jobPosition),
+          toJS(context.jobType)
+        ],
+        context.beforeSearch,
+        keySearch
+      )
+    )
+  }
+
   return (
     <Observer>
       {() => (
         <div>
-          <div className="container grid max-w-screen-lg grid-flow-row mx-auto mt-20 bg-white shadow-lg rounded-lg font-prompt px-10">
+          <div className="container grid max-w-screen-lg grid-flow-row px-10 mx-auto mt-20 bg-white rounded-lg shadow-lg font-prompt">
             <div className="w-full max-w-screen-lg my-6">
-              <div className="p-2 w-full bg-white border-opacity-50 rounded border-DEFAULT border-secondary2">
+              <div className="w-full p-2 bg-white border-opacity-50 rounded border-DEFAULT border-secondary2">
                 <Search
+                  onKeyPress={(event) => {
+                    if (event.key === 'Enter') {
+                      handlerSearch()
+                    }
+                  }}
                   onChange={(event) => {
                     if (typeof event.target.value === 'string') {
                       context.setValue('companyName', event.target.value)
@@ -45,14 +88,13 @@ const AnnouncementSearch = () => {
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของงาน</InputLabel>
                     <Select
-                      id="trinity-select"
-                      name="job_position"
-                      onChange={(event) => {
-                        if (typeof event.target.value === 'string') {
-                          context.setValue('jobPosition', event.target.value)
-                        }
-                      }}>
-                      {context.jobPositions.map((position, i) => (
+                      labelId="trinity-select"
+                      multiple
+                      value={context.jobPosition}
+                      onChange={(event) => context.setValue('jobPosition', event?.target?.value)}
+                      input={<Input />}
+                      MenuProps={MenuProps}>
+                      {_.map(context.jobPositions, (position, i) => (
                         <MenuItem key={i} value={position.job_position}>
                           {position.job_position}
                         </MenuItem>
@@ -64,14 +106,14 @@ const AnnouncementSearch = () => {
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของประกาศ</InputLabel>
                     <Select
-                      id="trinity-select"
-                      name="job_type"
-                      onChange={(event) => {
-                        if (typeof event.target.value === 'string') {
-                          context.setValue('jobType', event.target.value)
-                        }
-                      }}>
-                      {jobType.map((job) => (
+                      labelId="demo-mutiple-name-label"
+                      id="demo-mutiple-name"
+                      multiple
+                      value={context.jobType}
+                      onChange={(event) => context.setValue('jobType', event?.target?.value)}
+                      input={<Input />}
+                      MenuProps={MenuProps}>
+                      {_.map(jobType, (job) => (
                         <MenuItem key={job.title} value={job.title}>
                           {job.title}
                         </MenuItem>
@@ -83,14 +125,14 @@ const AnnouncementSearch = () => {
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของษริษัท</InputLabel>
                     <Select
-                      id="trinity-select"
-                      name="company_type"
-                      onChange={(event) => {
-                        if (typeof event.target.value === 'string') {
-                          context.setValue('companyType', event.target.value)
-                        }
-                      }}>
-                      {companyType.map((company) => (
+                      labelId="demo-mutiple-name-label"
+                      id="demo-mutiple-name"
+                      multiple
+                      value={context.companyType}
+                      onChange={(event) => context.setValue('companyType', event?.target?.value)}
+                      input={<Input />}
+                      MenuProps={MenuProps}>
+                      {_.map(companyType, (company) => (
                         <MenuItem key={company.title} value={company.title}>
                           {company.title}
                         </MenuItem>
@@ -101,43 +143,7 @@ const AnnouncementSearch = () => {
                 <PrimaryButton
                   title="ค้นหา"
                   className="z-50 ml-10 lg:w-2/6"
-                  onClick={() => {
-                    if (
-                      typeof (
-                        context.companyType ||
-                        context.companyName ||
-                        context.announcementTitle ||
-                        context.jobPosition ||
-                        context.jobType
-                      ) === 'string'
-                    ) {
-                      const keySearch = [
-                        'company_type',
-                        'company_name_th',
-                        'company_name_en',
-                        'announcement_title',
-                        'job_position',
-                        'job_type'
-                      ]
-                      context.setAnnouncements(
-                        contextSearch.searchMultiFilter(
-                          [
-                            context.companyType +
-                              ' ' +
-                              context.companyName +
-                              ' ' +
-                              context.announcementTitle +
-                              ' ' +
-                              context.jobPosition +
-                              ' ' +
-                              context.jobType
-                          ],
-                          context.beforeSearch,
-                          keySearch
-                        )
-                      )
-                    }
-                  }}>
+                  onClick={handlerSearch}>
                   <p className="px-4 py-4 text-white font-prompt text-subtitle-1">ค้นหา</p>
                 </PrimaryButton>
               </div>
@@ -159,18 +165,22 @@ const AnnouncementSearch = () => {
                             return (
                               <div className="pb-5 cursor-pointer" key={i}>
                                 <CardSmall
-                                  title={data.announcement_title}
-                                  status={checkStatus(data.start_date, data.end_date, data.status)}
-                                  tags={[data.job_position, data.job_type]}
-                                  date={`${dayjs(data.start_date)
+                                  title={data?.announcement_title}
+                                  status={checkStatus(
+                                    data?.start_date,
+                                    data?.end_date,
+                                    data?.status
+                                  )}
+                                  tags={[data?.job_position, data?.job_type]}
+                                  date={`${dayjs(data?.start_date)
                                     .locale('th')
                                     .add(543, 'year')
-                                    .format('DD MMMM')} - ${dayjs(data.end_date)
+                                    .format('DD MMMM')} - ${dayjs(data?.end_date)
                                     .locale('th')
                                     .add(543, 'year')
                                     .format('DD MMMM YYYY')}`}
-                                  company={`${data.company_name_th} - ${data.company_name_en}`}
-                                  srcImg={data.logo}
+                                  company={`${data?.company_name_th} - ${data?.company_name_en}`}
+                                  srcImg={data?.logo}
                                   onClick={() => context.setValue('announcementDetail', data)}
                                 />
                               </div>
