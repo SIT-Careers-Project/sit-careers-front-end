@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import apiService from '../services/apiAcademicIndustry'
 import { createContext } from 'react'
 export class AnnouncementSearchPageContext {
@@ -12,31 +12,19 @@ export class AnnouncementSearchPageContext {
   companyType
   announcementDetail
   constructor() {
-    makeObservable(this, {
-      getAnnouncements: action,
-      setAnnouncements: action,
-      announcements: observable,
-      beforeSearch: observable,
-      companyName: observable,
-      announcementTitle: observable,
-      jobPositions: observable,
-      jobPosition: observable,
-      jobType: observable,
-      companyType: observable,
-      announcementDetail: observable
-    })
+    makeAutoObservable(this)
     this.announcements = []
     this.beforeSearch = []
     this.companyName = ''
     this.jobPositions = []
     this.announcementDetail = []
     this.announcementTitle = ''
-    this.jobType = ''
-    this.companyType = ''
-    this.jobPosition = ''
+    this.jobType = []
+    this.companyType = []
+    this.jobPosition = []
   }
   setAnnouncements = (announcements) => {
-    this.announcements = announcements
+    this.announcements = announcements || []
   }
   setValue = (key, value) => {
     this[key] = value

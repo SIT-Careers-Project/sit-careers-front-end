@@ -10,6 +10,7 @@ const CoreSearch = (props) => {
       placeholder="ค้นหาบริษัท"
       fullWidth={true}
       onChange={onChange}
+      onKeyPress={props.onKeyPress}
       startAdornment={
         <InputAdornment position="start">
           <Search className="ml-4 mr-4 opacity-25 text-secondary2" />
