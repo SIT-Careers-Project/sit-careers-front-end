@@ -23,7 +23,7 @@ export const dropdownLinkAdmin = [
     permission: ['access_resume', 'create_resume']
   },
   {
-    path: '/company/company-table',
+    path: '/company/info',
     name: 'จัดการข้อมูลบริษัท',
     icon: <Business />,
     role: ['admin', 'manager', 'coordinator'],
