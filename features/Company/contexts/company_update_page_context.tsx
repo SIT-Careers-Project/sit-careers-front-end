@@ -52,7 +52,7 @@ export class CompanyUpdatePageContext {
     try {
       await apiService.updateCompany(data).then(() => {
         this.modal.closeModal()
-        Router.push('/company/company-table')
+        Router.push('/company/info')
         this.alert.setAlert('แก้ไขข้อมูลสำเร็จ', 'success', 'success', true)
       })
     } catch (error) {
@@ -84,7 +84,7 @@ export class CompanyUpdatePageContext {
     try {
       await apiService.requestDelete().then(() => {
         this.modal.closeModal()
-        Router.push('/company/company-table')
+        Router.push('/company/info')
         this.alert.setAlert('ส่งคำร้องขอลบข้อมูลบริษัทสำเร็จ', 'success', 'success', true)
       })
     } catch (error) {
@@ -111,7 +111,7 @@ export class CompanyUpdatePageContext {
     try {
       await apiService.deleteCompany(companyId).then(() => {
         this.modal.closeModal()
-        Router.push('/company/company-table')
+        Router.push('/company/info')
       })
     } catch (error) {
       console.log(error)
