@@ -50,7 +50,7 @@ export const AnnouncementFormAdminSchema = yup.object().shape({
   start_date: yup.string().required('*จำเป็นต้องกรอก วันประกาศรับสมัคร'),
   end_date: yup.string().required('*จำเป็นต้องกรอก วันปิดรับสมัคร'),
   welfare: yup.string().required('*จำเป็นต้องกรอก สวัสดิการ'),
-  job_type: yup.string().required('*จำเป็นต้องเลือก ประเภทของประกาศ'),
+  job_type: yup.array().required('*จำเป็นต้องเลือก ประเภทของประกาศ'),
   status: yup.string()
 })
 
@@ -99,7 +99,7 @@ export const AnnouncementFormSchema = yup.object().shape({
   start_date: yup.string().required('*จำเป็นต้องกรอก วันประกาศรับสมัคร'),
   end_date: yup.string().required('*จำเป็นต้องกรอก วันปิดรับสมัคร'),
   welfare: yup.string().required('*จำเป็นต้องกรอก สวัสดิการ'),
-  job_type: yup.string().required('*จำเป็นต้องเลือก ประเภทของประกาศ'),
+  job_type: yup.array().required('*จำเป็นต้องเลือก ประเภทของประกาศ'),
   status: yup.string()
 })
 

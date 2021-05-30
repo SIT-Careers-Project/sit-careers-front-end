@@ -41,7 +41,7 @@ const apiAcademic = {
     formData.append('end_business_day', data.end_business_day)
     formData.append('start_business_time', data.start_business_time)
     formData.append('end_business_time', data.end_business_time)
-    formData.append('job_type', data.job_type)
+    formData.append('job_type', JSON.stringify(data.job_type))
 
     const response = await api.post('/academic-industry/announcement', formData, {
       headers: { 'Content-type': 'multipart/form-data' }
