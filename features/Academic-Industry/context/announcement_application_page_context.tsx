@@ -1,8 +1,12 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction, configure } from 'mobx'
 
 import { createContext } from 'react'
 import apiAcademic from '../services/apiAcademicIndustry'
 import Router from 'next/router'
+
+configure({
+  enforceActions: 'never'
+})
 export class AnnouncementApplicationFormContext {
   modal
   announcement
@@ -34,7 +38,9 @@ export class AnnouncementApplicationFormContext {
   getAnnouncementById = async (announcementId) => {
     try {
       const response = await apiAcademic.getAnnouncementById(announcementId)
-      this.announcement = response.data
+      runInAction(() => {
+        this.announcement = response.data[0]
+      })
     } catch (error) {
       console.log(error)
     }

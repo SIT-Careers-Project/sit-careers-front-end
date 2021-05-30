@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, Input } from '@material-ui/core'
+import { FormControl, InputLabel, MenuItem, Select, OutlinedInput } from '@material-ui/core'
 import React, { useContext, useEffect } from 'react'
 import { Observer } from 'mobx-react-lite'
 import _ from 'lodash'
@@ -63,7 +63,7 @@ const AllCompany = () => {
                       id="trinity-select"
                       multiple
                       value={context.companyType}
-                      input={<Input />}
+                      input={<OutlinedInput />}
                       onChange={(event) => {
                         context.setValue('companyType', event.target.value)
                       }}>
