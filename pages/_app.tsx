@@ -25,7 +25,7 @@ function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>SIT-Industry Collaboration Service System</title>
+        <title>SIT Career Center</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
