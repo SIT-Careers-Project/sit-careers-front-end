@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState, useContext, useMemo, useCallback } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import _ from 'lodash'
 import Image from 'next/image'
 import getConfig from 'next/config'
@@ -16,13 +16,8 @@ export const Carousel = () => {
   const context = useContext(ModalBannerContext)
   const ref = useRef(null)
 
-  useCallback(() => {
-    context.banners
-  }, [context.banners])
-
-  useMemo(() => context.getBanners(), context.banners)
-
   useEffect(() => {
+    context.getBanners()
     if (!isActive) {
       const interval = setInterval(() => {
         setActive((oldValue) => {
@@ -37,7 +32,7 @@ export const Carousel = () => {
         clearInterval(interval)
       }
     }
-  }, [context.banners])
+  }, [])
 
   const handlerClick = (i) => {
     setActive(i)

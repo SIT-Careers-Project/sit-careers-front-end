@@ -1,12 +1,14 @@
 import {
   FormControl,
   FormHelperText,
+  InputBase,
   InputLabel,
   MenuItem,
   Select,
   TextField
 } from '@material-ui/core'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import _ from 'lodash'
 import { AutoComplete } from 'core/components/AutoComplete'
 import { Controller } from 'react-hook-form'
 import { Observer } from 'mobx-react-lite'
@@ -15,7 +17,12 @@ import { jobType, salary } from '../../services/constantVariable'
 const AnnouncementMainInfoForm = (props) => {
   const { errors, register, control, data, jobPosition, companyName, authContext } = props
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  useEffect(() => {}, [authContext])
+  useEffect(() => {}, [errors, register, control, data, jobPosition, companyName, authContext])
+  const [jobTypes, setJobTypes] = useState(data?.announcement?.job_type || [])
+
+  const handleChange = (event) => {
+    setJobTypes([event.target.value])
+  }
 
   return (
     <div>
@@ -80,9 +87,15 @@ const AnnouncementMainInfoForm = (props) => {
             <Controller
               control={control}
               name="job_type"
+              defaultValue={jobTypes}
               as={
-                <Select id="select-outlined-label">
-                  {jobType.map((job) => (
+                <Select
+                  multiple
+                  onChange={handleChange}
+                  value={jobTypes}
+                  input={<InputBase />}
+                  id="select-outlined-label">
+                  {_.map(jobType, (job) => (
                     <MenuItem key={job.title} value={job.title}>
                       {job.title}
                     </MenuItem>
@@ -107,7 +120,7 @@ const AnnouncementMainInfoForm = (props) => {
               name="salary"
               as={
                 <Select id="select-outlined-label">
-                  {salary.map((salary) => (
+                  {_.map(salary, (salary) => (
                     <MenuItem key={salary.title} value={salary.title}>
                       {salary.title}
                     </MenuItem>
