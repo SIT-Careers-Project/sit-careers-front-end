@@ -11,7 +11,7 @@ import { Controller } from 'react-hook-form'
 import { days } from '../../services/constantVariable'
 
 const AnnouncementBusinessDateInfo = (props) => {
-  const { errors, register, control } = props
+  const { errors, register, control, data } = props
 
   return (
     <div>
@@ -29,6 +29,7 @@ const AnnouncementBusinessDateInfo = (props) => {
               control={control}
               id="start-business-day-select"
               name="start_business_day"
+              defaultValue={data?.announcement?.start_business_day || ''}
               as={
                 <Select id="select-outlined-label">
                   {days.map((data) => (
@@ -55,6 +56,7 @@ const AnnouncementBusinessDateInfo = (props) => {
             inputRef={register}
             error={!!errors.start_business_time}
             helperText={errors.start_business_time?.message}
+            defaultValue={data?.announcement?.start_business_time || ''}
             fullWidth
           />
         </div>
@@ -73,6 +75,7 @@ const AnnouncementBusinessDateInfo = (props) => {
               control={control}
               id="end-business-day-select"
               name="end_business_day"
+              defaultValue={data?.announcement?.end_business_day || ''}
               as={
                 <Select id="select-outlined-label">
                   {days.map((data) => (
@@ -99,6 +102,7 @@ const AnnouncementBusinessDateInfo = (props) => {
             inputRef={register}
             error={!!errors.end_business_time}
             helperText={errors.end_business_time?.message}
+            defaultValue={data?.announcement?.start_business_time || ''}
             fullWidth
           />
         </div>

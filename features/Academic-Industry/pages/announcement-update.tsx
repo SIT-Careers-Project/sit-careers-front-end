@@ -77,6 +77,7 @@ const AnnouncementUpdateForm = ({ authContext }) => {
                 changeEndDate={(event) => {
                   context.keyChange('endDate', event.target.value)
                 }}
+                data={context}
                 closeAnnouncement={() => context.keyChange('endDate', context.closeDate)}
               />
               <div>
@@ -132,17 +133,30 @@ const AnnouncementUpdateForm = ({ authContext }) => {
                     ref={register}
                   />
                   <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                    <AnnouncementPropertyInfoForm register={register} errors={errors} />
-                    <AnnouncementWalfareInfoForm register={register} errors={errors} />
+                    <AnnouncementPropertyInfoForm
+                      data={context}
+                      register={register}
+                      errors={errors}
+                    />
+                    <AnnouncementWalfareInfoForm
+                      data={context}
+                      register={register}
+                      errors={errors}
+                    />
                   </div>
                   <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                    <AnnouncementCompanyLocationInfo register={register} errors={errors} />
+                    <AnnouncementCompanyLocationInfo
+                      data={context}
+                      register={register}
+                      errors={errors}
+                    />
                   </div>
                   <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                     <AnnouncementBusinessDateInfo
                       register={register}
                       errors={errors}
                       control={control}
+                      data={context}
                     />
                   </div>
                 </div>

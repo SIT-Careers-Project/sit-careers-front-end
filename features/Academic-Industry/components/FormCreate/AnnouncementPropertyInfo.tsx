@@ -1,8 +1,11 @@
 import { FormControl, TextField } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const AnnouncementPropertyInfoForm = (props) => {
-  const { errors, register } = props
+  const { errors, register, data } = props
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  useEffect(() => {}, [data, register])
 
   return (
     <div className="flex flex-col pb-6">
@@ -12,7 +15,7 @@ const AnnouncementPropertyInfoForm = (props) => {
           label="คุณสมบัติ *"
           className="border-opacity-50 place-content-start border-DEFAULT"
           variant="outlined"
-          defaultValue=""
+          defaultValue={data?.announcement?.property || ''}
           rows={5}
           multiline
           fullWidth

@@ -75,7 +75,7 @@ const AnnouncementInfo = ({ authContext }) => {
               <>
                 {contextInfo.announcements
                   .slice(contextPagination.sliceDataStart, contextPagination.sliceDataEnd)
-                  .map((data) => {
+                  .map((data, i) => {
                     const startDate = dayjs(data?.start_date)
                       .locale('th')
                       .format('DD MMMM YYYY hh:mm')
@@ -83,7 +83,7 @@ const AnnouncementInfo = ({ authContext }) => {
                     const status = checkStatus(data?.start_date, data?.end_date, data?.status)
 
                     return (
-                      <div className="pt-5" key={data?.announcement_id}>
+                      <div className="pt-5" key={i}>
                         <Announcement
                           title={data?.announcement_title}
                           tags={[data?.job_position, data?.job_type]}

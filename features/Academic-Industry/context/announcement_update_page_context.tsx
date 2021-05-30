@@ -59,7 +59,7 @@ export class AnnouncementUpdatePageContext {
   getAnnouncement = async (announcement_id) => {
     try {
       const response = await apiService.getAnnouncementById(announcement_id)
-      this.announcement = response.data
+      this.announcement = response.data[0]
     } catch (error) {
       console.log(error)
     }
