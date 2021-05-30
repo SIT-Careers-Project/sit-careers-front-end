@@ -8,7 +8,7 @@ describe('The User Management Page', () => {
   it('It is a have footer component', () => {
     cy.get('[data-cy=core-footer]').should('be.visible')
   })
-  it('should show modal add user when click button เพิ่มผู้ประสานงาน.', () => {
+  it.skip('should show modal add user when click button เพิ่มผู้ประสานงาน.', () => {
     cy.contains('เพิ่มผู้ประสานงาน').click()
     cy.contains('เพิ่มผู้ใข้งาน')
     cy.get('button').should('contain.text', 'เพิ่ม')
