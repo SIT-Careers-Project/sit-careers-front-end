@@ -15,6 +15,8 @@ import { Card as MaterialCard, Typography } from '@material-ui/core'
 import Link from 'next/link'
 import { TagStatus } from 'core/components/TagStatus'
 import { checkStatus } from '../../../core/services/utils'
+import _ from 'lodash'
+
 const { publicRuntimeConfig } = getConfig()
 
 interface AnnouncementDetailProps {
@@ -51,17 +53,32 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
           <div className="p-5 align-middle">
             <div className="flex flex-row">
               <div className="w-3/4">
-                <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
+                <div className="mb-2 font-bold text-primary font-sarabun text-subtitle-1">
                   {data?.announcement_title}
-                </Typography>
+                </div>
                 <TagStatus status={checkStatus(data?.start_date, data?.end_date, data?.status)} />
-                {[`${data?.job_type}`, `${data?.job_position}`].map((item, i) => (
+                {[`${data?.job_position}`].map((item, i) => (
                   <span
                     key={i}
                     className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-primary">
                     {item}
                   </span>
                 ))}
+                <div>
+                  <Typography className="pt-2 ml-1 font-bold text-red font-prompt text-heading-6">
+                    <QueryBuilder className="mb-2 mr-2" />
+                    <span>
+                      {dayjs(data?.start_date)
+                        .locale('th')
+                        .add(543, 'year')
+                        .format('DD/MM/YYYY h:mm A - ')}
+                      {dayjs(data?.end_date)
+                        .locale('th')
+                        .add(543, 'year')
+                        .format('DD/MM/YYYY h:mm A')}
+                    </span>
+                  </Typography>
+                </div>
               </div>
               <div className="flex justify-end w-1/4 h-12 grid-cols-12">
                 {checkStatus(data?.start_date, data?.end_date, data?.status) === 'OPEN' && (
@@ -80,55 +97,60 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
                 )}
               </div>
             </div>
-            <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
-            <div className="w-3/4">
-              <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
-                <QueryBuilder className="mb-2 mr-2" />
-                <span>
-                  {dayjs(data?.start_date).locale('th').add(543, 'year').format('DD MMMM')} -{' '}
-                  {dayjs(data?.end_date).locale('th').add(543, 'year').format('DD MMMM YYYY')}
-                </span>
-              </Typography>
-              <div className="pt-2 pb-2">
+            <div className="w-full h-1 mt-2 mb-3 bg-secondary1" />
+            <div>
+              <div className="mb-2 font-bold text-primary font-sarabun text-subtitle-1">
+                ประเภทของประกาศ
+                <div className="pt-2 pb-5">
+                  {_.map(data?.job_type, (item, i) => (
+                    <span
+                      key={i}
+                      className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-primary">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="pt-2 pb-5">
                 <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
-                  <Assignment className="mb-2 mr-2" />
+                  <Assignment className="mr-2" />
                   รายละเอียดงาน
                 </Typography>
-                <Typography className="mb-3 ml-1 font-bold text-black font-prompt text-heading-6">
+                <div className="mt-2 ml-1 text-black font-sarabun text-subtitle-1">
                   {data?.job_description}
-                </Typography>
+                </div>
               </div>
-              <div className="pt-2 pb-2">
+              <div className="pt-2 pb-5">
                 <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
-                  <CheckBox className="mb-2 mr-2" />
+                  <CheckBox className="mr-2" />
                   คุณสมบัติ
                 </Typography>
-                <Typography className="mb-3 ml-1 font-bold text-blackfont-prompt text-heading-6">
+                <div className="mt-2 ml-1 text-black font-sarabun text-subtitle-1">
                   {data?.property}
-                </Typography>
+                </div>
               </div>
-              <div className="pt-2 pb-2">
+              <div className="pt-2 pb-5">
                 <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
-                  <AttachMoney className="mb-2 mr-2" />
+                  <AttachMoney />
                   เงินเดือน
                 </Typography>
-                <Typography className="mb-3 ml-1 font-bold text-black font-prompt text-heading-6">
+                <div className="mt-2 ml-1 text-black font-sarabun text-subtitle-1">
                   {data?.salary}
-                </Typography>
+                </div>
               </div>
-              <div className="pt-2 pb-2">
+              <div className="pt-2 pb-5">
                 <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
-                  <FreeBreakfast className="mb-2 mr-2" />
+                  <FreeBreakfast className="mr-2" />
                   สวัสดิการ
                 </Typography>
-                <Typography className="mb-3 ml-1 font-bold text-black font-prompt text-heading-6">
+                <div className="mt-2 ml-1 text-black font-sarabun text-subtitle-1">
                   {data?.welfare}
-                </Typography>
+                </div>
               </div>
-              <div className="pt-2 pb-2">
+              <div className="pt-2 pb-5">
                 <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
                   <div className="flex flex-row">
-                    <Business className="mb-2 mr-2" />
+                    <Business className="mr-2" />
                     <Link href={`/company/detail/${data?.company_id}`}>
                       <div className="cursor-pointer hover:underline hover:text-secondary1">
                         สถานที่ปฏิบัติงาน
@@ -137,21 +159,21 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
                     </Link>
                   </div>
                 </Typography>
-                <Typography className="mb-3 ml-1 font-bold text-black font-prompt text-heading-6">
+                <div className="mt-2 ml-1 text-black font-sarabun text-subtitle-1">
                   {data?.company_name_th} {data?.address_one} {data?.lane} {data?.road}
                   {data?.district} {data?.sub_district}
                   {data?.province} {data?.postal_code}
-                </Typography>
+                </div>
               </div>
-              <div className="pt-2 pb-2">
+              <div className="pt-2 pb-5">
                 <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
-                  <QueryBuilder className="mb-2 mr-2" />
+                  <QueryBuilder className="mr-2" />
                   วันที่ทำการ
                 </Typography>
-                <Typography className="mb-3 ml-1 font-bold text-black font-prompt text-heading-6">
+                <div className="mt-2 ml-1 text-black font-sarabun text-subtitle-1">
                   {data?.start_business_day} - {data?.end_business_day} เวลา{' '}
                   {data?.start_business_time} - {data?.end_business_time} น.
-                </Typography>
+                </div>
               </div>
             </div>
           </div>

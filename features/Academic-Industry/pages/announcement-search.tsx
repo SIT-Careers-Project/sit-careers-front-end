@@ -170,7 +170,7 @@ const AnnouncementSearch = () => {
                                     data?.end_date,
                                     data?.status
                                   )}
-                                  tags={[data?.job_position, data?.job_type]}
+                                  tags={[data?.job_position]}
                                   date={`${dayjs(data?.start_date)
                                     .locale('th')
                                     .add(543, 'year')
