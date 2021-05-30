@@ -31,7 +31,7 @@ export const AnnouncementCardSection = (props) => {
                         .add(543, 'year')
                         .format('DD MMMM YYYY')}`}
                       status={checkStatus(data.start_date, data.end_date, data.status)}
-                      tags={[`${data.job_position}`, `${data.job_type}`]}
+                      tags={[`${data.job_position}`]}
                       srcImg={data.logo}
                     />
                   </div>

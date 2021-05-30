@@ -15,6 +15,7 @@ interface AnnouncementProps {
   company?: string
   linkPath?: string
   status?: string
+  jobType?: Array<string>
 }
 
 export const Announcement = ({
@@ -25,7 +26,8 @@ export const Announcement = ({
   title,
   date,
   company,
-  linkPath
+  linkPath,
+  jobType
 }: AnnouncementProps) => (
   <>
     <MaterialCard
@@ -64,6 +66,13 @@ export const Announcement = ({
               key={i}
               className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-primary">
               {data}
+            </span>
+          ))}
+          {jobType.map((item, i) => (
+            <span
+              key={i}
+              className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-primary">
+              {item}
             </span>
           ))}
         </div>
