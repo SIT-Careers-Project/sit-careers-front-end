@@ -45,7 +45,7 @@ function Index() {
               </div>
               <div className="col-span-4">
                 <StatCard
-                  title="ประการรับสมัครงาน"
+                  title="ประกาศรับสมัครงาน"
                   stat={context.statInfo.count_all_announcements}
                   icon={<Assignment style={{ color: 'white', fontSize: '87px' }} />}
                 />

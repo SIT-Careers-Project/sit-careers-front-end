@@ -39,6 +39,11 @@ const ApplicationHistory = ({ authContext }) => {
       field: 'status'
     },
     {
+      title: 'อัพเดตล่าสุด',
+      filed: 'updated_at',
+      render: (rowData) => new Date(rowData.updated_at).toLocaleDateString('en-GB')
+    },
+    {
       title: 'รายละเอียด',
       field: 'announcement_resume_id',
       render: (rowData) => (

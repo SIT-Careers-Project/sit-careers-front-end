@@ -1,6 +1,6 @@
 describe('[Company feature] Add company', () => {
   it('It should add data of company success.', () => {
-    cy.visit('/company/company-table')
+    cy.visit('/company/info')
     cy.contains('เพิ่มบริษัท').click()
     cy.wait(1000)
   })
@@ -43,7 +43,7 @@ describe('[Company feature] Add company', () => {
 
 describe('[Company feature] Update company', () => {
   it('Go to company table page', () => {
-    cy.visit('/company/company-table')
+    cy.visit('/company/info')
     cy.wait(1000)
   })
 

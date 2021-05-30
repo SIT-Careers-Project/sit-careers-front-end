@@ -19,11 +19,11 @@ export const dropdownLinkAdmin = [
     path: '/resume/info',
     name: 'โปรไฟล์สมัครงาน',
     icon: <AccountBox />,
-    role: ['admin', 'student'],
+    role: ['student'],
     permission: ['access_resume', 'create_resume']
   },
   {
-    path: '/company/company-table',
+    path: '/company/info',
     name: 'จัดการข้อมูลบริษัท',
     icon: <Business />,
     role: ['admin', 'manager', 'coordinator'],
@@ -50,6 +50,7 @@ export const dropdownLinkAdmin = [
     role: ['admin'],
     permission: ['access_dashboard']
   },
+
   {
     path: '/user-management/info',
     name: 'จัดการผู้ใช้งาน',
