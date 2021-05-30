@@ -1,8 +1,11 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, configure } from 'mobx'
 import { sortAnnouncement } from '../../../core/services/utils'
 import apiService from '../services/apiAcademicIndustry'
 import { createContext } from 'react'
 
+configure({
+  enforceActions: 'never'
+})
 export class AnnouncementInfoContext {
   announcements
   beforeSearch

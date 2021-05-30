@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState, useContext, useMemo, useCallback } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import _ from 'lodash'
 import Image from 'next/image'
 import getConfig from 'next/config'
