@@ -2,7 +2,7 @@ import { FormControl, TextField } from '@material-ui/core'
 import React from 'react'
 
 const AnnouncementWalfareInfoForm = (props) => {
-  const { errors, register } = props
+  const { errors, register, data } = props
 
   return (
     <div className="flex flex-col pb-3">
@@ -12,7 +12,7 @@ const AnnouncementWalfareInfoForm = (props) => {
           label="สวัสดิการ *"
           className="border-opacity-50 place-content-start border-DEFAULT"
           variant="outlined"
-          defaultValue=""
+          defaultValue={data?.announcement?.welfare || ''}
           rows={5}
           multiline
           fullWidth

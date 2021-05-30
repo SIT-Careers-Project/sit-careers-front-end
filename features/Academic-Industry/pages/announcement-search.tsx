@@ -158,7 +158,7 @@ const AnnouncementSearch = () => {
                   <div className="w-full mr-5 md:w-5/12">
                     {context.announcements.length !== 0 ? (
                       <>
-                        {context.announcements
+                        {toJS(context.announcements)
                           .slice(contextPagination.sliceDataStart, contextPagination.sliceDataEnd)
                           .map((data, i) => {
                             return (

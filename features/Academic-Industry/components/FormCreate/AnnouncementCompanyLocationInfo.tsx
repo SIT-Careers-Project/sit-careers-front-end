@@ -2,7 +2,7 @@ import { TextField } from '@material-ui/core'
 import React from 'react'
 
 const AnnouncementCompanyLocationInfo = (props) => {
-  const { errors, register } = props
+  const { errors, register, data } = props
 
   return (
     <div>
@@ -16,6 +16,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
           inputRef={register}
           error={!!errors.address_one}
           helperText={errors.address_one?.message}
+          defaultValue={data?.announcement?.address_one || ''}
           fullWidth
         />
       </div>
@@ -28,6 +29,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
           inputRef={register}
           error={!!errors.address_two}
           helperText={errors.address_two?.message}
+          defaultValue={data?.announcement?.address_two || ''}
           fullWidth
         />
       </div>
@@ -41,6 +43,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             inputRef={register}
             error={!!errors.lane}
             helperText={errors.lane?.message}
+            defaultValue={data?.announcement?.lane || ''}
             fullWidth
           />
         </div>
@@ -53,6 +56,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             inputRef={register}
             error={!!errors.road}
             helperText={errors.road?.message}
+            defaultValue={data?.announcement?.road || ''}
             fullWidth
           />
         </div>
@@ -65,6 +69,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             inputRef={register}
             error={!!errors.sub_district}
             helperText={errors.sub_district?.message}
+            defaultValue={data?.announcement?.sub_district || ''}
             fullWidth
           />
         </div>
@@ -79,6 +84,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             inputRef={register}
             error={!!errors.district}
             helperText={errors.district?.message}
+            defaultValue={data?.announcement?.district || ''}
             fullWidth
           />
         </div>
@@ -91,6 +97,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             inputRef={register}
             error={!!errors.province}
             helperText={errors.province?.message}
+            defaultValue={data?.announcement?.province || ''}
             fullWidth
           />
         </div>
@@ -103,6 +110,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             inputRef={register}
             error={!!errors.postal_code}
             helperText={errors.postal_code?.message}
+            defaultValue={data?.announcement?.postal_code || ''}
             fullWidth
           />
         </div>

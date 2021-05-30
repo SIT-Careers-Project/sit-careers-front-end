@@ -14,17 +14,18 @@ const AnnouncementDateInfoForm = (props) => {
     changeEndDate,
     showCloseButton,
     onSubmit,
-    openModal
+    openModal,
+    data
   } = props
 
   useEffect(() => {}, [startDate, endDate])
 
   return (
-    <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-10">
+    <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
       <div>
         <p className="font-semibold font-prompt text-heading-6">วันประกาศรับสมัคร</p>
       </div>
-      <div className="flex flex-row pb-3 pt-5">
+      <div className="flex flex-row pt-5 pb-3">
         <div className="pr-6">
           <TextField
             id="datetime-local"
@@ -34,6 +35,7 @@ const AnnouncementDateInfoForm = (props) => {
             InputLabelProps={{
               shrink: true
             }}
+            defaultValue={data?.announcement[0]?.start_date || ''}
             name="start_date"
             value={startDate}
             onChange={changeStartDate}
@@ -54,6 +56,7 @@ const AnnouncementDateInfoForm = (props) => {
             InputLabelProps={{
               shrink: true
             }}
+            defaultValue={data?.announcement[0]?.end_date || ''}
             name="end_date"
             value={endDate}
             onChange={changeEndDate}
