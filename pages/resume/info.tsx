@@ -9,7 +9,7 @@ const ResumeInfo = ({ authContext }) => {
 
   useEffect(() => {
     authContext.fetchMe().then(() => {
-      const path = checkLoggedIn(authContext.isLoggedIn, ['admin', 'student'], authContext.roleUser)
+      const path = checkLoggedIn(authContext.isLoggedIn, ['student'], authContext.roleUser)
       path && router.push(path)
     })
   }, [authContext, router])
