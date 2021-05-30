@@ -43,9 +43,9 @@ export default function Navbar({ authContext }) {
               <div className="flex flex-row items-center justify-between h-full">
                 <Link href="/">
                   <div
-                    style={{ height: '40px', width: '82px' }}
+                    style={{ height: '30px', width: '100px' }}
                     className="mt-2 font-semibold text-white cursor-pointer font-prompt">
-                    <img src="/image/sit-logo.png" alt="sit logo" />
+                    <img src="/image/sit-career-center.svg" alt="sit logo" />
                   </div>
                 </Link>
                 <ul className="flex flex-row list-none lg:flex-row">

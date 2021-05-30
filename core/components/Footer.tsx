@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 const Footer = () => {
   return (
@@ -15,16 +16,22 @@ const Footer = () => {
             <div className="font-semibold text-primary font-prompt text-body-1">ติดต่อเรา</div>
             <div className="mt-2 text-body-1 font-prompt">66 2470 9850</div>
             <div className="mt-2 text-body-1 font-prompt">webadmin@sit.kmutt.ac.th</div>
-            <button className="p-2 mt-10 text-white text-body-1 bg-secondary2">Logo</button>
+            <Link href="/">
+              <div
+                style={{ height: '30px', width: '120px' }}
+                className="mt-10 font-semibold text-white cursor-pointer font-prompt">
+                <img src="/image/sit-career-center-footer.svg" alt="sit logo" />
+              </div>
+            </Link>
           </div>
           <div className="relative flex flex-col justify-center h-full col-span-8">
             <div>
-              <p className="text-body-1 text-primary font-prompt-semibold">สถานที่ทำการ</p>
-              <p className="mb-5 text-body-1 font-prompt">
-                126 ถนนประชาอุทิศ แขวงบางมด เขตทุ่งครุ กรุงเทพฯ 10140
+              <p className="mt-2 text-body-1 text-primary font-prompt-semibold">สถานที่ทำการ</p>
+              <p className="mt-2 mb-2 text-body-1 font-prompt">
+                126 คณะเทคโนโลยีสารสนเทศ ถนนประชาอุทิศ แขวงบางมด เขตทุ่งครุ กรุงเทพฯ 10140
               </p>
               <p className="text-body-1 text-primary font-prompt-semibold">วันที่ทำการ</p>
-              <p className="text-body-1 font-prompt">
+              <p className="mt-2 text-body-1 font-prompt">
                 วันจันทร์ – วันศุกร์ เวลา 08.30 น. – 16.30 น.
               </p>
             </div>
