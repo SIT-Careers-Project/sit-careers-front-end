@@ -13,7 +13,7 @@ const CorePagination = (props: CorePaginationProps) => {
   const context = useContext(paginationContext)
 
   return (
-    <div className="flex items-center justify-center w-full mt-5">
+    <div className="flex items-center justify-center w-full my-5">
       <Pagination
         count={Math.ceil(data.length / context.itemsPerPage)}
         page={context.page}
