@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, Input } from '@material-ui/core'
+import { FormControl, InputLabel, MenuItem, Select, Input, InputBase } from '@material-ui/core'
 import { companyType, jobType } from '../services/constantVariable'
 import { CardSmall } from '../../../core/components/Card/Small'
 import PrimaryButton from '../../../core/components/Button/Primary'
@@ -92,8 +92,7 @@ const AnnouncementSearch = () => {
                       multiple
                       value={context.jobPosition}
                       onChange={(event) => context.setValue('jobPosition', event?.target?.value)}
-                      input={<Input />}
-                      MenuProps={MenuProps}>
+                      input={<InputBase />}>
                       {_.map(context.jobPositions, (position, i) => (
                         <MenuItem key={i} value={position.job_position}>
                           {position.job_position}
