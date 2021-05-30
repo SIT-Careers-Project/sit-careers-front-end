@@ -86,7 +86,8 @@ const AnnouncementInfo = ({ authContext }) => {
                       <div className="pt-5" key={i}>
                         <Announcement
                           title={data?.announcement_title}
-                          tags={[data?.job_position, data?.job_type]}
+                          tags={[data?.job_position]}
+                          jobType={data?.job_type}
                           status={status}
                           date={`${startDate} - ${endDate}`}
                           company={`${data?.company_name_th} - ${data?.company_name_en}`}
