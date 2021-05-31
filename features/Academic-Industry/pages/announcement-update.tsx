@@ -170,6 +170,7 @@ const AnnouncementUpdateForm = ({ authContext }) => {
                 </div>
                 {!context.modalCloseAnnouncement && coreModalContext.isOpen && (
                   <CoreModal
+                    isDisable={context.disableButton}
                     buttonSubmit="บันทึก"
                     title="บันทึกข้อมูลประกาศรับสมัคร"
                     content={

@@ -90,7 +90,7 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
                 )}
                 {checkStatus(data?.start_date, data?.end_date, data?.status) === 'CLOSE' && (
                   <button className="text-white bg-opacity-50 bg-primary" disabled>
-                    <p className="px-5 py-3 text-white cursor-default font-prompt text-subtitle-1">
+                    <p className="px-5 py-3 focus:outline-none text-white cursor-default font-prompt text-subtitle-1">
                       สมัคร
                     </p>
                   </button>
