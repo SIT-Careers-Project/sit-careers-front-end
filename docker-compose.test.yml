@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+
+  cypress:
+    image: sit-careers:cypress-${IMAGE_TAG}
+    working_dir: /app
+    restart: always
+    ipc: host
+    networks:
+      - sit-careers
+
+networks:
+  sit-careers:
+    driver: bridge

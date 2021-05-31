@@ -1,0 +1,21 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "video": false,
+  "viewportWidth": 1980,
+  "viewportHeight": 1080,
+  "env": {
+    "api": "https://dev-apitesting.sit-industry.systems/api"
+  },
+  "testFiles": [
+    "Login/login.spec.js",
+    "Company/company-form.spec.js",
+    "Company/company-info.spec.js",
+    "Academic-Industry/announcement-form.spec.js",
+    "Academic-Industry/announcement-application.spec.js",
+    "Academic-Industry/announcement-info.spec.js",
+    "Academic-Industry/announcement-search.spec.js",
+    "Academic-Industry/announcement-history.spec.js",
+    "Report-Management/report-info.spec.js",
+    "User-Management/user-info.spec.js"
+  ]
+}

@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+
+  frontend:
+    image: sit-careers:local
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile.local
+    working_dir: /app
+    container_name: sit-careers-frontend
+    restart: always
+    command: sh -c "./docker/app/yarn-local.sh"
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+    env_file: .env
+    networks:
+      - sit-careers
+      - sit-careers-api_sit-careers
+
+networks:
+  sit-careers:
+    driver: bridge
+  sit-careers-api_sit-careers:
+    external: true

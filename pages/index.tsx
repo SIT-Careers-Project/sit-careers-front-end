@@ -1,5 +1,16 @@
-import HomePage from '../features/HomePage/components/index'
+import Footer from '../core/components/Footer'
+import HomePage from '../features/HomePage/pages'
+import Navbar from '../core/components/Navbar'
+import React from 'react'
 
-export default function Home() {
-  return <HomePage />
+const Home = ({ authContext }) => {
+  return (
+    <>
+      <Navbar authContext={authContext} />
+      <HomePage />
+      <Footer />
+    </>
+  )
 }
+
+export default Home
