@@ -147,6 +147,7 @@ const CompanyForm = ({ authContext }) => {
                 )}
               {!context.modalDelete && coreModalContext.isOpen && (
                 <CoreModal
+                  isDisable={context.disableButton}
                   buttonSubmit="บันทึก"
                   title="บันทึกข้อมูลบริษัท"
                   content={
