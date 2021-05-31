@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Observer } from 'mobx-react-lite'
 import { Dialog, DialogActions } from '@material-ui/core'
 import { modalContext } from '../contexts/modal_context'
@@ -16,6 +16,9 @@ export const CoreModal = (props: ModalProps) => {
   const { onSubmit, title, content, buttonSubmit, isDisable, color } = props
   const context = useContext(modalContext)
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  useEffect(() => {}, [isDisable])
+
   return (
     <Observer>
       {() => (
@@ -27,12 +30,21 @@ export const CoreModal = (props: ModalProps) => {
               <button onClick={context.closeModal} className="text-secondary2 focus:outline-none">
                 <p className="px-5 py-2 font-prompt">ยกเลิก</p>
               </button>
-              <button
-                onClick={onSubmit}
-                disabled={isDisable}
-                className={`text-white ${color || 'bg-primary'} focus:outline-none`}>
-                <p className="px-5 py-2 font-prompt">{buttonSubmit}</p>
-              </button>
+              <div className="relative bg-primary">
+                <button
+                  onClick={onSubmit}
+                  disabled={isDisable}
+                  className={`text-white ${
+                    color || isDisable ? 'bg-primary opacity-50' : 'bg-primary'
+                  } focus:outline-none`}>
+                  {!isDisable && <p className="px-5 py-2 font-prompt">{buttonSubmit}</p>}
+                  {isDisable && (
+                    <div className="flex flex-col justify-center px-5 py-2">
+                      <div className="loader" />
+                    </div>
+                  )}
+                </button>
+              </div>
             </DialogActions>
           </div>
         </Dialog>

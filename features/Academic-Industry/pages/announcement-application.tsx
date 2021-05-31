@@ -3,6 +3,7 @@ import { Card as MaterialCard, CardMedia } from '@material-ui/core'
 import { InfoOutlined, Launch } from '@material-ui/icons'
 import { Observer } from 'mobx-react-lite'
 import { announcementApplicationFormContext } from '../context/announcement_application_page_context'
+import { AlertContext } from 'core/contexts/alert_context'
 import { modalContext } from '../../../core/contexts/modal_context'
 import { CoreModal } from '../../../core/components/Modal'
 import PrimaryButton from '../../../core/components/Button/Primary'
@@ -15,6 +16,7 @@ const { publicRuntimeConfig } = getConfig()
 
 const ApplicationInfo = () => {
   const context = useContext(announcementApplicationFormContext)
+  const alertContext = useContext(AlertContext)
   const coreModalContext = useContext(modalContext)
   const router = useRouter()
 
@@ -24,6 +26,7 @@ const ApplicationInfo = () => {
 
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
+    context.keyChange('alert', alertContext)
     context.getAnnouncementById(router.query.announcement_id)
     context.getResumeByUserId().then(() => {
       setTimeout(() => {
@@ -31,7 +34,7 @@ const ApplicationInfo = () => {
       }, 400)
       setTimeout(() => context.keyChange('renderDelay', false), 1000)
     })
-  }, [context, coreModalContext, router, reset])
+  }, [context, coreModalContext, router, reset, alertContext])
 
   return (
     <Observer>
@@ -166,6 +169,7 @@ const ApplicationInfo = () => {
                             </PrimaryButton>
                           </div>
                           <CoreModal
+                            isDisable={context.disableButton}
                             buttonSubmit="สมัคร"
                             title="ยืนยันการสมัคร"
                             content={

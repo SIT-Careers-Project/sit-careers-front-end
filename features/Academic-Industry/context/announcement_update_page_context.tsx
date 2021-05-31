@@ -15,6 +15,7 @@ export class AnnouncementUpdatePageContext {
   showCloseButton
   renderDelay
   modalCloseAnnouncement
+  disableButton
 
   startDate
   endDate
@@ -32,6 +33,7 @@ export class AnnouncementUpdatePageContext {
       endDate: observable,
       renderDelay: observable,
       modalCloseAnnouncement: observable,
+      disableButton: observable,
       closeDate: observable,
       getAutoCompleteCompanies: action,
       getAutoCompleteJobPositions: action
@@ -45,6 +47,7 @@ export class AnnouncementUpdatePageContext {
     this.renderDelay = true
     this.showCloseButton = true
     this.modalCloseAnnouncement = false
+    this.disableButton = false
   }
 
   keyChange = (key, value) => {
@@ -67,9 +70,11 @@ export class AnnouncementUpdatePageContext {
 
   updateAnnouncement = async (data) => {
     try {
+      this.disableButton = true
       const checkOpen = checkStatus(data.start_date, data.end_date, data.status)
       data.status = checkOpen
       await apiService.updateAnnouncement(data).then(() => {
+        this.disableButton = false
         this.modal.closeModal()
         Router.push('/academic-industry/info-management')
       })

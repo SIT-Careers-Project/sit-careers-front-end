@@ -10,11 +10,13 @@ export class CompanyUpdatePageContext {
   modal
   modalDelete
   alert
+  disableButton
 
   constructor() {
     this.company = []
     this.modalDelete = false
     this.alert = ''
+    this.disableButton = false
 
     makeAutoObservable(this)
   }
@@ -50,13 +52,16 @@ export class CompanyUpdatePageContext {
 
   updateCompany = async (data) => {
     try {
+      this.disableButton = true
       await apiService.updateCompany(data).then(() => {
+        this.disableButton = false
         this.modal.closeModal()
         Router.push('/company/info')
         this.alert.setAlert('แก้ไขข้อมูลสำเร็จ', 'success', 'success', true)
       })
     } catch (error) {
       console.log(error)
+      this.disableButton = false
       if (error.response.status === 401) {
         this.alert.setAlert(
           'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
@@ -82,13 +87,16 @@ export class CompanyUpdatePageContext {
 
   requestDeleteCompany = async () => {
     try {
+      this.disableButton = true
       await apiService.requestDelete().then(() => {
+        this.disableButton = false
         this.modal.closeModal()
         Router.push('/company/info')
         this.alert.setAlert('ส่งคำร้องขอลบข้อมูลบริษัทสำเร็จ', 'success', 'success', true)
       })
     } catch (error) {
       console.log(error)
+      this.disableButton = false
       if (error.response.status === 401) {
         this.alert.setAlert(
           'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
@@ -109,12 +117,15 @@ export class CompanyUpdatePageContext {
 
   deleteCompany = async (companyId) => {
     try {
+      this.disableButton = true
       await apiService.deleteCompany(companyId).then(() => {
+        this.disableButton = false
         this.modal.closeModal()
         Router.push('/company/info')
       })
     } catch (error) {
       console.log(error)
+      this.disableButton = false
       if (error.response.status === 401) {
         this.alert.setAlert(
           'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
