@@ -121,6 +121,7 @@ const CompanyForm = ({ authContext }) => {
                 coreModalContext.isOpen &&
                 authContext.roleUser === 'admin' && (
                   <CoreModal
+                    isDisable={context.disableButton}
                     buttonSubmit="ลบข้อมูลบริษัท"
                     title="คุณต้องการลบข้อมูลบริษัทใช่หรือไม่"
                     color="bg-red"
@@ -134,6 +135,7 @@ const CompanyForm = ({ authContext }) => {
                 coreModalContext.isOpen &&
                 authContext.roleUser !== 'admin' && (
                   <CoreModal
+                    isDisable={context.disableButton}
                     buttonSubmit="ส่งคำขอ"
                     title="คุณต้องการส่งคำขอลบข้อมูลบริษัทใช่หรือไม่"
                     color="bg-red"

@@ -35,9 +35,9 @@ export const CoreModal = (props: ModalProps) => {
                   onClick={onSubmit}
                   disabled={isDisable}
                   className={`text-white ${
-                    color || isDisable ? 'bg-primary opacity-50' : 'bg-primary'
+                    color ? color : isDisable ? 'bg-primary opacity-50' : 'bg-primary'
                   } focus:outline-none`}>
-                  {!isDisable && <p className="px-5 py-2 font-prompt">{buttonSubmit}</p>}
+                  {!isDisable && <p className="px-5 py-2 text-white font-prompt">{buttonSubmit}</p>}
                   {isDisable && (
                     <div className="flex flex-col justify-center px-5 py-2">
                       <div className="loader" />
