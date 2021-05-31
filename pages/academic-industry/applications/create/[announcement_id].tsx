@@ -3,6 +3,7 @@ import { MainLayout } from '../../../../core/components/Layout/Main'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
+import { Alert } from 'core/components/Alert'
 
 const CreateApplication = ({ authContext }) => {
   const router = useRouter()
@@ -16,7 +17,8 @@ const CreateApplication = ({ authContext }) => {
 
   return (
     <MainLayout authContext={authContext}>
-      <div className="flex justify-center mt-16">
+      <div className="flex flex-col items-center mt-16">
+        <Alert />
         <ApplicationForm />
       </div>
     </MainLayout>
