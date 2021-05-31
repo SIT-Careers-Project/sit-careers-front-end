@@ -144,14 +144,14 @@ export default function Navbar({ authContext }) {
                               <button
                                 key={i}
                                 onClick={() => context.updateReadAt(data)}
-                                className="flex flex-col items-center justify-between h-full pt-2 focus:outline-none">
+                                className="flex flex-col items-center w-full h-full pt-2 focus:outline-none">
                                 <div
                                   style={{ wordWrap: 'break-word' }}
-                                  className="flex flex-col items-end justify-between h-full ml-3">
+                                  className="flex flex-col justify-between w-full h-full ml-3">
                                   <span className="text-left font-prompt-light text-body-2">
                                     {data?.message}
                                   </span>
-                                  <p className="text-black opacity-50 font-prompt text-body-2">
+                                  <p className="text-right text-black opacity-50 font-prompt text-body-2">
                                     {dayjs(data?.created_at).locale('th').fromNow()}
                                   </p>
                                 </div>

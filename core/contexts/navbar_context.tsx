@@ -4,6 +4,7 @@ import { createContext } from 'react'
 import { apiNotification } from '../services/apiNotification'
 import dayjs from 'dayjs'
 import { Router } from 'next/router'
+import { sortByDate } from 'core/services/utils'
 
 export class NavbarContext {
   anchorEl
@@ -35,7 +36,7 @@ export class NavbarContext {
   getNotifications = async () => {
     try {
       const response = await apiNotification.getNotification()
-      this.notifications = response.data
+      this.notifications = sortByDate(response.data, 'created_at')
     } catch (error) {
       console.log(error)
     }
