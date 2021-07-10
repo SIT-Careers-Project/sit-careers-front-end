@@ -46,6 +46,7 @@ export class CompanyFormPageContext {
         this.modalDisable = true
         this.modal.closeModal()
         this.alert.setAlert('บันทึกข้อมูลสำเร็จ', 'success', 'success', true)
+        window.scrollTo(0, 0)
       })
     } catch (error) {
       console.log(error)

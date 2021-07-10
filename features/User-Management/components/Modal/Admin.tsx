@@ -17,6 +17,9 @@ export const ModalAdmin = () => {
   useEffect(() => {
     context.getAutoCompleteCompanies()
     context.getRoles()
+    return () => {
+      context.keyChange('roles', [])
+    }
   }, [context])
 
   const { handleSubmit, register, errors, control } = useForm({

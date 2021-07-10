@@ -68,13 +68,12 @@ export class UserInfoPageContext {
       })
       this.alert.setAlert('เพิ่มผู้ใช้งานสำเร็จ', 'success', 'success', true)
     } catch (error) {
-      console.log(error)
-      this.alert.setAlert(
-        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้',
-        'error',
-        'error',
-        true
-      )
+      let message = 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้'
+      if (error.response.status === 400) {
+        message = `ไม่สามารถ เพิ่มผู้ประสานงานได้ เนื่องจากไม่มีชื่อบริษัทที่กรอกในระบบ กรุณากรอกเฉพาะชื่อที่มีให้ระบบเท่านั้นหรือถ้ายังไม่มีกรุณา เพิ่มข้อมูลบริษัท`
+      }
+      this.alert.setAlert(message, 'error', 'error', true)
+      this.modal.closeModal()
     }
   }
 
@@ -93,6 +92,7 @@ export class UserInfoPageContext {
         'error',
         true
       )
+      this.modal.closeModal()
     }
   }
 
@@ -100,8 +100,12 @@ export class UserInfoPageContext {
     try {
       const response = await apiUser.getRoles()
       this.roles = response.data
-      this.roles = _.remove(this.roles, function (currentObject) {
-        return currentObject.role_name !== 'other'
+      this.roles = _.filter(this.roles, function (currentObject) {
+        return (
+          currentObject.role_name !== 'other' &&
+          currentObject.role_name != 'student' &&
+          currentObject.role_name != 'admin'
+        )
       })
     } catch (error) {
       console.log(error)
