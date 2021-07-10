@@ -107,7 +107,6 @@ export class UserInfoPageContext {
           currentObject.role_name != 'admin'
         )
       })
-      console.log(this.roles)
     } catch (error) {
       console.log(error)
       this.alert.setAlert(
