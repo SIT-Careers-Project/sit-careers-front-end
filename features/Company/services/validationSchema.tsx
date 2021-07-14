@@ -11,12 +11,10 @@ export const CompanyFormSchema = yup.object().shape({
   //   ),
   company_name_th: yup
     .string()
-    .matches(/[^a-zA-Z0-9]/, '*จำเป็นต้องกรอก ชื่อภาษาไทย และต้องกรอกเป็นภาษาไทยเท่านั้น')
-    .required('*จำเป็นต้องกรอก ชื่อภาษาไทย'),
+    .matches(/[^a-zA-Z0-9]/, '*จำเป็นต้องกรอก ชื่อภาษาไทย และต้องกรอกเป็นภาษาไทยเท่านั้น'),
   company_name_en: yup
     .string()
-    .matches(/[a-zA-Z0-9]/, '*จำเป็นต้องกรอก ชื่ออังกฤษ และต้องกรอกเป็นภาษาอังกฤษเท่านั้น')
-    .required('*จำเป็นต้องกรอก ชื่ออังกฤษ'),
+    .matches(/[a-zA-Z0-9]/, '*จำเป็นต้องกรอก ชื่ออังกฤษ และต้องกรอกเป็นภาษาอังกฤษเท่านั้น'),
   company_type: yup.string().required('*จำเป็นต้องกรอก ประเภทบริษัท'),
   website: yup.string().required('*จำเป็นต้องกรอก เว็บไซต์บริษัท'),
   about_us: yup
