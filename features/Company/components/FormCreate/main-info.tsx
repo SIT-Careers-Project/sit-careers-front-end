@@ -11,7 +11,7 @@ import React from 'react'
 import { Controller } from 'react-hook-form'
 
 const MainInfoForm = (props) => {
-  const { register, errors, control } = props
+  const { register, errors, control, disable } = props
 
   return (
     <div>
@@ -22,11 +22,11 @@ const MainInfoForm = (props) => {
             name="company_name_th"
             variant="outlined"
             className="font-sarabun"
-            defaultValue=""
             inputRef={register}
             error={!!errors.company_name_th}
             helperText={errors.company_name_th?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-1/2 pl-3">
@@ -35,11 +35,11 @@ const MainInfoForm = (props) => {
             name="company_name_en"
             variant="outlined"
             className="font-sarabun"
-            defaultValue=""
             inputRef={register}
             error={!!errors.company_name_en}
             helperText={errors.company_name_en?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
       </div>

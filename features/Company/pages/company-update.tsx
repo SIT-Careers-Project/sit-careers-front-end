@@ -77,7 +77,21 @@ const CompanyForm = ({ authContext }) => {
                   <input name="logo" className="hidden" ref={register} />
                   <input name="company_id" className="hidden" ref={register} />
                 </button>
-                <MainInfoForm register={register} errors={errors} control={control} />
+                {authContext.roleUser === 'admin' ? (
+                  <MainInfoForm
+                    register={register}
+                    errors={errors}
+                    control={control}
+                    disable={false}
+                  />
+                ) : (
+                  <MainInfoForm
+                    register={register}
+                    errors={errors}
+                    control={control}
+                    disable={true}
+                  />
+                )}
                 <DetailInfoForm errors={errors} control={control} />
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
