@@ -9,6 +9,11 @@ import { AuthContext } from '../core/contexts/auth_context'
 import theme from '../core/config/theme'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { ModalBanner } from 'core/components/ModalBanner'
+import { configure } from 'mobx'
+
+configure({
+  enforceActions: 'never'
+})
 
 function App({ Component, pageProps }) {
   const useStore = () => useContext(AuthContext)

@@ -101,7 +101,7 @@ const UserInfo = ({ authContext }) => {
                   }}>
                   <p className="px-5 py-2 text-white cursor-pointer font-prompt text-subtitle-1">
                     <AddCircle className="mr-1" />
-                    เพิ่มผู้ประสานงาน
+                    เพิ่มผู้ใช้งาน
                   </p>
                 </button>
                 {authContext.roleUser === 'admin' && (

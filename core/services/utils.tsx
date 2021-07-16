@@ -48,6 +48,9 @@ export const checkRoleRender = (roleName) => {
     case 'student':
       tmpRoleName = 'นักศึกษา'
       break
+    case 'viewer':
+      tmpRoleName = 'ผู้ชม'
+      break
   }
   return tmpRoleName
 }

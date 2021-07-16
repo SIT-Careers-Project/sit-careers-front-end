@@ -11,11 +11,12 @@ export class UserInfoPageContext {
 
   users
   roles
+  roleViewer
+  roleSelected
   userDelete
   disableTrashButton
 
   selectRoleName
-  email
   autoCompleteCompany
   modalDelete
 
@@ -24,12 +25,13 @@ export class UserInfoPageContext {
     this.modal = ''
     this.modalDelete = false
     this.selectRoleName = ''
-    this.email = ''
     this.autoCompleteCompany = []
     this.users = []
     this.roles = []
     this.userDelete = []
     this.disableTrashButton = true
+    this.roleViewer = ''
+    this.roleSelected = ''
 
     makeAutoObservable(this)
   }
@@ -107,6 +109,7 @@ export class UserInfoPageContext {
           currentObject.role_name != 'admin'
         )
       })
+      this.roleViewer = _.find(this.roles, (value) => value.role_name === 'viewer')
     } catch (error) {
       console.log(error)
       this.alert.setAlert(
