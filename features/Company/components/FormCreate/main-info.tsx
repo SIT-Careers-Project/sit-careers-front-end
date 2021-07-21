@@ -11,7 +11,7 @@ import React from 'react'
 import { Controller } from 'react-hook-form'
 
 const MainInfoForm = (props) => {
-  const { register, errors, control, disable } = props
+  const { register, errors, control, disable, viewer } = props
 
   return (
     <div>
@@ -48,7 +48,8 @@ const MainInfoForm = (props) => {
           <FormControl
             error={!!errors?.company_type}
             className="w-full font-prompt"
-            variant="outlined">
+            variant="outlined"
+            disabled={viewer}>
             <InputLabel htmlFor="trinity-select" id="select-outlined-label">
               ประเภทธุรกิจ *
             </InputLabel>
@@ -79,6 +80,7 @@ const MainInfoForm = (props) => {
             error={!!errors.website}
             helperText={errors.website?.message}
             fullWidth
+            disabled={viewer}
           />
         </div>
       </div>
@@ -100,6 +102,7 @@ const MainInfoForm = (props) => {
                 rows={5}
                 multiline
                 fullWidth
+                disabled={viewer}
               />
             }
           />
