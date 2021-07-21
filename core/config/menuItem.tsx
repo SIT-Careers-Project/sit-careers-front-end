@@ -26,28 +26,28 @@ export const dropdownLinkAdmin = [
     path: '/company/info',
     name: 'จัดการข้อมูลบริษัท',
     icon: <Business />,
-    role: ['admin', 'manager', 'coordinator'],
+    role: ['admin', 'manager', 'coordinator', 'viewer'],
     permission: ['access_company', 'create_company']
   },
   {
     path: '/academic-industry/info-management',
     name: 'ลงประกาศรับสมัครงาน',
     icon: <Assignment />,
-    role: ['admin', 'manager', 'coordinator'],
+    role: ['admin', 'manager', 'coordinator', 'viewer'],
     permission: ['access_academic_announcement', 'create_academic_announcement']
   },
   {
     path: '/academic-industry/applications/history',
     name: 'ประวัติการสมัครงาน',
     icon: <AssignmentTurnedIn />,
-    role: ['admin', 'student', 'manager', 'coordinator'],
+    role: ['admin', 'student', 'manager', 'coordinator', 'viewer'],
     permission: ['access_history']
   },
   {
     path: '/report-management/info',
     name: 'ดาวห์โหลดรายงานสรุป',
     icon: <SaveAlt />,
-    role: ['admin'],
+    role: ['admin', 'viewer'],
     permission: ['access_dashboard']
   },
 
@@ -55,7 +55,7 @@ export const dropdownLinkAdmin = [
     path: '/user-management/info',
     name: 'จัดการผู้ใช้งาน',
     icon: <People />,
-    role: ['admin', 'manager'],
+    role: ['admin', 'manager', 'viewer'],
     permission: ['access_user']
   }
 ]
