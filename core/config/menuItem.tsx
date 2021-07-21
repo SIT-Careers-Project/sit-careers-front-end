@@ -41,7 +41,11 @@ export const dropdownLinkAdmin = [
     name: 'ประวัติการสมัครงาน',
     icon: <AssignmentTurnedIn />,
     role: ['admin', 'student', 'manager', 'coordinator', 'viewer'],
-    permission: ['access_history']
+    permission: [
+      'access_history',
+      'access_announcement_resume_by_company',
+      'access_announcement_resume_by_student'
+    ]
   },
   {
     path: '/report-management/info',
