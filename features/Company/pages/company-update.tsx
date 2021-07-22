@@ -77,31 +77,69 @@ const CompanyForm = ({ authContext }) => {
                   <input name="logo" className="hidden" ref={register} />
                   <input name="company_id" className="hidden" ref={register} />
                 </button>
-                {authContext.roleUser === 'admin' ? (
+                {authContext.roleUser === 'admin' && (
                   <MainInfoForm
                     register={register}
                     errors={errors}
                     control={control}
                     disable={false}
+                    viewer={false}
                   />
-                ) : (
+                )}
+                {authContext.roleUser === 'viewer' && (
                   <MainInfoForm
                     register={register}
                     errors={errors}
                     control={control}
                     disable={true}
+                    viewer={true}
                   />
                 )}
-                <DetailInfoForm errors={errors} control={control} />
+                {(authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') && (
+                  <MainInfoForm
+                    register={register}
+                    errors={errors}
+                    control={control}
+                    disable={true}
+                    viewer={false}
+                  />
+                )}
+                {authContext.roleUser === 'viewer' ? (
+                  <DetailInfoForm errors={errors} control={control} disable={true} />
+                ) : (
+                  <DetailInfoForm errors={errors} control={control} disable={false} />
+                )}
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                <ContractInfoForm register={register} errors={errors} />
+                {authContext.roleUser === 'viewer' ? (
+                  <ContractInfoForm register={register} errors={errors} disable={true} />
+                ) : (
+                  <ContractInfoForm register={register} errors={errors} disable={false} />
+                )}
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                <LocationInfoForm register={register} errors={errors} />
+                {authContext.roleUser === 'viewer' ? (
+                  <LocationInfoForm register={register} errors={errors} disable={true} />
+                ) : (
+                  <LocationInfoForm register={register} errors={errors} disable={false} />
+                )}
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                <CompanyDateInfoForm register={register} errors={errors} control={control} />
+                {authContext.roleUser === 'viewer' ? (
+                  <CompanyDateInfoForm
+                    register={register}
+                    errors={errors}
+                    control={control}
+                    disable={true}
+                  />
+                ) : (
+                  <CompanyDateInfoForm
+                    register={register}
+                    errors={errors}
+                    control={control}
+                    disable={false}
+                  />
+                )}
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 {authContext.roleUser === 'admin' ? (
@@ -125,11 +163,15 @@ const CompanyForm = ({ authContext }) => {
                     <p className="text-white font-prompt text-subtitle-1">ลบบริษัท</p>
                   </button>
                 )}
-                <PrimaryButton
-                  onClick={() => context.handlerModal(false, coreModalContext.openModal)}
-                  className="py-4 lg:w-1/4">
-                  <p className="text-white font-prompt text-subtitle-1">บันทึก</p>
-                </PrimaryButton>
+                {(authContext.roleUser === 'admin' ||
+                  authContext.roleUser === 'manager' ||
+                  authContext.roleUser === 'coordinator') && (
+                  <PrimaryButton
+                    onClick={() => context.handlerModal(false, coreModalContext.openModal)}
+                    className="py-4 lg:w-1/4">
+                    <p className="text-white font-prompt text-subtitle-1">บันทึก</p>
+                  </PrimaryButton>
+                )}
               </div>
               {context.modalDelete &&
                 coreModalContext.isOpen &&

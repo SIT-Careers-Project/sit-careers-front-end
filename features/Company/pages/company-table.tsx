@@ -17,7 +17,7 @@ const CompanyTable = ({ authContext }) => {
 
   useEffect(() => {
     context.changeKey('alert', alertContext)
-    if (authContext.roleUser === 'admin') {
+    if (authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') {
       context.getCompaniesByAdmin()
     } else {
       context.getCompaniesByCompany()
@@ -103,7 +103,7 @@ const CompanyTable = ({ authContext }) => {
         <Observer>
           {() => (
             <>
-              {authContext.roleUser === 'admin' && (
+              {(authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') && (
                 <CoreTable
                   column={column}
                   data={context.companies}

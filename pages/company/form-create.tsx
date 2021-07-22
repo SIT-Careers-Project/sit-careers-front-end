@@ -10,11 +10,7 @@ const CompanyInfo = ({ authContext }) => {
 
   useEffect(() => {
     authContext.fetchMe().then(() => {
-      const path = checkLoggedIn(
-        authContext.isLoggedIn,
-        ['admin', 'manager', 'coordinator'],
-        authContext.roleUser
-      )
+      const path = checkLoggedIn(authContext.isLoggedIn, ['admin'], authContext.roleUser)
       path && router.push(path)
     })
   }, [authContext, router])
