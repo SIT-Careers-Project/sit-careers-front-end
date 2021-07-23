@@ -18,7 +18,7 @@ const AnnouncementInfo = ({ authContext }) => {
   const contextPagination = useContext(paginationContext)
 
   useEffect(() => {
-    if (authContext.roleUser === 'admin') {
+    if (authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') {
       contextInfo.getAnnouncements()
     } else if (authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') {
       contextInfo.getAnnouncementByCompany()
@@ -34,16 +34,20 @@ const AnnouncementInfo = ({ authContext }) => {
             <div>
               <p className="text-heading-5 font-prompt">ลงประกาศรับสมัครงาน</p>
             </div>
-            <div>
-              <Link href="/academic-industry/form-create">
-                <button className="bg-primary focus:outline-none">
-                  <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
-                    <AddCircle className="mr-1" />
-                    สร้างประกาศ
-                  </p>
-                </button>
-              </Link>
-            </div>
+            {(authContext.roleUser === 'admin' ||
+              authContext.roleUser === 'manager' ||
+              authContext.roleUser === 'coordinator') && (
+              <div>
+                <Link href="/academic-industry/form-create">
+                  <button className="bg-primary focus:outline-none">
+                    <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
+                      <AddCircle className="mr-1" />
+                      สร้างประกาศ
+                    </p>
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
           <div className="w-full h-1 mt-5 mb-5 bg-secondary1" />
           <div className="w-full h-8 bg-grey-100">
