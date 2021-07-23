@@ -20,7 +20,7 @@ const UserInfo = ({ authContext }) => {
   const context = useContext(userInfoPageContext)
 
   const getData = useCallback(() => {
-    if (authContext.roleUser === 'admin') {
+    if (authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') {
       context.getUserByAdmin()
     } else {
       context.getUserByCompany()
@@ -89,42 +89,44 @@ const UserInfo = ({ authContext }) => {
         <div>
           <p className="text-heading-5 font-prompt">จัดการผู้ใช้งาน</p>
         </div>
-        <Observer>
-          {() => (
-            <>
-              <div className="flex justify-end grid-cols-12 gap-x-3" id="button-add-user">
-                <button
-                  className="bg-primary focus:outline-none"
-                  onClick={() => {
-                    context.keyChange('modalDelete', false)
-                    context.modal.openModal()
-                  }}>
-                  <p className="px-5 py-2 text-white cursor-pointer font-prompt text-subtitle-1">
-                    <AddCircle className="mr-1" />
-                    เพิ่มผู้ใช้งาน
-                  </p>
-                </button>
-                {authContext.roleUser === 'admin' && (
+        {authContext.roleUser === 'admin' && (
+          <Observer>
+            {() => (
+              <>
+                <div className="flex justify-end grid-cols-12 gap-x-3" id="button-add-user">
                   <button
-                    disabled={context.disableTrashButton}
+                    className="bg-primary focus:outline-none"
                     onClick={() => {
-                      context.keyChange('modalDelete', true)
+                      context.keyChange('modalDelete', false)
                       context.modal.openModal()
-                    }}
-                    className={`flex items-center focus:outline-none justify-center w-10 ${
-                      context.disableTrashButton
-                        ? 'text-grey-200 cursor-default bg-secondary2 opacity-25'
-                        : 'text-white cursor-pointer bg-red'
-                    }`}>
-                    <Delete fontSize="default" />
+                    }}>
+                    <p className="px-5 py-2 text-white cursor-pointer font-prompt text-subtitle-1">
+                      <AddCircle className="mr-1" />
+                      เพิ่มผู้ใช้งาน
+                    </p>
                   </button>
-                )}
-              </div>
-              {authContext.roleUser === 'admin' && !context.modalDelete && <ModalAdmin />}
-              {authContext.roleUser === 'manager' && !context.modalDelete && <ModalCompany />}
-            </>
-          )}
-        </Observer>
+                  {authContext.roleUser === 'admin' && (
+                    <button
+                      disabled={context.disableTrashButton}
+                      onClick={() => {
+                        context.keyChange('modalDelete', true)
+                        context.modal.openModal()
+                      }}
+                      className={`flex items-center focus:outline-none justify-center w-10 ${
+                        context.disableTrashButton
+                          ? 'text-grey-200 cursor-default bg-secondary2 opacity-25'
+                          : 'text-white cursor-pointer bg-red'
+                      }`}>
+                      <Delete fontSize="default" />
+                    </button>
+                  )}
+                </div>
+                {authContext.roleUser === 'admin' && !context.modalDelete && <ModalAdmin />}
+                {authContext.roleUser === 'manager' && !context.modalDelete && <ModalCompany />}
+              </>
+            )}
+          </Observer>
+        )}
       </div>
       <Observer>
         {() => (

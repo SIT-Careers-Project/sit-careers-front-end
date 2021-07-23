@@ -51,7 +51,7 @@ export const dropdownLinkAdmin = [
     path: '/report-management/info',
     name: 'ดาวห์โหลดรายงานสรุป',
     icon: <SaveAlt />,
-    role: ['admin', 'viewer'],
+    role: ['admin'],
     permission: ['access_dashboard']
   },
 
