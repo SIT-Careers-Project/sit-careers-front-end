@@ -11,7 +11,7 @@ const UpdateAnnouncement = ({ authContext }) => {
     authContext.fetchMe().then(() => {
       const path = checkLoggedIn(
         authContext.isLoggedIn,
-        ['admin', 'manager', 'coordinator'],
+        ['admin', 'manager', 'coordinator', 'viewer'],
         authContext.roleUser
       )
       path && router.push(path)
