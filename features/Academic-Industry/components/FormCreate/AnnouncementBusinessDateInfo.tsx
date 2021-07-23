@@ -11,7 +11,7 @@ import { Controller } from 'react-hook-form'
 import { days } from '../../services/constantVariable'
 
 const AnnouncementBusinessDateInfo = (props) => {
-  const { errors, register, control, data } = props
+  const { errors, register, control, data, disable } = props
 
   return (
     <div>
@@ -21,7 +21,8 @@ const AnnouncementBusinessDateInfo = (props) => {
           <FormControl
             error={!!errors?.start_business_day}
             className="w-full font-prompt"
-            variant="outlined">
+            variant="outlined"
+            disabled={disable}>
             <InputLabel htmlFor="start-business-day-select" id="select-outlined-label">
               วันเปิดทำการ *
             </InputLabel>
@@ -58,6 +59,7 @@ const AnnouncementBusinessDateInfo = (props) => {
             helperText={errors.start_business_time?.message}
             defaultValue={data?.announcement?.start_business_time || ''}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="flex items-end justify-center col-span-1">
@@ -67,7 +69,8 @@ const AnnouncementBusinessDateInfo = (props) => {
           <FormControl
             error={!!errors.end_business_day}
             className="w-full font-prompt"
-            variant="outlined">
+            variant="outlined"
+            disabled={disable}>
             <InputLabel htmlFor="end-business-day-select" id="select-outlined-label">
               วันปิดทำการ *
             </InputLabel>
@@ -104,6 +107,7 @@ const AnnouncementBusinessDateInfo = (props) => {
             helperText={errors.end_business_time?.message}
             defaultValue={data?.announcement?.start_business_time || ''}
             fullWidth
+            disabled={disable}
           />
         </div>
       </div>

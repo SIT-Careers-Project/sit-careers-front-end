@@ -2,7 +2,7 @@ import { TextField } from '@material-ui/core'
 import React from 'react'
 
 const AnnouncementCompanyLocationInfo = (props) => {
-  const { errors, register, data } = props
+  const { errors, register, data, disable } = props
 
   return (
     <div>
@@ -18,6 +18,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
           helperText={errors.address_one?.message}
           defaultValue={data?.announcement?.address_one || ''}
           fullWidth
+          disabled={disable}
         />
       </div>
       <div className="w-full my-6">
@@ -31,6 +32,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
           helperText={errors.address_two?.message}
           defaultValue={data?.announcement?.address_two || ''}
           fullWidth
+          disabled={disable}
         />
       </div>
       <div className="flex flex-row justify-between">
@@ -45,6 +47,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             helperText={errors.lane?.message}
             defaultValue={data?.announcement?.lane || ''}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-4/12 pl-3 pr-3">
@@ -58,6 +61,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             helperText={errors.road?.message}
             defaultValue={data?.announcement?.road || ''}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-4/12 pl-3">
@@ -71,6 +75,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             helperText={errors.sub_district?.message}
             defaultValue={data?.announcement?.sub_district || ''}
             fullWidth
+            disabled={disable}
           />
         </div>
       </div>
@@ -86,6 +91,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             helperText={errors.district?.message}
             defaultValue={data?.announcement?.district || ''}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-4/12 px-3">
@@ -99,6 +105,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             helperText={errors.province?.message}
             defaultValue={data?.announcement?.province || ''}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-4/12 pl-3">
@@ -112,6 +119,7 @@ const AnnouncementCompanyLocationInfo = (props) => {
             helperText={errors.postal_code?.message}
             defaultValue={data?.announcement?.postal_code || ''}
             fullWidth
+            disabled={disable}
           />
         </div>
       </div>
