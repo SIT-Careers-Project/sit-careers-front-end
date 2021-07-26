@@ -2,7 +2,7 @@ import { FormControl, TextField } from '@material-ui/core'
 import React, { useEffect } from 'react'
 
 const AnnouncementPropertyInfoForm = (props) => {
-  const { errors, register, data } = props
+  const { errors, register, data, disable } = props
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [data, register])
@@ -23,6 +23,7 @@ const AnnouncementPropertyInfoForm = (props) => {
           inputRef={register}
           error={!!errors.property}
           helperText={errors.property?.message}
+          disabled={disable}
         />
       </FormControl>
     </div>

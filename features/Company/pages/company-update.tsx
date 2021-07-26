@@ -64,16 +64,31 @@ const CompanyForm = ({ authContext }) => {
                       className="mt-5 cursor-pointer bg-grey-100"
                     />
                   </label>
-                  <input
-                    id="company_logo_image"
-                    name="company_logo_image"
-                    type="file"
-                    className="hidden bg-grey-100"
-                    ref={register}
-                    onChange={(event) => {
-                      setFile(URL.createObjectURL(event.target.files[0]))
-                    }}
-                  />
+                  {authContext.roleUser === 'viewer' ? (
+                    <input
+                      id="company_logo_image"
+                      name="company_logo_image"
+                      type="file"
+                      className="hidden bg-grey-100"
+                      ref={register}
+                      disabled={true}
+                      onChange={(event) => {
+                        setFile(URL.createObjectURL(event.target.files[0]))
+                      }}
+                    />
+                  ) : (
+                    <input
+                      id="company_logo_image"
+                      name="company_logo_image"
+                      type="file"
+                      className="hidden bg-grey-100"
+                      ref={register}
+                      onChange={(event) => {
+                        setFile(URL.createObjectURL(event.target.files[0]))
+                      }}
+                    />
+                  )}
+
                   <input name="logo" className="hidden" ref={register} />
                   <input name="company_id" className="hidden" ref={register} />
                 </button>
