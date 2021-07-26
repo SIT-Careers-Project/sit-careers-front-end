@@ -15,7 +15,7 @@ import { Observer } from 'mobx-react-lite'
 import { jobType, salary } from '../../services/constantVariable'
 
 const AnnouncementMainInfoForm = (props) => {
-  const { errors, register, control, data, jobPosition, companyName, authContext } = props
+  const { errors, register, control, data, jobPosition, companyName, authContext, disable } = props
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [authContext, data, jobPosition, companyName])
   const [jobTypes, setJobTypes] = useState(data?.announcement?.job_type || [])
@@ -31,7 +31,9 @@ const AnnouncementMainInfoForm = (props) => {
           <div className="grid w-full grid-flow-row grid-cols-12 pt-6">
             <div
               className={`${
-                authContext?.roleUser === 'admin' ? 'col-span-6 pr-3' : 'col-span-12'
+                authContext?.roleUser === 'admin' || authContext?.roleUser === 'viewer'
+                  ? 'col-span-6 pr-3'
+                  : 'col-span-12'
               }`}>
               <TextField
                 label="หัวข้อ *"
@@ -42,9 +44,10 @@ const AnnouncementMainInfoForm = (props) => {
                 defaultValue={data?.announcement?.announcement_title || ''}
                 error={!!errors.announcement_title}
                 helperText={errors.announcement_title?.message}
+                disabled={disable}
               />
             </div>
-            {authContext?.roleUser === 'admin' && (
+            {(authContext?.roleUser === 'admin' || authContext?.roleUser === 'viewer') && (
               <div className="col-span-6 pl-3">
                 <AutoComplete
                   className="w-full"
@@ -56,6 +59,7 @@ const AnnouncementMainInfoForm = (props) => {
                   helperText={errors.company_id?.message}
                   options={data.autoCompleteCompany}
                   keySearch="company_name_th"
+                  disable={disable}
                 />
               </div>
             )}
@@ -72,13 +76,15 @@ const AnnouncementMainInfoForm = (props) => {
                 error={!!errors.job_position_id}
                 helperText={errors.job_position_id?.message}
                 options={data.jobPositions}
+                disable={disable}
               />
             </div>
             <div className="w-4/12 pl-3 pr-6">
               <FormControl
                 error={errors.job_type?.message}
                 className="w-full font-prompt"
-                variant="outlined">
+                variant="outlined"
+                disabled={disable}>
                 <InputLabel htmlFor="trinity-select" id="select-outlined-label">
                   ประเภทของประกาศ *
                 </InputLabel>
@@ -109,7 +115,8 @@ const AnnouncementMainInfoForm = (props) => {
               <FormControl
                 error={errors.salary?.message}
                 className="w-full font-prompt"
-                variant="outlined">
+                variant="outlined"
+                disabled={disable}>
                 <InputLabel htmlFor="salary-select" id="select-outlined-label">
                   {'เงินเดือน (บาท) *'}
                 </InputLabel>
@@ -147,6 +154,7 @@ const AnnouncementMainInfoForm = (props) => {
                 inputRef={register}
                 error={!!errors.job_description}
                 helperText={errors.job_description?.message}
+                disabled={disable}
               />
             </FormControl>
           </div>

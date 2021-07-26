@@ -14,6 +14,7 @@ type CoreAutoCompleteProps = {
   error?: boolean
   helperText?: string
   defaultValue?: any
+  disable?: boolean
 }
 
 export const AutoComplete = (props: CoreAutoCompleteProps) => {
@@ -29,7 +30,8 @@ export const AutoComplete = (props: CoreAutoCompleteProps) => {
     label,
     error,
     helperText,
-    defaultValue
+    defaultValue,
+    disable
   } = props
   const ref = useRef(null)
 
@@ -58,6 +60,7 @@ export const AutoComplete = (props: CoreAutoCompleteProps) => {
         }}
         getOptionLabel={(option) => option[keySearch]}
         inputValue={inputValue}
+        disabled={disable}
         renderInput={(params) => (
           <TextField
             variant="outlined"
