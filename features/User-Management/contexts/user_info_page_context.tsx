@@ -88,12 +88,11 @@ export class UserInfoPageContext {
       this.alert.setAlert('เพิ่มผู้ใช้งานสำเร็จ', 'success', 'success', true)
     } catch (error) {
       console.log(error)
-      this.alert.setAlert(
-        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้',
-        'error',
-        'error',
-        true
-      )
+      let message = 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้'
+      if (error.response.status === 400) {
+        message = `ไม่สามารถ เพิ่มผู้ประสานงานได้ เนื่องจากคุณเพิ่มผู้ประสานงานครบจำนวนแล้ว`
+      }
+      this.alert.setAlert(message, 'error', 'error', true)
       this.modal.closeModal()
     }
   }
