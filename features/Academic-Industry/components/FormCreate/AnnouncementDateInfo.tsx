@@ -15,7 +15,8 @@ const AnnouncementDateInfoForm = (props) => {
     showCloseButton,
     onSubmit,
     openModal,
-    data
+    data,
+    disable
   } = props
 
   useEffect(() => {}, [startDate, endDate])
@@ -42,6 +43,7 @@ const AnnouncementDateInfoForm = (props) => {
             inputRef={register}
             error={!!errors.start_date}
             helperText={errors.start_date?.message}
+            disabled={disable}
           />
         </div>
         <div className="flex items-end justify-center pr-6">
@@ -63,33 +65,38 @@ const AnnouncementDateInfoForm = (props) => {
             inputRef={register}
             error={!!errors.end_date}
             helperText={errors.end_date?.message}
+            disabled={disable}
           />
         </div>
-        {showCloseButton && (
+        {disable === false && (
           <>
-            <div className="flex justify-end w-2/4 grid-cols-12">
-              <button
-                className="text-white bg-red"
-                onClick={() => {
-                  openModal()
-                  closeAnnouncement()
-                }}>
-                <p className="px-5 text-white font-prompt text-subtitle-1">ปิดรับสมัคร</p>
-              </button>
-            </div>
-            {openModal && (
-              <CoreModal
-                buttonSubmit="ปิดรับสมัคร"
-                title="ปิดรับสมัคร"
-                content={
-                  <>
-                    <span className="mb-5 font-prompt text-subtitle-1">
-                      คุณต้องการปิดรับสมัครหรือไม่
-                    </span>
-                  </>
-                }
-                onSubmit={onSubmit}
-              />
+            {showCloseButton && (
+              <>
+                <div className="flex justify-end w-2/4 grid-cols-12">
+                  <button
+                    className="text-white bg-red"
+                    onClick={() => {
+                      openModal()
+                      closeAnnouncement()
+                    }}>
+                    <p className="px-5 text-white font-prompt text-subtitle-1">ปิดรับสมัคร</p>
+                  </button>
+                </div>
+                {openModal && (
+                  <CoreModal
+                    buttonSubmit="ปิดรับสมัคร"
+                    title="ปิดรับสมัคร"
+                    content={
+                      <>
+                        <span className="mb-5 font-prompt text-subtitle-1">
+                          คุณต้องการปิดรับสมัครหรือไม่
+                        </span>
+                      </>
+                    }
+                    onSubmit={onSubmit}
+                  />
+                )}
+              </>
             )}
           </>
         )}

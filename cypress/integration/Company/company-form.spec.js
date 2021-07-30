@@ -1,5 +1,5 @@
 describe('[Company feature] Add company', () => {
-  it('It should add data of company success.', () => {
+  it.skip('It should add data of company success.', () => {
     cy.visit('/company/info')
     cy.contains('เพิ่มบริษัท').click()
     cy.wait(1000)

@@ -2,7 +2,7 @@ import { TextField } from '@material-ui/core'
 import React from 'react'
 
 const ContractInfoForm = (props) => {
-  const { errors, register } = props
+  const { errors, register, disable } = props
 
   return (
     <div>
@@ -18,6 +18,7 @@ const ContractInfoForm = (props) => {
             error={!!errors.e_mail_manager}
             helperText={errors.e_mail_manager?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-1/2 pl-3">
@@ -30,6 +31,7 @@ const ContractInfoForm = (props) => {
             error={!!errors.e_mail_coordinator}
             helperText={errors.e_mail_coordinator?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
       </div>
@@ -45,6 +47,7 @@ const ContractInfoForm = (props) => {
             error={!!errors.tel_no}
             helperText={errors.tel_no?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-1/2 pl-3">
@@ -58,6 +61,7 @@ const ContractInfoForm = (props) => {
             error={!!errors.phone_no}
             helperText={errors.phone_no?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
       </div>

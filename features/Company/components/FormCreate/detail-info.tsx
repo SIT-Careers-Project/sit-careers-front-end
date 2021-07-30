@@ -3,7 +3,7 @@ import React from 'react'
 import { Controller } from 'react-hook-form'
 
 const DetailInfoForm = (props) => {
-  const { errors, control } = props
+  const { errors, control, disable } = props
 
   return (
     <div className="flex flex-col pb-6">
@@ -25,6 +25,7 @@ const DetailInfoForm = (props) => {
               rows={5}
               multiline
               fullWidth
+              disabled={disable}
             />
           }
         />
