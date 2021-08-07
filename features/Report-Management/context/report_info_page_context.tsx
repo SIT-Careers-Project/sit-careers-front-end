@@ -9,19 +9,22 @@ export class ReportInfoPageContext {
   isDownload
   selectRows
   nameReports
+  rowApplication
 
   constructor() {
     this.fileZip = ''
     this.selectRows = []
     this.nameReports = []
     this.isDownload = false
+    this.rowApplication = false
     makeAutoObservable(this)
   }
 
   setSelectRows = (selectRows) => {
     this.nameReports = []
-    if (selectRows.length === 3) {
+    if (selectRows.length === 4) {
       this.handleSelectReports('all')
+      this.rowApplication = true
       console.log('nameReport: ', this.nameReports)
     } else {
       _.map(selectRows, (item) => {
@@ -31,8 +34,9 @@ export class ReportInfoPageContext {
           this.handleSelectReports('announcement')
         } else if (item.tableData.id === 2) {
           this.handleSelectReports('dashboard')
+        } else if (item.tableData.id === 3) {
+          this.rowApplication = true
         }
-        console.log('nameReport: ', this.nameReports)
       })
     }
   }
@@ -59,6 +63,22 @@ export class ReportInfoPageContext {
         end_date: endDate
       })
       this.isDownload = true
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  createApplicationReportByAdmin = async (data) => {
+    try {
+      const startDate = dayjs(data[0]).format('YYYY-MM-DD')
+      const endDate = dayjs(data[1]).format('YYYY-MM-DD')
+      const response = await apiService.createApplicationReportByAdmin({
+        start_date: startDate,
+        end_date: endDate
+      })
+      this.isDownload = true
+      this.rowApplication = false
       return response
     } catch (error) {
       console.log(error)
