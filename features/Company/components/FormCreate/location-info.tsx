@@ -2,7 +2,7 @@ import { TextField } from '@material-ui/core'
 import React from 'react'
 
 const LocationInfoForm = (props) => {
-  const { errors, register } = props
+  const { errors, register, disable } = props
 
   return (
     <div>
@@ -17,6 +17,7 @@ const LocationInfoForm = (props) => {
           error={!!errors.address_one}
           helperText={errors.address_one?.message}
           fullWidth
+          disabled={disable}
         />
       </div>
       <div className="w-full my-6">
@@ -29,6 +30,7 @@ const LocationInfoForm = (props) => {
           error={!!errors.address_two}
           helperText={errors.address_two?.message}
           fullWidth
+          disabled={disable}
         />
       </div>
       <div className="flex flex-row justify-between">
@@ -42,6 +44,7 @@ const LocationInfoForm = (props) => {
             error={!!errors.lane}
             helperText={errors.lane?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-4/12 pl-3 pr-3">
@@ -54,6 +57,7 @@ const LocationInfoForm = (props) => {
             error={!!errors.road}
             helperText={errors.road?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-4/12 pl-3">
@@ -66,6 +70,7 @@ const LocationInfoForm = (props) => {
             error={!!errors.sub_district}
             helperText={errors.sub_district?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
       </div>
@@ -80,6 +85,7 @@ const LocationInfoForm = (props) => {
             error={!!errors.district}
             helperText={errors.district?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-4/12 pl-3 px-3">
@@ -92,6 +98,7 @@ const LocationInfoForm = (props) => {
             error={!!errors.province}
             helperText={errors.province?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-4/12 pl-3">
@@ -104,6 +111,7 @@ const LocationInfoForm = (props) => {
             error={!!errors.postal_code}
             helperText={errors.postal_code?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
       </div>

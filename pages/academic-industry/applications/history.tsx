@@ -11,7 +11,7 @@ const ApplicationHistory = ({ authContext }) => {
     authContext.fetchMe().then(() => {
       const path = checkLoggedIn(
         authContext.isLoggedIn,
-        ['admin', 'manager', 'coordinator', 'student'],
+        ['admin', 'manager', 'coordinator', 'student', 'viewer'],
         authContext.roleUser
       )
       path && router.push(path)

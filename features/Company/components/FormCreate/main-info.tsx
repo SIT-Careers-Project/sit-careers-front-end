@@ -11,7 +11,7 @@ import React from 'react'
 import { Controller } from 'react-hook-form'
 
 const MainInfoForm = (props) => {
-  const { register, errors, control } = props
+  const { register, errors, control, disable, viewer } = props
 
   return (
     <div>
@@ -22,11 +22,11 @@ const MainInfoForm = (props) => {
             name="company_name_th"
             variant="outlined"
             className="font-sarabun"
-            defaultValue=""
             inputRef={register}
             error={!!errors.company_name_th}
             helperText={errors.company_name_th?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
         <div className="w-1/2 pl-3">
@@ -35,11 +35,11 @@ const MainInfoForm = (props) => {
             name="company_name_en"
             variant="outlined"
             className="font-sarabun"
-            defaultValue=""
             inputRef={register}
             error={!!errors.company_name_en}
             helperText={errors.company_name_en?.message}
             fullWidth
+            disabled={disable}
           />
         </div>
       </div>
@@ -48,7 +48,8 @@ const MainInfoForm = (props) => {
           <FormControl
             error={!!errors?.company_type}
             className="w-full font-prompt"
-            variant="outlined">
+            variant="outlined"
+            disabled={viewer}>
             <InputLabel htmlFor="trinity-select" id="select-outlined-label">
               ประเภทธุรกิจ *
             </InputLabel>
@@ -79,6 +80,7 @@ const MainInfoForm = (props) => {
             error={!!errors.website}
             helperText={errors.website?.message}
             fullWidth
+            disabled={viewer}
           />
         </div>
       </div>
@@ -100,6 +102,7 @@ const MainInfoForm = (props) => {
                 rows={5}
                 multiline
                 fullWidth
+                disabled={viewer}
               />
             }
           />

@@ -10,7 +10,7 @@ const ApplicationHistory = ({ authContext }) => {
   const context = useContext(applicationHistoryContext)
 
   useEffect(() => {
-    if (authContext.roleUser === 'admin') {
+    if (authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') {
       context.getAnnouncementApplicationByAdmin()
     } else if (authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') {
       context.getAnnouncementApplicationByCompany()
@@ -66,7 +66,7 @@ const ApplicationHistory = ({ authContext }) => {
         <Observer>
           {() => (
             <>
-              {authContext.roleUser === 'admin' && (
+              {(authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') && (
                 <CoreTable
                   column={column}
                   data={context?.applications}

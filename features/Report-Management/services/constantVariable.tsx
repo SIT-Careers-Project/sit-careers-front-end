@@ -30,5 +30,15 @@ export const data = [
         </p>
       </div>
     )
+  },
+  {
+    summaryInfo: (
+      <div>
+        <p className="font-sarabun-meduim text-body-2">ข้อมูลประวัติการสมัคร</p>
+        <p className="text-body-2 text-secondary2 font-sarabun-light">
+          ข้อมูลสรุปประวัติการสมัครของนักศึกษาทั้งหมด
+        </p>
+      </div>
+    )
   }
 ]
