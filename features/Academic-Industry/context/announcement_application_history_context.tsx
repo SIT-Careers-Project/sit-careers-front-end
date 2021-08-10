@@ -44,5 +44,14 @@ export class ApplicationHistoryContext {
       console.log(error)
     }
   }
+
+  createApplicationReportByCompany = async () => {
+    try {
+      const response = await apiAcademic.createApplicationReportByCompany({})
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 export const applicationHistoryContext = createContext(new ApplicationHistoryContext())
