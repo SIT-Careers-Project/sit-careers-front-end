@@ -1,5 +1,10 @@
 import api from '../../../utils/api'
+import axios from 'axios'
+import Cookie from 'js-cookie'
+import getConfig from 'next/config'
 
+
+const { publicRuntimeConfig } = getConfig()
 const apiAcademic = {
   getAnnouncementById: async (announcement_id) => {
     const response = await api.get(`/academic-industry/announcement/${announcement_id}`)
@@ -156,6 +161,16 @@ const apiAcademic = {
 
     const response = await api.post('/academic-industry/application', formData, {
       headers: { 'Content-type': 'multipart/form-data' }
+    })
+    return response
+  },
+  createApplicationReportByCompany: async (data) => {
+    const response = axios.post(`${publicRuntimeConfig.API_URL}/academic-industry/company/applications/report`, data, {
+      headers: {
+        Authorization: `Bearer ${Cookie.get('token')}`,
+        'Content-Type': 'application/json'
+      },
+      responseType: 'blob'
     })
     return response
   }
