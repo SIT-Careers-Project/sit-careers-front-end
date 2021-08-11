@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import { createContext } from 'react'
 import { apiBanner } from '../services/apiBanner'
 import _ from 'lodash'
