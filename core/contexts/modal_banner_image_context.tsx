@@ -36,7 +36,6 @@ export class modalBannerContext {
       this.bannerForShow = _.filter(this.banners, (item) => {
         return dayjs().isBetween(item.date_display_start, item.date_display_end, null, '[]')
       })
-      console.log(toJS(this.banners))
     } catch (error) {
       console.log(error)
     }
