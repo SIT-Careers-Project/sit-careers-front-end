@@ -22,7 +22,6 @@ export const apiBanner = {
     return response
   },
   updateBanner: async (data) => {
-    console.log(data)
     const response = await api.put('banner', {
       banner_id: data.banner_id,
       date_display_start: data.date_display_start,
