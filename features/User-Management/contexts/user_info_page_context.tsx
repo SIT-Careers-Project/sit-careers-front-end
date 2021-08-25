@@ -72,7 +72,11 @@ export class UserInfoPageContext {
     } catch (error) {
       let message = 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้'
       if (error.response.status === 400) {
-        message = `ไม่สามารถ เพิ่มผู้ประสานงานได้ เนื่องจากไม่มีชื่อบริษัทที่กรอกในระบบ กรุณากรอกเฉพาะชื่อที่มีให้ระบบเท่านั้นหรือถ้ายังไม่มีกรุณา เพิ่มข้อมูลบริษัท`
+        if (error.response.data.email) {
+          message = `ไม่สามารถ เพิ่มผู้ประสานงานได้ เนื่องจาก email นี้ได้ถูกใช้งานในระบบไปแล้ว`
+        } else if (error.response.data.company_id) {
+          message = `ไม่สามารถ เพิ่มผู้ประสานงานได้ เนื่องจากไม่มีบริษัทที่อยู่ในระบบ`
+        }
       }
       this.alert.setAlert(message, 'error', 'error', true)
       this.modal.closeModal()
