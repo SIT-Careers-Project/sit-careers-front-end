@@ -12,6 +12,8 @@ export class AnnouncementSearchPageContext {
   jobType
   companyType
   announcementDetail
+  alert
+
   constructor() {
     makeAutoObservable(this)
     this.announcements = []
@@ -39,6 +41,21 @@ export class AnnouncementSearchPageContext {
       this.beforeSearch = response.data
       this.announcementDetail = response.data[0]
     } catch (error) {
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
       console.log(error)
     }
   }

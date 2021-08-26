@@ -3,6 +3,7 @@ import { MainLayout } from '../../../core/components/Layout/Main'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
+import { Alert } from 'core/components/Alert'
 
 const ApplicationHistory = ({ authContext }) => {
   const router = useRouter()
@@ -21,6 +22,7 @@ const ApplicationHistory = ({ authContext }) => {
   return (
     <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16">
+        <Alert />
         <Application authContext={authContext} />
       </div>
     </MainLayout>

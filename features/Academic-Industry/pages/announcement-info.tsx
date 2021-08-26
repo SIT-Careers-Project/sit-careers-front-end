@@ -11,13 +11,16 @@ import { announcementInfoContext } from '../context/announcement_info_context'
 import { searchContext } from '../../../core/contexts/search_context'
 import { Observer } from 'mobx-react-lite'
 import { paginationContext } from '../../../core/contexts/pagination_context'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const AnnouncementInfo = ({ authContext }) => {
   const contextInfo = useContext(announcementInfoContext)
   const contextSearch = useContext(searchContext)
+  const alertContext = useContext(AlertContext)
   const contextPagination = useContext(paginationContext)
 
   useEffect(() => {
+    contextInfo.keyChange('alert', alertContext)
     if (authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') {
       contextInfo.getAnnouncements()
     } else if (authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') {
