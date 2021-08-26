@@ -8,7 +8,7 @@ describe('The Announcement Application Form Page', () => {
   it('It is a have footer component', () => {
     cy.get('[data-cy=core-footer]').should('be.visible')
   })
-  it('Go to application page', () => {
+  it.skip('Go to application page', () => {
     cy.contains('สมัคร').click()
   })
   it.skip('should show ยืนยันการสมัคร page if student have profile', () => {
