@@ -32,7 +32,7 @@ const UserInfo = ({ authContext }) => {
       <Observer>
         {() => (
           <>
-            {(authContext.roleUser === 'admin') && (
+            {authContext.roleUser === 'admin' && (
               <CoreTable
                 column={column}
                 data={toJS(context.users)}

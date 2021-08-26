@@ -71,14 +71,14 @@ const ReportInfo = () => {
                     }
                     if (context.nameReports.length != 0) {
                       context.createReport(selectedDate).then((response) => {
-                      const fileURL = window.URL.createObjectURL(new Blob([response.data]))
-                      const fileLink = document.createElement('a')
-                      fileLink.href = fileURL
-                      fileLink.setAttribute('download', 'SIT_CC_report.zip')
-                      document.body.appendChild(fileLink)
-                      fileLink.click()
-                      fileLink.remove()
-                    })
+                        const fileURL = window.URL.createObjectURL(new Blob([response.data]))
+                        const fileLink = document.createElement('a')
+                        fileLink.href = fileURL
+                        fileLink.setAttribute('download', 'SIT_CC_report.zip')
+                        document.body.appendChild(fileLink)
+                        fileLink.click()
+                        fileLink.remove()
+                      })
                     }
                   }
                 }
