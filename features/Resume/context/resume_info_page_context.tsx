@@ -7,6 +7,7 @@ export class ResumeInfoPageContext {
   resume
   fileName
   renderDelay
+  alert
 
   constructor() {
     this.modal = ''
@@ -27,6 +28,21 @@ export class ResumeInfoPageContext {
       this.fileName = 'No file chosen'
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -37,6 +53,21 @@ export class ResumeInfoPageContext {
       this.fileName = 'No file chosen'
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -49,6 +80,21 @@ export class ResumeInfoPageContext {
       })
     } catch (error) {
       console.log(error)
+      if (error.response.status === 400) {
+        this.alert.setAlert(
+          `ไม่สามารถแก้ไขข้อมูลได้ เนื่องจากคุณไม่ได้กรอกข้อมูลบางอย่าง กรุณาตรวจสอบข้อมูล`,
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          `ไม่สามารถแก้ไขข้อมูลได้ เนื่องจาก ${error.response?.data?.message}`,
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
