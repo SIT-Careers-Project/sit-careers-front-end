@@ -104,3 +104,8 @@ export const applicationStatus = [
   { title: 'ผ่านการคัดเลือก' },
   { title: 'ปฏิเสธการรับสมัคร' }
 ]
+
+export const status = [
+  { title: 'OPEN' },
+  { title: 'CLOSE' }
+]

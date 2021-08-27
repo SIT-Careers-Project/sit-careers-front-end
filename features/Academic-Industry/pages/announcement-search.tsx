@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select, OutlinedInput } from '@material-ui/core'
-import { companyType, jobType } from '../services/constantVariable'
+import { companyType, jobType, status } from '../services/constantVariable'
 import { CardSmall } from '../../../core/components/Card/Small'
 import PrimaryButton from '../../../core/components/Button/Primary'
 import React, { useContext, useEffect } from 'react'
@@ -46,7 +46,8 @@ const AnnouncementSearch = () => {
     'announcement_title',
     'job_position',
     'company_type',
-    'job_type'
+    'job_type',
+    'status'
   ]
 
   const handlerSearch = () => {
@@ -57,7 +58,8 @@ const AnnouncementSearch = () => {
           context.companyName,
           context.announcementTitle,
           toJS(context.jobPosition),
-          toJS(context.jobType)
+          toJS(context.jobType),
+          toJS(context.status)
         ],
         context.beforeSearch,
         keySearch
@@ -71,20 +73,30 @@ const AnnouncementSearch = () => {
         <div>
           <div className="container grid max-w-screen-lg grid-flow-row px-10 mx-auto mt-20 bg-white rounded-lg shadow-lg font-prompt">
             <div className="w-full max-w-screen-lg my-6">
-              <div className="w-full p-2 bg-white border-opacity-50 rounded border-DEFAULT border-secondary2">
-                <Search
-                  onKeyPress={(event) => {
-                    if (event.key === 'Enter') {
-                      handlerSearch()
-                    }
-                  }}
-                  onChange={(event) => {
-                    if (typeof event.target.value === 'string') {
-                      context.setValue('companyName', event.target.value)
-                      context.setValue('announcementTitle', event.target.value)
-                    }
-                  }}
-                />
+              <div className="flex flex-row justify-between">
+                <div className="w-10/12">
+                  <div className="w-full p-2 bg-white border-opacity-50 rounded border-DEFAULT border-secondary2">
+                    <Search
+                      onKeyPress={(event) => {
+                        if (event.key === 'Enter') {
+                          handlerSearch()
+                        }
+                      }}
+                      onChange={(event) => {
+                        if (typeof event.target.value === 'string') {
+                          context.setValue('companyName', event.target.value)
+                          context.setValue('announcementTitle', event.target.value)
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+                <PrimaryButton
+                  title="ค้นหา"
+                  className="z-50 ml-5 lg:w-3/12"
+                  onClick={handlerSearch}>
+                  <p className="px-4 py-4 text-white font-prompt text-subtitle-1">ค้นหา</p>
+                </PrimaryButton>
               </div>
               <div className="flex flex-row justify-between pt-6">
                 <div className="w-3/12">
@@ -142,12 +154,25 @@ const AnnouncementSearch = () => {
                     </Select>
                   </FormControl>
                 </div>
-                <PrimaryButton
-                  title="ค้นหา"
-                  className="z-50 ml-10 lg:w-2/6"
-                  onClick={handlerSearch}>
-                  <p className="px-4 py-4 text-white font-prompt text-subtitle-1">ค้นหา</p>
-                </PrimaryButton>
+                <div className="w-3/12 pl-5">
+                  <FormControl className="w-full font-prompt" variant="outlined">
+                    <InputLabel htmlFor="trinity-select">สถานะการรับสมัคร</InputLabel>
+                    <Select
+                      labelId="demo-mutiple-name-label"
+                      id="demo-mutiple-name"
+                      multiple
+                      value={context.status}
+                      onChange={(event) => context.setValue('status', event?.target?.value)}
+                      input={<OutlinedInput />}
+                      MenuProps={MenuProps}>
+                      {_.map(status, (status) => (
+                        <MenuItem key={status.title} value={status.title}>
+                          {status.title}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
               </div>
             </div>
           </div>
