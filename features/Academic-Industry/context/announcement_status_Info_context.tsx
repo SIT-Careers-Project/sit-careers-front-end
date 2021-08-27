@@ -11,6 +11,7 @@ export class AnnouncementStatusInfoContext {
   isDisable
   modal
   modalDelete
+  alert
 
   constructor() {
     this.applicationDate = ''
@@ -42,6 +43,21 @@ export class AnnouncementStatusInfoContext {
       this.application = response.data[0]
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -55,6 +71,21 @@ export class AnnouncementStatusInfoContext {
       this.application = response.data[0]
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -66,6 +97,21 @@ export class AnnouncementStatusInfoContext {
       this.application = response.data[0]
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -77,6 +123,12 @@ export class AnnouncementStatusInfoContext {
       })
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        `ไม่สามารถแก้ข้อมูลได้ เนื่องจาก ${error.response?.data?.message}`,
+        'error',
+        'error',
+        true
+      )
     }
   }
 

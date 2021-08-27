@@ -14,15 +14,18 @@ import { checkStatus } from '../../../core/services/utils'
 import dayjs from 'dayjs'
 import _ from 'lodash'
 import { toJS } from 'mobx'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const AnnouncementSearch = () => {
   const context = useContext(announcementSearchPageContext)
   const contextSearch = useContext(searchContext)
   const contextPagination = useContext(paginationContext)
+  const alertContext = useContext(AlertContext)
 
   useEffect(() => {
     context.getAnnouncements()
     contextPagination.setSliceAnnouncement()
+    context.setValue('alert', alertContext)
     context.setValue('announcementDetail', context.announcements[0])
   }, [context, contextPagination])
 
@@ -38,11 +41,11 @@ const AnnouncementSearch = () => {
   }
 
   const keySearch = [
-    'company_type',
     'company_name_th',
     'company_name_en',
     'announcement_title',
     'job_position',
+    'company_type',
     'job_type',
     'status'
   ]
@@ -200,9 +203,9 @@ const AnnouncementSearch = () => {
                                     .locale('th')
                                     .add(543, 'year')
                                     .format('DD MMMM')} - ${dayjs(data?.end_date)
-                                      .locale('th')
-                                      .add(543, 'year')
-                                      .format('DD MMMM YYYY')}`}
+                                    .locale('th')
+                                    .add(543, 'year')
+                                    .format('DD MMMM YYYY')}`}
                                   company={`${data?.company_name_th} - ${data?.company_name_en}`}
                                   srcImg={data?.logo}
                                   onClick={() => context.setValue('announcementDetail', data)}

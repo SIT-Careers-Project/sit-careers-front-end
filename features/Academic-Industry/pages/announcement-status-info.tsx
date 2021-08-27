@@ -23,11 +23,13 @@ import { CoreModal } from '../../../core/components/Modal'
 import { StatusFormSchema } from '../services/validationSchema'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { AuthContext } from 'core/contexts/auth_context'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const ApplicationInfo = ({ authContext }) => {
   const context = useContext(announcementStatusInfoContext)
   const coreModalContext = useContext(modalContext)
   const coreAuthContext = useContext(AuthContext)
+  const alertContext = useContext(AlertContext)
   const router = useRouter()
   const { announcement_resume_id } = router.query
 
@@ -37,6 +39,7 @@ const ApplicationInfo = ({ authContext }) => {
   })
 
   useEffect(() => {
+    context.keyChange('alert', alertContext)
     coreAuthContext.fetchMe().then(() => {
       context.keyChange('modal', coreModalContext)
       const applicationDate = dayjs(context?.application?.created_at).format('DD MMMM YYYY')
@@ -185,29 +188,30 @@ const ApplicationInfo = ({ authContext }) => {
                       />
                     </FormControl>
                   </div>
-                  {(authContext.roleUser === 'admin' || authContext.roleUser === 'manager' ||
+                  {(authContext.roleUser === 'admin' ||
+                    authContext.roleUser === 'manager' ||
                     authContext.roleUser === 'coordinator') && (
-                      <div>
-                        <div className="flex justify-end grid-cols-12 my-4">
-                          <PrimaryButton
-                            onClick={coreModalContext.openModal}
-                            className="py-4 lg:w-1/4"
-                            title="บันทึก">
-                            <p className="text-white font-prompt text-subtitle-1">บันทึก</p>
-                          </PrimaryButton>
-                        </div>
-                        <CoreModal
-                          buttonSubmit="บันทึก"
-                          title="บันทึกสถานะของผู้สมัคร"
-                          content={
-                            <span className="mb-5 font-prompt text-subtitle-1">
-                              คุณต้องการบันทึกสถานะของผู้สมัครหรือไม่
-                            </span>
-                          }
-                          onSubmit={handleSubmit(context.updateAnnouncementResume)}
-                        />
+                    <div>
+                      <div className="flex justify-end grid-cols-12 my-4">
+                        <PrimaryButton
+                          onClick={coreModalContext.openModal}
+                          className="py-4 lg:w-1/4"
+                          title="บันทึก">
+                          <p className="text-white font-prompt text-subtitle-1">บันทึก</p>
+                        </PrimaryButton>
                       </div>
-                    )}
+                      <CoreModal
+                        buttonSubmit="บันทึก"
+                        title="บันทึกสถานะของผู้สมัคร"
+                        content={
+                          <span className="mb-5 font-prompt text-subtitle-1">
+                            คุณต้องการบันทึกสถานะของผู้สมัครหรือไม่
+                          </span>
+                        }
+                        onSubmit={handleSubmit(context.updateAnnouncementResume)}
+                      />
+                    </div>
+                  )}
                 </div>
               </>
             )}

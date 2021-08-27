@@ -6,6 +6,7 @@ import apiAcademic from '../services/apiAcademicIndustry'
 export class ApplicationHistoryContext {
   modal
   applications
+  alert
 
   constructor() {
     this.modal = ''
@@ -24,6 +25,21 @@ export class ApplicationHistoryContext {
       this.applications = response.data
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -33,6 +49,21 @@ export class ApplicationHistoryContext {
       this.applications = response.data
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -42,6 +73,21 @@ export class ApplicationHistoryContext {
       this.applications = response.data
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -51,6 +97,12 @@ export class ApplicationHistoryContext {
       return response
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        `ไม่สามารถสร้างได้ เนื่องจาก ${error.response?.data?.message}`,
+        'error',
+        'error',
+        true
+      )
     }
   }
 }

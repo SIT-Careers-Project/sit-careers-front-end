@@ -21,12 +21,14 @@ import AnnouncementPropertyInfoForm from '../components/FormCreate/AnnouncementP
 import AnnouncementWalfareInfoForm from '../components/FormCreate/AnnouncementWelfareInfo'
 import AnnouncementCompanyLocationInfo from '../components/FormCreate/AnnouncementCompanyLocationInfo'
 import AnnouncementBusinessDateInfo from '../components/FormCreate/AnnouncementBusinessDateInfo'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const { publicRuntimeConfig } = getConfig()
 
 const AnnouncementUpdateForm = ({ authContext }) => {
   const context = useContext(announcementUpdatePageContext)
   const coreModalContext = useContext(modalContext)
+  const alertContext = useContext(AlertContext)
 
   const router = useRouter()
   const { announcement_id } = router.query
@@ -41,6 +43,7 @@ const AnnouncementUpdateForm = ({ authContext }) => {
 
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
+    context.keyChange('alert', alertContext)
     context.getAutoCompleteCompanies()
     context.getAutoCompleteJobPositions()
     context.getAnnouncement(announcement_id).then(() => {

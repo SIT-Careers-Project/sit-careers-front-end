@@ -21,12 +21,15 @@ import { useForm, Controller } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { ResumeFormSchema } from '../services/validationSchema'
 import { nameTitle, curriculum, years } from '../services/constantVariable'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const { publicRuntimeConfig } = getConfig()
 
 const ResumeInfo = () => {
   const context = useContext(resumeInfoPageContext)
   const coreModalContext = useContext(modalContext)
+  const alertContext = useContext(AlertContext)
+
   // eslint-disable-next-line no-unused-vars
   const [file, setFile] = useState(null)
   const router = useRouter()
@@ -38,6 +41,7 @@ const ResumeInfo = () => {
 
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
+    context.keyChange('alert', alertContext)
     context.getResumeByUserId().then(() => {
       setTimeout(() => {
         reset({ ...context.resume })
@@ -52,7 +56,7 @@ const ResumeInfo = () => {
         <>
           {!context.renderDelay && (
             <div className="w-full h-full max-w-screen-lg pb-8">
-              <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-5">
+              <div className="w-full max-w-screen-lg p-5 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <div className="px-12 pt-6">
                   <p className="font-semibold font-prompt text-heading-6 text-primary">
                     โปรไฟล์สมัครงาน
@@ -191,7 +195,7 @@ const ResumeInfo = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-5">
+              <div className="w-full max-w-screen-lg p-5 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <div className="px-12 pt-5">
                   <p className="font-semibold font-prompt text-heading-6 text-primary">
                     ช่องทางการติดต่อ
@@ -230,12 +234,12 @@ const ResumeInfo = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-5">
+              <div className="w-full max-w-screen-lg p-5 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <div className="px-12 pt-5">
                   <p className="font-semibold font-prompt text-heading-6 text-primary">
                     อัพโหลดผลงาน
                   </p>
-                  <p className="font-prompt-light font-prompt text-body-2 text-secondary2 pt-3">
+                  <p className="pt-3 font-prompt-light font-prompt text-body-2 text-secondary2">
                     * ผลงานต้องเป็นไฟล์นามสกุล .pdf และมีขนาดไม่เกิน 5 MB
                   </p>
                 </div>
@@ -262,26 +266,26 @@ const ResumeInfo = () => {
                           context?.resume?.path_file === undefined ||
                           context?.resume?.path_file === '-'
                         ) && (
-                            <div className="pr-5">
-                              <a
-                                href={`${publicRuntimeConfig.s3_url}/resume/${context?.resume?.path_file}`}
-                                target="_self"
-                                id="path_file"
-                                download
-                                onClick={() => {
-                                  const link = document.getElementById('path_file')
-                                  link.setAttribute(
-                                    'download',
-                                    `${publicRuntimeConfig.s3_url}/resume/${context?.resume?.path_file}`
-                                  )
-                                }}>
-                                <Button variant="contained" color="primary">
-                                  <GetApp />
-                                  ดาวน์โหลดผลงาน
-                                </Button>
-                              </a>
-                            </div>
-                          )}
+                          <div className="pr-5">
+                            <a
+                              href={`${publicRuntimeConfig.s3_url}/resume/${context?.resume?.path_file}`}
+                              target="_self"
+                              id="path_file"
+                              download
+                              onClick={() => {
+                                const link = document.getElementById('path_file')
+                                link.setAttribute(
+                                  'download',
+                                  `${publicRuntimeConfig.s3_url}/resume/${context?.resume?.path_file}`
+                                )
+                              }}>
+                              <Button variant="contained" color="primary">
+                                <GetApp />
+                                ดาวน์โหลดผลงาน
+                              </Button>
+                            </a>
+                          </div>
+                        )}
                         <Button variant="contained" component="label">
                           Upload File
                           <input
@@ -297,7 +301,7 @@ const ResumeInfo = () => {
                           />
                           <input name="path_file" className="hidden" ref={register} />
                         </Button>
-                        <span className="pl-5 pt-2">{context.fileName}</span>
+                        <span className="pt-2 pl-5">{context.fileName}</span>
                       </div>
                     </div>
                   </div>

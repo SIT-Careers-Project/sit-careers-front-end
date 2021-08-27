@@ -9,12 +9,17 @@ configure({
 export class AnnouncementInfoContext {
   announcements
   beforeSearch
+  alert
 
   constructor() {
     this.announcements = []
     this.beforeSearch = []
 
     makeAutoObservable(this)
+  }
+
+  keyChange = (key, value) => {
+    this[key] = value
   }
 
   setAnnouncements = (announcements) => {
@@ -28,6 +33,21 @@ export class AnnouncementInfoContext {
       this.beforeSearch = response.data
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -38,6 +58,21 @@ export class AnnouncementInfoContext {
       this.beforeSearch = response.data
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 }

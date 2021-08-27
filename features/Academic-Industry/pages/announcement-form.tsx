@@ -16,10 +16,12 @@ import AnnouncementWalfareInfoForm from '../components/FormCreate/AnnouncementWe
 import AnnouncementCompanyLocationInfo from '../components/FormCreate/AnnouncementCompanyLocationInfo'
 import AnnouncementBusinessDateInfo from '../components/FormCreate/AnnouncementBusinessDateInfo'
 import PrimaryButton from '../../../core/components/Button/Primary'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const AnnouncementForm = ({ authContext }) => {
   const context = useContext(announcementFormPageContext)
   const coreModalContext = useContext(modalContext)
+  const alertContext = useContext(AlertContext)
   const [file, setFile] = useState(null)
 
   const { handleSubmit, register, errors, control } = useForm({
@@ -30,6 +32,7 @@ const AnnouncementForm = ({ authContext }) => {
 
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
+    context.keyChange('alert', alertContext)
     context.getAutoCompleteCompanies()
     context.getAutoCompleteJobPositions()
   }, [context, coreModalContext])

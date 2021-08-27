@@ -3,6 +3,7 @@ import { MainLayout } from 'core/components/Layout/Main'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
+import { Alert } from 'core/components/Alert'
 
 const UpdateCompany = ({ authContext }) => {
   const router = useRouter()
@@ -21,6 +22,7 @@ const UpdateCompany = ({ authContext }) => {
   return (
     <MainLayout authContext={authContext}>
       <div className="flex justify-center mt-16">
+        <Alert />
         <AnnouncementForm authContext={authContext} />
       </div>
     </MainLayout>

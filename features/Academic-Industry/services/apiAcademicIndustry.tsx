@@ -3,7 +3,6 @@ import axios from 'axios'
 import Cookie from 'js-cookie'
 import getConfig from 'next/config'
 
-
 const { publicRuntimeConfig } = getConfig()
 const apiAcademic = {
   getAnnouncementById: async (announcement_id) => {
@@ -165,13 +164,17 @@ const apiAcademic = {
     return response
   },
   createApplicationReportByCompany: async (data) => {
-    const response = axios.post(`${publicRuntimeConfig.API_URL}/academic-industry/company/applications/report`, data, {
-      headers: {
-        Authorization: `Bearer ${Cookie.get('token')}`,
-        'Content-Type': 'application/json'
-      },
-      responseType: 'blob'
-    })
+    const response = axios.post(
+      `${publicRuntimeConfig.API_URL}/academic-industry/company/applications/report`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${Cookie.get('token')}`,
+          'Content-Type': 'application/json'
+        },
+        responseType: 'blob'
+      }
+    )
     return response
   }
 }
