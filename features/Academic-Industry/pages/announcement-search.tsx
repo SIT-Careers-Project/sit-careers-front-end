@@ -16,7 +16,7 @@ import _ from 'lodash'
 import { toJS } from 'mobx'
 import { AlertContext } from 'core/contexts/alert_context'
 
-const AnnouncementSearch = () => {
+const AnnouncementSearch = ({ authContext }) => {
   const context = useContext(announcementSearchPageContext)
   const contextSearch = useContext(searchContext)
   const contextPagination = useContext(paginationContext)
@@ -81,7 +81,7 @@ const AnnouncementSearch = () => {
                 </PrimaryButton>
               </div>
               <div className="flex flex-row justify-between pt-6">
-                <div className="w-3/12">
+                <div className="w-full">
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของงาน</InputLabel>
                     <Select
@@ -106,7 +106,7 @@ const AnnouncementSearch = () => {
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-3/12 pl-5">
+                <div className="w-full pl-5">
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของประกาศ</InputLabel>
                     <Select
@@ -133,7 +133,7 @@ const AnnouncementSearch = () => {
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-3/12 pl-5">
+                <div className="w-full pl-5">
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของษริษัท</InputLabel>
                     <Select
@@ -160,33 +160,35 @@ const AnnouncementSearch = () => {
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-3/12 pl-5">
-                  <FormControl className="w-full font-prompt" variant="outlined">
-                    <InputLabel htmlFor="trinity-select">สถานะการรับสมัคร</InputLabel>
-                    <Select
-                      labelId="demo-mutiple-name-label"
-                      id="demo-mutiple-name"
-                      multiple
-                      value={context.status}
-                      onChange={(event) => {
-                        context.setValue('status', event?.target?.value)
-                        context.setValue('filterSearch', [
-                          { type: 'status', name: context.status },
-                          { type: 'company_name_en', name: [event.target.value] },
-                          { type: 'company_name_th', name: [event.target.value] },
-                          { type: 'announcement_title', name: [event.target.value] }
-                        ])
-                      }}
-                      input={<OutlinedInput />}
-                      MenuProps={MenuProps}>
-                      {_.map(status, (status) => (
-                        <MenuItem key={status.title} value={status.title}>
-                          {status.title}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </div>
+                {(authContext.roleUser === 'viewer' || authContext.roleUser === 'admin') && (
+                  <div className="w-full pl-5">
+                    <FormControl className="w-full font-prompt" variant="outlined">
+                      <InputLabel htmlFor="trinity-select">สถานะการรับสมัคร</InputLabel>
+                      <Select
+                        labelId="demo-mutiple-name-label"
+                        id="demo-mutiple-name"
+                        multiple
+                        value={context.status}
+                        onChange={(event) => {
+                          context.setValue('status', event?.target?.value)
+                          context.setValue('filterSearch', [
+                            { type: 'status', name: context.status },
+                            { type: 'company_name_en', name: [event.target.value] },
+                            { type: 'company_name_th', name: [event.target.value] },
+                            { type: 'announcement_title', name: [event.target.value] }
+                          ])
+                        }}
+                        input={<OutlinedInput />}
+                        MenuProps={MenuProps}>
+                        {_.map(status, (status) => (
+                          <MenuItem key={status.title} value={status.title}>
+                            {status.title}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </div>
+                )}
               </div>
             </div>
           </div>

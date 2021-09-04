@@ -18,7 +18,7 @@ const Announcements = ({ authContext }) => {
     <MainLayout authContext={authContext}>
       <div>
         <Alert />
-        <AnnouncementSearch />
+        <AnnouncementSearch authContext={authContext} />
       </div>
     </MainLayout>
   )
