@@ -36,9 +36,13 @@ const Footer = () => {
               </p>
             </div>
             <div className="absolute bottom-0">
-              <p className="opacity-25 text-body-2 text-secondary2">
+              <p className="-mb-5 opacity-25 text-body-2 text-secondary2">
                 © School of Information Technology, King Mongkut&apos;s University of Technology
-                Thonburi.
+                Thonburi. <br />
+                Power by{' '}
+                <Link href="https://github.com/SIT-Careers-Project">
+                  <span className="underline cursor-pointer">SIT Career Center</span>
+                </Link>
               </p>
             </div>
           </div>
