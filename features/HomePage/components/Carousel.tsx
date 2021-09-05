@@ -55,7 +55,8 @@ export const Carousel = () => {
           <div
             className="z-10 slideshowSlider"
             style={{
-              transform: `translate3d(${-index * 100}%, 0, 0)`
+              transform: `translate3d(${-index * 100}%, 0, 0)`,
+              height: context.bannerForShow.length ? '600px' : '0px'
             }}>
             {_.map(toJS(context.bannerForShow), (bgImage, i) => (
               <div
