@@ -295,13 +295,18 @@ const ResumeInfo = () => {
                             style={{ display: 'none' }}
                             ref={register}
                             onChange={(event) => {
-                              setFile(URL.createObjectURL(event.target.files[0]))
-                              context.keyChange('fileName', event.target.value)
+                              setFile(URL.createObjectURL(event?.target?.files[0]) || null)
+                              context.keyChange('fileName', event?.target?.value)
                             }}
                           />
                           <input name="path_file" className="hidden" ref={register} />
                         </Button>
                         <span className="pt-2 pl-5">{context.fileName}</span>
+                        {errors?.file_resume && (
+                          <div className="flex items-center pl-4 text-red text-body-2">
+                            {errors?.file_resume?.message}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

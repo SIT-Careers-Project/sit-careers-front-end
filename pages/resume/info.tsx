@@ -17,7 +17,7 @@ const ResumeInfo = ({ authContext }) => {
 
   return (
     <MainLayout authContext={authContext}>
-      <div className="flex justify-center mt-16">
+      <div className="flex flex-col items-center justify-center mt-16">
         <Alert />
         <ResumeForm />
       </div>

@@ -16,7 +16,7 @@ const Announcements = ({ authContext }) => {
 
   return (
     <MainLayout authContext={authContext}>
-      <div>
+      <div className="flex flex-col items-center justify-center">
         <Alert />
         <AnnouncementSearch authContext={authContext} />
       </div>
