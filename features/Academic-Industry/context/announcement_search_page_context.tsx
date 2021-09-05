@@ -13,7 +13,7 @@ export class AnnouncementSearchPageContext {
   companyType
   announcementDetail
   alert
-
+  filterSearch
   status
   constructor() {
     makeAutoObservable(this)
@@ -27,6 +27,7 @@ export class AnnouncementSearchPageContext {
     this.companyType = []
     this.jobPosition = []
     this.status = []
+    this.filterSearch = []
   }
   setAnnouncements = (announcements) => {
     this.announcements = announcements || []
