@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { createContext } from 'react'
 import apiResume from '../services/apiResume'
-import Router from 'next/router'
+
 export class ResumeInfoPageContext {
   modal
   resume
@@ -73,10 +73,14 @@ export class ResumeInfoPageContext {
 
   updateResume = async (data) => {
     try {
-      await apiResume.updateResume(data).then(() => {
+      await apiResume.updateResume(data).then((response) => {
         this.fileName = 'No file chosen'
         this.modal.closeModal()
-        Router.reload()
+        if (response?.status === 200) {
+          this.alert.setAlert(`สร้างโปรไฟล์สำเร็จ !`, 'success', 'success', true)
+        } else if (response?.status === 400) {
+          this.alert.setAlert(`กรุณากรอกข้อมูลให้ถูกต้อง !`, 'warning', 'warning', true)
+        }
       })
     } catch (error) {
       console.log(error)
@@ -100,13 +104,23 @@ export class ResumeInfoPageContext {
 
   createResume = async (data) => {
     try {
-      await apiResume.createResume(data).then(() => {
+      await apiResume.createResume(data).then((response) => {
         this.fileName = 'No file chosen'
         this.modal.closeModal()
-        Router.reload()
+        if (response?.status === 200) {
+          this.alert.setAlert(`สร้างโปรไฟล์สำเร็จ !`, 'success', 'success', true)
+        } else if (response?.status === 400) {
+          this.alert.setAlert(`กรุณากรอกข้อมูลให้ถูกต้อง !`, 'warning', 'warning', true)
+        }
       })
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        `ไม่สามารถบันทึกข้อมูลได้ เนื่องจาก ${error.response?.data?.message}`,
+        'error',
+        'error',
+        true
+      )
     }
   }
 }
