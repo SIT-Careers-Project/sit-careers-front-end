@@ -38,6 +38,7 @@ function Index() {
               </div>
               <div className="col-span-4">
                 <StatCard
+                  isLoading={context.isLoading}
                   title="บริษัททั้งหมด"
                   stat={context?.statInfo?.count_all_companies}
                   icon={<Domain style={{ color: 'white', fontSize: '87px' }} />}
@@ -45,6 +46,7 @@ function Index() {
               </div>
               <div className="col-span-4">
                 <StatCard
+                  isLoading={context.isLoading}
                   title="ประกาศรับสมัคร"
                   stat={context.statInfo.count_all_announcements}
                   icon={<Assignment style={{ color: 'white', fontSize: '87px' }} />}
@@ -52,6 +54,7 @@ function Index() {
               </div>
               <div className="col-span-4">
                 <StatCard
+                  isLoading={context.isLoading}
                   title="ผู้เข้าใช้งาน"
                   stat={context.statInfo.count_all_users}
                   icon={<People style={{ color: 'white', fontSize: '87px' }} />}
