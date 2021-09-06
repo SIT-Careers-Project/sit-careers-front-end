@@ -27,7 +27,12 @@ export const AnnouncementSection = () => {
             </div>
           </div>
           <div className="col-span-7">
-            <Image src="/image/announcement.svg" width={560} height={537} />
+            <Image
+              src="/image/announcement.svg"
+              width={560}
+              alt="SIT Career Center Announcment"
+              height={537}
+            />
           </div>
         </div>
       </div>
