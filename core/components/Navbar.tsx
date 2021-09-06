@@ -23,7 +23,9 @@ export default function Navbar({ authContext }) {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {
-    context.getNotifications()
+    if (authContext.isLoggedIn) {
+      context.getNotifications()
+    }
   }, [authContext, authContext.permission, context])
 
   return (
