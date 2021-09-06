@@ -33,7 +33,7 @@ export const AnnouncementCardSection = (props) => {
           <p className="font-prompt-semibold text-body-1">ประกาศรับสมัครงาน</p>
           <div
             style={{ height: '301px' }}
-            className="relative flex flex-row items-center w-full overflow-x-scroll">
+            className="relative flex flex-row items-center w-full overflow-x-hidden">
             <div className="absolute top-0 right-0 z-10 flex items-center justify-end flex-1 w-12 h-full bg-grey-fbfcfd">
               <button
                 className="focus:outline-none"

@@ -23,7 +23,9 @@ export default function Navbar({ authContext }) {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {
-    context.getNotifications()
+    if (authContext.isLoggedIn) {
+      context.getNotifications()
+    }
   }, [authContext, authContext.permission, context])
 
   return (
@@ -42,10 +44,13 @@ export default function Navbar({ authContext }) {
             <div style={{ width: '1280px' }} className="h-full max-w-screen-lg">
               <div className="flex flex-row items-center justify-between h-full">
                 <Link href="/">
-                  <div
-                    style={{ height: '30px', width: '100px' }}
-                    className="mt-2 font-semibold text-white cursor-pointer font-prompt">
-                    <img src="/image/sit-career-center.svg" alt="sit logo" />
+                  <div className="mt-2 font-semibold text-white cursor-pointer font-prompt">
+                    <img
+                      width="100px"
+                      height="30px"
+                      src="/image/sit-career-center.svg"
+                      alt="SIT Career Center Logo"
+                    />
                   </div>
                 </Link>
                 <ul className="flex flex-row list-none lg:flex-row">

@@ -17,7 +17,12 @@ export const CompanySection = () => {
       <div className="h-full max-w-screen-lg mx-auto">
         <div className="grid h-full grid-cols-12 gap-5 pt-64">
           <div className="flex flex-col items-center justify-center col-span-7">
-            <Image src="/image/company.svg" width={562} height={483} />
+            <Image
+              src="/image/company.svg"
+              width={562}
+              alt="SIT Career Center Company"
+              height={483}
+            />
           </div>
           <div className="flex flex-col items-end justify-center col-span-5 text-right">
             <div className="flex flex-col">

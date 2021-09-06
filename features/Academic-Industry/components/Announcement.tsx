@@ -32,7 +32,7 @@ export const Announcement = ({
   <>
     <MaterialCard
       style={{ height: '199px' }}
-      className={`${className} w-full grid grid-cols-12 gap-4`}>
+      className={`${className} w-full grid grid-cols-12 gap-4 pr-1`}>
       {srcImg !== '-' && (
         <div
           className="w-full col-span-3 bg-cover bg-clip-padding"

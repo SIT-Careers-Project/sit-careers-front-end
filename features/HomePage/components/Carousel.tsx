@@ -59,15 +59,14 @@ export const Carousel = () => {
               height: context.bannerForShow.length ? '600px' : '0px'
             }}>
             {_.map(toJS(context.bannerForShow), (bgImage, i) => (
-              <div
+              <img
                 key={i}
+                loading="lazy"
+                style={{ height: '600px' }}
+                src={`${publicRuntimeConfig.s3_url}/banner/${bgImage.path_image}`}
                 className="inline-block w-full"
-                style={{
-                  height: '600px',
-                  backgroundImage: `url(${publicRuntimeConfig.s3_url}/banner/${bgImage.path_image})`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover'
-                }}></div>
+                alt={`Banners ${bgImage.path_image} SIT Careers Center.`}
+              />
             ))}
           </div>
         </div>

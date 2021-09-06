@@ -9,41 +9,49 @@
 @font-face {
   font-family: "Prompt Light";
   src: url('/fonts/Prompt-Light.ttf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Prompt Medium";
   src: url('/fonts/Prompt-Medium.ttf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Prompt Regular";
   src: url('/fonts/Prompt-Regular.ttf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Prompt SemiBold";
   src: url('/fonts/Prompt-SemiBold.ttf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Sarabun Light";
   src: url('/fonts/Sarabun-Light.ttf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Sarabun Medium";
   src: url('/fonts/Sarabun-Medium.ttf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Sarabun Regular";
   src: url('/fonts/Sarabun-Regular.ttf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Sarabun SemiBold";
   src: url('/fonts/Sarabun-SemiBold.ttf');
+  font-display: swap;
 }
 
 .MuiInputLabel-formControl {

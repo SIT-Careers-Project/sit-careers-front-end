@@ -108,6 +108,15 @@ export class authContext {
       }
     } catch (error) {
       console.log(error)
+      if (error.response?.status === 401) {
+        this.alert.setAlert(
+          `ไม่สามารถเข้าใช้งานระบบได้ คุณอาจจะไม่ใช่ผู้ได้รับอนุญาตให้เข้าใช่งาน กรุณาติดต่อผู้ดูแลระบบ`,
+          'error',
+          'error',
+          true
+        )
+        Router.prototype.push('/login')
+      }
     }
   }
 

@@ -16,13 +16,13 @@ class MyDocument extends Document {
           />
           <meta
             name="keywords"
-            content="sitcc, sitcareers,d-day,หางาน,สมัครงาน,ประกาศรับสมัครงาน,คณะเทคโนโลยีสารสนเทศ,ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม"
+            content="sitcc,sitcareer,sitcareercenter,D-Day,หางาน,สมัครงาน,ประกาศรับสมัครงาน,คณะเทคโนโลยีสารสนเทศ,ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม"
           />
           <meta
             property="og:title"
-            content="SIT CC : SIT Career Center : ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม"
+            content="SIT Career Center : ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม"
           />
-          <meta property="og:type" content="company" />
+          <meta property="og:type" content="website" />
           <meta property="og:url" content="http://sitcc.sit.kmutt.ac.th/" />
           <meta
             property="og:image"
@@ -30,7 +30,7 @@ class MyDocument extends Document {
           />
           <meta
             property="og:site_name"
-            content="SIT CC : SIT Career Center : ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม"
+            content="SIT Career Center: ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม"
           />
           <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"></link>
           <meta name="theme-color" content="#295B8D" />
