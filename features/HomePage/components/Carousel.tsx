@@ -62,8 +62,9 @@ export const Carousel = () => {
               <img
                 key={i}
                 loading="lazy"
+                style={{ height: '600px' }}
                 src={`${publicRuntimeConfig.s3_url}/banner/${bgImage.path_image}`}
-                className="inline-block w-full h-full"
+                className="inline-block w-full"
                 alt={`Banners ${bgImage.path_image} SIT Careers Center.`}
               />
             ))}
