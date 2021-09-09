@@ -17,10 +17,13 @@ const Footer = () => {
             <div className="mt-2 text-body-1 font-prompt">66 2470 9850</div>
             <div className="mt-2 text-body-1 font-prompt">webadmin@sit.kmutt.ac.th</div>
             <Link href="/">
-              <div
-                style={{ height: '30px', width: '120px' }}
-                className="mt-10 font-semibold text-white cursor-pointer font-prompt">
-                <img src="/image/sit-career-center-footer.svg" alt="sit logo" />
+              <div className="mt-10 font-semibold text-white cursor-pointer font-prompt">
+                <img
+                  height="30px"
+                  width="120px"
+                  src="/image/sit-career-center-footer.svg"
+                  alt="sit logo"
+                />
               </div>
             </Link>
           </div>
@@ -36,7 +39,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="absolute bottom-0">
-              <p className="-mb-5 opacity-25 text-body-2 text-secondary2">
+              <p className="-mb-5 opacity-50 text-body-2 text-secondary2">
                 © School of Information Technology, King Mongkut&apos;s University of Technology
                 Thonburi. <br />
                 Power by{' '}
