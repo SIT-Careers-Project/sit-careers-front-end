@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import MaterialTable from 'material-table'
 import React, { useCallback, useEffect } from 'react'
+import { tableIcons } from './IconTable'
 
 const CoreTable = (props) => {
   const { column, title, action, getData, data } = props
@@ -18,6 +19,7 @@ const CoreTable = (props) => {
 
   return (
     <MaterialTable
+      icons={tableIcons}
       title={title || ''}
       columns={column}
       data={data}
