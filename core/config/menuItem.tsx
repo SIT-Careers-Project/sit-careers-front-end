@@ -49,7 +49,7 @@ export const dropdownLinkAdmin = [
   },
   {
     path: '/report-management/info',
-    name: 'ดาวห์โหลดรายงานสรุป',
+    name: 'ดาวน์โหลดรายงานสรุป',
     icon: <SaveAlt />,
     role: ['admin'],
     permission: ['access_dashboard']
