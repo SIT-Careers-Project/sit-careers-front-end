@@ -10,9 +10,31 @@ class MyDocument extends Document {
       <Html lang="en" dir="ltr">
         <Head>
           <meta charSet="utf-8" />
-          {/* Use minimum-scale=1 to enable GPU rasterization */}
+          <meta
+            name="description"
+            content="SIT Career Center หรือ ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม : เว็บไซต์ที่รวบรวมประมาศรับสมัครของบริษัทหางาน และสามารถใหันักศึกษาคณะเทคโนโลยีสาสารสนเทศสมัครงานที่สนใจ"
+          />
+          <meta
+            name="keywords"
+            content="sitcc,sitcareer,sitcareercenter,D-Day,หางาน,สมัครงาน,ประกาศรับสมัครงาน,คณะเทคโนโลยีสารสนเทศ,ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม"
+          />
+          <meta
+            property="og:title"
+            content="SIT Career Center : ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม"
+          />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="http://sitcc.sit.kmutt.ac.th/" />
+          <meta
+            property="og:image"
+            content="https://seniorproject.sit.kmutt.ac.th/projectPoster/posterIT60-BU87.png"
+          />
+          <meta
+            property="og:site_name"
+            content="SIT Career Center: ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม"
+          />
           <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"></link>
           <meta name="theme-color" content="#295B8D" />
+          <meta name="msapplication-TileColor" content="#295B8D" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"

@@ -2,7 +2,7 @@ version: "3.8"
 services:
 
   frontend:
-    image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers:fe
+    image: sit-careers:fe
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
@@ -12,7 +12,7 @@ services:
       - sit-careers
 
   fe-nginx:
-    image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers:fe-nginx
+    image: sit-careers:fe-nginx
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile

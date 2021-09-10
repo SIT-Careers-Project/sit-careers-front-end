@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useRef, useState, useContext } from 'react'
 import _ from 'lodash'
-import Image from 'next/image'
 import getConfig from 'next/config'
 import { Observer } from 'mobx-react-lite'
 import { toJS } from 'mobx'
@@ -11,64 +10,64 @@ import { ModalBannerContext } from 'core/contexts/modal_banner_image_context'
 const { publicRuntimeConfig } = getConfig()
 
 export const Carousel = () => {
-  const [active, setActive] = useState(0)
-  const [isActive, setIsActive] = useState(false)
   const context = useContext(ModalBannerContext)
-  const ref = useRef(null)
+  const [index, setIndex] = useState(0)
+  const timeoutRef = useRef(null)
+  const delay = 2500
+  const resetTimeout = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+  }
 
   useEffect(() => {
-    context.getBanners()
-    if (!isActive) {
-      const interval = setInterval(() => {
-        setActive((oldValue) => {
-          let newValue = oldValue + 1
-          if (newValue === context.banners.length) {
-            newValue = 0
-          }
-          return newValue
-        })
-      }, 4000)
-      return () => {
-        clearInterval(interval)
-      }
-    }
-  }, [])
+    resetTimeout()
+    timeoutRef.current = setTimeout(
+      () =>
+        setIndex((prevIndex) =>
+          prevIndex === context.bannerForShow?.length - 1 ? 0 : prevIndex + 1
+        ),
+      delay
+    )
 
-  const handlerClick = (i) => {
-    setActive(i)
-    setIsActive(!isActive)
-  }
+    return () => {
+      resetTimeout()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index])
 
   return (
     <Observer>
       {() => (
-        <div ref={ref} className={`relative z-10 w-full bg-primary h-full mt-12`}>
-          <Image
-            src={`${publicRuntimeConfig.s3_url}/banner/${
-              toJS(context.banners[active])?.path_image
-            }`}
-            alt="logo"
-            layout="responsive"
-            width={900}
-            height={250}
-          />
-          <div className="absolute bottom-0 flex flex-row justify-center w-full gap-5 mb-5">
-            {_.map(context.banners, (data, i) => {
-              return (
-                <div key={i}>
-                  <button
-                    className={`w-5 focus:outline-none h-5 rounded-full cursor-pointer ${
-                      active === i ? 'bg-secondary1' : 'bg-white'
-                    }`}
-                    onClick={() => handlerClick(i)}>
-                    <div
-                      style={{ filter: 'blur(15px)' }}
-                      className="w-4 h-4 bg-white rounded-full"
-                    />
-                  </button>
-                </div>
-              )
-            })}
+        <div className="relative pt-10 slideshow">
+          <div className="absolute bottom-0 z-50 flex justify-center w-full mb-10 slideshowDots">
+            {_.map(context.bannerForShow, (img, idx) => (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+              <div
+                key={idx}
+                className={`slideshowDot ${index === idx ? 'active' : 'bg-white'}`}
+                onClick={() => {
+                  setIndex(idx)
+                }}
+              />
+            ))}
+          </div>
+          <div
+            className="z-10 transition-all duration-1000 opacity-100 slideshowSlider"
+            style={{
+              transform: `translate3d(${-index * 100}%, 0, 0)`,
+              height: context.bannerForShow.length ? '600px' : '0px'
+            }}>
+            {_.map(toJS(context.bannerForShow), (bgImage, i) => (
+              <img
+                key={i}
+                loading="lazy"
+                style={{ height: '600px' }}
+                src={`${publicRuntimeConfig.s3_url}/banner/${bgImage.path_image}`}
+                className="inline-block w-full"
+                alt={`Banners ${bgImage.path_image} SIT Careers Center.`}
+              />
+            ))}
           </div>
         </div>
       )}

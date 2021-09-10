@@ -1,20 +1,15 @@
 module.exports = {
   future: {
     removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
+    purgeLayersByDefault: true
   },
-  purge: [
-    './pages/*.tsx',
-    './pages/**/*.tsx',
-    './core/**/*.tsx',
-    './features/**/**/*.tsx',
-  ],
+  purge: ['./pages/*.tsx', './pages/**/*.tsx', './core/**/*.tsx', './features/**/**/*.tsx'],
   theme: {
     fontFamily: {
-      prompt: [ 'Prompt Regular' ],
+      prompt: ['Prompt Regular'],
       'prompt-light': ['Prompt Light'],
-      'prompt-medium': [ 'Prompt Medium' ],
-      'prompt-semibold': [ 'Prompt SemiBold' ],
+      'prompt-medium': ['Prompt Medium'],
+      'prompt-semibold': ['Prompt SemiBold'],
       sarabun: ['Sarabun Regular'],
       'sarabun-meduim': ['Sarabun Medium'],
       'sarabun-light': ['Sarabun Light'],
@@ -36,10 +31,10 @@ module.exports = {
       'red-dark': '#C62828',
       grey4: '#E0E0E0',
       grey1: '#FBFCFB',
-      green1:'#ECF9F3',
+      green1: '#ECF9F3',
       green2: '#27AE60',
       green3: '#00C853',
-      green4: '#5CB660',
+      green4: '#5CB660'
     },
     fontSize: {
       'heading-1': '96px',
@@ -51,18 +46,18 @@ module.exports = {
       'body-1': '18px',
       'body-2': '14px',
       'subtitle-1': '16px',
-      'subtitle-2': '14px',
+      'subtitle-2': '14px'
     },
     borderWidth: {
       DEFAULT: '1px',
-      '0': '0',
-      '2': '2px',
-      '3': '3px',
-      '4': '4px',
-      '6': '6px',
-      '8': '8px',
+      0: '0',
+      2: '2px',
+      3: '3px',
+      4: '4px',
+      6: '6px',
+      8: '8px'
     }
   },
   variants: {},
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')]
 }

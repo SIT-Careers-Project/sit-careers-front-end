@@ -3,6 +3,7 @@ import { MainLayout } from 'core/components/Layout/Main'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
+import { Alert } from 'core/components/Alert'
 
 const UpdateAnnouncement = ({ authContext }) => {
   const router = useRouter()
@@ -11,7 +12,7 @@ const UpdateAnnouncement = ({ authContext }) => {
     authContext.fetchMe().then(() => {
       const path = checkLoggedIn(
         authContext.isLoggedIn,
-        ['admin', 'manager', 'coordinator'],
+        ['admin', 'manager', 'coordinator', 'viewer'],
         authContext.roleUser
       )
       path && router.push(path)
@@ -20,7 +21,8 @@ const UpdateAnnouncement = ({ authContext }) => {
 
   return (
     <MainLayout authContext={authContext}>
-      <div className="flex justify-center mt-16 ">
+      <div className="flex flex-col items-center justify-center mt-16 ">
+        <Alert />
         <AnnouncementPage authContext={authContext} />
       </div>
     </MainLayout>

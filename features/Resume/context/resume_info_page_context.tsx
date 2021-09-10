@@ -1,12 +1,13 @@
 import { makeAutoObservable } from 'mobx'
 import { createContext } from 'react'
 import apiResume from '../services/apiResume'
-import Router from 'next/router'
+
 export class ResumeInfoPageContext {
   modal
   resume
   fileName
   renderDelay
+  alert
 
   constructor() {
     this.modal = ''
@@ -27,6 +28,21 @@ export class ResumeInfoPageContext {
       this.fileName = 'No file chosen'
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -37,30 +53,74 @@ export class ResumeInfoPageContext {
       this.fileName = 'No file chosen'
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
   updateResume = async (data) => {
     try {
-      await apiResume.updateResume(data).then(() => {
+      await apiResume.updateResume(data).then((response) => {
         this.fileName = 'No file chosen'
         this.modal.closeModal()
-        Router.reload()
+        if (response?.status === 200) {
+          this.alert.setAlert(`สร้างโปรไฟล์สำเร็จ !`, 'success', 'success', true)
+        } else if (response?.status === 400) {
+          this.alert.setAlert(`กรุณากรอกข้อมูลให้ถูกต้อง !`, 'warning', 'warning', true)
+        }
       })
     } catch (error) {
       console.log(error)
+      if (error.response.status === 400) {
+        this.alert.setAlert(
+          `ไม่สามารถแก้ไขข้อมูลได้ เนื่องจากคุณไม่ได้กรอกข้อมูลบางอย่าง กรุณาตรวจสอบข้อมูล`,
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          `ไม่สามารถแก้ไขข้อมูลได้ เนื่องจาก ${error.response?.data?.message}`,
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
   createResume = async (data) => {
     try {
-      await apiResume.createResume(data).then(() => {
+      await apiResume.createResume(data).then((response) => {
         this.fileName = 'No file chosen'
         this.modal.closeModal()
-        Router.reload()
+        if (response?.status === 200) {
+          this.alert.setAlert(`สร้างโปรไฟล์สำเร็จ !`, 'success', 'success', true)
+        } else if (response?.status === 400) {
+          this.alert.setAlert(`กรุณากรอกข้อมูลให้ถูกต้อง !`, 'warning', 'warning', true)
+        }
       })
     } catch (error) {
       console.log(error)
+      this.alert.setAlert(
+        `ไม่สามารถบันทึกข้อมูลได้ เนื่องจาก ${error.response?.data?.message}`,
+        'error',
+        'error',
+        true
+      )
     }
   }
 }

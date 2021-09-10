@@ -11,11 +11,12 @@ export class UserInfoPageContext {
 
   users
   roles
+  roleViewer
+  roleSelected
   userDelete
   disableTrashButton
 
   selectRoleName
-  email
   autoCompleteCompany
   modalDelete
 
@@ -24,12 +25,13 @@ export class UserInfoPageContext {
     this.modal = ''
     this.modalDelete = false
     this.selectRoleName = ''
-    this.email = ''
     this.autoCompleteCompany = []
     this.users = []
     this.roles = []
     this.userDelete = []
     this.disableTrashButton = true
+    this.roleViewer = ''
+    this.roleSelected = ''
 
     makeAutoObservable(this)
   }
@@ -68,13 +70,16 @@ export class UserInfoPageContext {
       })
       this.alert.setAlert('เพิ่มผู้ใช้งานสำเร็จ', 'success', 'success', true)
     } catch (error) {
-      console.log(error)
-      this.alert.setAlert(
-        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้',
-        'error',
-        'error',
-        true
-      )
+      let message = 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้'
+      if (error.response.status === 400) {
+        if (error.response.data.email) {
+          message = `ไม่สามารถ เพิ่มผู้ประสานงานได้ เนื่องจาก email นี้ได้ถูกใช้งานในระบบไปแล้ว`
+        } else if (error.response.data.company_id) {
+          message = `ไม่สามารถ เพิ่มผู้ประสานงานได้ เนื่องจากไม่มีบริษัทที่อยู่ในระบบ`
+        }
+      }
+      this.alert.setAlert(message, 'error', 'error', true)
+      this.modal.closeModal()
     }
   }
 
@@ -87,12 +92,12 @@ export class UserInfoPageContext {
       this.alert.setAlert('เพิ่มผู้ใช้งานสำเร็จ', 'success', 'success', true)
     } catch (error) {
       console.log(error)
-      this.alert.setAlert(
-        'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้',
-        'error',
-        'error',
-        true
-      )
+      let message = 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถเพิ่มผู้ประสานงานได้'
+      if (error.response.status === 400) {
+        message = `ไม่สามารถ เพิ่มผู้ประสานงานได้ เนื่องจากคุณเพิ่มผู้ประสานงานครบจำนวนแล้ว`
+      }
+      this.alert.setAlert(message, 'error', 'error', true)
+      this.modal.closeModal()
     }
   }
 
@@ -100,9 +105,14 @@ export class UserInfoPageContext {
     try {
       const response = await apiUser.getRoles()
       this.roles = response.data
-      this.roles = _.remove(this.roles, function (currentObject) {
-        return currentObject.role_name !== 'other'
+      this.roles = _.filter(this.roles, function (currentObject) {
+        return (
+          currentObject.role_name !== 'other' &&
+          currentObject.role_name != 'student' &&
+          currentObject.role_name != 'admin'
+        )
       })
+      this.roleViewer = _.find(this.roles, (value) => value.role_name === 'viewer')
     } catch (error) {
       console.log(error)
       this.alert.setAlert(

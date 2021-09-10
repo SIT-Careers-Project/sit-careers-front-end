@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { TagStatus } from 'core/components/TagStatus'
 import { checkStatus } from '../../../core/services/utils'
 import _ from 'lodash'
+import marked from 'marked'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -31,7 +32,7 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
       <div>
         <MaterialCard
           style={{
-            height: '1100px',
+            minHeight: '1100px',
             width: '562px',
             boxShadow: '10px -3px 15px rgba(0, 0, 0, 0.10), 4px -2px 6px rgba(0, 0, 0, 0.05)'
           }}>
@@ -90,7 +91,7 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
                 )}
                 {checkStatus(data?.start_date, data?.end_date, data?.status) === 'CLOSE' && (
                   <button className="text-white bg-opacity-50 bg-primary" disabled>
-                    <p className="px-5 py-3 focus:outline-none text-white cursor-default font-prompt text-subtitle-1">
+                    <p className="px-5 py-3 text-white cursor-default focus:outline-none font-prompt text-subtitle-1">
                       สมัคร
                     </p>
                   </button>
@@ -111,22 +112,23 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
                   ))}
                 </div>
               </div>
-              <div className="pt-2 pb-5">
+              <div className="pt-2">
                 <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
                   <Assignment className="mr-2" />
                   รายละเอียดงาน
                 </Typography>
-                <div className="mt-2 ml-1 text-black font-sarabun text-subtitle-1">
-                  {data?.job_description}
+                <div className="mt-2 ml-1 prose text-black font-sarabun text-subtitle-1">
+                  <div
+                    dangerouslySetInnerHTML={{ __html: marked(data?.job_description || '') }}></div>
                 </div>
               </div>
-              <div className="pt-2 pb-5">
+              <div className="pt-2">
                 <Typography className="mb-3 ml-1 font-bold text-primary font-prompt text-heading-6">
                   <CheckBox className="mr-2" />
                   คุณสมบัติ
                 </Typography>
-                <div className="mt-2 ml-1 text-black font-sarabun text-subtitle-1">
-                  {data?.property}
+                <div className="mt-2 ml-1 prose text-black font-sarabun text-subtitle-1">
+                  <div dangerouslySetInnerHTML={{ __html: marked(data?.property || '') }}></div>
                 </div>
               </div>
               <div className="pt-2 pb-5">
@@ -143,8 +145,8 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
                   <FreeBreakfast className="mr-2" />
                   สวัสดิการ
                 </Typography>
-                <div className="mt-2 ml-1 text-black font-sarabun text-subtitle-1">
-                  {data?.welfare}
+                <div className="mt-2 ml-1 prose text-black font-sarabun text-subtitle-1">
+                  <div dangerouslySetInnerHTML={{ __html: marked(data?.welfare || '') }}></div>
                 </div>
               </div>
               <div className="pt-2 pb-5">

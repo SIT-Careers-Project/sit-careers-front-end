@@ -14,6 +14,7 @@ export class DashboardPageContext {
   chartStudentJobPositions
   chartAnnouncementJobPositions
   statInfo
+  isLoading
 
   constructor() {
     makeAutoObservable(this)
@@ -24,6 +25,7 @@ export class DashboardPageContext {
     this.chartAnnouncementJobPositions = []
     this.chartStudentJobPositions = []
     this.statInfo = []
+    this.isLoading = false
   }
 
   getCompanyTypes = async () => {
@@ -70,8 +72,10 @@ export class DashboardPageContext {
 
   getStat = async () => {
     try {
+      this.isLoading = true
       const response = await apiService.getStat()
       this.statInfo = response.data
+      this.isLoading = false
     } catch (error) {
       console.log(error)
     }

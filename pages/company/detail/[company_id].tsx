@@ -10,7 +10,7 @@ const CompanyInfo = ({ query, authContext }) => {
     authContext.fetchMe().then(() => {
       const path = checkLoggedIn(
         authContext.isLoggedIn,
-        ['admin', 'student', 'manager', 'coordinator'],
+        ['admin', 'student', 'manager', 'coordinator', 'viewer'],
         authContext.roleUser
       )
       path && router.push(path)

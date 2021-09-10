@@ -3,6 +3,7 @@ import { Card as MaterialCard, Typography } from '@material-ui/core'
 import Link from 'next/link'
 import React from 'react'
 import getConfig from 'next/config'
+import marked from 'marked'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -56,11 +57,13 @@ export const Card = ({ className, tags, srcImg, aboutUs, title, linkPath }: Card
             </span>
           ))}
         </div>
-        <div className="mt-2 leading-5 text-black text-body-2">
-          <span className="text-subtitle-2">
-            {aboutUs.substr(0, 150)}
-            {aboutUs.length >= 150 ? '...' : ''}
-          </span>
+        <div className="flex mt-2 leading-5 text-black text-body-2">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: marked(aboutUs.substr(0, 150) || '')
+            }}
+            className="flex-wrap text-black text-subtitle-2"
+          />
         </div>
       </div>
     </MaterialCard>

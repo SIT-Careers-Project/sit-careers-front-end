@@ -61,6 +61,10 @@ const AnnouncementResumeInfo = (props) => {
               </div>
             </div>
             <div className="grid flex-row grid-cols-6 pb-3">
+              <p className="col-span-1">มหาวิทยาลัย:</p>
+              <p className="col-span-3">{data?.university_name}</p>
+            </div>
+            <div className="grid flex-row grid-cols-6 pb-3">
               <p className="col-span-1">สาขา:</p>
               <p className="col-span-3 "> {data?.curriculum}</p>
             </div>

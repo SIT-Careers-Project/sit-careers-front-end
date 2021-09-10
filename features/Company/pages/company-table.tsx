@@ -17,7 +17,7 @@ const CompanyTable = ({ authContext }) => {
 
   useEffect(() => {
     context.changeKey('alert', alertContext)
-    if (authContext.roleUser === 'admin') {
+    if (authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') {
       context.getCompaniesByAdmin()
     } else {
       context.getCompaniesByCompany()
@@ -86,14 +86,16 @@ const CompanyTable = ({ authContext }) => {
           <p className="text-heading-5 font-prompt">จัดการข้อมูลบริษัท</p>
         </div>
         <div>
-          <Link href="/company/form-create">
-            <button className="bg-primary focus:outline-none">
-              <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
-                <AddCircle className="mr-1" />
-                เพิ่มบริษัท
-              </p>
-            </button>
-          </Link>
+          {authContext.roleUser === 'admin' && (
+            <Link href="/company/form-create">
+              <button className="bg-primary focus:outline-none">
+                <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
+                  <AddCircle className="mr-1" />
+                  เพิ่มบริษัท
+                </p>
+              </button>
+            </Link>
+          )}
         </div>
       </div>
       <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
@@ -101,7 +103,7 @@ const CompanyTable = ({ authContext }) => {
         <Observer>
           {() => (
             <>
-              {authContext.roleUser === 'admin' && (
+              {(authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') && (
                 <CoreTable
                   column={column}
                   data={context.companies}

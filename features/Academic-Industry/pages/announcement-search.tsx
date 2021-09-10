@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select, OutlinedInput } from '@material-ui/core'
-import { companyType, jobType } from '../services/constantVariable'
+import { companyType, jobType, status } from '../services/constantVariable'
 import { CardSmall } from '../../../core/components/Card/Small'
 import PrimaryButton from '../../../core/components/Button/Primary'
 import React, { useContext, useEffect } from 'react'
@@ -14,15 +14,18 @@ import { checkStatus } from '../../../core/services/utils'
 import dayjs from 'dayjs'
 import _ from 'lodash'
 import { toJS } from 'mobx'
+import { AlertContext } from 'core/contexts/alert_context'
 
-const AnnouncementSearch = () => {
+const AnnouncementSearch = ({ authContext }) => {
   const context = useContext(announcementSearchPageContext)
   const contextSearch = useContext(searchContext)
   const contextPagination = useContext(paginationContext)
+  const alertContext = useContext(AlertContext)
 
   useEffect(() => {
     context.getAnnouncements()
     contextPagination.setSliceAnnouncement()
+    context.setValue('alert', alertContext)
     context.setValue('announcementDetail', context.announcements[0])
   }, [context, contextPagination])
 
@@ -37,28 +40,9 @@ const AnnouncementSearch = () => {
     }
   }
 
-  const keySearch = [
-    'company_type',
-    'company_name_th',
-    'company_name_en',
-    'announcement_title',
-    'job_position',
-    'job_type'
-  ]
-
   const handlerSearch = () => {
     context.setAnnouncements(
-      contextSearch.searchMultiFilter(
-        [
-          toJS(context.companyType),
-          context.companyName,
-          context.announcementTitle,
-          toJS(context.jobPosition),
-          toJS(context.jobType)
-        ],
-        context.beforeSearch,
-        keySearch
-      )
+      contextSearch.searchMultiFilterAnnouncement(context.beforeSearch, context.filterSearch)
     )
   }
 
@@ -68,30 +52,51 @@ const AnnouncementSearch = () => {
         <div>
           <div className="container grid max-w-screen-lg grid-flow-row px-10 mx-auto mt-20 bg-white rounded-lg shadow-lg font-prompt">
             <div className="w-full max-w-screen-lg my-6">
-              <div className="w-full p-2 bg-white border-opacity-50 rounded border-DEFAULT border-secondary2">
-                <Search
-                  onKeyPress={(event) => {
-                    if (event.key === 'Enter') {
-                      handlerSearch()
-                    }
-                  }}
-                  onChange={(event) => {
-                    if (typeof event.target.value === 'string') {
-                      context.setValue('companyName', event.target.value)
-                      context.setValue('announcementTitle', event.target.value)
-                    }
-                  }}
-                />
+              <div className="flex flex-row justify-between">
+                <div className="w-10/12">
+                  <div className="w-full p-2 bg-white border-opacity-50 rounded border-DEFAULT border-secondary2">
+                    <Search
+                      onKeyPress={(event) => {
+                        if (event.key === 'Enter') {
+                          handlerSearch()
+                        }
+                      }}
+                      onChange={(event) => {
+                        if (typeof event.target.value === 'string') {
+                          context.setValue('filterSearch', [
+                            { type: 'company_name_en', name: [event.target.value] },
+                            { type: 'company_name_th', name: [event.target.value] },
+                            { type: 'announcement_title', name: [event.target.value] }
+                          ])
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+                <PrimaryButton
+                  title="ค้นหา"
+                  className="z-50 ml-5 lg:w-3/12"
+                  onClick={handlerSearch}>
+                  <p className="px-4 py-4 text-white font-prompt text-subtitle-1">ค้นหา</p>
+                </PrimaryButton>
               </div>
               <div className="flex flex-row justify-between pt-6">
-                <div className="w-3/12">
+                <div className="w-full">
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของงาน</InputLabel>
                     <Select
                       labelId="trinity-select"
                       multiple
                       value={context.jobPosition}
-                      onChange={(event) => context.setValue('jobPosition', event?.target?.value)}
+                      onChange={(event) => {
+                        context.setValue('jobPosition', event?.target?.value)
+                        context.setValue('filterSearch', [
+                          { type: 'job_position', name: context.jobPosition },
+                          { type: 'company_name_en', name: [event.target.value] },
+                          { type: 'company_name_th', name: [event.target.value] },
+                          { type: 'announcement_title', name: [event.target.value] }
+                        ])
+                      }}
                       input={<OutlinedInput />}>
                       {_.map(context.jobPositions, (position, i) => (
                         <MenuItem key={i} value={position.job_position}>
@@ -101,7 +106,7 @@ const AnnouncementSearch = () => {
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-3/12 pl-5">
+                <div className="w-full pl-5">
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของประกาศ</InputLabel>
                     <Select
@@ -109,7 +114,15 @@ const AnnouncementSearch = () => {
                       id="demo-mutiple-name"
                       multiple
                       value={context.jobType}
-                      onChange={(event) => context.setValue('jobType', event?.target?.value)}
+                      onChange={(event) => {
+                        context.setValue('jobType', event?.target?.value)
+                        context.setValue('filterSearch', [
+                          { type: 'job_type', name: context.jobType },
+                          { type: 'company_name_en', name: [event.target.value] },
+                          { type: 'company_name_th', name: [event.target.value] },
+                          { type: 'announcement_title', name: [event.target.value] }
+                        ])
+                      }}
                       input={<OutlinedInput />}
                       MenuProps={MenuProps}>
                       {_.map(jobType, (job) => (
@@ -120,7 +133,7 @@ const AnnouncementSearch = () => {
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-3/12 pl-5">
+                <div className="w-full pl-5">
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของษริษัท</InputLabel>
                     <Select
@@ -128,7 +141,15 @@ const AnnouncementSearch = () => {
                       id="demo-mutiple-name"
                       multiple
                       value={context.companyType}
-                      onChange={(event) => context.setValue('companyType', event?.target?.value)}
+                      onChange={(event) => {
+                        context.setValue('companyType', event?.target?.value)
+                        context.setValue('filterSearch', [
+                          { type: 'company_type', name: context.companyType },
+                          { type: 'company_name_en', name: [event.target.value] },
+                          { type: 'company_name_th', name: [event.target.value] },
+                          { type: 'announcement_title', name: [event.target.value] }
+                        ])
+                      }}
                       input={<OutlinedInput />}
                       MenuProps={MenuProps}>
                       {_.map(companyType, (company) => (
@@ -139,12 +160,35 @@ const AnnouncementSearch = () => {
                     </Select>
                   </FormControl>
                 </div>
-                <PrimaryButton
-                  title="ค้นหา"
-                  className="z-50 ml-10 lg:w-2/6"
-                  onClick={handlerSearch}>
-                  <p className="px-4 py-4 text-white font-prompt text-subtitle-1">ค้นหา</p>
-                </PrimaryButton>
+                {(authContext.roleUser === 'viewer' || authContext.roleUser === 'admin') && (
+                  <div className="w-full pl-5">
+                    <FormControl className="w-full font-prompt" variant="outlined">
+                      <InputLabel htmlFor="trinity-select">สถานะการรับสมัคร</InputLabel>
+                      <Select
+                        labelId="demo-mutiple-name-label"
+                        id="demo-mutiple-name"
+                        multiple
+                        value={context.status}
+                        onChange={(event) => {
+                          context.setValue('status', event?.target?.value)
+                          context.setValue('filterSearch', [
+                            { type: 'status', name: context.status },
+                            { type: 'company_name_en', name: [event.target.value] },
+                            { type: 'company_name_th', name: [event.target.value] },
+                            { type: 'announcement_title', name: [event.target.value] }
+                          ])
+                        }}
+                        input={<OutlinedInput />}
+                        MenuProps={MenuProps}>
+                        {_.map(status, (status) => (
+                          <MenuItem key={status.title} value={status.title}>
+                            {status.title}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </div>
+                )}
               </div>
             </div>
           </div>

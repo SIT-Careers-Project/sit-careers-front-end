@@ -13,6 +13,20 @@ const apiReport = {
       responseType: 'blob'
     })
     return response
+  },
+  createApplicationReportByAdmin: async (data) => {
+    const response = axios.post(
+      `${publicRuntimeConfig.API_URL}/academic-industry/admin/applications/report`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${Cookie.get('token')}`,
+          'Content-Type': 'application/json'
+        },
+        responseType: 'blob'
+      }
+    )
+    return response
   }
 }
 export default apiReport

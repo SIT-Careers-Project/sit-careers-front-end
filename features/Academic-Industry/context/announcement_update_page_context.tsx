@@ -16,6 +16,7 @@ export class AnnouncementUpdatePageContext {
   renderDelay
   modalCloseAnnouncement
   disableButton
+  alert
 
   startDate
   endDate
@@ -65,6 +66,21 @@ export class AnnouncementUpdatePageContext {
       this.announcement = response.data[0]
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -79,6 +95,21 @@ export class AnnouncementUpdatePageContext {
         Router.push('/academic-industry/info-management')
       })
     } catch (error) {
+      if (error.response.status === 400) {
+        this.alert.setAlert(
+          `ไม่สามารถแก้ไขข้อมูลได้ เนื่องจากคุณไม่ได้กรอกข้อมูลบางอย่าง กรุณาตรวจสอบข้อมูล`,
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          `ไม่สามารถแก้ไขข้อมูลได้ เนื่องจาก ${error.response?.data?.message}`,
+          'error',
+          'error',
+          true
+        )
+      }
       console.log(error)
     }
   }
@@ -90,6 +121,21 @@ export class AnnouncementUpdatePageContext {
       })
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 
@@ -100,6 +146,21 @@ export class AnnouncementUpdatePageContext {
       })
     } catch (error) {
       console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
     }
   }
 }

@@ -2,7 +2,7 @@ import { FormControl, TextField } from '@material-ui/core'
 import React from 'react'
 
 const AnnouncementWalfareInfoForm = (props) => {
-  const { errors, register, data } = props
+  const { errors, register, data, disable } = props
 
   return (
     <div className="flex flex-col pb-3">
@@ -20,6 +20,7 @@ const AnnouncementWalfareInfoForm = (props) => {
           inputRef={register}
           error={!!errors.welfare}
           helperText={errors.welfare?.message}
+          disabled={disable}
         />
       </FormControl>
     </div>

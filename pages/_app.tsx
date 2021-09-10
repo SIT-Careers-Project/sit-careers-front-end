@@ -9,6 +9,11 @@ import { AuthContext } from '../core/contexts/auth_context'
 import theme from '../core/config/theme'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { ModalBanner } from 'core/components/ModalBanner'
+import { configure } from 'mobx'
+
+configure({
+  enforceActions: 'never'
+})
 
 function App({ Component, pageProps }) {
   const useStore = () => useContext(AuthContext)
@@ -25,9 +30,11 @@ function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>SIT Career Center</title>
+        <title>
+          SIT Career Center: ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม
+        </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <link rel="preload" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
       <CssBaseline />
       <ThemeProvider theme={theme}>

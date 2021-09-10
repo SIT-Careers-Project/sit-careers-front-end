@@ -1,16 +1,19 @@
 /* eslint-disable react/display-name */
-import { Assignment } from '@material-ui/icons'
+import { Assignment, GetApp } from '@material-ui/icons'
 import React, { useContext, useEffect } from 'react'
 import { Observer } from 'mobx-react-lite'
 import Link from 'next/link'
 import CoreTable from '../../../core/components/Table'
 import { applicationHistoryContext } from '../context/announcement_application_history_context'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const ApplicationHistory = ({ authContext }) => {
   const context = useContext(applicationHistoryContext)
+  const alertContext = useContext(AlertContext)
 
   useEffect(() => {
-    if (authContext.roleUser === 'admin') {
+    context.keyChange('alert', alertContext)
+    if (authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') {
       context.getAnnouncementApplicationByAdmin()
     } else if (authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') {
       context.getAnnouncementApplicationByCompany()
@@ -60,13 +63,35 @@ const ApplicationHistory = ({ authContext }) => {
         <div>
           <p className="text-heading-5 font-prompt">ประวัติการสมัครงาน</p>
         </div>
+        <div>
+          {(authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') && (
+            <button
+              className="bg-primary focus:outline-none"
+              onClick={() => {
+                context.createApplicationReportByCompany().then((response) => {
+                  const fileURL = window.URL.createObjectURL(new Blob([response?.data]))
+                  const fileLink = document.createElement('a')
+                  fileLink.href = fileURL
+                  fileLink.setAttribute('download', 'SIT_CC_application_report.zip')
+                  document.body.appendChild(fileLink)
+                  fileLink.click()
+                  fileLink.remove()
+                })
+              }}>
+              <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
+                <GetApp className="mr-1" />
+                ประวัติการสมัครทั้งหมด
+              </p>
+            </button>
+          )}
+        </div>
       </div>
       <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
       <div>
         <Observer>
           {() => (
             <>
-              {authContext.roleUser === 'admin' && (
+              {(authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') && (
                 <CoreTable
                   column={column}
                   data={context?.applications}

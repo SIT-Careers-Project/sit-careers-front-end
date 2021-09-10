@@ -31,5 +31,18 @@ export class SearchContext {
 
     return _.uniqWith(search, _.isEqual)
   }
+
+  searchMultiFilterAnnouncement = (items, filterSearch) => {
+    const filteredResults = items.filter((el) =>
+      filterSearch.some((filterEl) =>
+        filterEl.name.some((element) => el[filterEl.type] === element)
+      )
+    )
+
+    if (filteredResults.length > 0) {
+      return filteredResults
+    }
+    return items
+  }
 }
 export const searchContext = createContext(new SearchContext())

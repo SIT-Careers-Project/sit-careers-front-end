@@ -21,12 +21,15 @@ import { useForm, Controller } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { ResumeFormSchema } from '../services/validationSchema'
 import { nameTitle, curriculum, years } from '../services/constantVariable'
+import { AlertContext } from 'core/contexts/alert_context'
 
 const { publicRuntimeConfig } = getConfig()
 
 const ResumeInfo = () => {
   const context = useContext(resumeInfoPageContext)
   const coreModalContext = useContext(modalContext)
+  const alertContext = useContext(AlertContext)
+
   // eslint-disable-next-line no-unused-vars
   const [file, setFile] = useState(null)
   const router = useRouter()
@@ -38,6 +41,7 @@ const ResumeInfo = () => {
 
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
+    context.keyChange('alert', alertContext)
     context.getResumeByUserId().then(() => {
       setTimeout(() => {
         reset({ ...context.resume })
@@ -52,7 +56,7 @@ const ResumeInfo = () => {
         <>
           {!context.renderDelay && (
             <div className="w-full h-full max-w-screen-lg pb-8">
-              <div className="w-full max-w-screen-lg mx-auto mt-5 bg-white shadow-lg rounded-lg font-prompt p-5">
+              <div className="w-full max-w-screen-lg p-5 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <div className="px-12 pt-6">
                   <p className="font-semibold font-prompt text-heading-6 text-primary">
                     โปรไฟล์สมัครงาน
@@ -119,7 +123,27 @@ const ResumeInfo = () => {
                       </div>
                     </div>
                   </div>
+                </div>
+                <div className="px-12 pt-3">
+                  <p className="font-semibold font-prompt text-heading-6 text-primary">
+                    ประวัติการศึกษา
+                  </p>
+                </div>
+                <div className="grid w-full grid-cols-12 px-6 py-3">
                   <div className="col-span-12">
+                    <div className="flex flex-row justify-between px-6 py-3">
+                      <div className="w-full">
+                        <TextField
+                          label="มหาวิทยาลัย *"
+                          name="university_name"
+                          defaultValue="มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี"
+                          variant="outlined"
+                          className="font-sarabun"
+                          fullWidth
+                          disabled
+                        />
+                      </div>
+                    </div>
                     <div className="flex flex-row justify-between gap-5 px-6 py-3">
                       <div className="w-1/2">
                         <FormControl
@@ -168,6 +192,17 @@ const ResumeInfo = () => {
                         </FormControl>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+              <div className="w-full max-w-screen-lg p-5 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
+                <div className="px-12 pt-5">
+                  <p className="font-semibold font-prompt text-heading-6 text-primary">
+                    ช่องทางการติดต่อ
+                  </p>
+                </div>
+                <div className="grid w-full grid-cols-12 px-6 py-3">
+                  <div className="col-span-12">
                     <div className="flex flex-row justify-between gap-5 px-6 py-3">
                       <div className="w-1/2">
                         <TextField
@@ -197,16 +232,19 @@ const ResumeInfo = () => {
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div className="w-full max-w-screen-lg p-5 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
+                <div className="px-12 pt-5">
+                  <p className="font-semibold font-prompt text-heading-6 text-primary">
+                    อัพโหลดผลงาน
+                  </p>
+                  <p className="pt-3 font-prompt-light font-prompt text-body-2 text-secondary2">
+                    * ผลงานต้องเป็นไฟล์นามสกุล .pdf และมีขนาดไม่เกิน 5 MB
+                  </p>
+                </div>
+                <div className="grid w-full grid-cols-12 px-6 py-3">
                   <div className="col-span-12">
-                    <div className="px-6 pt-6 py-3">
-                      <p className="font-semibold font-prompt text-heading-6 text-primary">
-                        อัพโหลดผลงาน
-                      </p>
-                      <p className="font-prompt-light font-prompt text-body-2 text-secondary2 pt-3">
-                        * ผลงานต้องเป็นไฟล์นามสกุล .pdf และมีขนาดไม่เกิน 5 MB
-                      </p>
-                    </div>
-
                     <div className="flex flex-row justify-between px-6 py-3">
                       <div className="w-full">
                         <TextField
@@ -257,74 +295,79 @@ const ResumeInfo = () => {
                             style={{ display: 'none' }}
                             ref={register}
                             onChange={(event) => {
-                              setFile(URL.createObjectURL(event.target.files[0]))
-                              context.keyChange('fileName', event.target.value)
+                              setFile(URL.createObjectURL(event?.target?.files[0]) || null)
+                              context.keyChange('fileName', event?.target?.value)
                             }}
                           />
                           <input name="path_file" className="hidden" ref={register} />
                         </Button>
-                        <span className="pl-5 pt-2">{context.fileName}</span>
+                        <span className="pt-2 pl-5">{context.fileName}</span>
+                        {errors?.file_resume && (
+                          <div className="flex items-center pl-4 text-red text-body-2">
+                            {errors?.file_resume?.message}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
-                <Observer>
-                  {() => (
-                    <>
-                      {!context.resume && (
-                        <div>
-                          <div
-                            className="flex justify-end grid-cols-12 px-12 my-6 gap-x-8"
-                            id="button-create-resume">
-                            <PrimaryButton
-                              onClick={coreModalContext.openModal}
-                              className="ml-10 shadow-md lg:w-2/6 btn-grad">
-                              <p className="px-4 py-3 text-white font-prompt text-subtitle-1">
-                                สร้างโปรไฟล์
-                              </p>
-                            </PrimaryButton>
-                          </div>
-                          <CoreModal
-                            buttonSubmit="สร้าง"
-                            title="สร้างโปรไฟล์"
-                            content={
-                              <span className="mb-5 font-prompt text-subtitle-1">
-                                คุณต้องการสร้างโปรไฟล์ใช่หรือไม่
-                              </span>
-                            }
-                            onSubmit={handleSubmit(context.createResume)}
-                          />
-                        </div>
-                      )}
-                      {context.resume && (
-                        <div>
-                          <div
-                            className="flex justify-end grid-cols-12 px-12 my-6 gap-x-8"
-                            id="button-application">
-                            <PrimaryButton
-                              onClick={coreModalContext.openModal}
-                              className="ml-10 shadow-md lg:w-2/6 btn-grad">
-                              <p className="px-4 py-3 text-white font-prompt text-subtitle-1">
-                                บันทึกโปรไฟล์
-                              </p>
-                            </PrimaryButton>
-                          </div>
-                          <CoreModal
-                            buttonSubmit="บันทึก"
-                            title="บันทึกโปรไฟล์"
-                            content={
-                              <span className="mb-5 font-prompt text-subtitle-1">
-                                คุณต้องการบันทึกโปรไฟล์ใช่หรือไม่
-                              </span>
-                            }
-                            onSubmit={handleSubmit(context.updateResume)}
-                          />
-                        </div>
-                      )}
-                    </>
-                  )}
-                </Observer>
               </div>
+              <Observer>
+                {() => (
+                  <>
+                    {!context.resume && (
+                      <div>
+                        <div
+                          className="flex justify-end grid-cols-12 my-6 gap-x-8"
+                          id="button-create-resume">
+                          <PrimaryButton
+                            onClick={coreModalContext.openModal}
+                            className="ml-10 shadow-md lg:w-2/6 btn-grad">
+                            <p className="px-4 py-3 text-white font-prompt text-subtitle-1">
+                              สร้างโปรไฟล์
+                            </p>
+                          </PrimaryButton>
+                        </div>
+                        <CoreModal
+                          buttonSubmit="สร้าง"
+                          title="สร้างโปรไฟล์"
+                          content={
+                            <span className="mb-5 font-prompt text-subtitle-1">
+                              คุณต้องการสร้างโปรไฟล์ใช่หรือไม่
+                            </span>
+                          }
+                          onSubmit={handleSubmit(context.createResume)}
+                        />
+                      </div>
+                    )}
+                    {context.resume && (
+                      <div>
+                        <div
+                          className="flex justify-end grid-cols-12 my-6 gap-x-8"
+                          id="button-application">
+                          <PrimaryButton
+                            onClick={coreModalContext.openModal}
+                            className="ml-10 shadow-md lg:w-2/6 btn-grad">
+                            <p className="px-4 py-3 text-white font-prompt text-subtitle-1">
+                              บันทึกโปรไฟล์
+                            </p>
+                          </PrimaryButton>
+                        </div>
+                        <CoreModal
+                          buttonSubmit="บันทึก"
+                          title="บันทึกโปรไฟล์"
+                          content={
+                            <span className="mb-5 font-prompt text-subtitle-1">
+                              คุณต้องการบันทึกโปรไฟล์ใช่หรือไม่
+                            </span>
+                          }
+                          onSubmit={handleSubmit(context.updateResume)}
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
+              </Observer>
             </div>
           )}
         </>
