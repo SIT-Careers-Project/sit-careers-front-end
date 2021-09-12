@@ -1,5 +1,5 @@
-import AnnouncementSearch from '../../features/Academic-Industry/pages/announcement-search'
-import { MainLayout } from '../../core/components/Layout/Main'
+import AnnouncementSearch from '../../../features/Academic-Industry/pages/announcement-search'
+import { MainLayout } from '../../../core/components/Layout/Main'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Alert } from 'core/components/Alert'

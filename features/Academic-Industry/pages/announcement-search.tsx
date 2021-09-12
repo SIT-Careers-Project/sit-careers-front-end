@@ -1,3 +1,10 @@
+import React, { useContext, useEffect } from 'react'
+import dayjs from 'dayjs'
+import _ from 'lodash'
+import { toJS } from 'mobx'
+import { Observer } from 'mobx-react-lite'
+import { useRouter } from 'next/router'
+
 import {
   FormControl,
   InputLabel,
@@ -9,18 +16,13 @@ import {
 import { companyType, jobType, status } from '../services/constantVariable'
 import { CardSmall } from '../../../core/components/Card/Small'
 import PrimaryButton from '../../../core/components/Button/Primary'
-import React, { useContext, useEffect } from 'react'
 import Search from '../../../core/components/Search'
-import { Observer } from 'mobx-react-lite'
 import { announcementSearchPageContext } from '../context/announcement_search_page_context'
 import { searchContext } from '../../../core/contexts/search_context'
 import { paginationContext } from '../../../core/contexts/pagination_context'
 import Pagination from '../../../core/components/Pagination'
 import { AnnouncementDetail } from '../components/AnnouncementDetail'
 import { checkStatus } from '../../../core/services/utils'
-import dayjs from 'dayjs'
-import _ from 'lodash'
-import { toJS } from 'mobx'
 import { AlertContext } from 'core/contexts/alert_context'
 
 const AnnouncementSearch = ({ authContext }) => {
@@ -28,13 +30,18 @@ const AnnouncementSearch = ({ authContext }) => {
   const contextSearch = useContext(searchContext)
   const contextPagination = useContext(paginationContext)
   const alertContext = useContext(AlertContext)
+  const router = useRouter()
 
   useEffect(() => {
-    context.getAnnouncements()
+    if (router.query.announcement_id) {
+      context.getAnnouncementById(router.query.announcement_id)
+    } else {
+      context.getAnnouncements()
+    }
     contextPagination.setSliceAnnouncement()
     context.setValue('alert', alertContext)
     context.setValue('announcementDetail', context.announcements[0])
-  }, [context, contextPagination])
+  }, [context, contextPagination, router])
 
   const ITEM_HEIGHT = 48
   const ITEM_PADDING_TOP = 8

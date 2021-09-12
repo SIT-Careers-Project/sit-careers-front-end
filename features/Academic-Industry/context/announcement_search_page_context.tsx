@@ -67,5 +67,38 @@ export class AnnouncementSearchPageContext {
       console.log(error)
     }
   }
+
+  getAnnouncementById = async (announcementId) => {
+    try {
+      this.isLoading = true
+      const response = await apiService.getAnnouncementById(announcementId)
+      this.announcementDetail = response.data[0]
+
+      const jobPosition = await apiService.getJosPositions()
+      this.jobPositions = jobPosition.data
+      this.announcements = sortAnnouncement(response.data, ['start_date'])
+
+      const responseAll = await apiService.getAllAnnouncement()
+      this.beforeSearch = responseAll.data
+      this.isLoading = false
+    } catch (error) {
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถดีงข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
+      console.log(error)
+    }
+  }
 }
 export const announcementSearchPageContext = createContext(new AnnouncementSearchPageContext())
