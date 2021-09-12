@@ -20,7 +20,7 @@ export const AnnouncementSection = () => {
             </div>
             <div className="w-2/3">
               <Link href="/academic-industry/announcements">
-                <Primary className="h-16 mt-6 rounded-full">
+                <Primary className="h-16 mt-6 rounded-full focus:outline-none">
                   <span className="text-white font-prompt text-heading-5">ค้นหางาน</span>
                 </Primary>
               </Link>
