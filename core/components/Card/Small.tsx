@@ -29,7 +29,7 @@ export const CardSmall = ({
 }: CardProps) => (
   <div>
     <MaterialCard
-      onClick={() => onClick()}
+      onClick={onClick}
       style={{
         height: '201px',
         width: '403px',

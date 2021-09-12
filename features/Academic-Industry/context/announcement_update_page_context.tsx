@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
 import Router from 'next/router'
 import apiService from '../services/apiAcademicIndustry'
@@ -24,23 +24,6 @@ export class AnnouncementUpdatePageContext {
   closeDate
 
   constructor() {
-    makeObservable(this, {
-      getAnnouncement: action,
-      updateAnnouncement: action,
-      autoCompleteCompany: observable,
-      showModal: observable,
-      announcement: observable,
-      showCloseButton: observable,
-      startDate: observable,
-      endDate: observable,
-      renderDelay: observable,
-      modalCloseAnnouncement: observable,
-      disableButton: observable,
-      closeDate: observable,
-      isLoading: observable,
-      getAutoCompleteCompanies: action,
-      getAutoCompleteJobPositions: action
-    })
     this.announcement = []
     this.jobPositions = []
     this.autoCompleteCompany = []
@@ -52,6 +35,8 @@ export class AnnouncementUpdatePageContext {
     this.modalCloseAnnouncement = false
     this.disableButton = false
     this.isLoading = false
+
+    makeAutoObservable(this)
   }
 
   keyChange = (key, value) => {
@@ -66,9 +51,12 @@ export class AnnouncementUpdatePageContext {
   getAnnouncement = async (announcement_id) => {
     try {
       this.isLoading = true
-      const response = await apiService.getAnnouncementById(announcement_id)
-      this.announcement = response.data[0]
-      this.isLoading = false
+      this.getAutoCompleteCompanies().then(async () => {
+        this.getAutoCompleteJobPositions()
+        const response = await apiService.getAnnouncementById(announcement_id)
+        this.announcement = response.data[0]
+        this.isLoading = false
+      })
     } catch (error) {
       console.log(error)
       if (error.response.status === 401) {
