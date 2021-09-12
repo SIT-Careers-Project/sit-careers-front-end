@@ -56,13 +56,13 @@ export const Carousel = () => {
             className="z-10 transition-all duration-1000 opacity-100 slideshowSlider"
             style={{
               transform: `translate3d(${-index * 100}%, 0, 0)`,
-              height: context.bannerForShow.length ? '600px' : '0px'
+              height: context.bannerForShow.length ? '500px' : '0px'
             }}>
             {_.map(toJS(context.bannerForShow), (bgImage, i) => (
               <img
                 key={i}
                 loading="lazy"
-                style={{ height: '600px' }}
+                style={{ height: '500px' }}
                 src={`${publicRuntimeConfig.s3_url}/banner/${bgImage.path_image}`}
                 className="inline-block w-full"
                 alt={`Banners ${bgImage.path_image} SIT Careers Center.`}
