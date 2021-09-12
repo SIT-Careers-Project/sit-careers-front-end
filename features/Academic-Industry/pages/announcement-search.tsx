@@ -212,9 +212,9 @@ const AnnouncementSearch = ({ authContext }) => {
                   <p className="w-3/4 pb-6 font-semibold font-prompt text-body-1">
                     {`การค้นหา: พบ ${context.announcements.length} ตำแหน่งงาน`}
                   </p>
-                  <div className="flex-1">
-                    {context.announcements.length !== 0 ? (
-                      <>
+                  {context.announcements.length !== 0 ? (
+                    <>
+                      <div className="flex-1">
                         {toJS(context.announcements)
                           .slice(contextPagination.sliceDataStart, contextPagination.sliceDataEnd)
                           .map((data, i) => {
@@ -243,16 +243,18 @@ const AnnouncementSearch = ({ authContext }) => {
                             )
                           })}
                         <Pagination data={context.announcements} />
-                      </>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center w-full h-16">
-                        <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
                       </div>
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <AnnouncementDetail data={context.announcementDetail} />
-                  </div>
+                    </>
+                  ) : (
+                    <div className="flex items-center justify-center w-full h-16">
+                      <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
+                    </div>
+                  )}
+                  {context.announcements.length !== 0 && (
+                    <div className="flex-1">
+                      <AnnouncementDetail data={context.announcementDetail} />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
