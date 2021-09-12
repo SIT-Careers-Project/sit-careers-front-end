@@ -1,4 +1,11 @@
-import { FormControl, InputLabel, MenuItem, Select, OutlinedInput } from '@material-ui/core'
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  OutlinedInput,
+  CircularProgress
+} from '@material-ui/core'
 import { companyType, jobType, status } from '../services/constantVariable'
 import { CardSmall } from '../../../core/components/Card/Small'
 import PrimaryButton from '../../../core/components/Button/Primary'
@@ -49,9 +56,11 @@ const AnnouncementSearch = ({ authContext }) => {
   return (
     <Observer>
       {() => (
-        <div>
-          <div className="container grid max-w-screen-lg grid-flow-row px-10 mx-auto mt-20 bg-white rounded-lg shadow-lg font-prompt">
-            <div className="w-full max-w-screen-lg my-6">
+        <div className="max-w-screen-lg pb-4 mx-auto">
+          <div
+            style={{ width: '1024px' }}
+            className="w-full px-10 py-2 mt-20 bg-white rounded-lg shadow-lg font-prompt">
+            <div className="w-full my-6">
               <div className="flex flex-row justify-between">
                 <div className="w-10/12">
                   <div className="w-full p-2 bg-white border-opacity-50 rounded border-DEFAULT border-secondary2">
@@ -192,14 +201,18 @@ const AnnouncementSearch = ({ authContext }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center w-full h-full pb-10">
-            <div className="-mt-24">
-              <div className="container px-32 mx-auto">
-                <div className="flex flex-wrap mt-32">
+          {context.isLoading ? (
+            <div className="flex justify-center w-full mt-8">
+              <CircularProgress />
+            </div>
+          ) : (
+            <div className="w-full">
+              <div className="mx-auto">
+                <div className="flex flex-wrap mt-8">
                   <p className="w-3/4 pb-6 font-semibold font-prompt text-body-1">
                     {`การค้นหา: พบ ${context.announcements.length} ตำแหน่งงาน`}
                   </p>
-                  <div className="w-full mr-5 md:w-5/12">
+                  <div className="flex-1">
                     {context.announcements.length !== 0 ? (
                       <>
                         {toJS(context.announcements)
@@ -237,11 +250,13 @@ const AnnouncementSearch = ({ authContext }) => {
                       </div>
                     )}
                   </div>
-                  <AnnouncementDetail data={context.announcementDetail} />
+                  <div className="flex-1">
+                    <AnnouncementDetail data={context.announcementDetail} />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </Observer>

@@ -15,6 +15,8 @@ export class AnnouncementSearchPageContext {
   alert
   filterSearch
   status
+  isLoading
+
   constructor() {
     makeAutoObservable(this)
     this.announcements = []
@@ -28,6 +30,7 @@ export class AnnouncementSearchPageContext {
     this.jobPosition = []
     this.status = []
     this.filterSearch = []
+    this.isLoading = false
   }
   setAnnouncements = (announcements) => {
     this.announcements = announcements || []
@@ -37,12 +40,14 @@ export class AnnouncementSearchPageContext {
   }
   getAnnouncements = async () => {
     try {
+      this.isLoading = true
       const response = await apiService.getAllAnnouncement()
       const jobPosition = await apiService.getJosPositions()
       this.jobPositions = jobPosition.data
       this.announcements = sortAnnouncement(response.data, ['start_date'])
       this.beforeSearch = response.data
       this.announcementDetail = response.data[0]
+      this.isLoading = false
     } catch (error) {
       if (error.response.status === 401) {
         this.alert.setAlert(

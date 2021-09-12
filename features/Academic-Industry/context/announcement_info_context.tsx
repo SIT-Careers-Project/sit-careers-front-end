@@ -10,10 +10,12 @@ export class AnnouncementInfoContext {
   announcements
   beforeSearch
   alert
+  isLoading
 
   constructor() {
     this.announcements = []
     this.beforeSearch = []
+    this.isLoading = false
 
     makeAutoObservable(this)
   }
@@ -28,9 +30,11 @@ export class AnnouncementInfoContext {
 
   getAnnouncements = async () => {
     try {
+      this.isLoading = true
       const response = await apiService.getAllAnnouncement()
       this.announcements = sortAnnouncement(response.data, ['start_date'])
       this.beforeSearch = response.data
+      this.isLoading = false
     } catch (error) {
       console.log(error)
       if (error.response.status === 401) {
