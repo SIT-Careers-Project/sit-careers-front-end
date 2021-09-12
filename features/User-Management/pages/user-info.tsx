@@ -20,7 +20,7 @@ const UserInfo = ({ authContext }) => {
   const context = useContext(userInfoPageContext)
 
   const getData = useCallback(() => {
-    if (authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') {
+    if (authContext.roleUser === 'admin') {
       context.getUserByAdmin()
     } else {
       context.getUserByCompany()
