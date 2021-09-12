@@ -33,7 +33,7 @@ export class AnnouncementSearchPageContext {
     this.isLoading = false
   }
   setAnnouncements = (announcements) => {
-    this.announcements = announcements || []
+    this.announcements = announcements
   }
   setValue = (key, value) => {
     this[key] = value
@@ -46,7 +46,7 @@ export class AnnouncementSearchPageContext {
       this.jobPositions = jobPosition.data
       this.announcements = sortAnnouncement(response.data, ['start_date'])
       this.beforeSearch = response.data
-      this.announcementDetail = response.data[0]
+      this.announcementDetail = this.announcements[0]
       this.isLoading = false
     } catch (error) {
       if (error.response.status === 401) {
@@ -72,11 +72,12 @@ export class AnnouncementSearchPageContext {
     try {
       this.isLoading = true
       const response = await apiService.getAnnouncementById(announcementId)
+      console.log(response.data[0])
       this.announcementDetail = response.data[0]
+      this.announcements = response.data
 
       const jobPosition = await apiService.getJosPositions()
       this.jobPositions = jobPosition.data
-      this.announcements = sortAnnouncement(response.data, ['start_date'])
 
       const responseAll = await apiService.getAllAnnouncement()
       this.beforeSearch = responseAll.data

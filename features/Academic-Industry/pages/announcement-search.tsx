@@ -3,7 +3,6 @@ import dayjs from 'dayjs'
 import _ from 'lodash'
 import { toJS } from 'mobx'
 import { Observer } from 'mobx-react-lite'
-import { useRouter } from 'next/router'
 
 import {
   FormControl,
@@ -25,23 +24,26 @@ import { AnnouncementDetail } from '../components/AnnouncementDetail'
 import { checkStatus } from '../../../core/services/utils'
 import { AlertContext } from 'core/contexts/alert_context'
 
-const AnnouncementSearch = ({ authContext }) => {
+interface AnnouncementProps {
+  announcementId?: string | string[]
+  authContext: any
+}
+
+const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) => {
   const context = useContext(announcementSearchPageContext)
   const contextSearch = useContext(searchContext)
   const contextPagination = useContext(paginationContext)
   const alertContext = useContext(AlertContext)
-  const router = useRouter()
 
   useEffect(() => {
-    if (router.query.announcement_id) {
-      context.getAnnouncementById(router.query.announcement_id)
+    if (announcementId) {
+      context.getAnnouncementById(announcementId)
     } else {
       context.getAnnouncements()
     }
     contextPagination.setSliceAnnouncement()
     context.setValue('alert', alertContext)
-    context.setValue('announcementDetail', context.announcements[0])
-  }, [context, contextPagination, router])
+  }, [context, contextPagination, announcementId])
 
   const ITEM_HEIGHT = 48
   const ITEM_PADDING_TOP = 8
@@ -222,7 +224,7 @@ const AnnouncementSearch = ({ authContext }) => {
                   {context.announcements.length !== 0 ? (
                     <>
                       <div className="flex-1">
-                        {toJS(context.announcements)
+                        {toJS(context?.announcements)
                           .slice(contextPagination.sliceDataStart, contextPagination.sliceDataEnd)
                           .map((data, i) => {
                             return (
@@ -259,7 +261,7 @@ const AnnouncementSearch = ({ authContext }) => {
                   )}
                   {context.announcements.length !== 0 && (
                     <div className="flex-1">
-                      <AnnouncementDetail data={context.announcementDetail} />
+                      <AnnouncementDetail data={toJS(context.announcementDetail)} />
                     </div>
                   )}
                 </div>
