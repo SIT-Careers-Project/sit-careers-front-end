@@ -6,9 +6,11 @@ import _ from 'lodash'
 import { CardSmall } from '../../../core/components/Card/Small'
 import { checkStatus } from '../../../core/services/utils'
 import { ArrowForwardIosOutlined, ArrowBackIosOutlined } from '@material-ui/icons'
+import { useRouter } from 'next/router'
 
 export const AnnouncementCardSection = (props) => {
   const { announcements } = props
+  const router = useRouter()
   const [index, setIndex] = useState(0)
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -54,20 +56,25 @@ export const AnnouncementCardSection = (props) => {
                     key={`card_announcement_${i}`}
                     className="inline-block"
                     style={{ width: '403px', height: '201px' }}>
-                    <CardSmall
-                      company={`${data.company_name_en}`}
-                      title={data.announcement_title}
-                      date={`${dayjs(data.start_date)
-                        .locale('th')
-                        .add(543, 'year')
-                        .format('DD MMMM')} - ${dayjs(data.end_date)
-                        .locale('th')
-                        .add(543, 'year')
-                        .format('DD MMMM YYYY')}`}
-                      status={checkStatus(data.start_date, data.end_date, data.status)}
-                      tags={[`${data.job_position}`]}
-                      srcImg={data.logo}
-                    />
+                    <button className="text-left focus:outline-none">
+                      <CardSmall
+                        company={`${data.company_name_en}`}
+                        title={data.announcement_title}
+                        onClick={() =>
+                          router.push(`/academic-industry/announcements/${data.announcement_id}`)
+                        }
+                        date={`${dayjs(data.start_date)
+                          .locale('th')
+                          .add(543, 'year')
+                          .format('DD MMMM')} - ${dayjs(data.end_date)
+                          .locale('th')
+                          .add(543, 'year')
+                          .format('DD MMMM YYYY')}`}
+                        status={checkStatus(data.start_date, data.end_date, data.status)}
+                        tags={[`${data.job_position}`]}
+                        srcImg={data.logo}
+                      />
+                    </button>
                   </div>
                 )
               })}

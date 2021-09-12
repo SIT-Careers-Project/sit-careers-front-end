@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react'
-
 import { Autocomplete as MaterialAutoComplete } from '@material-ui/lab'
 import { TextField } from '@material-ui/core'
+import _ from 'lodash'
 
 type CoreAutoCompleteProps = {
   options: Array<string>
@@ -37,9 +37,11 @@ export const AutoComplete = (props: CoreAutoCompleteProps) => {
 
   useEffect(() => {
     if (defaultValue) {
-      const dataFilter = options.filter((data) => data[keyName] === defaultValue)
-      setValue(dataFilter[0][keyName])
-      setInputValue(dataFilter[0][keySearch])
+      const dataFilter = _.filter(options, (data) => data[keyName] === defaultValue)
+      if (dataFilter.length > 0) {
+        setValue(dataFilter[0][keyName])
+        setInputValue(dataFilter[0][keySearch])
+      }
     }
   }, [keySearch, keyName, defaultValue, options])
 

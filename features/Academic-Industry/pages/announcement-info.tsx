@@ -91,7 +91,7 @@ const AnnouncementInfo = ({ authContext }) => {
                     const status = checkStatus(data?.start_date, data?.end_date, data?.status)
 
                     return (
-                      <div className="pt-5" key={i}>
+                      <div className="pt-5" key={`announcement_card_${i}`}>
                         <Announcement
                           title={data?.announcement_title}
                           tags={[data?.job_position]}

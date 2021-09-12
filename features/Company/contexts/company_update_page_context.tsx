@@ -29,11 +29,10 @@ export class CompanyUpdatePageContext {
 
   getCompany = async (company_id) => {
     this.company = []
+    this.isLoading = true
     try {
-      this.isLoading = true
       const response = await apiService.getCompanyById(company_id)
       this.company = response.data
-      this.isLoading = false
     } catch (error) {
       console.log(error)
       if (error.response.status === 401) {

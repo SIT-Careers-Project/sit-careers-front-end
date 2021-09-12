@@ -13,6 +13,7 @@ import { AutoComplete } from 'core/components/AutoComplete'
 import { Controller } from 'react-hook-form'
 import { Observer } from 'mobx-react-lite'
 import { jobType, salary } from '../../services/constantVariable'
+import { toJS } from 'mobx'
 
 const AnnouncementMainInfoForm = (props) => {
   const { errors, register, control, data, jobPosition, companyName, authContext, disable } = props
@@ -57,7 +58,7 @@ const AnnouncementMainInfoForm = (props) => {
                   defaultValue={data?.announcement?.company_id || ''}
                   error={!!errors.company_id}
                   helperText={errors.company_id?.message}
-                  options={data.autoCompleteCompany}
+                  options={toJS(data?.autoCompleteCompany)}
                   keySearch="company_name_th"
                   disable={disable}
                 />
@@ -75,7 +76,7 @@ const AnnouncementMainInfoForm = (props) => {
                 keySearch="job_position"
                 error={!!errors.job_position_id}
                 helperText={errors.job_position_id?.message}
-                options={data.jobPositions}
+                options={toJS(data?.jobPositions)}
                 disable={disable}
               />
             </div>
