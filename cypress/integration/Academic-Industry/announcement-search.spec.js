@@ -11,7 +11,7 @@ describe('The Announcement Search Page', () => {
   it('should have button ค้นหา', () => {
     cy.get('button').should('contain.text', 'ค้นหา')
   })
-  it('should have button สมัคร', () => {
-    cy.get('button').should('contain.text', 'สมัคร')
+  it.skip('should have button สมัคร', () => {
+    cy.get('[data-cy="application_button"]')
   })
 })
