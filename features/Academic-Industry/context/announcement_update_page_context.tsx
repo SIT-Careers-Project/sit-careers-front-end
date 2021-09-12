@@ -17,6 +17,7 @@ export class AnnouncementUpdatePageContext {
   modalCloseAnnouncement
   disableButton
   alert
+  isLoading
 
   startDate
   endDate
@@ -36,6 +37,7 @@ export class AnnouncementUpdatePageContext {
       modalCloseAnnouncement: observable,
       disableButton: observable,
       closeDate: observable,
+      isLoading: observable,
       getAutoCompleteCompanies: action,
       getAutoCompleteJobPositions: action
     })
@@ -49,6 +51,7 @@ export class AnnouncementUpdatePageContext {
     this.showCloseButton = true
     this.modalCloseAnnouncement = false
     this.disableButton = false
+    this.isLoading = false
   }
 
   keyChange = (key, value) => {
@@ -62,8 +65,10 @@ export class AnnouncementUpdatePageContext {
 
   getAnnouncement = async (announcement_id) => {
     try {
+      this.isLoading = true
       const response = await apiService.getAnnouncementById(announcement_id)
       this.announcement = response.data[0]
+      this.isLoading = false
     } catch (error) {
       console.log(error)
       if (error.response.status === 401) {

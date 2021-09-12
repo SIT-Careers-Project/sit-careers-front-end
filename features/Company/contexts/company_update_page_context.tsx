@@ -11,12 +11,14 @@ export class CompanyUpdatePageContext {
   modalDelete
   alert
   disableButton
+  isLoading
 
   constructor() {
     this.company = []
     this.modalDelete = false
     this.alert = ''
     this.disableButton = false
+    this.isLoading = false
 
     makeAutoObservable(this)
   }
@@ -28,8 +30,10 @@ export class CompanyUpdatePageContext {
   getCompany = async (company_id) => {
     this.company = []
     try {
+      this.isLoading = true
       const response = await apiService.getCompanyById(company_id)
       this.company = response.data
+      this.isLoading = false
     } catch (error) {
       console.log(error)
       if (error.response.status === 401) {

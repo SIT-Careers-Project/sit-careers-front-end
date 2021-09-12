@@ -6,6 +6,7 @@ import { createContext } from 'react'
 export class CompanyDetailPageContext {
   company
   announcements
+  isLoading
 
   constructor() {
     makeObservable(this, {
@@ -16,12 +17,15 @@ export class CompanyDetailPageContext {
     })
     this.company = []
     this.announcements = []
+    this.isLoading = false
   }
 
   getCompany = async (companyId) => {
     try {
+      this.isLoading = true
       const response = await apiService.getCompanyById(companyId)
       this.company = response.data
+      this.isLoading = false
     } catch (error) {
       console.log(error)
     }

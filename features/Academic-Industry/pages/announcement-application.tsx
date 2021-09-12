@@ -41,7 +41,7 @@ const ApplicationInfo = () => {
       {() => (
         <>
           {!context.resume && (
-            <div className="w-full h-full max-w-screen-lg pt-5">
+            <div className="w-full h-full max-w-screen-lg py-5">
               <MaterialCard
                 style={{
                   height: '550px',

@@ -50,7 +50,10 @@ export const AnnouncementCardSection = (props) => {
               className="z-0 flex flex-row flex-1 pl-12 space-x-6 transition duration-1000 ease-in whitespace-nowrap">
               {_.map(announcements, (data, i) => {
                 return (
-                  <div className="inline-block" style={{ width: '403px', height: '201px' }} key={i}>
+                  <div
+                    key={`card_announcement_${i}`}
+                    className="inline-block"
+                    style={{ width: '403px', height: '201px' }}>
                     <CardSmall
                       company={`${data.company_name_en}`}
                       title={data.announcement_title}
