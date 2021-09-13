@@ -6,6 +6,8 @@ export class CompanySearchPageContext {
   beforeSearch
   companyName
   companyType
+  isLoading
+
   constructor() {
     makeObservable(this, {
       getCompanies: action,
@@ -19,6 +21,7 @@ export class CompanySearchPageContext {
     this.beforeSearch = []
     this.companyName = ''
     this.companyType = []
+    this.isLoading = false
   }
 
   setValue = (key, value) => {
@@ -31,9 +34,11 @@ export class CompanySearchPageContext {
 
   getCompanies = async () => {
     try {
+      this.isLoading = true
       const response = await apiService.getAllCompanies()
       this.companies = response.data
       this.beforeSearch = response.data
+      this.isLoading = false
     } catch (error) {
       console.log(error)
     }

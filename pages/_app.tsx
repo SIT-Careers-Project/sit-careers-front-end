@@ -31,7 +31,7 @@ function App({ Component, pageProps }) {
     <>
       <Head>
         <title>
-          SIT Career Center: ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม
+          SIT Career Center - ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preload" href="https://fonts.googleapis.com/icon?family=Material+Icons" />

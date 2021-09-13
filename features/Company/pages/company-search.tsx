@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { Observer } from 'mobx-react-lite'
 import _ from 'lodash'
 
+import { CircularProgress } from '@material-ui/core'
 import { Card } from 'core/components/Card/Card'
 import Pagination from 'core/components/Pagination'
 import PrimaryButton from 'core/components/Button/Primary'
@@ -86,7 +87,7 @@ const AllCompany = () => {
               <p className="text-heading-5 font-prompt">ข้อมูลบริษัท</p>
             </div>
             <div className="mb-5">
-              {context.companies.length !== 0 ? (
+              {context?.companies?.length !== 0 ? (
                 <>
                   {context.companies
                     .slice(contextPagination.sliceDataStart, contextPagination.sliceDataEnd)
@@ -110,9 +111,17 @@ const AllCompany = () => {
                   <Pagination data={context.companies} />
                 </>
               ) : (
-                <div className="flex flex-col items-center justify-center w-full h-16">
-                  <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
-                </div>
+                <>
+                  {!context.isLoading ? (
+                    <div className="flex justify-center">
+                      <CircularProgress disableShrink className="mt-32" />
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center w-full h-16">
+                      <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>

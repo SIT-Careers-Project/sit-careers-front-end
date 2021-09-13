@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
 import { Alert } from 'core/components/Alert'
 
-const UpdateAnnouncement = ({ authContext }) => {
+const UpdateAnnouncement = ({ authContext, announcement_id }) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -23,10 +23,18 @@ const UpdateAnnouncement = ({ authContext }) => {
     <MainLayout authContext={authContext}>
       <div className="flex flex-col items-center justify-center mt-16 ">
         <Alert />
-        <AnnouncementPage authContext={authContext} />
+        <AnnouncementPage authContext={authContext} announcementId={announcement_id} />
       </div>
     </MainLayout>
   )
+}
+
+UpdateAnnouncement.getInitialProps = (context) => {
+  const announcementId = context.query.announcement_id
+
+  return {
+    announcement_id: announcementId
+  }
 }
 
 export default UpdateAnnouncement

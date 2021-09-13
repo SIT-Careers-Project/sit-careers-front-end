@@ -1,20 +1,17 @@
-import { useForm } from 'react-hook-form'
-import dayjs from 'dayjs'
-import { FormHelperText } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { CircularProgress, FormHelperText } from '@material-ui/core'
+import { yupResolver } from '@hookform/resolvers/yup'
+import getConfig from 'next/config'
+import { Observer } from 'mobx-react-lite'
+import dayjs from 'dayjs'
 
 import { AnnouncementFormSchema, AnnouncementFormAdminSchema } from '../services/validationSchema'
 import { BannerImages } from '../../../core/components/BannerImage'
 import { CoreModal } from '../../../core/components/Modal'
-import { Observer } from 'mobx-react-lite'
 import { modalContext } from '../../../core/contexts/modal_context'
-import { yupResolver } from '@hookform/resolvers/yup'
-
-import { useRouter } from 'next/router'
-import getConfig from 'next/config'
 import { announcementUpdatePageContext } from '../context/announcement_update_page_context'
 import PrimaryButton from '../../../core/components/Button/Primary'
-
 import AnnouncementDateInfoForm from '../components/FormCreate/AnnouncementDateInfo'
 import AnnouncementMainInfoForm from '../components/FormCreate/AnnouncementMainInfo'
 import AnnouncementPropertyInfoForm from '../components/FormCreate/AnnouncementPropertyInfo'
@@ -25,13 +22,11 @@ import { AlertContext } from 'core/contexts/alert_context'
 
 const { publicRuntimeConfig } = getConfig()
 
-const AnnouncementUpdateForm = ({ authContext }) => {
+const AnnouncementUpdateForm = ({ authContext, announcementId }) => {
   const context = useContext(announcementUpdatePageContext)
   const coreModalContext = useContext(modalContext)
   const alertContext = useContext(AlertContext)
 
-  const router = useRouter()
-  const { announcement_id } = router.query
   const [file, setFile] = useState(null)
 
   const { handleSubmit, register, errors, control, reset } = useForm({
@@ -44,9 +39,7 @@ const AnnouncementUpdateForm = ({ authContext }) => {
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
     context.keyChange('alert', alertContext)
-    context.getAutoCompleteCompanies()
-    context.getAutoCompleteJobPositions()
-    context.getAnnouncement(announcement_id).then(() => {
+    context.getAnnouncement(announcementId).then(() => {
       setTimeout(() => {
         reset({ ...context.announcement })
         const startDate = dayjs(context.announcement.start_date).format('YYYY-MM-DDThh:mm')
@@ -58,14 +51,18 @@ const AnnouncementUpdateForm = ({ authContext }) => {
       }, 400)
       setTimeout(() => context.keyChange('renderDelay', false), 1000)
     })
-  }, [announcement_id, context, coreModalContext, reset])
+  }, [announcementId, context, coreModalContext, reset])
 
   return (
     <Observer>
       {() => (
-        <>
-          {!context.renderDelay && (
-            <div className="w-full h-full max-w-screen-lg">
+        <div className="w-full h-full max-w-screen-lg">
+          {context.isLoading ? (
+            <div className="flex justify-center pt-20">
+              <CircularProgress />
+            </div>
+          ) : (
+            <>
               {authContext.roleUser === 'viewer' ? (
                 <AnnouncementDateInfoForm
                   openModal={() => context.handlerModal(true, coreModalContext.openModal)}
@@ -281,9 +278,9 @@ const AnnouncementUpdateForm = ({ authContext }) => {
                   />
                 )}
               </div>
-            </div>
+            </>
           )}
-        </>
+        </div>
       )}
     </Observer>
   )

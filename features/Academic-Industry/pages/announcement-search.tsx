@@ -1,33 +1,49 @@
-import { FormControl, InputLabel, MenuItem, Select, OutlinedInput } from '@material-ui/core'
+import React, { useContext, useEffect } from 'react'
+import dayjs from 'dayjs'
+import _ from 'lodash'
+import { toJS } from 'mobx'
+import { Observer } from 'mobx-react-lite'
+
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  OutlinedInput,
+  CircularProgress
+} from '@material-ui/core'
 import { companyType, jobType, status } from '../services/constantVariable'
 import { CardSmall } from '../../../core/components/Card/Small'
 import PrimaryButton from '../../../core/components/Button/Primary'
-import React, { useContext, useEffect } from 'react'
 import Search from '../../../core/components/Search'
-import { Observer } from 'mobx-react-lite'
 import { announcementSearchPageContext } from '../context/announcement_search_page_context'
 import { searchContext } from '../../../core/contexts/search_context'
 import { paginationContext } from '../../../core/contexts/pagination_context'
 import Pagination from '../../../core/components/Pagination'
 import { AnnouncementDetail } from '../components/AnnouncementDetail'
 import { checkStatus } from '../../../core/services/utils'
-import dayjs from 'dayjs'
-import _ from 'lodash'
-import { toJS } from 'mobx'
 import { AlertContext } from 'core/contexts/alert_context'
 
-const AnnouncementSearch = ({ authContext }) => {
+interface AnnouncementProps {
+  announcementId?: string | string[]
+  authContext: any
+}
+
+const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) => {
   const context = useContext(announcementSearchPageContext)
   const contextSearch = useContext(searchContext)
   const contextPagination = useContext(paginationContext)
   const alertContext = useContext(AlertContext)
 
   useEffect(() => {
-    context.getAnnouncements()
+    if (announcementId) {
+      context.getAnnouncementById(announcementId)
+    } else {
+      context.getAnnouncements()
+    }
     contextPagination.setSliceAnnouncement()
     context.setValue('alert', alertContext)
-    context.setValue('announcementDetail', context.announcements[0])
-  }, [context, contextPagination])
+  }, [context, contextPagination, announcementId])
 
   const ITEM_HEIGHT = 48
   const ITEM_PADDING_TOP = 8
@@ -49,9 +65,11 @@ const AnnouncementSearch = ({ authContext }) => {
   return (
     <Observer>
       {() => (
-        <div>
-          <div className="container grid max-w-screen-lg grid-flow-row px-10 mx-auto mt-20 bg-white rounded-lg shadow-lg font-prompt">
-            <div className="w-full max-w-screen-lg my-6">
+        <div className="max-w-screen-lg pb-4 mx-auto">
+          <div
+            style={{ width: '1024px' }}
+            className="w-full px-10 py-2 mt-20 bg-white rounded-lg shadow-lg font-prompt">
+            <div className="w-full my-6">
               <div className="flex flex-row justify-between">
                 <div className="w-10/12">
                   <div className="w-full p-2 bg-white border-opacity-50 rounded border-DEFAULT border-secondary2">
@@ -192,17 +210,21 @@ const AnnouncementSearch = ({ authContext }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center w-full h-full pb-10">
-            <div className="-mt-24">
-              <div className="container px-32 mx-auto">
-                <div className="flex flex-wrap mt-32">
+          {context.isLoading ? (
+            <div className="flex justify-center w-full mt-8">
+              <CircularProgress />
+            </div>
+          ) : (
+            <div className="w-full">
+              <div className="mx-auto">
+                <div className="flex flex-wrap mt-8">
                   <p className="w-3/4 pb-6 font-semibold font-prompt text-body-1">
                     {`การค้นหา: พบ ${context.announcements.length} ตำแหน่งงาน`}
                   </p>
-                  <div className="w-full mr-5 md:w-5/12">
-                    {context.announcements.length !== 0 ? (
-                      <>
-                        {toJS(context.announcements)
+                  {context.announcements.length !== 0 ? (
+                    <>
+                      <div className="flex-1">
+                        {toJS(context?.announcements)
                           .slice(contextPagination.sliceDataStart, contextPagination.sliceDataEnd)
                           .map((data, i) => {
                             return (
@@ -230,18 +252,22 @@ const AnnouncementSearch = ({ authContext }) => {
                             )
                           })}
                         <Pagination data={context.announcements} />
-                      </>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center w-full h-16">
-                        <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
                       </div>
-                    )}
-                  </div>
-                  <AnnouncementDetail data={context.announcementDetail} />
+                    </>
+                  ) : (
+                    <div className="flex items-center justify-center w-full h-16">
+                      <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
+                    </div>
+                  )}
+                  {context.announcements.length !== 0 && (
+                    <div className="flex-1">
+                      <AnnouncementDetail data={toJS(context.announcementDetail)} />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </Observer>

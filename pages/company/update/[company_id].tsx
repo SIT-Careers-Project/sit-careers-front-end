@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { checkLoggedIn } from 'core/services/utils'
 import { Alert } from 'core/components/Alert'
 
-const UpdateCompany = ({ authContext }) => {
+const UpdateCompany = ({ authContext, company_id }) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -23,10 +23,18 @@ const UpdateCompany = ({ authContext }) => {
     <MainLayout authContext={authContext}>
       <div className="flex flex-col items-center mt-16 ">
         <Alert />
-        <CompanyPage authContext={authContext} />
+        <CompanyPage authContext={authContext} companyId={company_id} />
       </div>
     </MainLayout>
   )
+}
+
+UpdateCompany.getInitialProps = (context) => {
+  const companyId = context.query.company_id
+
+  return {
+    company_id: companyId
+  }
 }
 
 export default UpdateCompany

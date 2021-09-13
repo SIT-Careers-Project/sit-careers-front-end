@@ -1,15 +1,17 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useForm } from 'react-hook-form'
 import React, { useContext, useEffect, useState } from 'react'
+import getConfig from 'next/config'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Observer } from 'mobx-react-lite'
+import { CircularProgress } from '@material-ui/core'
 
 import { Avatar } from '../../../core/components/Avatar'
 import { CoreModal } from '../../../core/components/Modal'
 import { modalContext } from '../../../core/contexts/modal_context'
 import { CompanyFormSchema } from '../services/validationSchema'
-import { Observer } from 'mobx-react-lite'
 import { companyUpdatePageContext } from '../contexts/company_update_page_context'
-import getConfig from 'next/config'
-import { useRouter } from 'next/router'
-import { yupResolver } from '@hookform/resolvers/yup'
 import PrimaryButton from '../../../core/components/Button/Primary'
 import MainInfoForm from '../components/FormCreate/main-info'
 import DetailInfoForm from '../components/FormCreate/detail-info'
@@ -21,13 +23,11 @@ import { AlertContext } from 'core/contexts/alert_context'
 
 const { publicRuntimeConfig } = getConfig()
 
-const CompanyForm = ({ authContext }) => {
+const CompanyForm = ({ authContext, companyId }) => {
   const context = useContext(companyUpdatePageContext)
   const coreModalContext = useContext(modalContext)
   const alertContext = useContext(AlertContext)
 
-  const router = useRouter()
-  const { company_id } = router.query
   const [file, setFile] = useState(null)
   const [renderDelay, setRenderDelay] = useState(true)
 
@@ -39,17 +39,23 @@ const CompanyForm = ({ authContext }) => {
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
     context.keyChange('alert', alertContext)
-    context.getCompany(company_id).then(() => {
+    context.getCompany(companyId).then(() => {
       setTimeout(() => reset({ ...context.company }), 400)
-      setTimeout(() => setRenderDelay(false), 1000)
+      setTimeout(() => {
+        context.keyChange('isLoading', false)
+      }, 1000)
     })
-  }, [alertContext, company_id, context, coreModalContext, reset])
+  }, [alertContext, companyId, context, coreModalContext, reset])
 
   return (
-    <>
-      {!renderDelay && (
-        <Observer>
-          {() => (
+    <Observer>
+      {() => (
+        <>
+          {context.isLoading ? (
+            <div className="flex justify-center mt-20">
+              <CircularProgress />
+            </div>
+          ) : (
             <div className="w-full max-w-screen-lg">
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 <p className="font-semibold font-prompt text-heading-6">ข้อมูลบริษัท</p>
@@ -88,7 +94,6 @@ const CompanyForm = ({ authContext }) => {
                       }}
                     />
                   )}
-
                   <input name="logo" className="hidden" ref={register} />
                   <input name="company_id" className="hidden" ref={register} />
                 </button>
@@ -199,7 +204,7 @@ const CompanyForm = ({ authContext }) => {
                     content={
                       <span className="mb-5 font-prompt text-subtitle-1">ลบข้อมูลบริษัท</span>
                     }
-                    onSubmit={() => context.deleteCompany(company_id)}
+                    onSubmit={() => context.deleteCompany(companyId)}
                   />
                 )}
               {context.modalDelete &&
@@ -233,9 +238,9 @@ const CompanyForm = ({ authContext }) => {
               )}
             </div>
           )}
-        </Observer>
+        </>
       )}
-    </>
+    </Observer>
   )
 }
 

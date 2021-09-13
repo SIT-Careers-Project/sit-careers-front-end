@@ -1,15 +1,16 @@
 import React, { useContext, useEffect } from 'react'
+import { Observer } from 'mobx-react-lite'
+import Link from 'next/link'
+import dayjs from 'dayjs'
 
 import { AddCircle } from '@material-ui/icons'
+import { CircularProgress } from '@material-ui/core'
 import { Announcement } from '../components/Announcement'
-import Link from 'next/link'
 import { checkStatus } from '../../../core/services/utils'
-import dayjs from 'dayjs'
 import Pagination from '../../../core/components/Pagination'
 import Search from '../../../core/components/Search'
 import { announcementInfoContext } from '../context/announcement_info_context'
 import { searchContext } from '../../../core/contexts/search_context'
-import { Observer } from 'mobx-react-lite'
 import { paginationContext } from '../../../core/contexts/pagination_context'
 import { AlertContext } from 'core/contexts/alert_context'
 
@@ -90,7 +91,7 @@ const AnnouncementInfo = ({ authContext }) => {
                     const status = checkStatus(data?.start_date, data?.end_date, data?.status)
 
                     return (
-                      <div className="pt-5" key={i}>
+                      <div className="pt-5" key={`announcement_card_${i}`}>
                         <Announcement
                           title={data?.announcement_title}
                           tags={[data?.job_position]}
@@ -107,9 +108,17 @@ const AnnouncementInfo = ({ authContext }) => {
                 <Pagination data={contextInfo.announcements} />
               </>
             ) : (
-              <div className="flex flex-col items-center justify-center w-full h-16">
-                <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
-              </div>
+              <>
+                {contextInfo.isLoading ? (
+                  <div className="flex justify-center">
+                    <CircularProgress disableShrink className="mt-32" />
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center w-full h-16">
+                    <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

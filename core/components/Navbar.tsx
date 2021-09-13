@@ -100,7 +100,10 @@ export default function Navbar({ authContext }) {
                           className="absolute top-0 text-white cursor-pointer"
                         />
                         {_.filter(context.notifications, ['read_at', null]).length > 0 && (
-                          <div className="absolute top-0 z-50 flex items-center justify-center w-4 h-4 ml-10 text-white rounded-full bg-red" />
+                          <>
+                            <div className="absolute top-0 z-40 flex items-center justify-center w-4 h-4 ml-10 text-white rounded-full animate-ping bg-red" />
+                            <div className="absolute top-0 z-50 flex items-center justify-center w-4 h-4 ml-10 text-white rounded-full bg-red" />
+                          </>
                         )}
                       </button>
                     )}

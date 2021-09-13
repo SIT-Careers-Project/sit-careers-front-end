@@ -38,8 +38,11 @@ function Index() {
           <div className="max-w-screen-lg mx-auto">
             <div className="grid grid-cols-12 gap-5 py-24">
               <div className="col-span-12">
-                <p className="text-center text-primary text-heading-3 font-prompt-medium">
+                <p className="leading-10 text-center text-primary text-heading-3 font-prompt-medium">
                   SIT Career Center
+                </p>
+                <p className="leading-10 text-center font-prompt text-body-1 text-primary">
+                  ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม
                 </p>
               </div>
               <div className="col-span-4">
