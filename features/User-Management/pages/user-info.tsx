@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-fallthrough */
 import { AddCircle, Delete } from '@material-ui/icons'
+import { Chip } from '@material-ui/core'
 /* eslint-disable react/display-name */
 import React, { useContext, useEffect, useCallback, useMemo } from 'react'
 import CoreTable from 'core/components/Table'
@@ -34,7 +35,7 @@ const UserInfo = ({ authContext }) => {
           <>
             {authContext.roleUser === 'admin' && (
               <CoreTable
-                column={column}
+                column={AdminColumn}
                 data={toJS(context.users)}
                 getData={getData}
                 options={{
@@ -69,6 +70,55 @@ const UserInfo = ({ authContext }) => {
       context.keyChange('disableTrashButton', true)
     }
   }, [])
+
+  const AdminColumn = [
+    { title: 'User Id', field: 'user_id', hidden: true },
+    {
+      title: 'บริษัท',
+      field: 'company_name_th',
+      render: function (rowData) {
+        return (
+          <div className="flex flex-row">
+            <div>
+              <p className="font-sarabun-samibold text-primary">{rowData.company_name_th}</p>
+              <p className="text-body-2 text-secondary2">{rowData.company_name_en}</p>
+            </div>
+          </div>
+        )
+      }
+    },
+    { title: 'อีเมล', field: 'email' },
+    {
+      title: 'สิทธิการใช้งาน',
+      field: 'role_name',
+      render: (rowData) => {
+        const roleName = checkRoleRender(rowData?.role_name)
+        return <p>{roleName}</p>
+      }
+    },
+    {
+      title: 'สถานะการใช้งาน',
+      field: 'status',
+      render: function (rowData) {
+        return (
+          <>
+            {rowData.status === 'active' ? (
+              <div>
+                <Chip
+                  style={{ backgroundColor: '#D8F6CB', color: '#36A05B' }}
+                  label={`${rowData.status}`}
+                />
+              </div>
+            ) : (
+              <div>
+                <Chip label={`${rowData.status}`} />
+              </div>
+            )}
+          </>
+        )
+      }
+    }
+  ]
 
   const column = [
     { title: 'User Id', field: 'user_id', hidden: true },
