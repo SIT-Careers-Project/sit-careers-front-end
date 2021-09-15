@@ -51,6 +51,9 @@ const AnnouncementUpdateForm = ({ authContext, announcementId }) => {
       }, 400)
       setTimeout(() => context.keyChange('renderDelay', false), 1000)
     })
+    return () => {
+      context.keyChange('announcement', [])
+    }
   }, [announcementId, context, coreModalContext, reset])
 
   return (

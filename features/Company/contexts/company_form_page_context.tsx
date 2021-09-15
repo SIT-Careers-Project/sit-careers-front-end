@@ -1,6 +1,7 @@
 import { action, makeObservable, observable } from 'mobx'
 import apiService from '../services/apiCompany'
 import { createContext } from 'react'
+import Router from 'next/router'
 
 export class CompanyFormPageContext {
   companies
@@ -13,6 +14,7 @@ export class CompanyFormPageContext {
     makeObservable(this, {
       getCompanies: action,
       createCompany: action,
+      createCompanyByAdmin: action,
       formCompany: observable,
       alert: observable,
       modalDisable: observable
@@ -46,6 +48,37 @@ export class CompanyFormPageContext {
         this.modalDisable = true
         this.modal.closeModal()
         this.alert.setAlert('บันทึกข้อมูลสำเร็จ', 'success', 'success', true)
+        Router.push('/company/info')
+        window.scrollTo(0, 0)
+      })
+    } catch (error) {
+      console.log(error)
+      if (error.response.status === 401) {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดเนื่องจากคุกกี้หมดอายุ กรุณา login ใหม่',
+          'error',
+          'error',
+          true
+        )
+      } else {
+        this.alert.setAlert(
+          'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ ไม่สามารถบันทึกข้อมูลได้',
+          'error',
+          'error',
+          true
+        )
+      }
+    }
+  }
+
+  createCompanyByAdmin = async (data) => {
+    try {
+      this.modalDisable = true
+      await apiService.createCompanyByAdmin(data).then(() => {
+        this.modalDisable = false
+        this.modal.closeModal()
+        this.alert.setAlert('บันทึกข้อมูลสำเร็จ', 'success', 'success', true)
+        Router.push('/company/info')
         window.scrollTo(0, 0)
       })
     } catch (error) {

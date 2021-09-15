@@ -10,7 +10,7 @@ import { CircularProgress } from '@material-ui/core'
 import { Avatar } from '../../../core/components/Avatar'
 import { CoreModal } from '../../../core/components/Modal'
 import { modalContext } from '../../../core/contexts/modal_context'
-import { CompanyFormSchema } from '../services/validationSchema'
+import { CompanyFormSchema, CompanyAdminSchema } from '../services/validationSchema'
 import { companyUpdatePageContext } from '../contexts/company_update_page_context'
 import PrimaryButton from '../../../core/components/Button/Primary'
 import MainInfoForm from '../components/FormCreate/main-info'
@@ -24,6 +24,7 @@ import { AlertContext } from 'core/contexts/alert_context'
 const { publicRuntimeConfig } = getConfig()
 
 const CompanyForm = ({ authContext, companyId }) => {
+  const companySchema = authContext.roleUser === 'admin' ? CompanyAdminSchema : CompanyFormSchema
   const context = useContext(companyUpdatePageContext)
   const coreModalContext = useContext(modalContext)
   const alertContext = useContext(AlertContext)
@@ -32,7 +33,7 @@ const CompanyForm = ({ authContext, companyId }) => {
   const [renderDelay, setRenderDelay] = useState(true)
 
   const { handleSubmit, register, errors, control, reset } = useForm({
-    resolver: yupResolver(CompanyFormSchema),
+    resolver: yupResolver(companySchema),
     defaultValues: { ...context.company }
   })
 
@@ -45,6 +46,9 @@ const CompanyForm = ({ authContext, companyId }) => {
         context.keyChange('isLoading', false)
       }, 1000)
     })
+    return () => {
+      context.keyChange('isDisable', false)
+    }
   }, [alertContext, companyId, context, coreModalContext, reset])
 
   return (

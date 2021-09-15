@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import React, { useContext, useEffect, useState } from 'react'
-import { CompanyFormSchema } from '../services/validationSchema'
+import { CompanyFormSchema, CompanyAdminSchema } from '../services/validationSchema'
 import { CoreModal } from '../../../core/components/Modal'
 import { Observer } from 'mobx-react-lite'
 import { companyFormPageContext } from '../contexts/company_form_page_context'
@@ -18,8 +18,9 @@ import PrimaryButton from '../../../core/components/Button/Primary'
 import { AlertContext } from 'core/contexts/alert_context'
 
 const CompanyForm = ({ authContext }) => {
+  const companySchema = authContext.roleUser === 'admin' ? CompanyAdminSchema : CompanyFormSchema
   const { handleSubmit, register, errors, control } = useForm({
-    resolver: yupResolver(CompanyFormSchema)
+    resolver: yupResolver(companySchema)
   })
   const context = useContext(companyFormPageContext)
   const alertContext = useContext(AlertContext)
@@ -30,6 +31,9 @@ const CompanyForm = ({ authContext }) => {
   useEffect(() => {
     context.keyChange('alert', alertContext)
     context.keyChange('modal', coreModalContext)
+    return () => {
+      context.keyChange('modalDisable', false)
+    }
   }, [alertContext, context, coreModalContext])
 
   return (
@@ -90,7 +94,11 @@ const CompanyForm = ({ authContext }) => {
                     </span>
                   }
                   isDisable={context.modalDisable}
-                  onSubmit={handleSubmit(context.createCompany)}
+                  onSubmit={handleSubmit(
+                    authContext.roleUser === 'admin'
+                      ? context.createCompanyByAdmin
+                      : context.createCompany
+                  )}
                 />
               </>
             )}

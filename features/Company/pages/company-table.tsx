@@ -60,7 +60,17 @@ const CompanyTable = ({ authContext }) => {
         )
       }
     },
-    { title: 'ประเภทธุรกิจ', field: 'company_type' },
+    {
+      title: 'ประเภทธุรกิจ',
+      field: 'company_type',
+      render: (rowData) => {
+        return (
+          <>
+            {rowData.company_type === null ? <span>-</span> : <span>{rowData.company_type}</span>}
+          </>
+        )
+      }
+    },
     {
       title: 'MOU',
       field: 'mou_link',
