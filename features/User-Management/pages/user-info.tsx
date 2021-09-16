@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-fallthrough */
 import { AddCircle, Delete } from '@material-ui/icons'
-import { Chip } from '@material-ui/core'
+import { Chip, CircularProgress } from '@material-ui/core'
 /* eslint-disable react/display-name */
-import React, { useContext, useEffect, useCallback, useMemo } from 'react'
+import React, { useContext, useEffect, useCallback, useMemo, useState } from 'react'
 import CoreTable from 'core/components/Table'
 import { Observer } from 'mobx-react-lite'
 import { CoreModal } from 'core/components/Modal'
@@ -16,6 +16,7 @@ import { ModalAdmin } from '../components/Modal/Admin'
 import { ModalCompany } from '../components/Modal/Company'
 
 const UserInfo = ({ authContext }) => {
+  const [role, setRole] = useState('')
   const coreModalContext = useContext(modalContext)
   const alertContext = useContext(AlertContext)
   const context = useContext(userInfoPageContext)
@@ -65,11 +66,14 @@ const UserInfo = ({ authContext }) => {
     context.keyChange('modal', coreModalContext)
     context.keyChange('modalDelete', coreModalContext)
     context.keyChange('alert', alertContext)
+    setTimeout(() => {
+      setRole(authContext.roleUser)
+    }, 2500)
     getData()
     return () => {
       context.keyChange('disableTrashButton', true)
     }
-  }, [])
+  }, [authContext])
 
   const AdminColumn = [
     { title: 'User Id', field: 'user_id', hidden: true },
@@ -139,43 +143,50 @@ const UserInfo = ({ authContext }) => {
         <div>
           <p className="text-heading-5 font-prompt">จัดการผู้ใช้งาน</p>
         </div>
-        {(authContext.roleUser === 'admin' || authContext.roleUser === 'manager') && (
-          <Observer>
-            {() => (
-              <>
-                <div className="flex justify-end grid-cols-12 gap-x-3" id="button-add-user">
-                  <button
-                    className="bg-primary focus:outline-none"
-                    onClick={() => {
-                      context.keyChange('modalDelete', false)
-                      context.modal.openModal()
-                    }}>
-                    <p className="px-5 py-2 text-white cursor-pointer font-prompt text-subtitle-1">
-                      <AddCircle className="mr-1" />
-                      เพิ่มผู้ใช้งาน
-                    </p>
-                  </button>
-                  {authContext.roleUser === 'admin' && (
-                    <button
-                      disabled={context.disableTrashButton}
-                      onClick={() => {
-                        context.keyChange('modalDelete', true)
-                        context.modal.openModal()
-                      }}
-                      className={`flex items-center focus:outline-none justify-center w-10 ${
-                        context.disableTrashButton
-                          ? 'text-grey-200 cursor-default bg-secondary2 opacity-25'
-                          : 'text-white cursor-pointer bg-red'
-                      }`}>
-                      <Delete fontSize="default" />
-                    </button>
-                  )}
-                </div>
-                {authContext.roleUser === 'admin' && !context.modalDelete && <ModalAdmin />}
-                {authContext.roleUser === 'manager' && !context.modalDelete && <ModalCompany />}
-              </>
+        <div className="flex justify-end grid-cols-12 gap-x-3">
+          {!role && <CircularProgress size={30} />}
+        </div>
+        {role && (
+          <>
+            {(authContext.roleUser === 'admin' || authContext.roleUser === 'manager') && (
+              <Observer>
+                {() => (
+                  <>
+                    <div className="flex justify-end grid-cols-12 gap-x-3" id="button-add-user">
+                      <button
+                        className="bg-primary focus:outline-none"
+                        onClick={() => {
+                          context.keyChange('modalDelete', false)
+                          context.modal.openModal()
+                        }}>
+                        <p className="px-5 py-2 text-white cursor-pointer font-prompt text-subtitle-1">
+                          <AddCircle className="mr-1" />
+                          เพิ่มผู้ใช้งาน
+                        </p>
+                      </button>
+                      {authContext.roleUser === 'admin' && (
+                        <button
+                          disabled={context.disableTrashButton}
+                          onClick={() => {
+                            context.keyChange('modalDelete', true)
+                            context.modal.openModal()
+                          }}
+                          className={`flex items-center focus:outline-none justify-center w-10 ${
+                            context.disableTrashButton
+                              ? 'text-grey-200 cursor-default bg-secondary2 opacity-25'
+                              : 'text-white cursor-pointer bg-red'
+                          }`}>
+                          <Delete fontSize="default" />
+                        </button>
+                      )}
+                    </div>
+                    {authContext.roleUser === 'admin' && !context.modalDelete && <ModalAdmin />}
+                    {authContext.roleUser === 'manager' && !context.modalDelete && <ModalCompany />}
+                  </>
+                )}
+              </Observer>
             )}
-          </Observer>
+          </>
         )}
       </div>
       <Observer>

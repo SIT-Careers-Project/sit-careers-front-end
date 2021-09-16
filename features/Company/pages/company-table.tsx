@@ -1,17 +1,20 @@
 import { AddCircle, SettingsApplications } from '@material-ui/icons'
 /* eslint-disable react/display-name */
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+
+import Link from 'next/link'
+import { Observer } from 'mobx-react-lite'
+import getConfig from 'next/config'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import CoreTable from '../../../core/components/Table'
 import { AlertContext } from 'core/contexts/alert_context'
-import Link from 'next/link'
-import { Observer } from 'mobx-react-lite'
 import { companyTablePageContext } from '../contexts/company_table_page_context'
-import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
 
 const CompanyTable = ({ authContext }) => {
+  const [role, setRole] = useState('')
   const context = useContext(companyTablePageContext)
   const alertContext = useContext(AlertContext)
 
@@ -22,7 +25,10 @@ const CompanyTable = ({ authContext }) => {
     } else {
       context.getCompaniesByCompany()
     }
-  }, [alertContext, authContext.roleUser, context])
+    setTimeout(() => {
+      setRole(authContext.roleUser)
+    }, 2500)
+  }, [alertContext, authContext, context])
 
   const column = [
     {
@@ -98,50 +104,57 @@ const CompanyTable = ({ authContext }) => {
   ]
 
   return (
-    <div className="w-full h-auto max-w-screen-lg mb-16 bg-white">
-      <div className="flex justify-between w-full mt-2">
-        <div>
-          <p className="text-heading-5 font-prompt">จัดการข้อมูลบริษัท</p>
+    <>
+      <div className="w-full h-auto max-w-screen-lg mb-16 bg-white">
+        <div className="flex justify-between w-full mt-2">
+          <div>
+            <p className="text-heading-5 font-prompt">จัดการข้อมูลบริษัท</p>
+          </div>
+          <div>
+            {!role && (
+              <div className="flex justify-center w-full">
+                <CircularProgress size={30} />
+              </div>
+            )}
+            {role === 'admin' && (
+              <Link href="/company/form-create">
+                <button className="bg-primary focus:outline-none">
+                  <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
+                    <AddCircle className="mr-1" />
+                    เพิ่มบริษัท
+                  </p>
+                </button>
+              </Link>
+            )}
+          </div>
         </div>
+        <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
         <div>
-          {authContext.roleUser === 'admin' && (
-            <Link href="/company/form-create">
-              <button className="bg-primary focus:outline-none">
-                <p className="px-5 py-2 text-white font-prompt text-subtitle-1">
-                  <AddCircle className="mr-1" />
-                  เพิ่มบริษัท
-                </p>
-              </button>
-            </Link>
-          )}
+          <Observer>
+            {() => (
+              <>
+                {(authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') && (
+                  <CoreTable
+                    column={column}
+                    data={context.companies}
+                    getData={context.getCompaniesByAdmin}
+                    options={{ search: true }}
+                  />
+                )}
+                {(authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') && (
+                  <CoreTable
+                    column={column}
+                    data={context.companies}
+                    getData={context.getCompaniesByCompany}
+                    options={{ search: true }}
+                  />
+                )}
+              </>
+            )}
+          </Observer>
         </div>
       </div>
-      <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
-      <div>
-        <Observer>
-          {() => (
-            <>
-              {(authContext.roleUser === 'admin' || authContext.roleUser === 'viewer') && (
-                <CoreTable
-                  column={column}
-                  data={context.companies}
-                  getData={context.getCompaniesByAdmin}
-                  options={{ search: true }}
-                />
-              )}
-              {(authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') && (
-                <CoreTable
-                  column={column}
-                  data={context.companies}
-                  getData={context.getCompaniesByCompany}
-                  options={{ search: true }}
-                />
-              )}
-            </>
-          )}
-        </Observer>
-      </div>
-    </div>
+    </>
   )
 }
 

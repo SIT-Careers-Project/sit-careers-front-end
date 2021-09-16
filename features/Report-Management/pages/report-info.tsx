@@ -7,6 +7,7 @@ import { reportInfoPageContext } from '../context/report_info_page_context'
 import { selectData, data } from '../services/constantVariable'
 import { createMuiTheme } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { GetApp } from '@material-ui/icons'
 
 const ReportInfo = () => {
   const context = useContext(reportInfoPageContext)
@@ -56,7 +57,7 @@ const ReportInfo = () => {
               action={[
                 {
                   tooltip: 'Export Data',
-                  icon: 'get_app',
+                  icon: () => <GetApp />,
                   onClick: () => {
                     if (context.rowApplication) {
                       context.createApplicationReportByAdmin(selectedDate).then((response) => {
