@@ -60,7 +60,7 @@ export const Card = ({ className, tags, srcImg, aboutUs, title, linkPath }: Card
         <div className="flex mt-2 leading-5 text-black text-body-2">
           <div
             dangerouslySetInnerHTML={{
-              __html: marked(aboutUs.substr(0, 150) || '')
+              __html: marked(aboutUs?.substr(0, 150) || '')
             }}
             className="flex-wrap text-black text-subtitle-2"
           />
