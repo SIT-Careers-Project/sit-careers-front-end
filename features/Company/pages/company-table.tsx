@@ -75,7 +75,15 @@ const CompanyTable = ({ authContext }) => {
       title: 'MOU',
       field: 'mou_link',
       render: (rowData) => {
-        return <>{rowData.mou_link === '-' ? <span>ไม่มี</span> : <span>มี</span>}</>
+        return (
+          <>
+            {rowData.mou_link === null || rowData.mou_link === '-' ? (
+              <span>ไม่มี</span>
+            ) : (
+              <span>มี</span>
+            )}
+          </>
+        )
       }
     },
     {
