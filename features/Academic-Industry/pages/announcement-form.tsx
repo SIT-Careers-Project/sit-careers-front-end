@@ -35,6 +35,9 @@ const AnnouncementForm = ({ authContext }) => {
     context.keyChange('alert', alertContext)
     context.getAutoCompleteCompanies()
     context.getAutoCompleteJobPositions()
+    return () => {
+      return context.keyChange('modalDisable', false)
+    }
   }, [context, coreModalContext])
 
   return (
