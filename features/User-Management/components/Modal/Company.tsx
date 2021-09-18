@@ -23,6 +23,7 @@ export const ModalCompany = () => {
     <Observer>
       {() => (
         <CoreModal
+          isDisable={context.isLoading}
           buttonSubmit="เพิ่ม"
           title="เพิ่มผู้ประสานงาน"
           content={
