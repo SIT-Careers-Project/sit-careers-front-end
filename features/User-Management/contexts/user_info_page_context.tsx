@@ -19,6 +19,7 @@ export class UserInfoPageContext {
   selectRoleName
   autoCompleteCompany
   modalDelete
+  isLoading
 
   constructor() {
     this.alert = ''
@@ -32,6 +33,7 @@ export class UserInfoPageContext {
     this.disableTrashButton = true
     this.roleViewer = ''
     this.roleSelected = ''
+    this.isLoading = false
 
     makeAutoObservable(this)
   }
@@ -64,9 +66,11 @@ export class UserInfoPageContext {
 
   createUserByAdmin = async (data) => {
     try {
+      this.isLoading = true
       await apiUser.createUser(data).then(() => {
         this.getUserByAdmin()
         this.modal.closeModal()
+        this.isLoading = false
       })
       this.alert.setAlert('เพิ่มผู้ใช้งานสำเร็จ', 'success', 'success', true)
     } catch (error) {
@@ -85,10 +89,12 @@ export class UserInfoPageContext {
 
   createUserByCompany = async (data) => {
     try {
+      this.isLoading = true
       await apiUser.createUserByManger(data).then(() => {
         this.getUserByCompany()
         this.modal.closeModal()
       })
+      this.isLoading = false
       this.alert.setAlert('เพิ่มผู้ใช้งานสำเร็จ', 'success', 'success', true)
     } catch (error) {
       console.log(error)

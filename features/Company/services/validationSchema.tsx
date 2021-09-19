@@ -9,9 +9,7 @@ export const CompanyFormSchema = yup.object().shape({
   //   .test('fileType', 'Unsupported File Format', (value) =>
   //     ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'].includes(value.type)
   //   ),
-  company_name_th: yup
-    .string()
-    .matches(/[^a-zA-Z0-9]/, '*จำเป็นต้องกรอก ชื่อภาษาไทย และต้องกรอกเป็นภาษาไทยเท่านั้น'),
+  company_name_th: yup.string(),
   company_name_en: yup
     .string()
     .matches(/[a-zA-Z0-9]/, '*จำเป็นต้องกรอก ชื่ออังกฤษ และต้องกรอกเป็นภาษาอังกฤษเท่านั้น'),
@@ -71,9 +69,7 @@ export const CompanyAdminSchema = yup.object().shape({
   //   .test('fileType', 'Unsupported File Format', (value) =>
   //     ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'].includes(value.type)
   //   ),
-  company_name_th: yup
-    .string()
-    .matches(/[^a-zA-Z0-9]/, '*จำเป็นต้องกรอก ชื่อภาษาไทย และต้องกรอกเป็นภาษาไทยเท่านั้น'),
+  company_name_th: yup.string(),
   company_name_en: yup
     .string()
     .matches(/[a-zA-Z0-9]/, '*จำเป็นต้องกรอก ชื่ออังกฤษ และต้องกรอกเป็นภาษาอังกฤษเท่านั้น'),

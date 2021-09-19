@@ -31,6 +31,7 @@ export const ModalAdmin = () => {
     <Observer>
       {() => (
         <CoreModal
+          isDisable={context.isLoading}
           buttonSubmit="เพิ่ม"
           title="เพิ่มผู้ใช้งาน"
           content={
