@@ -23,7 +23,7 @@ class MyDocument extends Document {
             content="SIT Career Center : ระบบบริหารความร่วมมือระหว่างคณะเทคโนโลยีสารสนเทศและอุตสาหกรรม"
           />
           <meta property="og:type" content="website" />
-          <meta property="og:url" content="http://sitcc.sit.kmutt.ac.th/" />
+          <meta property="og:url" content="https://careers.sit.kmutt.ac.th/" />
           <meta
             property="og:image"
             content="https://seniorproject.sit.kmutt.ac.th/projectPoster/posterIT60-BU87.png"

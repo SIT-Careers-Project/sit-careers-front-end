@@ -4,6 +4,7 @@ import _ from 'lodash'
 import getConfig from 'next/config'
 import { Observer } from 'mobx-react-lite'
 import { toJS } from 'mobx'
+import Image from 'next/image'
 
 import { ModalBannerContext } from 'core/contexts/modal_banner_image_context'
 
@@ -59,12 +60,14 @@ export const Carousel = () => {
               height: context.bannerForShow.length ? '500px' : '0px'
             }}>
             {_.map(toJS(context.bannerForShow), (bgImage, i) => (
-              <img
+              <Image
                 key={i}
                 loading="lazy"
-                style={{ height: '500px' }}
-                src={`${publicRuntimeConfig.s3_url}/banner/${bgImage.path_image}`}
                 className="inline-block w-full"
+                height={180}
+                width={500}
+                layout="responsive"
+                src={`${publicRuntimeConfig.s3_url}/banner/${bgImage.path_image}`}
                 alt={`Banners ${bgImage.path_image} SIT Careers Center.`}
               />
             ))}

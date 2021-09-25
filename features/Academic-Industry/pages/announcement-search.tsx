@@ -43,6 +43,15 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
     }
     contextPagination.setSliceAnnouncement()
     context.setValue('alert', alertContext)
+    return () => {
+      context.setValue('filterSearch', [])
+      context.setValue('companyName', [])
+      context.setValue('companyType', [])
+      context.setValue('jobType', [])
+      context.setValue('jobPosition', [])
+      context.setValue('announcementTitle', [])
+      context.setValue('status', [])
+    }
   }, [context, contextPagination, announcementId])
 
   const ITEM_HEIGHT = 48
@@ -58,8 +67,20 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
 
   const handlerSearch = () => {
     context.setAnnouncements(
-      contextSearch.searchMultiFilterAnnouncement(context.beforeSearch, context.filterSearch)
+      contextSearch.searchMultiFilterWithFuse(
+        context.beforeSearch,
+        [
+          toJS(context.companyType),
+          context.companyName,
+          context.announcementTitle,
+          toJS(context.jobPosition),
+          toJS(context.jobType),
+          toJS(context.status)
+        ],
+        context.filterSearch
+      )
     )
+    context.setValue('filterSearch', [])
   }
 
   return (
@@ -81,10 +102,13 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                       }}
                       onChange={(event) => {
                         if (typeof event.target.value === 'string') {
+                          context.setValue('companyName', event.target.value)
+                          context.setValue('announcementTitle', event.target.value)
                           context.setValue('filterSearch', [
-                            { type: 'company_name_en', name: [event.target.value] },
-                            { type: 'company_name_th', name: [event.target.value] },
-                            { type: 'announcement_title', name: [event.target.value] }
+                            ...context.filterSearch,
+                            'company_name_en',
+                            'company_name_th',
+                            'announcement_title'
                           ])
                         }
                       }}
@@ -99,7 +123,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                 </PrimaryButton>
               </div>
               <div className="flex flex-row justify-between pt-6">
-                <div className="w-full">
+                <div className="w-1/3">
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของงาน</InputLabel>
                     <Select
@@ -108,12 +132,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                       value={context.jobPosition}
                       onChange={(event) => {
                         context.setValue('jobPosition', event?.target?.value)
-                        context.setValue('filterSearch', [
-                          { type: 'job_position', name: context.jobPosition },
-                          { type: 'company_name_en', name: [event.target.value] },
-                          { type: 'company_name_th', name: [event.target.value] },
-                          { type: 'announcement_title', name: [event.target.value] }
-                        ])
+                        context.setValue('filterSearch', [...context.filterSearch, 'job_position'])
                       }}
                       input={<OutlinedInput />}>
                       {_.map(context.jobPositions, (position, i) => (
@@ -124,7 +143,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-full pl-5">
+                <div className="w-1/3 pl-5">
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของประกาศ</InputLabel>
                     <Select
@@ -134,12 +153,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                       value={context.jobType}
                       onChange={(event) => {
                         context.setValue('jobType', event?.target?.value)
-                        context.setValue('filterSearch', [
-                          { type: 'job_type', name: context.jobType },
-                          { type: 'company_name_en', name: [event.target.value] },
-                          { type: 'company_name_th', name: [event.target.value] },
-                          { type: 'announcement_title', name: [event.target.value] }
-                        ])
+                        context.setValue('filterSearch', [...context.filterSearch, 'job_type'])
                       }}
                       input={<OutlinedInput />}
                       MenuProps={MenuProps}>
@@ -151,7 +165,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-full pl-5">
+                <div className="w-1/3 pl-5">
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของษริษัท</InputLabel>
                     <Select
@@ -161,12 +175,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                       value={context.companyType}
                       onChange={(event) => {
                         context.setValue('companyType', event?.target?.value)
-                        context.setValue('filterSearch', [
-                          { type: 'company_type', name: context.companyType },
-                          { type: 'company_name_en', name: [event.target.value] },
-                          { type: 'company_name_th', name: [event.target.value] },
-                          { type: 'announcement_title', name: [event.target.value] }
-                        ])
+                        context.setValue('filterSearch', [...context.filterSearch, 'company_type'])
                       }}
                       input={<OutlinedInput />}
                       MenuProps={MenuProps}>
@@ -179,7 +188,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                   </FormControl>
                 </div>
                 {(authContext.roleUser === 'viewer' || authContext.roleUser === 'admin') && (
-                  <div className="w-full pl-5">
+                  <div className="w-1/3 pl-5">
                     <FormControl className="w-full font-prompt" variant="outlined">
                       <InputLabel htmlFor="trinity-select">สถานะการรับสมัคร</InputLabel>
                       <Select
@@ -189,12 +198,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                         value={context.status}
                         onChange={(event) => {
                           context.setValue('status', event?.target?.value)
-                          context.setValue('filterSearch', [
-                            { type: 'status', name: context.status },
-                            { type: 'company_name_en', name: [event.target.value] },
-                            { type: 'company_name_th', name: [event.target.value] },
-                            { type: 'announcement_title', name: [event.target.value] }
-                          ])
+                          context.setValue('filterSearch', [...context.filterSearch, 'status'])
                         }}
                         input={<OutlinedInput />}
                         MenuProps={MenuProps}>
