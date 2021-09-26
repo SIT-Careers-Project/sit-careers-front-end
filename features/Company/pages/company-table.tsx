@@ -28,6 +28,9 @@ const CompanyTable = ({ authContext }) => {
     setTimeout(() => {
       setRole(authContext.roleUser)
     }, 2500)
+    return () => {
+      context.alert.clearAlert()
+    }
   }, [alertContext, authContext, context])
 
   const column = [

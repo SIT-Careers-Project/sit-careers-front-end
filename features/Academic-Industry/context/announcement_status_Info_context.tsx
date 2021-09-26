@@ -12,6 +12,7 @@ export class AnnouncementStatusInfoContext {
   modal
   modalDelete
   alert
+  isLoading
 
   constructor() {
     this.applicationDate = ''
@@ -19,6 +20,7 @@ export class AnnouncementStatusInfoContext {
     this.application = []
     this.isDisable = true
     this.modalDelete = false
+    this.isLoading = false
 
     makeAutoObservable(this)
   }
@@ -36,11 +38,13 @@ export class AnnouncementStatusInfoContext {
   }
 
   getAnnouncementResumeByIdForAdmin = async (announcement_resume_id) => {
-    this.isDisable = true
-    this.application = []
     try {
+      this.isLoading = true
+      this.isDisable = true
+      this.application = []
       const response = await apiService.getAnnouncementResumeById(announcement_resume_id)
       this.application = response.data[0]
+      this.isLoading = false
     } catch (error) {
       console.log(error)
       if (error.response.status === 401) {
@@ -62,13 +66,15 @@ export class AnnouncementStatusInfoContext {
   }
 
   getAnnouncementResumeByIdForCompanyId = async (announcement_resume_id) => {
-    this.isDisable = true
-    this.application = []
     try {
+      this.isLoading = true
+      this.isDisable = true
+      this.application = []
       const response = await apiService.getAnnouncementResumeByIdForCompanyId(
         announcement_resume_id
       )
       this.application = response.data[0]
+      this.isLoading = false
     } catch (error) {
       console.log(error)
       if (error.response.status === 401) {
@@ -90,11 +96,13 @@ export class AnnouncementStatusInfoContext {
   }
 
   getAnnouncementResumeByIdForUserId = async (announcement_resume_id) => {
-    this.isDisable = true
-    this.application = []
     try {
+      this.isLoading = true
+      this.isDisable = true
+      this.application = []
       const response = await apiService.getAnnouncementResumeByIdForUserId(announcement_resume_id)
       this.application = response.data[0]
+      this.isLoading = false
     } catch (error) {
       console.log(error)
       if (error.response.status === 401) {
