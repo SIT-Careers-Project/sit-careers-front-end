@@ -99,7 +99,7 @@ const AnnouncementMainInfoForm = (props) => {
                       onChange={handleChange}
                       name="job_type"
                       value={jobTypes}
-                      input={<OutlinedInput />}
+                      input={<OutlinedInput label="ประเภทของประกาศ *" />}
                       id="select-outlined-label">
                       {_.map(jobType, (job) => (
                         <MenuItem key={job.title} value={job.title}>
@@ -127,7 +127,9 @@ const AnnouncementMainInfoForm = (props) => {
                   name="salary"
                   defaultValue={data?.announcement?.salary || ''}
                   as={
-                    <Select id="select-outlined-label">
+                    <Select
+                      input={<OutlinedInput label="เงินเดือน (บาท) *" />}
+                      id="select-outlined-label">
                       {_.map(salary, (salary) => (
                         <MenuItem key={salary.title} value={salary.title}>
                           {salary.title}
