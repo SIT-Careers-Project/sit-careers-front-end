@@ -38,7 +38,7 @@ export class SearchContext {
     const flattenSearchValue = _.without(_.flattenDeep(searchValue), '')
     const keys = _.uniq(keySearch)
     const options = {
-      useExtendedSearch: true,
+      isCaseSensitive: true,
       minMatchCharLength: 2,
       keys: keys
     }

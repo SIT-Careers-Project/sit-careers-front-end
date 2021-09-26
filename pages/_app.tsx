@@ -7,7 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Head from 'next/head'
 import { AuthContext } from '../core/contexts/auth_context'
 import theme from '../core/config/theme'
-import { ThemeProvider } from '@material-ui/core/styles'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { ModalBanner } from 'core/components/ModalBanner'
 import { configure } from 'mobx'
 
@@ -37,7 +37,7 @@ function App({ Component, pageProps }) {
         <link rel="preload" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
       <CssBaseline />
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={createMuiTheme(theme)}>
         <ModalBanner />
         <Component {...pageProps} authContext={useStore()} />
       </ThemeProvider>
