@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="max-w-screen-lg mx-auto">
         <div className="grid h-full grid-flow-row grid-cols-12 gap-5">
           <div className="col-span-4 pt-12">
-            <div className="font-semibold text-primary font-prompt text-body-1">ติดต่อเรา</div>
+            <div className="font-semibold text-primary font-prompt text-body-1">ติดต่อ</div>
             <div className="mt-2 text-body-1 font-prompt">คุณรุ่งโรจน์ ขวัญโกมล</div>
             <div className="mt-2 text-body-1 font-prompt">Tel: 0-2470-9889</div>
             <div className="mt-2 text-body-1 font-prompt">E-mail: rungroj@sit.kmutt.ac.th</div>
