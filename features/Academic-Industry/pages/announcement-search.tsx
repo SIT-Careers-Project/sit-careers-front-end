@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import dayjs from 'dayjs'
 import _ from 'lodash'
 import { toJS } from 'mobx'
+import classNames from 'classnames'
 import { Observer } from 'mobx-react-lite'
 
 import {
@@ -103,7 +104,6 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                       onChange={(event) => {
                         if (typeof event.target.value === 'string') {
                           context.setValue('companyName', event.target.value)
-                          context.setValue('announcementTitle', event.target.value)
                           context.setValue('filterSearch', [
                             ...context.filterSearch,
                             'company_name_en',
@@ -123,27 +123,48 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                 </PrimaryButton>
               </div>
               <div className="flex flex-row justify-between pt-6">
-                <div className="w-1/3">
+                <div
+                  className={classNames(
+                    {
+                      'w-2/5': authContext.roleUser === 'admin' || authContext.roleUser === 'viewer'
+                    },
+                    {
+                      'w-1/3':
+                        !(authContext.roleUser === 'admin') || !(authContext.roleUser === 'viewer')
+                    }
+                  )}>
                   <FormControl className="w-full font-prompt" variant="outlined">
-                    <InputLabel htmlFor="trinity-select">ประเภทของงาน</InputLabel>
+                    <InputLabel htmlFor="job-position-select">ประเภทของงาน</InputLabel>
                     <Select
-                      labelId="trinity-select"
                       multiple
                       value={context.jobPosition}
                       onChange={(event) => {
                         context.setValue('jobPosition', event?.target?.value)
-                        context.setValue('filterSearch', [...context.filterSearch, 'job_position'])
+                        context.setValue('filterSearch', [
+                          ...context.filterSearch,
+                          'job_position_id'
+                        ])
                       }}
-                      input={<OutlinedInput />}>
+                      input={<OutlinedInput label="ประเภทของงาน" />}>
                       {_.map(context.jobPositions, (position, i) => (
-                        <MenuItem key={i} value={position.job_position}>
+                        <MenuItem key={i} value={position.job_position_id}>
                           {position.job_position}
                         </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-1/3 pl-5">
+                <div
+                  className={classNames(
+                    'pl-5',
+                    {
+                      'w-2/5': authContext.roleUser === 'admin' || authContext.roleUser === 'viewer'
+                    },
+                    {
+                      'w-1/3':
+                        !(authContext.roleUser === 'admin') || !(authContext.roleUser === 'viewer')
+                    }
+                  )}>
                   <FormControl className="w-full font-prompt" variant="outlined">
                     <InputLabel htmlFor="trinity-select">ประเภทของประกาศ</InputLabel>
                     <Select
@@ -155,7 +176,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                         context.setValue('jobType', event?.target?.value)
                         context.setValue('filterSearch', [...context.filterSearch, 'job_type'])
                       }}
-                      input={<OutlinedInput />}
+                      input={<OutlinedInput label="ประเภทของประกาศ" />}
                       MenuProps={MenuProps}>
                       {_.map(jobType, (job) => (
                         <MenuItem key={job.title} value={job.title}>
@@ -165,9 +186,19 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                     </Select>
                   </FormControl>
                 </div>
-                <div className="w-1/3 pl-5">
+                <div
+                  className={classNames(
+                    'pl-5',
+                    {
+                      'w-2/5': authContext.roleUser === 'admin' || authContext.roleUser === 'viewer'
+                    },
+                    {
+                      'w-1/3':
+                        !(authContext.roleUser === 'admin') || !(authContext.roleUser === 'viewer')
+                    }
+                  )}>
                   <FormControl className="w-full font-prompt" variant="outlined">
-                    <InputLabel htmlFor="trinity-select">ประเภทของษริษัท</InputLabel>
+                    <InputLabel htmlFor="trinity-select">ประเภทของบริษัท</InputLabel>
                     <Select
                       labelId="demo-mutiple-name-label"
                       id="demo-mutiple-name"
@@ -177,7 +208,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                         context.setValue('companyType', event?.target?.value)
                         context.setValue('filterSearch', [...context.filterSearch, 'company_type'])
                       }}
-                      input={<OutlinedInput />}
+                      input={<OutlinedInput label="ประเภทของษริษัท" />}
                       MenuProps={MenuProps}>
                       {_.map(companyType, (company) => (
                         <MenuItem key={company.title} value={company.title}>
@@ -188,7 +219,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                   </FormControl>
                 </div>
                 {(authContext.roleUser === 'viewer' || authContext.roleUser === 'admin') && (
-                  <div className="w-1/3 pl-5">
+                  <div className="w-1/4 pl-5">
                     <FormControl className="w-full font-prompt" variant="outlined">
                       <InputLabel htmlFor="trinity-select">สถานะการรับสมัคร</InputLabel>
                       <Select
@@ -200,7 +231,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                           context.setValue('status', event?.target?.value)
                           context.setValue('filterSearch', [...context.filterSearch, 'status'])
                         }}
-                        input={<OutlinedInput />}
+                        input={<OutlinedInput label="สถานะการรับสมัคร" />}
                         MenuProps={MenuProps}>
                         {_.map(status, (status) => (
                           <MenuItem key={status.title} value={status.title}>
