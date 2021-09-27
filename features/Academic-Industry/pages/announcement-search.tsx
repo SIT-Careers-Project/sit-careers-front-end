@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useEffect } from 'react'
 import dayjs from 'dayjs'
 import _ from 'lodash'
@@ -81,7 +82,6 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
         context.filterSearch
       )
     )
-    context.setValue('filterSearch', [])
   }
 
   return (
@@ -101,15 +101,23 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                           handlerSearch()
                         }
                       }}
-                      onChange={(event) => {
+                      onChange={(event: any) => {
                         if (typeof event.target.value === 'string') {
                           context.setValue('companyName', event.target.value)
-                          context.setValue('filterSearch', [
-                            ...context.filterSearch,
-                            'company_name_en',
-                            'company_name_th',
-                            'announcement_title'
-                          ])
+                          if (event.target.value.length > 0) {
+                            context.setValue('filterSearch', [
+                              ...context.filterSearch,
+                              { name: 'company_name_en', weight: 5 },
+                              { name: 'company_name_th', weight: 5 },
+                              { name: 'announcement_title', weight: 5 }
+                            ])
+                          } else {
+                            context.removeKeySearch([
+                              'company_name_en',
+                              'company_name_th',
+                              'announcement_title'
+                            ])
+                          }
                         }
                       }}
                     />
@@ -122,7 +130,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                   <p className="px-4 py-4 text-white font-prompt text-subtitle-1">ค้นหา</p>
                 </PrimaryButton>
               </div>
-              <div className="flex flex-row justify-between pt-6">
+              <div className="flex flex-row justify-between pt-6 space-x-3">
                 <div
                   className={classNames(
                     {
@@ -138,12 +146,16 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                     <Select
                       multiple
                       value={context.jobPosition}
-                      onChange={(event) => {
+                      onChange={(event: any) => {
                         context.setValue('jobPosition', event?.target?.value)
-                        context.setValue('filterSearch', [
-                          ...context.filterSearch,
-                          'job_position_id'
-                        ])
+                        if (event.target?.value?.length > 0) {
+                          context.setValue('filterSearch', [
+                            { name: 'job_position_id', weight: 3 },
+                            ...context.filterSearch
+                          ])
+                        } else {
+                          context.removeKeySearch(['job_position_id'])
+                        }
                       }}
                       input={<OutlinedInput label="ประเภทของงาน" />}>
                       {_.map(context.jobPositions, (position, i) => (
@@ -156,7 +168,6 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                 </div>
                 <div
                   className={classNames(
-                    'pl-5',
                     {
                       'w-2/5': authContext.roleUser === 'admin' || authContext.roleUser === 'viewer'
                     },
@@ -172,9 +183,16 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                       id="demo-mutiple-name"
                       multiple
                       value={context.jobType}
-                      onChange={(event) => {
+                      onChange={(event: any) => {
                         context.setValue('jobType', event?.target?.value)
-                        context.setValue('filterSearch', [...context.filterSearch, 'job_type'])
+                        if (event.target?.value?.length > 0) {
+                          context.setValue('filterSearch', [
+                            { name: 'job_type', weight: 2 },
+                            ...toJS(context.filterSearch)
+                          ])
+                        } else {
+                          context.removeKeySearch(['job_type'])
+                        }
                       }}
                       input={<OutlinedInput label="ประเภทของประกาศ" />}
                       MenuProps={MenuProps}>
@@ -188,7 +206,6 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                 </div>
                 <div
                   className={classNames(
-                    'pl-5',
                     {
                       'w-2/5': authContext.roleUser === 'admin' || authContext.roleUser === 'viewer'
                     },
@@ -204,9 +221,16 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                       id="demo-mutiple-name"
                       multiple
                       value={context.companyType}
-                      onChange={(event) => {
+                      onChange={(event: any) => {
                         context.setValue('companyType', event?.target?.value)
-                        context.setValue('filterSearch', [...context.filterSearch, 'company_type'])
+                        if (event.target?.value?.length > 0) {
+                          context.setValue('filterSearch', [
+                            ...toJS(context.filterSearch),
+                            { name: 'company_type', weight: 1 }
+                          ])
+                        } else {
+                          context.removeKeySearch(['company_type'])
+                        }
                       }}
                       input={<OutlinedInput label="ประเภทของษริษัท" />}
                       MenuProps={MenuProps}>
@@ -219,7 +243,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                   </FormControl>
                 </div>
                 {(authContext.roleUser === 'viewer' || authContext.roleUser === 'admin') && (
-                  <div className="w-1/4 pl-5">
+                  <div className="w-1/3">
                     <FormControl className="w-full font-prompt" variant="outlined">
                       <InputLabel htmlFor="trinity-select">สถานะการรับสมัคร</InputLabel>
                       <Select
@@ -227,9 +251,16 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                         id="demo-mutiple-name"
                         multiple
                         value={context.status}
-                        onChange={(event) => {
+                        onChange={(event: any) => {
                           context.setValue('status', event?.target?.value)
-                          context.setValue('filterSearch', [...context.filterSearch, 'status'])
+                          if (event.target?.value?.length > 0) {
+                            context.setValue('filterSearch', [
+                              ...toJS(context.filterSearch),
+                              { name: 'status', weight: 4 }
+                            ])
+                          } else {
+                            context.removeKeySearch(['status'])
+                          }
                         }}
                         input={<OutlinedInput label="สถานะการรับสมัคร" />}
                         MenuProps={MenuProps}>
@@ -291,7 +322,9 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                     </>
                   ) : (
                     <div className="flex items-center justify-center w-full h-16">
-                      <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
+                      <span className="font-prompt text-heading-6">
+                        ไม่พบผลลัพธ์หรือคุณพิมพ์ข้อมูลน้อยเกินไป...
+                      </span>
                     </div>
                   )}
                   {context.announcements.length !== 0 && (
