@@ -1,4 +1,3 @@
-import { DashboardAnalysisSection } from '../components/Sections/DashboardIntro'
 import { StatCardSection } from '../components/Sections/StatCard'
 import { useRouter } from 'next/router'
 import { useEffect, useContext } from 'react'
@@ -18,8 +17,7 @@ function Index() {
 
   return (
     <>
-      <div style={{ height: '1300px' }} className="relative overflow-hidden bg-grey-fbfcfd">
-        <DashboardAnalysisSection />
+      <div style={{ height: '500px' }} className="relative overflow-hidden bg-grey-fbfcfd">
         <StatCardSection />
       </div>
       <ChartInfoSection />
