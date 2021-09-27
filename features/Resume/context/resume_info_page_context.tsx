@@ -8,12 +8,14 @@ export class ResumeInfoPageContext {
   fileName
   renderDelay
   alert
+  isLoading
 
   constructor() {
     this.modal = ''
     this.resume = ''
     this.fileName = 'No file chosen'
     this.renderDelay = true
+    this.isLoading = false
     makeAutoObservable(this)
   }
 
@@ -78,8 +80,10 @@ export class ResumeInfoPageContext {
         this.modal.closeModal()
         if (response?.status === 200) {
           this.alert.setAlert(`สร้างโปรไฟล์สำเร็จ !`, 'success', 'success', true)
+          window.scrollTo(0, 0)
         } else if (response?.status === 400) {
           this.alert.setAlert(`กรุณากรอกข้อมูลให้ถูกต้อง !`, 'warning', 'warning', true)
+          window.scrollTo(0, 0)
         }
       })
     } catch (error) {
@@ -109,8 +113,10 @@ export class ResumeInfoPageContext {
         this.modal.closeModal()
         if (response?.status === 200) {
           this.alert.setAlert(`สร้างโปรไฟล์สำเร็จ !`, 'success', 'success', true)
+          window.scrollTo(0, 0)
         } else if (response?.status === 400) {
           this.alert.setAlert(`กรุณากรอกข้อมูลให้ถูกต้อง !`, 'warning', 'warning', true)
+          window.scrollTo(0, 0)
         }
       })
     } catch (error) {

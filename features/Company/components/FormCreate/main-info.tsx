@@ -3,6 +3,7 @@ import {
   FormHelperText,
   InputLabel,
   MenuItem,
+  OutlinedInput,
   Select,
   TextField
 } from '@material-ui/core'
@@ -57,7 +58,7 @@ const MainInfoForm = (props) => {
               control={control}
               name="company_type"
               as={
-                <Select id="select-outlined-label">
+                <Select input={<OutlinedInput label="ประเภทธุรกิจ *" />} id="select-outlined-label">
                   {companyType.map((company) => (
                     <MenuItem key={company.title} value={company.title}>
                       {company.title}

@@ -72,7 +72,7 @@ const AllCompany = () => {
                       id="trinity-select"
                       multiple
                       value={context.companyType}
-                      input={<OutlinedInput />}
+                      input={<OutlinedInput label="ประเภทธุรกิจ" />}
                       onChange={(event) => {
                         context.setValue('companyType', event.target.value)
                         context.setValue('keySearch', [...context.keySearch, 'company_type'])

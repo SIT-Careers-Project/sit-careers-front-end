@@ -126,13 +126,13 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
             <div className="flex flex-col items-center w-1/4 h-12 grid-cols-12">
               {checkStatus(data?.start_date, data?.end_date, data?.status) === 'OPEN' && (
                 <Link href={`applications/create/${data?.announcement_id}`}>
-                  <button className="text-white cursor-pointer bg-primary">
+                  <button className="text-white cursor-pointer focus:outline-none bg-primary">
                     <p className="px-5 py-3 text-white font-prompt text-subtitle-1">สมัคร</p>
                   </button>
                 </Link>
               )}
               {checkStatus(data?.start_date, data?.end_date, data?.status) === 'CLOSE' && (
-                <button className="text-white bg-opacity-50 bg-primary" disabled>
+                <button className="text-white bg-opacity-50 focus:outline-none bg-primary" disabled>
                   <p className="px-5 py-3 text-white cursor-default focus:outline-none font-prompt text-subtitle-1">
                     สมัคร
                   </p>

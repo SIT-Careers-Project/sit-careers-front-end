@@ -3,6 +3,7 @@ import {
   FormHelperText,
   InputLabel,
   MenuItem,
+  OutlinedInput,
   Select,
   TextField
 } from '@material-ui/core'
@@ -32,7 +33,7 @@ const AnnouncementBusinessDateInfo = (props) => {
               name="start_business_day"
               defaultValue={data?.announcement?.start_business_day || ''}
               as={
-                <Select id="select-outlined-label">
+                <Select input={<OutlinedInput label="วันเปิดทำการ *" />} id="select-outlined-label">
                   {days.map((data) => (
                     <MenuItem key={data.day} value={data.day}>
                       {data.day}
@@ -80,7 +81,7 @@ const AnnouncementBusinessDateInfo = (props) => {
               name="end_business_day"
               defaultValue={data?.announcement?.end_business_day || ''}
               as={
-                <Select id="select-outlined-label">
+                <Select input={<OutlinedInput label="วันปิดทำการ *" />} id="select-outlined-label">
                   {days.map((data) => (
                     <MenuItem key={data.day} value={data.day}>
                       {data.day}

@@ -72,6 +72,7 @@ const UserInfo = ({ authContext }) => {
     getData()
     return () => {
       context.keyChange('disableTrashButton', true)
+      context.alert.clearAlert()
     }
   }, [authContext])
 

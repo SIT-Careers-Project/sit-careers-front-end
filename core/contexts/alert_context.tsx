@@ -34,6 +34,10 @@ export class alertContext {
     ]
   }
 
+  clearAlert = () => {
+    this.alert = []
+  }
+
   openAlert = () => {
     this.isOpen = true
   }
