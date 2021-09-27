@@ -135,10 +135,29 @@ const CompanyForm = ({ authContext, companyId }) => {
                 )}
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                {authContext.roleUser === 'viewer' ? (
-                  <ContractInfoForm register={register} errors={errors} disable={true} />
-                ) : (
-                  <ContractInfoForm register={register} errors={errors} disable={false} />
+                {authContext.roleUser === 'viewer' && (
+                  <ContractInfoForm
+                    register={register}
+                    errors={errors}
+                    disable={true}
+                    contract={false}
+                  />
+                )}
+                {authContext.roleUser === 'coordinator' && (
+                  <ContractInfoForm
+                    register={register}
+                    errors={errors}
+                    disable={false}
+                    contract={true}
+                  />
+                )}
+                {(authContext.roleUser === 'manager' || authContext.roleUser === 'admin') && (
+                  <ContractInfoForm
+                    register={register}
+                    errors={errors}
+                    disable={false}
+                    contract={false}
+                  />
                 )}
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
