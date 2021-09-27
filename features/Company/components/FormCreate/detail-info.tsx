@@ -15,7 +15,7 @@ const DetailInfoForm = (props) => {
           data-cy="description"
           as={
             <TextField
-              label="รายละเอียด *"
+              label="รายละเอียด"
               name="description"
               className="border-opacity-50 place-content-start border-DEFAULT"
               variant="outlined"

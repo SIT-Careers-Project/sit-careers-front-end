@@ -52,13 +52,13 @@ const MainInfoForm = (props) => {
             variant="outlined"
             disabled={viewer}>
             <InputLabel htmlFor="trinity-select" id="select-outlined-label">
-              ประเภทธุรกิจ *
+              ประเภทธุรกิจ
             </InputLabel>
             <Controller
               control={control}
               name="company_type"
               as={
-                <Select input={<OutlinedInput label="ประเภทธุรกิจ *" />} id="select-outlined-label">
+                <Select input={<OutlinedInput label="ประเภทธุรกิจ" />} id="select-outlined-label">
                   {companyType.map((company) => (
                     <MenuItem key={company.title} value={company.title}>
                       {company.title}
@@ -72,7 +72,7 @@ const MainInfoForm = (props) => {
         </div>
         <div className="w-1/2 pl-3">
           <TextField
-            label="เว็บไซต์ *"
+            label="เว็บไซต์"
             name="website"
             variant="outlined"
             className="font-sarabun"
@@ -92,7 +92,7 @@ const MainInfoForm = (props) => {
             name="about_us"
             as={
               <TextField
-                label="แนะนำ *"
+                label="แนะนำ"
                 name="about_us"
                 className="border-opacity-50 place-content-start border-DEFAULT"
                 variant="outlined"
