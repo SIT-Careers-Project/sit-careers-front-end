@@ -2,14 +2,39 @@ import { TextField } from '@material-ui/core'
 import React from 'react'
 
 const ContractInfoForm = (props) => {
-  const { errors, register, disable } = props
+  const { errors, register, disable, contract } = props
 
   return (
     <div>
       <p className="mb-3 font-semibold font-prompt text-heading-6">ข้อมูลติดต่อ</p>
       <div className="flex flex-row justify-between">
         <div className="w-1/2 pb-6 pr-3">
-          <TextField
+          {contract ? (
+            <TextField
+              label="อีเมล์ผู้จัดการ"
+              name="e_mail_manager"
+              variant="outlined"
+              className="font-sarabun"
+              inputRef={register}
+              error={!!errors.e_mail_manager}
+              helperText={errors.e_mail_manager?.message}
+              fullWidth
+              disabled={true}
+            />
+          ) : (
+            <TextField
+              label="อีเมล์ผู้จัดการ"
+              name="e_mail_manager"
+              variant="outlined"
+              className="font-sarabun"
+              inputRef={register}
+              error={!!errors.e_mail_manager}
+              helperText={errors.e_mail_manager?.message}
+              fullWidth
+              disabled={disable}
+            />
+          )}
+          {/* <TextField
             label="อีเมล์ผู้จัดการ"
             name="e_mail_manager"
             variant="outlined"
@@ -19,7 +44,7 @@ const ContractInfoForm = (props) => {
             helperText={errors.e_mail_manager?.message}
             fullWidth
             disabled={disable}
-          />
+          /> */}
         </div>
         <div className="w-1/2 pl-3">
           <TextField
