@@ -38,8 +38,10 @@ export class SearchContext {
     const flattenSearchValue = _.without(_.flattenDeep(searchValue), '')
     const keys = _.uniq(keySearch)
     const options = {
-      isCaseSensitive: true,
-      minMatchCharLength: 2,
+      minMatchCharLength: 28,
+      includeScore: true,
+      ignoreLocation: true,
+      ignoreFieldNorm: true,
       keys: keys
     }
     const fuse = new Fuse(toJS(items), options)
