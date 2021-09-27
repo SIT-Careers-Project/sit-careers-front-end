@@ -9,7 +9,7 @@ const LocationInfoForm = (props) => {
       <p className="mb-3 font-semibold font-prompt text-heading-6">สถานที่ทำการ</p>
       <div className="w-full">
         <TextField
-          label="ที่อยู่ 1 *"
+          label="ที่อยู่ 1"
           name="address_one"
           variant="outlined"
           className="font-sarabun"
@@ -63,7 +63,7 @@ const LocationInfoForm = (props) => {
         <div className="w-4/12 pl-3">
           <TextField
             name="sub_district"
-            label="ตำบล/เขต *"
+            label="ตำบล/เขต"
             variant="outlined"
             className="font-sarabun"
             inputRef={register}
@@ -78,7 +78,7 @@ const LocationInfoForm = (props) => {
         <div className="w-4/12 pr-3">
           <TextField
             name="district"
-            label="อำเภอ *"
+            label="อำเภอ"
             variant="outlined"
             className="font-sarabun"
             inputRef={register}
@@ -91,7 +91,7 @@ const LocationInfoForm = (props) => {
         <div className="w-4/12 pl-3 px-3">
           <TextField
             name="province"
-            label="จังหวัด *"
+            label="จังหวัด"
             variant="outlined"
             className="font-sarabun"
             inputRef={register}
@@ -104,7 +104,7 @@ const LocationInfoForm = (props) => {
         <div className="w-4/12 pl-3">
           <TextField
             name="postal_code"
-            label="รหัสไปรษณีย์ *"
+            label="รหัสไปรษณีย์"
             variant="outlined"
             className="font-sarabun"
             inputRef={register}

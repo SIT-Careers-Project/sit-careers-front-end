@@ -10,7 +10,7 @@ const ContractInfoForm = (props) => {
       <div className="flex flex-row justify-between">
         <div className="w-1/2 pb-6 pr-3">
           <TextField
-            label="อีเมล์ผู้จัดการ *"
+            label="อีเมล์ผู้จัดการ"
             name="e_mail_manager"
             variant="outlined"
             className="font-sarabun"
@@ -23,7 +23,7 @@ const ContractInfoForm = (props) => {
         </div>
         <div className="w-1/2 pl-3">
           <TextField
-            label="อีเมล์ผู้ประสานงาน *"
+            label="อีเมล์ผู้ประสานงาน"
             name="e_mail_coordinator"
             variant="outlined"
             className="font-sarabun"
@@ -39,7 +39,7 @@ const ContractInfoForm = (props) => {
       <div className="flex flex-row justify-between pb-6">
         <div className="w-1/2 pr-3">
           <TextField
-            label="เบอร์สำนักงาน *"
+            label="เบอร์สำนักงาน"
             name="tel_no"
             variant="outlined"
             className="font-sarabun"
@@ -52,7 +52,7 @@ const ContractInfoForm = (props) => {
         </div>
         <div className="w-1/2 pl-3">
           <TextField
-            label="เบอร์ผู้ประสานงาน *"
+            label="เบอร์ผู้ประสานงาน"
             name="phone_no"
             variant="outlined"
             className="font-sarabun"
