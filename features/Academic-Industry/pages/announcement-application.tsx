@@ -40,47 +40,46 @@ const ApplicationInfo = () => {
     <Observer>
       {() => (
         <>
+          {!context.resume && (
+            <div className="w-full h-full max-w-screen-lg py-5">
+              <MaterialCard
+                style={{
+                  height: '550px',
+                  boxShadow: '10px -3px 15px rgba(0, 0, 0, 0.10), 4px -2px 6px rgba(0, 0, 0, 0.05)'
+                }}
+                className="grid w-full grid-cols-12 gap-4">
+                <div className="flex flex-wrap content-center justify-center col-span-7 px-6">
+                  <div>
+                    <div className="flex flex-row justify-center pb-5 font-prompt text-heading-6 text-primary">
+                      <p>คุณไม่สามารถสมัครได้</p>
+                    </div>
+                    <div className="flex flex-row justify-center pb-5 font-prompt text-heading-6 text-primary">
+                      <p>กรุณาสร้างโปรไฟล์สมัครงานของคุณ</p>
+                    </div>
+                    <Link href="/resume/info">
+                      <PrimaryButton className="shadow-md btn-grad">
+                        <p className="px-4 py-3 text-white font-prompt text-subtitle-1">
+                          สร้างโปรไฟล์สมัครงาน
+                        </p>
+                      </PrimaryButton>
+                    </Link>
+                  </div>
+                </div>
+                <CardMedia
+                  className="relative flex items-end justify-end col-span-5"
+                  image="/image/resume.svg"
+                  title="-"
+                  id="resume_second"
+                />
+              </MaterialCard>
+            </div>
+          )}
           {context.isLoading ? (
             <div className="flex justify-center">
               <CircularProgress disableShrink className="mt-32" />
             </div>
           ) : (
             <>
-              {!context.resume && (
-                <div className="w-full h-full max-w-screen-lg py-5">
-                  <MaterialCard
-                    style={{
-                      height: '550px',
-                      boxShadow:
-                        '10px -3px 15px rgba(0, 0, 0, 0.10), 4px -2px 6px rgba(0, 0, 0, 0.05)'
-                    }}
-                    className="grid w-full grid-cols-12 gap-4">
-                    <div className="flex flex-wrap content-center justify-center col-span-7 px-6">
-                      <div>
-                        <div className="flex flex-row justify-center pb-5 font-prompt text-heading-6 text-primary">
-                          <p>คุณไม่สามารถสมัครได้</p>
-                        </div>
-                        <div className="flex flex-row justify-center pb-5 font-prompt text-heading-6 text-primary">
-                          <p>กรุณาสร้างโปรไฟล์สมัครงานของคุณ</p>
-                        </div>
-                        <Link href="/resume/info">
-                          <PrimaryButton className="shadow-md btn-grad">
-                            <p className="px-4 py-3 text-white font-prompt text-subtitle-1">
-                              สร้างโปรไฟล์สมัครงาน
-                            </p>
-                          </PrimaryButton>
-                        </Link>
-                      </div>
-                    </div>
-                    <CardMedia
-                      className="relative flex items-end justify-end col-span-5"
-                      image="/image/resume.svg"
-                      title="-"
-                      id="resume_second"
-                    />
-                  </MaterialCard>
-                </div>
-              )}
               {context.resume && (
                 <div className="w-full h-full max-w-screen-lg pb-3">
                   <MaterialCard
