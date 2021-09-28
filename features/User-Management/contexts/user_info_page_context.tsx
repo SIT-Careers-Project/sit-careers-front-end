@@ -84,6 +84,7 @@ export class UserInfoPageContext {
       }
       this.alert.setAlert(message, 'error', 'error', true)
       this.modal.closeModal()
+      this.isLoading = false
     }
   }
 
@@ -104,6 +105,7 @@ export class UserInfoPageContext {
       }
       this.alert.setAlert(message, 'error', 'error', true)
       this.modal.closeModal()
+      this.isLoading = false
     }
   }
 

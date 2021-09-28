@@ -12,7 +12,7 @@ import React from 'react'
 import { Controller } from 'react-hook-form'
 
 const MainInfoForm = (props) => {
-  const { register, errors, control, disable, viewer } = props
+  const { register, errors, control, disable, viewer, require } = props
 
   return (
     <div>
@@ -52,7 +52,7 @@ const MainInfoForm = (props) => {
             variant="outlined"
             disabled={viewer}>
             <InputLabel htmlFor="trinity-select" id="select-outlined-label">
-              ประเภทธุรกิจ
+              ประเภทธุรกิจ {require ? '*' : ''}
             </InputLabel>
             <Controller
               control={control}
@@ -72,7 +72,7 @@ const MainInfoForm = (props) => {
         </div>
         <div className="w-1/2 pl-3">
           <TextField
-            label="เว็บไซต์"
+            label={`เว็บไซต์ ${require ? '*' : ''}`}
             name="website"
             variant="outlined"
             className="font-sarabun"
@@ -92,7 +92,7 @@ const MainInfoForm = (props) => {
             name="about_us"
             as={
               <TextField
-                label="แนะนำ"
+                label={`แนะนำ ${require ? '*' : ''}`}
                 name="about_us"
                 className="border-opacity-50 place-content-start border-DEFAULT"
                 variant="outlined"
