@@ -2,14 +2,14 @@ import { TextField } from '@material-ui/core'
 import React from 'react'
 
 const LocationInfoForm = (props) => {
-  const { errors, register, disable } = props
+  const { errors, register, disable, require } = props
 
   return (
     <div>
       <p className="mb-3 font-semibold font-prompt text-heading-6">สถานที่ทำการ</p>
       <div className="w-full">
         <TextField
-          label="ที่อยู่ 1"
+          label={`ที่อยู่ 1 ${require ? '*' : ''}`}
           name="address_one"
           variant="outlined"
           className="font-sarabun"
@@ -63,7 +63,7 @@ const LocationInfoForm = (props) => {
         <div className="w-4/12 pl-3">
           <TextField
             name="sub_district"
-            label="ตำบล/เขต"
+            label={`ตำบล/เขต ${require ? '*' : ''}`}
             variant="outlined"
             className="font-sarabun"
             inputRef={register}
@@ -78,7 +78,7 @@ const LocationInfoForm = (props) => {
         <div className="w-4/12 pr-3">
           <TextField
             name="district"
-            label="อำเภอ"
+            label={`อำเภอ ${require ? '*' : ''}`}
             variant="outlined"
             className="font-sarabun"
             inputRef={register}
@@ -88,10 +88,10 @@ const LocationInfoForm = (props) => {
             disabled={disable}
           />
         </div>
-        <div className="w-4/12 pl-3 px-3">
+        <div className="w-4/12 px-3 pl-3">
           <TextField
             name="province"
-            label="จังหวัด"
+            label={`จังหวัด ${require ? '*' : ''}`}
             variant="outlined"
             className="font-sarabun"
             inputRef={register}
@@ -104,7 +104,7 @@ const LocationInfoForm = (props) => {
         <div className="w-4/12 pl-3">
           <TextField
             name="postal_code"
-            label="รหัสไปรษณีย์"
+            label={`รหัสไปรษณีย์ ${require ? '*' : ''}`}
             variant="outlined"
             className="font-sarabun"
             inputRef={register}

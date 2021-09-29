@@ -84,7 +84,6 @@ export class AnnouncementSearchPageContext {
     try {
       this.isLoading = true
       const response = await apiService.getAnnouncementById(announcementId)
-      console.log(response.data[0])
       this.announcementDetail = response.data[0]
       this.announcements = response.data
 

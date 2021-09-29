@@ -2,7 +2,7 @@ import { TextField } from '@material-ui/core'
 import React from 'react'
 
 const ContractInfoForm = (props) => {
-  const { errors, register, disable, contract } = props
+  const { errors, register, disable, contract, require } = props
 
   return (
     <div>
@@ -11,7 +11,7 @@ const ContractInfoForm = (props) => {
         <div className="w-1/2 pb-6 pr-3">
           {contract ? (
             <TextField
-              label="อีเมล์ผู้จัดการ"
+              label={`อีเมล์ผู้จัดการ ${require ? '*' : ''}`}
               name="e_mail_manager"
               variant="outlined"
               className="font-sarabun"
@@ -23,7 +23,7 @@ const ContractInfoForm = (props) => {
             />
           ) : (
             <TextField
-              label="อีเมล์ผู้จัดการ"
+              label={`อีเมล์ผู้จัดการ ${require ? '*' : ''}`}
               name="e_mail_manager"
               variant="outlined"
               className="font-sarabun"
@@ -48,7 +48,7 @@ const ContractInfoForm = (props) => {
         </div>
         <div className="w-1/2 pl-3">
           <TextField
-            label="อีเมล์ผู้ประสานงาน"
+            label={`อีเมล์ผู้ประสานงาน ${require ? '*' : ''}`}
             name="e_mail_coordinator"
             variant="outlined"
             className="font-sarabun"
@@ -64,7 +64,7 @@ const ContractInfoForm = (props) => {
       <div className="flex flex-row justify-between pb-6">
         <div className="w-1/2 pr-3">
           <TextField
-            label="เบอร์สำนักงาน"
+            label={`เบอร์สำนักงาน ${require ? '*' : ''}`}
             name="tel_no"
             variant="outlined"
             className="font-sarabun"
@@ -77,7 +77,7 @@ const ContractInfoForm = (props) => {
         </div>
         <div className="w-1/2 pl-3">
           <TextField
-            label="เบอร์ผู้ประสานงาน"
+            label={`เบอร์ผู้ประสานงาน ${require ? '*' : ''}`}
             name="phone_no"
             variant="outlined"
             className="font-sarabun"

@@ -12,6 +12,7 @@ export class CompanyUpdatePageContext {
   alert
   disableButton
   isLoading
+  require
 
   constructor() {
     this.company = []
@@ -19,6 +20,7 @@ export class CompanyUpdatePageContext {
     this.alert = ''
     this.disableButton = false
     this.isLoading = false
+    this.require = false
 
     makeAutoObservable(this)
   }
