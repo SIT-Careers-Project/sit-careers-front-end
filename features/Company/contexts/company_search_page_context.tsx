@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import apiService from '../services/apiCompany'
 import { createContext } from 'react'
 export class CompanySearchPageContext {
@@ -7,20 +7,15 @@ export class CompanySearchPageContext {
   companyName
   companyType
   isLoading
+  keySearch
 
   constructor() {
-    makeObservable(this, {
-      getCompanies: action,
-      setCompanies: action,
-      companies: observable,
-      beforeSearch: observable,
-      companyName: observable,
-      companyType: observable
-    })
+    makeAutoObservable(this)
     this.companies = []
     this.beforeSearch = []
     this.companyName = ''
     this.companyType = []
+    this.keySearch = []
     this.isLoading = false
   }
 

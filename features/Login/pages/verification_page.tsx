@@ -83,6 +83,26 @@ export const VerificationPage = () => {
                         fullWidth
                       />
                     </div>
+                    <div className="pt-5">
+                      <p className="text-body-2 text-primary font-prompt font-semibold">
+                        รหัสผ่านต้องมี:
+                      </p>
+                      <p className="text-body-2 text-secondary2 font-prompt">
+                        ○ ตัวอักษรอย่างน้อย 8 ตัว
+                      </p>
+                      <p className="text-body-2 text-secondary2 font-prompt">
+                        ○ ภาษาอังกฤษตัวพิมพ์ใหญ่ เช่น A, B, C
+                      </p>
+                      <p className="text-body-2 text-secondary2 font-prompt">
+                        ○ ภาษาอังกฤษตัวพิมพ์เล็ก เช่น a, b, c
+                      </p>
+                      <p className="text-body-2 text-secondary2 font-prompt">
+                        ○ ตัวเลข เช่น 1, 2, 3
+                      </p>
+                      <p className="text-body-2 text-secondary2 font-prompt">
+                        ○ อักขระพิเศษ {`(~!@#$%^&*( )_+-={ }|[ ]:";'< >?,./)`}
+                      </p>
+                    </div>
                     <button type="submit" className="w-full p-2 mt-8 btn-grad focus:outline-none">
                       <p className="text-white text-heading-6">Submit</p>
                     </button>

@@ -3,7 +3,7 @@ import React from 'react'
 import { Controller } from 'react-hook-form'
 
 const DetailInfoForm = (props) => {
-  const { errors, control, disable } = props
+  const { errors, control, disable, require } = props
 
   return (
     <div className="flex flex-col pb-6">
@@ -15,7 +15,7 @@ const DetailInfoForm = (props) => {
           data-cy="description"
           as={
             <TextField
-              label="รายละเอียด *"
+              label={`รายละเอียด ${require ? '*' : ''}`}
               name="description"
               className="border-opacity-50 place-content-start border-DEFAULT"
               variant="outlined"

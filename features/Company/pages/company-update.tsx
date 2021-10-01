@@ -40,6 +40,9 @@ const CompanyForm = ({ authContext, companyId }) => {
   useEffect(() => {
     context.keyChange('modal', coreModalContext)
     context.keyChange('alert', alertContext)
+    if (authContext.roleUser === 'coordinator' || authContext.roleUser === 'manager') {
+      context.keyChange('require', true)
+    }
     context.getCompany(companyId).then(() => {
       setTimeout(() => reset({ ...context.company }), 400)
       setTimeout(() => {
@@ -48,6 +51,7 @@ const CompanyForm = ({ authContext, companyId }) => {
     })
     return () => {
       context.keyChange('isDisable', false)
+      context.keyChange('require', false)
     }
   }, [alertContext, companyId, context, coreModalContext, reset])
 
@@ -108,6 +112,7 @@ const CompanyForm = ({ authContext, companyId }) => {
                     control={control}
                     disable={false}
                     viewer={false}
+                    require={context.require}
                   />
                 )}
                 {authContext.roleUser === 'viewer' && (
@@ -117,6 +122,7 @@ const CompanyForm = ({ authContext, companyId }) => {
                     control={control}
                     disable={true}
                     viewer={true}
+                    require={context.require}
                   />
                 )}
                 {(authContext.roleUser === 'manager' || authContext.roleUser === 'coordinator') && (
@@ -126,26 +132,59 @@ const CompanyForm = ({ authContext, companyId }) => {
                     control={control}
                     disable={true}
                     viewer={false}
+                    require={context.require}
                   />
                 )}
                 {authContext.roleUser === 'viewer' ? (
                   <DetailInfoForm errors={errors} control={control} disable={true} />
                 ) : (
-                  <DetailInfoForm errors={errors} control={control} disable={false} />
+                  <DetailInfoForm
+                    errors={errors}
+                    control={control}
+                    disable={false}
+                    require={context.require}
+                  />
                 )}
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
-                {authContext.roleUser === 'viewer' ? (
-                  <ContractInfoForm register={register} errors={errors} disable={true} />
-                ) : (
-                  <ContractInfoForm register={register} errors={errors} disable={false} />
+                {authContext.roleUser === 'viewer' && (
+                  <ContractInfoForm
+                    register={register}
+                    errors={errors}
+                    disable={true}
+                    contract={false}
+                    require={context.require}
+                  />
+                )}
+                {authContext.roleUser === 'coordinator' && (
+                  <ContractInfoForm
+                    register={register}
+                    errors={errors}
+                    disable={false}
+                    contract={true}
+                    require={context.require}
+                  />
+                )}
+                {(authContext.roleUser === 'manager' || authContext.roleUser === 'admin') && (
+                  <ContractInfoForm
+                    register={register}
+                    errors={errors}
+                    disable={false}
+                    contract={false}
+                    require={context.require}
+                  />
                 )}
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 {authContext.roleUser === 'viewer' ? (
                   <LocationInfoForm register={register} errors={errors} disable={true} />
                 ) : (
-                  <LocationInfoForm register={register} errors={errors} disable={false} />
+                  <LocationInfoForm
+                    register={register}
+                    errors={errors}
+                    disable={false}
+                    require={context.require}
+                  />
                 )}
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
@@ -155,6 +194,7 @@ const CompanyForm = ({ authContext, companyId }) => {
                     errors={errors}
                     control={control}
                     disable={true}
+                    require={context.require}
                   />
                 ) : (
                   <CompanyDateInfoForm
@@ -162,14 +202,25 @@ const CompanyForm = ({ authContext, companyId }) => {
                     errors={errors}
                     control={control}
                     disable={false}
+                    require={context.require}
                   />
                 )}
               </div>
               <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
                 {authContext.roleUser === 'admin' ? (
-                  <MouInfoForm disable={false} register={register} errors={errors} />
+                  <MouInfoForm
+                    disable={false}
+                    register={register}
+                    require={context.require}
+                    errors={errors}
+                  />
                 ) : (
-                  <MouInfoForm disable={true} register={register} errors={errors} />
+                  <MouInfoForm
+                    disable={true}
+                    register={register}
+                    errors={errors}
+                    require={context.require}
+                  />
                 )}
               </div>
               <div className="flex justify-end grid-cols-12 my-6 gap-x-8 focus:outline-none">

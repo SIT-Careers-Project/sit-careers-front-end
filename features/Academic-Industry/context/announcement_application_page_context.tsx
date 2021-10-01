@@ -14,6 +14,7 @@ export class AnnouncementApplicationFormContext {
   renderDelay
   disableButton
   alert
+  isLoading
 
   constructor() {
     this.modal = ''
@@ -22,6 +23,7 @@ export class AnnouncementApplicationFormContext {
     this.renderDelay = true
     this.disableButton = false
     this.alert = ''
+    this.isLoading = false
 
     makeAutoObservable(this)
   }
@@ -32,8 +34,10 @@ export class AnnouncementApplicationFormContext {
 
   getResumeByUserId = async () => {
     try {
+      this.isLoading = true
       const response = await apiAcademic.getResumeByUserId()
       this.resume = response.data[0]
+      this.isLoading = false
     } catch (error) {
       console.log(error)
       if (error.response.status === 401) {
@@ -56,9 +60,11 @@ export class AnnouncementApplicationFormContext {
 
   getAnnouncementById = async (announcementId) => {
     try {
+      this.isLoading = true
       const response = await apiAcademic.getAnnouncementById(announcementId)
       runInAction(() => {
         this.announcement = response.data[0]
+        this.isLoading = false
       })
     } catch (error) {
       console.log(error)

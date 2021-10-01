@@ -30,9 +30,13 @@ interface AnnouncementDetailProps {
 
 export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
   const [copied, setCopied] = useState(false)
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
+  const [path, setPath] = useState('')
+  const host = window.location.host
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  useEffect(() => {}, [data])
+  useEffect(() => {
+    setPath(`http://${host}/academic-industry/applications/create`)
+  }, [data])
 
   const handleTooltipClose = () => {
     setOpen(false)
@@ -40,7 +44,7 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
 
   const handleTooltipOpen = () => {
     const el = document.createElement('input')
-    el.value = `http://${window.location.host}/academic-industry/announcements/${data.announcement_id}`
+    el.value = `http://${location.host}/academic-industry/announcements/${data.announcement_id}`
     document.body.appendChild(el)
     el.select()
     document.execCommand('copy')
@@ -125,14 +129,14 @@ export const AnnouncementDetail = ({ data }: AnnouncementDetailProps) => {
             </div>
             <div className="flex flex-col items-center w-1/4 h-12 grid-cols-12">
               {checkStatus(data?.start_date, data?.end_date, data?.status) === 'OPEN' && (
-                <Link href={`applications/create/${data?.announcement_id}`}>
-                  <button className="text-white cursor-pointer bg-primary">
+                <Link href={`${path}/${data?.announcement_id}`} replace>
+                  <button className="text-white cursor-pointer focus:outline-none bg-primary">
                     <p className="px-5 py-3 text-white font-prompt text-subtitle-1">สมัคร</p>
                   </button>
                 </Link>
               )}
               {checkStatus(data?.start_date, data?.end_date, data?.status) === 'CLOSE' && (
-                <button className="text-white bg-opacity-50 bg-primary" disabled>
+                <button className="text-white bg-opacity-50 focus:outline-none bg-primary" disabled>
                   <p className="px-5 py-3 text-white cursor-default focus:outline-none font-prompt text-subtitle-1">
                     สมัคร
                   </p>

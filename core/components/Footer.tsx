@@ -13,11 +13,12 @@ const Footer = () => {
       <div className="max-w-screen-lg mx-auto">
         <div className="grid h-full grid-flow-row grid-cols-12 gap-5">
           <div className="col-span-4 pt-12">
-            <div className="font-semibold text-primary font-prompt text-body-1">ติดต่อเรา</div>
-            <div className="mt-2 text-body-1 font-prompt">66 2470 9850</div>
-            <div className="mt-2 text-body-1 font-prompt">webadmin@sit.kmutt.ac.th</div>
+            <div className="font-semibold text-primary font-prompt text-body-1">ติดต่อ</div>
+            <div className="mt-2 text-body-1 font-prompt">คุณรุ่งโรจน์ ขวัญโกมล</div>
+            <div className="mt-2 text-body-1 font-prompt">Tel: 0-2470-9889</div>
+            <div className="mt-2 text-body-1 font-prompt">E-mail: rungroj@sit.kmutt.ac.th</div>
             <Link href="/">
-              <div className="mt-10 font-semibold text-white cursor-pointer font-prompt">
+              <div className="pt-10 font-semibold text-white cursor-pointer font-prompt">
                 <img
                   height="30px"
                   width="120px"
@@ -27,22 +28,24 @@ const Footer = () => {
               </div>
             </Link>
           </div>
-          <div className="relative flex flex-col justify-center h-full col-span-8">
+          <div className="col-span-8 pt-12">
             <div>
-              <p className="mt-2 text-body-1 text-primary font-prompt-semibold">สถานที่ทำการ</p>
-              <p className="mt-2 mb-2 text-body-1 font-prompt">
+              <div className="font-semibold text-primary font-prompt text-body-1">สถานที่ทำการ</div>
+              <div className="mt-2 text-body-1 font-prompt">
                 126 คณะเทคโนโลยีสารสนเทศ ถนนประชาอุทิศ แขวงบางมด เขตทุ่งครุ กรุงเทพฯ 10140
-              </p>
-              <p className="text-body-1 text-primary font-prompt-semibold">วันที่ทำการ</p>
-              <p className="mt-2 text-body-1 font-prompt">
-                วันจันทร์ – วันศุกร์ เวลา 08.30 น. – 16.30 น.
-              </p>
+              </div>
             </div>
-            <div className="absolute bottom-0">
-              <p className="-mb-5 opacity-50 text-body-2 text-secondary2">
+            <div className="mt-2">
+              <div className="font-semibold text-primary font-prompt text-body-1">วันที่ทำการ</div>
+              <div className="mt-2 text-body-1 font-prompt">
+                วันจันทร์ – วันศุกร์ เวลา 08.30 น. – 16.30 น.
+              </div>
+            </div>
+            <div className="pt-8 cursor-pointer font-prompt">
+              <p className="opacity-50 text-body-2 text-secondary2">
                 © School of Information Technology, King Mongkut&apos;s University of Technology
                 Thonburi. <br />
-                Power by{' '}
+                Power by
                 <Link href="https://github.com/SIT-Careers-Project">
                   <span className="underline cursor-pointer">SIT Career Center</span>
                 </Link>

@@ -2,11 +2,14 @@
 import React, { useEffect } from 'react'
 import { Business, CheckBox, Event, Launch } from '@material-ui/icons'
 import getConfig from 'next/config'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const { publicRuntimeConfig } = getConfig()
 
 const AnnouncementResumeInfo = (props) => {
   const { data, register, applicationDate } = props
+  const router = useRouter()
 
   useEffect(() => {}, [data, applicationDate])
 
@@ -16,7 +19,14 @@ const AnnouncementResumeInfo = (props) => {
         <div className="font-semibold font-prompt text-heading-6">
           <div className="grid flex-row grid-cols-6">
             <p className="col-span-1">ประกาศรับสมัคร:</p>
-            <p className="col-span-3 text-primary"> {data?.announcement_title}</p>
+            <Link
+              href={`${router.basePath}/academic-industry/announcements/${data?.announcement_id}`}>
+              <a target="_blank" className="col-span-3 cursor-pointer text-primary">
+                {' '}
+                {data?.announcement_title}
+                <Launch style={{ fontSize: 'medium' }} className="ml-2" />
+              </a>
+            </Link>
           </div>
         </div>
         <input
@@ -31,21 +41,21 @@ const AnnouncementResumeInfo = (props) => {
               <Event className="mb-2 mr-2" />
               วันที่สมัคร:
             </p>
-            <p className="col-span-3 "> {applicationDate}</p>
+            <p className="col-span-3 pt-1"> {applicationDate}</p>
           </div>
           <div className="grid flex-row grid-cols-6 pb-3">
             <p className="col-span-1 text-primary">
               <Business className="mb-2 mr-2" />
               บริษัท:
             </p>
-            <p className="col-span-3 "> {data?.company_name_th}</p>
+            <p className="col-span-3 pt-1"> {data?.company_name_th}</p>
           </div>
           <div className="grid flex-row grid-cols-6 pb-3">
             <p className="col-span-1 text-primary">
               <CheckBox className="mb-2 mr-2" />
               สถานะปัจจุบัน:
             </p>
-            <p className="col-span-3 "> {data?.status}</p>
+            <p className="col-span-3 pt-1"> {data?.status}</p>
           </div>
         </div>
         <hr className="mb-6 font-semibold opacity-25 text-secondary2" />
@@ -78,11 +88,31 @@ const AnnouncementResumeInfo = (props) => {
             </div>
             <div className="grid flex-row grid-cols-6 pb-3">
               <p className="col-span-1">อีเมล:</p>
-              <p className="col-span-3 "> {data?.email}</p>
+              {data?.email && (
+                <a
+                  href={`mailto:${data?.email}`}
+                  className="col-span-3 cursor-pointer hover:underline text-secondary1">
+                  {' '}
+                  {data?.email}
+                  <Launch style={{ fontSize: 'medium' }} className="mb-1 ml-1" />
+                </a>
+              )}
             </div>
             <div className="grid flex-row grid-cols-6 pb-3">
               <p className="col-span-1">Link ผลงาน:</p>
-              <p className="col-span-3 "> {data?.resume_link}</p>
+              {data?.resume_link ? (
+                <Link href={data?.resume_link}>
+                  <a
+                    target="_blank"
+                    className="col-span-3 cursor-pointer hover:underline text-secondary1">
+                    {' '}
+                    {data?.resume_link}
+                    <Launch style={{ fontSize: 'medium' }} className="mb-1 ml-1" />
+                  </a>
+                </Link>
+              ) : (
+                <p className="col-span-3 ">-</p>
+              )}
             </div>
             <div className="grid flex-row grid-cols-6">
               <p className="col-span-1">ไฟล์ผลงาน:</p>
@@ -95,6 +125,11 @@ const AnnouncementResumeInfo = (props) => {
                         <Launch style={{ fontSize: 'medium' }} className="mb-1 ml-1" />
                       </div>
                     </a>
+                  </div>
+                )}
+                {(data?.path_file === undefined || data?.path_file === '-') && (
+                  <div>
+                    <p>-</p>
                   </div>
                 )}
               </div>

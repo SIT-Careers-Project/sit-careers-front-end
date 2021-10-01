@@ -2,6 +2,7 @@ import { toJS, makeAutoObservable } from 'mobx'
 import { createContext } from 'react'
 import { matchSorter } from 'match-sorter'
 import _ from 'lodash'
+import Fuse from 'fuse.js'
 
 export class SearchContext {
   constructor() {
@@ -32,15 +33,28 @@ export class SearchContext {
     return _.uniqWith(search, _.isEqual)
   }
 
-  searchMultiFilterAnnouncement = (items, filterSearch) => {
-    const filteredResults = items.filter((el) =>
-      filterSearch.some((filterEl) =>
-        filterEl.name.some((element) => el[filterEl.type] === element)
-      )
-    )
-
-    if (filteredResults.length > 0) {
-      return filteredResults
+  searchMultiFilterWithFuse = (items, searchValue, keySearch) => {
+    let data = []
+    const flattenSearchValue = _.without(_.flattenDeep(searchValue), '')
+    const keys = _.uniq(keySearch)
+    const options = {
+      minMatchCharLength: 28,
+      includeScore: true,
+      ignoreLocation: true,
+      ignoreFieldNorm: true,
+      keys: keys
+    }
+    const fuse = new Fuse(toJS(items), options)
+    if (flattenSearchValue.length > 0) {
+      _.forEach(flattenSearchValue, (value) => {
+        if (value) {
+          data = [...data, fuse.search(value)]
+        }
+      })
+      if (_.flattenDeep(data).length === 0) {
+        return []
+      }
+      return _.uniq(_.map(_.flattenDeep(toJS(data)), (data) => data.item))
     }
     return items
   }

@@ -18,20 +18,23 @@ const AllCompany = () => {
   const contextPagination = useContext(paginationContext)
   const contextSearch = useContext(searchContext)
 
-  const keySearch = ['company_type', 'company_name_th', 'company_name_en']
-
   useEffect(() => {
     context.getCompanies()
     contextPagination.setSliceData()
+    return () => {
+      context.setValue('keySearch', [])
+      context.setValue('companyName', [])
+      context.setValue('companyType', [])
+    }
   }, [context, contextPagination])
 
   const handlerSearch = () => {
     context.setValue(
       'companies',
-      contextSearch.searchMultiFilter(
-        [context.companyType, context.companyName],
+      contextSearch.searchMultiFilterWithFuse(
         context.beforeSearch,
-        keySearch
+        [context.companyType, context.companyName],
+        context.keySearch
       )
     )
   }
@@ -53,6 +56,11 @@ const AllCompany = () => {
                     onChange={(event) => {
                       if (typeof event.target.value === 'string') {
                         context.setValue('companyName', event.target.value)
+                        context.setValue('keySearch', [
+                          ...context.keySearch,
+                          'company_name_en',
+                          'company_name_th'
+                        ])
                       }
                     }}
                   />
@@ -64,9 +72,10 @@ const AllCompany = () => {
                       id="trinity-select"
                       multiple
                       value={context.companyType}
-                      input={<OutlinedInput />}
+                      input={<OutlinedInput label="ประเภทธุรกิจ" />}
                       onChange={(event) => {
                         context.setValue('companyType', event.target.value)
+                        context.setValue('keySearch', [...context.keySearch, 'company_type'])
                       }}>
                       {_.map(companyType, (company) => (
                         <MenuItem key={company.title} value={company.title}>
@@ -112,7 +121,7 @@ const AllCompany = () => {
                 </>
               ) : (
                 <>
-                  {!context.isLoading ? (
+                  {context.isLoading ? (
                     <div className="flex justify-center">
                       <CircularProgress disableShrink className="mt-32" />
                     </div>

@@ -1,6 +1,8 @@
 import { makeAutoObservable } from 'mobx'
-import apiService from '../services/apiAcademicIndustry'
 import { createContext } from 'react'
+import _ from 'lodash'
+
+import apiService from '../services/apiAcademicIndustry'
 import { sortAnnouncement } from 'core/services/utils'
 export class AnnouncementSearchPageContext {
   announcements
@@ -38,6 +40,16 @@ export class AnnouncementSearchPageContext {
   setValue = (key, value) => {
     this[key] = value
   }
+
+  removeKeySearch = (keySearch) => {
+    this.filterSearch = _.remove(this.filterSearch, function (keyFilter) {
+      const result = _.forEach(keySearch, (key) => {
+        return keyFilter.name === key
+      })
+      return result
+    })
+  }
+
   getAnnouncements = async () => {
     try {
       this.isLoading = true
@@ -72,7 +84,6 @@ export class AnnouncementSearchPageContext {
     try {
       this.isLoading = true
       const response = await apiService.getAnnouncementById(announcementId)
-      console.log(response.data[0])
       this.announcementDetail = response.data[0]
       this.announcements = response.data
 
