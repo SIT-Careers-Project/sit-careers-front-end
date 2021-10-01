@@ -40,8 +40,6 @@ export class SearchContext {
     const options = {
       minMatchCharLength: 28,
       includeScore: true,
-      ignoreLocation: true,
-      ignoreFieldNorm: true,
       keys: keys
     }
     const fuse = new Fuse(toJS(items), options)
