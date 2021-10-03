@@ -41,8 +41,8 @@ export const VerificationPage = () => {
                     ไม่สามารถตั้งค่ารหัสผ่านได้
                   </p>
                   <p className="mt-8 font-semibold text-red text-body-1 font-prompt">
-                    เนื่องจากอายุลิงก์ในการยืนยันตัวตนหมดอายุ หรือมีการยืนยันตัวตนไปแล้ว
-                    กรุณาติดต่อผู้ดูแลระบบเพื่อรับข้อความยืนยันตัวตนอีกครั้ง
+                    เนื่องจากอายุลิงก์ในการยืนยันตัวตนหมดอายุหรือมีการยืนยันตัวตนไปแล้ว
+                    กรุณาติดต่อผู้ดูแลระบบ เพื่อรับข้อความยืนยันตัวตนอีกครั้ง
                   </p>
                   <Link href="/login">
                     <button className="w-full p-2 mt-8 btn-grad focus:outline-none">
@@ -84,7 +84,7 @@ export const VerificationPage = () => {
                       />
                     </div>
                     <div className="pt-5">
-                      <p className="text-body-2 text-primary font-prompt font-semibold">
+                      <p className="font-semibold text-body-2 text-primary font-prompt">
                         รหัสผ่านต้องมี:
                       </p>
                       <p className="text-body-2 text-secondary2 font-prompt">
