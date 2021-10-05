@@ -11,6 +11,7 @@ import { Observer } from 'mobx-react-lite'
 
 import { navbarContext } from '../contexts/navbar_context'
 import { ModalBannerContext } from '../contexts/modal_banner_image_context'
+import { checkAspectRatio } from 'core/services/utils'
 
 const { publicRuntimeConfig } = getConfig()
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']
@@ -25,9 +26,39 @@ const ModalBannerValidation = yup.object().shape({
       } else {
         return true
       }
+    })
+    .test('fileSize', 'รูปต้องมีขนาดไม่เกิน 5MB', (value) => {
+      if (value.length !== 0) {
+        return value && value[0].size <= 5242880
+      } else {
+        return true
+      }
     }),
   date_display_end: yup.string().required('จำเป็นต้องกรอก วันเริ่มต้น'),
   date_display_start: yup.string().required('จำเป็นต้องกรอก วันเริ่มต้น'),
+  path_image: yup.string()
+})
+
+const ModalBannerDeleteValidation = yup.object().shape({
+  file_banner: yup
+    .mixed()
+    .notRequired()
+    .test('fileFormat', 'ไฟล์ต้องเป็นนามสกุล .jpg .jpeg .gif และ .png', (value) => {
+      if (value.length !== 0) {
+        return value && SUPPORTED_FORMATS.includes(value[0].type)
+      } else {
+        return true
+      }
+    })
+    .test('fileSize', 'รูปต้องมีขนาดไม่เกิน 5MB', (value) => {
+      if (value.length !== 0) {
+        return value && value[0].size <= 5242880
+      } else {
+        return true
+      }
+    }),
+  date_display_end: yup.string(),
+  date_display_start: yup.string(),
   path_image: yup.string()
 })
 
@@ -37,10 +68,35 @@ export const ModalBanner = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const ref = useRef(null)
 
-  const { handleSubmit, register, errors, reset } = useForm({
-    resolver: yupResolver(ModalBannerValidation),
+  const { handleSubmit, register, errors, reset, setError } = useForm({
+    resolver: yupResolver(
+      context.updateBanner ? ModalBannerDeleteValidation : ModalBannerValidation
+    ),
     defaultValues: { ...context.banner }
   })
+
+  const handlerImage = async (event) => {
+    let value
+    if (!event.target.files[0]) {
+      value = null
+    } else {
+      value = event?.target?.files[0]
+      const image = new Image()
+      image.src = URL?.createObjectURL(value)
+      image.onload = function () {
+        const url = URL?.createObjectURL(value)
+        if (checkAspectRatio(image.width, image.height) === 3.2) {
+          context.changeKey('file', url)
+          setError('file_banner', {})
+        } else {
+          setError('file_banner', {
+            type: 'manual',
+            message: '*ไม่สามารถอัปโหลดไฟล์ได้เนื่องจากรูปภาพมีขนาดไม่ตรงตามที่กำหนด'
+          })
+        }
+      }
+    }
+  }
 
   useCallback(() => {
     context.banners
@@ -75,8 +131,9 @@ export const ModalBanner = () => {
                           <Panorama fontSize="large" />
                           <p className="text-body-2">Browse Banner image</p>
                           <p className="text-body-2">
-                            รูปต้องมีขนาด 1600 x 500 เป็นไฟล์นามสกุล .png .jpg
+                            * รูปต้องมีขนาดอัตราส่วนเท่ากับ 3.2 เช่น 1600 x 500 เป็นไฟล์นามสกุล .png
                           </p>
+                          <p className="px-5 text-body-2">และไฟล์ต้องมีขนาดไม่เกิน 5MB</p>
                         </div>
                       )}
                       {context.file !== null && (
@@ -92,7 +149,7 @@ export const ModalBanner = () => {
                   {_.map(context.banners, (item, i) => {
                     return (
                       <div
-                        key={i}
+                        key={`banner_image_${i}`}
                         className="flex items-center w-full h-16 p-1 my-1 border-opacity-25 gap-x-1 border-DEFAULT border-secondary2">
                         <div
                           style={{
@@ -151,9 +208,11 @@ export const ModalBanner = () => {
                               <div className="absolute z-40 flex flex-col items-center justify-center text-secondary2 font-prompt">
                                 <Panorama fontSize="large" />
                                 <p className="text-body-2">Browse Banner image</p>
-                                <p className="text-body-2">
-                                  รูปต้องมีขนาด 1600 x 500 เป็นไฟล์นามสกุล .png .jpg
+                                <p className="px-5 text-body-2">
+                                  * รูปต้องมีขนาดอัตราส่วนเท่ากับ 3.2 เช่น 1600 x 500
+                                  เป็นไฟล์นามสกุล .png .jpg
                                 </p>
+                                <p className="px-5 text-body-2">และไฟล์ต้องมีขนาดไม่เกิน 5MB</p>
                               </div>
                             )}
                             {context.file !== null && (
@@ -171,12 +230,15 @@ export const ModalBanner = () => {
                           className="z-50 hidden bg-grey-100"
                           ref={register}
                           onChange={(event) => {
-                            context.changeKey('file', URL.createObjectURL(event.target.files[0]))
+                            handlerImage(event)
                           }}
                         />
                         <input name="path_image" className="hidden" />
                       </button>
                     </>
+                  )}
+                  {errors.file_banner && (
+                    <p className="mt-2 text-red text-body-2">{errors.file_banner.message}</p>
                   )}
                   {isUpdate && (
                     <div

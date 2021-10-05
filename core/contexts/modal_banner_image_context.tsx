@@ -72,17 +72,18 @@ export class modalBannerContext {
       this.getBanners()
       setTimeout(() => {
         this.file = null
-      }, 3000)
+      }, 2000)
       this.index = 0
     } catch (error) {
       console.log(error)
     }
   }
 
-  deleteBanner = async (path_image, banner_id) => {
+  deleteBanner = async () => {
     try {
-      await apiBanner.deleteBanner(path_image, banner_id)
+      await apiBanner.deleteBanner(this.banner?.path_image, this.banner?.banner_id)
       this.getBanners()
+      this.index = 0
     } catch (error) {
       console.log(error)
     }

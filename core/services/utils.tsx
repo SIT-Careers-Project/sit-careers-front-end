@@ -54,3 +54,7 @@ export const checkRoleRender = (roleName) => {
   }
   return tmpRoleName
 }
+
+export const checkAspectRatio = (width, height) => {
+  return width / height
+}
