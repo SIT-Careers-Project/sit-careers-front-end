@@ -36,7 +36,7 @@ function Index() {
             <Alert />
           </div>
           <div className="max-w-screen-lg mx-auto">
-            <div className="grid grid-cols-12 gap-5 py-24">
+            <div className="grid grid-cols-12 gap-5 pt-10 pb-24">
               <div className="col-span-12">
                 <p className="leading-10 text-center text-primary text-heading-3 font-prompt-medium">
                   SIT Career Center

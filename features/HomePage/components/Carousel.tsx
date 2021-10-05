@@ -4,9 +4,9 @@ import _ from 'lodash'
 import getConfig from 'next/config'
 import { Observer } from 'mobx-react-lite'
 import { toJS } from 'mobx'
-import Image from 'next/image'
 
 import { ModalBannerContext } from 'core/contexts/modal_banner_image_context'
+import classNames from 'classnames'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -54,19 +54,17 @@ export const Carousel = () => {
             ))}
           </div>
           <div
-            className="z-10 transition-all duration-1000 opacity-100 slideshowSlider"
+            className={classNames('z-10 transition-all duration-1000 opacity-100 slideshowSlider', {
+              '2xl:h-470 3xl:h-600 xl:h-400 lg:h-370 sm:h-280 h-200': context.bannerForShow.length
+            })}
             style={{
-              transform: `translate3d(${-index * 100}%, 0, 0)`,
-              height: context.bannerForShow.length ? '500px' : '0px'
+              transform: `translate3d(${-index * 100}%, 0, 0)`
             }}>
             {_.map(toJS(context.bannerForShow), (bgImage, i) => (
-              <Image
-                key={i}
+              <img
+                key={`image_banner_slide_${i}`}
                 loading="lazy"
-                className="inline-block w-full"
-                height={180}
-                width={500}
-                layout="responsive"
+                className="inline-block object-contain w-full"
                 src={`${publicRuntimeConfig.s3_url}/banner/${bgImage.path_image}`}
                 alt={`Banners ${bgImage.path_image} SIT Careers Center.`}
               />
