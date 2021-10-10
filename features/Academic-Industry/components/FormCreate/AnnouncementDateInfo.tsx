@@ -41,9 +41,9 @@ const AnnouncementDateInfoForm = (props) => {
             value={startDate}
             onChange={changeStartDate}
             inputRef={register}
+            disabled={props.authContext.roleUser === 'admin' ? disable : true}
             error={!!errors.start_date}
             helperText={errors.start_date?.message}
-            disabled={disable}
           />
         </div>
         <div className="flex items-end justify-center pr-6">
@@ -65,7 +65,7 @@ const AnnouncementDateInfoForm = (props) => {
             inputRef={register}
             error={!!errors.end_date}
             helperText={errors.end_date?.message}
-            disabled={disable}
+            disabled={props.authContext.roleUser === 'admin' ? disable : true}
           />
         </div>
         {disable === false && (
