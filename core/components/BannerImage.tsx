@@ -13,7 +13,7 @@ export const BannerImages = (props: BannerImage) => {
       <div>
         {imgSrc !== 'https://s3.amazonaws.com/cover_announcement/-' && imgSrc !== null ? (
           <div
-            className={`w-full rounded h-48 flex items-center justify-center ${className}`}
+            className={`w-full bg-cover bg-no-repeat rounded h-48 flex items-center justify-center ${className}`}
             style={{ backgroundImage: `url(${imgSrc})` }}></div>
         ) : (
           <div
@@ -21,7 +21,7 @@ export const BannerImages = (props: BannerImage) => {
             style={{ backgroundImage: `url(${imgSrc})` }}>
             <div className="text-grey4">
               <CameraAlt fontSize="large" />
-              <div className="font-semibold font-prompt text-body-1 pt-3">
+              <div className="pt-3 font-semibold font-prompt text-body-1">
                 <p>รูปภาพสำหรับประกาศรับสมัครงาน</p>
                 <p>ไฟล์นามสกุล .png และ .jpg ต้องมีขนาดไม่เกิน 5MB</p>
               </div>
@@ -29,7 +29,7 @@ export const BannerImages = (props: BannerImage) => {
           </div>
         )}
       </div>
-      <div className="flex justify-end items-end">
+      <div className="flex items-end justify-end">
         <div className="flex flex-col items-center justify-center w-8 h-8 -m-3 text-white rounded-full bg-secondary1">
           <CameraAlt fontSize="small" />
         </div>
