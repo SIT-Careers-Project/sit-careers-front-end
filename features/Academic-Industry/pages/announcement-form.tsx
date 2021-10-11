@@ -42,7 +42,7 @@ const AnnouncementForm = ({ authContext }) => {
 
   return (
     <div className="w-full h-full max-w-screen-lg">
-      <AnnouncementDateInfoForm register={register} errors={errors} />
+      <AnnouncementDateInfoForm authContext={authContext} register={register} errors={errors} />
       <div>
         <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
           <p className="font-semibold font-prompt text-heading-6">ข้อมูลประกาศรับสมัคร</p>
