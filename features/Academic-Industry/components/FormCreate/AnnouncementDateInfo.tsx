@@ -16,10 +16,11 @@ const AnnouncementDateInfoForm = (props) => {
     onSubmit,
     openModal,
     data,
-    disable
+    disable,
+    authContext
   } = props
 
-  useEffect(() => {}, [startDate, endDate])
+  useEffect(() => {}, [startDate, endDate, authContext])
 
   return (
     <div className="w-full max-w-screen-lg p-10 mx-auto mt-5 bg-white rounded-lg shadow-lg font-prompt">
@@ -41,9 +42,9 @@ const AnnouncementDateInfoForm = (props) => {
             value={startDate}
             onChange={changeStartDate}
             inputRef={register}
+            disabled={authContext?.roleUser === 'admin' ? disable : true}
             error={!!errors.start_date}
             helperText={errors.start_date?.message}
-            disabled={disable}
           />
         </div>
         <div className="flex items-end justify-center pr-6">
@@ -65,7 +66,7 @@ const AnnouncementDateInfoForm = (props) => {
             inputRef={register}
             error={!!errors.end_date}
             helperText={errors.end_date?.message}
-            disabled={disable}
+            disabled={props.authContext.roleUser === 'admin' ? disable : true}
           />
         </div>
         {disable === false && (

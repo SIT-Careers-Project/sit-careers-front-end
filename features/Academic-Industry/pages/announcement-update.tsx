@@ -6,7 +6,7 @@ import getConfig from 'next/config'
 import { Observer } from 'mobx-react-lite'
 import dayjs from 'dayjs'
 
-import { AnnouncementFormSchema, AnnouncementFormAdminSchema } from '../services/validationSchema'
+import { AnnouncementUpdateSchema, AnnouncementFormAdminSchema } from '../services/validationSchema'
 import { BannerImages } from '../../../core/components/BannerImage'
 import { CoreModal } from '../../../core/components/Modal'
 import { modalContext } from '../../../core/contexts/modal_context'
@@ -31,7 +31,7 @@ const AnnouncementUpdateForm = ({ authContext, announcementId }) => {
 
   const { handleSubmit, register, errors, control, reset } = useForm({
     resolver: yupResolver(
-      authContext === 'admin' ? AnnouncementFormAdminSchema : AnnouncementFormSchema
+      authContext === 'admin' ? AnnouncementFormAdminSchema : AnnouncementUpdateSchema
     ),
     defaultValues: { ...context.announcement }
   })
@@ -96,6 +96,7 @@ const AnnouncementUpdateForm = ({ authContext, announcementId }) => {
                   changeStartDate={(event) => {
                     context.keyChange('startDate', event.target.value)
                   }}
+                  authContext={authContext}
                   endDate={context.endDate}
                   changeEndDate={(event) => {
                     context.keyChange('endDate', event.target.value)

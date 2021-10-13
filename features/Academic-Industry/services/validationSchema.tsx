@@ -103,6 +103,55 @@ export const AnnouncementFormSchema = yup.object().shape({
   status: yup.string()
 })
 
+export const AnnouncementUpdateSchema = yup.object().shape({
+  announcement_id: yup.string(),
+  file_picture: yup
+    .mixed()
+    .notRequired()
+    .test('fileSize', 'ไฟล์นามสกุล .png และ .jpg ต้องมีขนาดไม่เกิน 5MB', (value) => {
+      console.log(value.length)
+      if (value.length !== 0) {
+        return value && value[0].size <= FILE_SIZE
+      } else {
+        return true
+      }
+    })
+    .test('fileFormat', 'ไฟล์ต้องเป็นนามสกุล .jpg .jpeg .gif และ .png', (value) => {
+      if (value.length !== 0) {
+        return value && SUPPORTED_FORMATS.includes(value[0].type)
+      } else {
+        return true
+      }
+    }),
+  address_one: yup.string().required('*จำเป็นต้องกรอก ที่อยู่ 1'),
+  address_two: yup.string(),
+  lane: yup.string(),
+  road: yup.string(),
+  sub_district: yup.string().required('*จำเป็นต้องกรอก ตำบล/เขต'),
+  district: yup.string().required('*จำเป็นต้องกรอก อำเภอ'),
+  province: yup.string().required('*จำเป็นต้องกรอก จังหวัด'),
+  postal_code: yup
+    .string()
+    .matches(/[0-9]/g, '*กรอกเพียงตัวเลขเท่านั้น')
+    .max(5)
+    .min(5)
+    .required('*จำเป็นต้องกรอก รหัสไปรษณีย์'),
+  start_business_day: yup.string().required('*จำเป็นต้องกรอก วันเปิดทำการ'),
+  start_business_time: yup.string().required('*จำเป็นต้องกรอก เวลาเปิดทำการ'),
+  end_business_day: yup.string().required('*จำเป็นต้องกรอก วันปิดทำการ'),
+  end_business_time: yup.string().required('*จำเป็นต้องกรอก เวลาปิดทำการ'),
+  announcement_title: yup.string().required('*จำเป็นต้องกรอก หัวข้อประกาศ'),
+  job_description: yup.string().required('*จำเป็นต้องกรอก รายละเอียดงาน'),
+  job_position_id: yup.string().required('*จำเป็นต้องกรอก ประเภทของงาน'),
+  property: yup.string().required('*จำเป็นต้องกรอก คุณสมบัติ'),
+  salary: yup.string().required('*จำเป็นต้องกรอก เงินเดือน'),
+  start_date: yup.string(),
+  end_date: yup.string(),
+  welfare: yup.string().required('*จำเป็นต้องกรอก สวัสดิการ'),
+  job_type: yup.array().required('*จำเป็นต้องเลือก ประเภทของประกาศ'),
+  status: yup.string()
+})
+
 export const ApplicationFormSchema = yup.object().shape({
   announcement_id: yup.string().required('*จำเป็นต้องกรอก วันประกาศรับสมัคร'),
   status: yup.string(),
