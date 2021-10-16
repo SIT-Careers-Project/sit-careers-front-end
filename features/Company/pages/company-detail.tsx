@@ -53,48 +53,68 @@ const CompanyDetail = ({ companyId }: CompanyDetailProps) => {
                   <div className="mb-4 font-bold text-primary font-prompt text-heading-6 md:w-full">
                     {context?.company.company_name_th} - {context?.company.company_name_en}
                   </div>
-                  <span className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-primary">
-                    {context?.company?.company_type}
-                  </span>
+                  {context?.company?.company_type && (
+                    <span className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-primary">
+                      {context?.company?.company_type}
+                    </span>
+                  )}
                   <div className="w-full h-1 mt-4 mb-3 bg-secondary1" />
                   <div className="w-full pr-2 mt-3 mb-4">
                     <p className="font-semibold font-prompt text-body-1">แนะนำบริษัท</p>
                     <div className="mt-2 prose text-black text-body-1 font-prompt">
-                      <div
-                        className="flex-wrap prose text-black text-body-1 font-prompt"
-                        dangerouslySetInnerHTML={{
-                          __html: marked(context?.company?.about_us || '')
-                        }}></div>
+                      {context?.company?.about_us && (
+                        <div
+                          className="flex-wrap prose text-black text-body-1 font-prompt"
+                          dangerouslySetInnerHTML={{
+                            __html: marked(context?.company?.about_us || '')
+                          }}></div>
+                      )}
+                      {!context?.company?.about_us && '-'}
                     </div>
                   </div>
                   <div className="w-full mb-4">
                     <p className="font-semibold font-prompt text-body-1">รายละเอียด</p>
-                    <div
-                      className="flex-wrap prose text-black text-body-1 font-prompt"
-                      dangerouslySetInnerHTML={{
-                        __html: marked(context?.company?.description || '')
-                      }}></div>
+                    {context?.company?.description && (
+                      <div
+                        className="flex-wrap prose text-black text-body-1 font-prompt"
+                        dangerouslySetInnerHTML={{
+                          __html: marked(context?.company?.description || '')
+                        }}></div>
+                    )}
+                    {!context?.company?.description && <p className="font-prompt text-body-1">-</p>}
                   </div>
                   <div className="mb-4 md:w-full">
                     <div className="font-semibold font-prompt text-body-1">ที่อยู่</div>
                     <div className="mt-2 text-body-1 font-prompt">
-                      {context?.company?.address_one} {context?.company?.lane}{' '}
-                      {context?.company?.road}
-                      {context?.company?.district} {context?.company?.sub_district}
-                      {context?.company?.province} {context?.company?.postal_code}
+                      {context?.company?.postal_code && (
+                        <>
+                          {context?.company?.address_one} {context?.company?.lane}{' '}
+                          {context?.company?.road} {context?.company?.district}{' '}
+                          {context?.company?.sub_district} {context?.company?.province}{' '}
+                          {context?.company?.postal_code}{' '}
+                        </>
+                      )}
+                      {!context?.company?.postal_code && <>-</>}
                     </div>
                   </div>
                   <div className="mt-3 mb-4 md:w-full">
                     <div className="font-semibold font-prompt text-body-1">วันที่ทำการ</div>
                     <div className="mt-2 text-body-1 font-prompt">
-                      {context?.company?.start_business_day} - {context?.company?.end_business_day}{' '}
-                      เวลา {context?.company?.start_business_time} -{' '}
-                      {context?.company?.end_business_time} น.
+                      {context?.company?.start_business_day !== 'undefined' &&
+                        context?.company?.end_business_day !== 'undefined' && (
+                          <>
+                            {context?.company?.start_business_day} -{' '}
+                            {context?.company?.end_business_day} เวลา{' '}
+                            {context?.company?.start_business_time} -{' '}
+                            {context?.company?.end_business_time} น.
+                          </>
+                        )}
+                      {context?.company?.start_business_day === 'undefined' && <>-</>}
                     </div>
                   </div>
                   <div className="mt-3 mb-4 md:w-full">
                     <div className="font-semibold font-prompt text-body-1">เว็บไซต์</div>
-                    {context?.company?.website !== '-' ? (
+                    {context?.company?.website ? (
                       <Link href={`${context?.company?.website}`}>
                         <div className="mt-2 cursor-pointer text-body-1 text-primary font-prompt">
                           {context?.company?.website}
@@ -102,7 +122,7 @@ const CompanyDetail = ({ companyId }: CompanyDetailProps) => {
                       </Link>
                     ) : (
                       <div className="mt-2 text-body-1 font-prompt">
-                        {context?.company?.website}
+                        {context?.company?.website || '-'}
                       </div>
                     )}
                   </div>

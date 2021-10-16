@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import getConfig from 'next/config'
 import marked from 'marked'
+import _ from 'lodash'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -49,13 +50,19 @@ export const Card = ({ className, tags, srcImg, aboutUs, title, linkPath }: Card
           </Typography>
         )}
         <div className="mt-2">
-          {tags.map((data, i) => (
-            <span
-              key={i}
-              className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-primary">
-              {data}
-            </span>
-          ))}
+          {_.map(tags, (data, i) => {
+            return (
+              <>
+                {data !== 'null' && (
+                  <span
+                    key={i}
+                    className="px-1 mr-2 text-sm text-white rounded font-prompt text-body-2 bg-primary">
+                    {data}
+                  </span>
+                )}
+              </>
+            )
+          })}
         </div>
         <div className="flex mt-2 leading-5 text-black text-body-2">
           <div
