@@ -18,7 +18,7 @@ const Footer = () => {
             <div className="mt-2 text-body-1 font-prompt">Tel: 0-2470-9889</div>
             <div className="mt-2 text-body-1 font-prompt">E-mail: rungroj@sit.kmutt.ac.th</div>
             <Link href="/">
-              <div className="pt-10 font-semibold text-white cursor-pointer font-prompt">
+              <div className="pt-8 font-semibold text-white cursor-pointer font-prompt">
                 <img
                   height="30px"
                   width="120px"
@@ -45,7 +45,7 @@ const Footer = () => {
               <p className="opacity-50 text-body-2 text-secondary2">
                 © School of Information Technology, King Mongkut&apos;s University of Technology
                 Thonburi. <br />
-                Power by
+                Power by{' '}
                 <Link href="https://github.com/SIT-Careers-Project">
                   <span className="underline cursor-pointer">SIT Career Center</span>
                 </Link>
