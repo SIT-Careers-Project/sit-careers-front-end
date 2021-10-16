@@ -58,8 +58,8 @@ const AllCompany = () => {
                         context.setValue('companyName', event.target.value)
                         context.setValue('keySearch', [
                           ...context.keySearch,
-                          'company_name_en',
-                          'company_name_th'
+                          { name: 'company_name_en', weight: 2 },
+                          { name: 'company_name_th', weight: 2 }
                         ])
                       }
                     }}
@@ -75,7 +75,10 @@ const AllCompany = () => {
                       input={<OutlinedInput label="ประเภทธุรกิจ" />}
                       onChange={(event) => {
                         context.setValue('companyType', event.target.value)
-                        context.setValue('keySearch', [...context.keySearch, 'company_type'])
+                        context.setValue('keySearch', [
+                          ...context.keySearch,
+                          { name: 'company_type', weight: 1 }
+                        ])
                       }}>
                       {_.map(companyType, (company) => (
                         <MenuItem key={company.title} value={company.title}>

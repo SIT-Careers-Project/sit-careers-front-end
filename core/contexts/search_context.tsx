@@ -38,14 +38,15 @@ export class SearchContext {
     const flattenSearchValue = _.without(_.flattenDeep(searchValue), '')
     const byCompanyName = this.searchByCompanyName(keySearch, items, flattenSearchValue)
 
-    const keys = _.sortedUniq(toJS(keySearch))
+    const keys = _.uniq(toJS(keySearch))
+    _.remove(
+      toJS(keys),
+      (array) => array.name === 'company_name_th' || array.name === 'company_name_en'
+    )
     const options = {
       minMatchCharLength: 28,
       includeScore: true,
-      keys: _.remove(
-        toJS(keys),
-        (array) => array.name === 'company_name_th' || array.name === 'company_name_en'
-      )
+      keys: keys
     }
     const fuse = new Fuse(toJS(items), options)
     if (flattenSearchValue.length > 0) {
@@ -57,7 +58,8 @@ export class SearchContext {
       if (_.flattenDeep(data).length === 0 && byCompanyName.length === 0) {
         return []
       }
-      return _.uniq(_.map(_.flattenDeep([toJS(data), byCompanyName]), (data) => data.item))
+      const mergeData = _.map(_.flattenDeep([toJS(data), toJS(byCompanyName)]), (data) => data.item)
+      return _.uniq(mergeData)
     }
     return items
   }
@@ -74,17 +76,14 @@ export class SearchContext {
     if (keySearchHasName.length > 0) {
       checkCompanyNameTH = _.indexOf(keySearchHasName, 'company_name_th') !== -1
       checkCompanyNameEN = _.indexOf(keySearchHasName, 'company_name_en') !== -1
-    } else {
-      checkCompanyNameTH = _.indexOf(keySearch, 'company_name_th') !== -1
-      checkCompanyNameEN = _.indexOf(keySearch, 'company_name_en') !== -1
     }
 
     if (checkCompanyNameTH || checkCompanyNameEN) {
-      const searchByCompanyName = new Fuse(items, {
+      const searchByCompanyName = new Fuse(toJS(items), {
         minMatchCharLength: 3,
         keys: ['company_name_th', 'company_name_en']
       })
-      byCompanyName = searchByCompanyName.search(searchValue.join(' '))
+      byCompanyName = searchByCompanyName.search(searchValue.join(' | '))
     }
 
     return byCompanyName

@@ -108,15 +108,10 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                             context.setValue('filterSearch', [
                               ...context.filterSearch,
                               { name: 'company_name_en', weight: 5 },
-                              { name: 'company_name_th', weight: 5 },
-                              { name: 'announcement_title', weight: 5 }
+                              { name: 'company_name_th', weight: 5 }
                             ])
                           } else {
-                            context.removeKeySearch([
-                              'company_name_en',
-                              'company_name_th',
-                              'announcement_title'
-                            ])
+                            context.removeKeySearch(['company_name_en', 'company_name_th'])
                           }
                         }
                       }}
@@ -322,9 +317,7 @@ const AnnouncementSearch = ({ authContext, announcementId }: AnnouncementProps) 
                     </>
                   ) : (
                     <div className="flex items-center justify-center w-full h-16">
-                      <span className="font-prompt text-heading-6">
-                        ไม่พบผลลัพธ์หรือคุณพิมพ์ข้อมูลน้อยเกินไป...
-                      </span>
+                      <span className="font-prompt text-heading-6">ไม่พบผลลัพธ์</span>
                     </div>
                   )}
                   {context.announcements.length !== 0 && (
