@@ -2,15 +2,16 @@ import React, { useContext, useEffect } from 'react'
 import { Card as MaterialCard, CardMedia, CircularProgress } from '@material-ui/core'
 import { InfoOutlined, Launch } from '@material-ui/icons'
 import { Observer } from 'mobx-react-lite'
+import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import getConfig from 'next/config'
+
 import { announcementApplicationFormContext } from '../context/announcement_application_page_context'
 import { AlertContext } from 'core/contexts/alert_context'
 import { modalContext } from '../../../core/contexts/modal_context'
 import { CoreModal } from '../../../core/components/Modal'
 import PrimaryButton from '../../../core/components/Button/Primary'
-import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -74,7 +75,7 @@ const ApplicationInfo = () => {
               </MaterialCard>
             </div>
           )}
-          {context.isLoading ? (
+          {context.isLoading && context.resume ? (
             <div className="flex justify-center">
               <CircularProgress disableShrink className="mt-32" />
             </div>
@@ -84,7 +85,7 @@ const ApplicationInfo = () => {
                 <div className="w-full h-full max-w-screen-lg pb-3">
                   <MaterialCard
                     style={{
-                      height: '550px',
+                      minHeight: '550px',
                       boxShadow:
                         '10px -3px 15px rgba(0, 0, 0, 0.10), 4px -2px 6px rgba(0, 0, 0, 0.05)'
                     }}
